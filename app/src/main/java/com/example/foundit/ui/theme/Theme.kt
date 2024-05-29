@@ -1,6 +1,9 @@
 package com.example.foundit.ui.theme
 
+<<<<<<< HEAD
 import android.app.Activity
+=======
+>>>>>>> b05e32c (Initial commit)
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -33,6 +36,10 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+<<<<<<< HEAD
+=======
+/*  Dynamic Light & Dark Mode
+>>>>>>> b05e32c (Initial commit)
 @Composable
 fun FoundItTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -55,4 +62,21 @@ fun FoundItTheme(
         typography = Typography,
         content = content
     )
+<<<<<<< HEAD
+=======
+} */
+
+// Force Light Mode
+@Composable
+fun FoundItTheme(
+    content: @Composable () -> Unit
+) {
+    val colorScheme = LightColorScheme // Always use LightColorScheme
+
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = Typography,
+        content = content
+    )
+>>>>>>> b05e32c (Initial commit)
 }

@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Found It</string>
+<<<<<<< HEAD
+=======
+
+    <!-- User Greetings (Main)-->
+    <string name="greeting_prefix">Hi</string>
+
+    <!-- Lost Card String's (Main) -->
+    <string name="lost_card_heading">Lost an item?</string>
+    <string name="lost_card_sub_title">Provide a detailed description of the item. Provide details to help others identify and return it.</string>
+    <string name="lost_card_button">Report Here</string>
+
+    <!-- Found Card String's (Main)-->
+    <string name="found_card_heading">Found an item?</string>
+    <string name="found_card_sub_title">Report a found item here. Provide details to help the owner identify and reclaim it.</string>
+    <string name="found_card_button">List Here</string>
+
+
+
+>>>>>>> b05e32c (Initial commit)
 </resources>
