@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Found It</string>
-<<<<<<< HEAD
-=======
+
+
 
     <!-- User Greetings (Main)-->
     <string name="greeting_prefix">Hi</string>
@@ -17,6 +17,4 @@
     <string name="found_card_button">List Here</string>
 
 
-
->>>>>>> b05e32c (Initial commit)
 </resources>

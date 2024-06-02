@@ -1,37 +1,26 @@
 package com.example.foundit.ui.theme
 
 import androidx.compose.material3.Typography
-<<<<<<< HEAD
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-=======
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import com.example.foundit.R
->>>>>>> b05e32c (Initial commit)
 
 // Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(
-<<<<<<< HEAD
-        fontFamily = FontFamily.Default,
+
+        fontFamily = FontFamily(Font(R.font.roboto_regular)),
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     )
-=======
-        fontFamily = FontFamily(Font(R.font.roboto_regular)),
-        fontWeight = FontWeight.Normal,
-    ),
->>>>>>> b05e32c (Initial commit)
+,
+
     /* Other default text styles to override
     titleLarge = TextStyle(
         fontFamily = FontFamily.Default,
@@ -48,8 +37,7 @@ val Typography = Typography(
         letterSpacing = 0.5.sp
     )
     */
-<<<<<<< HEAD
-=======
+
     headlineSmall = TextStyle(
         fontFamily = FontFamily(Font(R.font.roboto_thin_italic)),
         fontWeight = FontWeight.Thin
@@ -78,5 +66,4 @@ val RobotFamily = FontFamily(
     Font(R.font.roboto_thin_italic, FontWeight.Thin,FontStyle.Italic),
     Font(R.font.roboto_thin_italic, FontWeight.Thin),
 
->>>>>>> b05e32c (Initial commit)
 )
