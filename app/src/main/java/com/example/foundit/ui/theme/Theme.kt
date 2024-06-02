@@ -30,7 +30,6 @@ private val LightColorScheme = lightColorScheme(
 )
 
 /*  Dynamic Light & Dark Mode
->>>>>>> b05e32c (Initial commit)
 @Composable
 fun FoundItTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -53,8 +52,6 @@ fun FoundItTheme(
         typography = Typography,
         content = content
     )
-<<<<<<< HEAD
-=======
 } */
 
 // Force Light Mode
@@ -62,7 +59,7 @@ fun FoundItTheme(
 fun FoundItTheme(
     content: @Composable () -> Unit
 ) {
-    val colorScheme = LightColorScheme // Always use LightColorScheme
+    val colorScheme = LightColorScheme
 
     MaterialTheme(
         colorScheme = colorScheme,

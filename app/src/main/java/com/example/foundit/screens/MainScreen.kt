@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults.buttonColors
@@ -55,7 +54,6 @@ fun MainCard(
         modifier = modifier
             .fillMaxWidth()
             .height(250.dp)
-            .width(376.dp)
             .padding(vertical = 10.dp),
         shape = RoundedCornerShape(size = 42.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp, hoveredElevation = 5.dp),
@@ -63,7 +61,6 @@ fun MainCard(
     ) {
         Column(
             modifier = modifier
-                .fillMaxSize()
                 .padding(20.dp),
             ) {
             Row(
@@ -74,7 +71,7 @@ fun MainCard(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_category_24),
-                    contentDescription = "",
+                    contentDescription = "Category Icon",
                     tint = Color.White,
                     modifier = modifier
                         .padding(end = 10.dp)
@@ -96,7 +93,7 @@ fun MainCard(
             // Sub-Column Start
             Column (
                 modifier = modifier
-                    .height(60.dp)
+                    .fillMaxWidth()
                     .padding(start = 200.dp),
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Top
@@ -137,15 +134,12 @@ fun MainCard(
                         color = cardColor,
                         fontSize = 15.sp,
                     )
-
-
-
-
                 }
             }
         }
     }
 }
+
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
