@@ -82,7 +82,7 @@ fun MainCard(
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.ExtraBold,
                     color = Color.White,
-                    fontSize = 40.sp
+                    fontSize = 22.sp
 
                 )
             } // Row Scope Ends
