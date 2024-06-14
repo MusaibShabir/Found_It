@@ -3,6 +3,7 @@ package com.example.foundit.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,9 +19,10 @@ fun BadgeCard(badges: List<Int>) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp,15.dp),
+        shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.Gray // light green background
+            containerColor = Color.LightGray // light green background
         )
     ) {
         LazyRow(
