@@ -22,4 +22,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "Found It"
 include(":app")
-include(":app:myapplication")
