@@ -16,6 +16,8 @@
 
     <!-- Profile Screen (Main)-->
     <string name="member_card_heading">FoundIt Member Since</string>
+    <string name="score_card_section_heading_left">Found</string>
+    <string name="score_card_section_heading_right">Reported</string>
 
 
 </resources>
