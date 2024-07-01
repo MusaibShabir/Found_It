@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,7 +37,14 @@ import com.example.foundit.R
 
 
 @Composable
-fun ProfileHeadingCard(modifier: Modifier) {
+fun ProfileHeadingCard(
+    modifier: Modifier,
+    profileName: String,
+    profilePicture: Painter,
+    profileCountryFlag: Painter,
+    profileCountryCode: String,
+    profileId: Long,
+    ) {
     Card(
         shape = RoundedCornerShape(15.dp),
         modifier = modifier
@@ -51,8 +59,9 @@ fun ProfileHeadingCard(modifier: Modifier) {
                     .weight(.4f)
                     .padding(16.dp)
             ) {
+
                 Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                    painter = profilePicture,
                     contentDescription = "",
                     alignment = Alignment.Center,
                     modifier = Modifier
@@ -66,7 +75,7 @@ fun ProfileHeadingCard(modifier: Modifier) {
                     .padding(16.dp)
             ) {
                 Text(
-                    text = "Musaib Shabir",
+                    text = profileName,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight(500),
                     maxLines = 1,
@@ -78,13 +87,13 @@ fun ProfileHeadingCard(modifier: Modifier) {
                     horizontalArrangement = Arrangement.Start
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.flag_in),
+                        painter = profileCountryFlag,
                         contentDescription = "Flag",
                         modifier = Modifier.size(14.dp)
                     )
                     Spacer(modifier = modifier.width(5.dp))
                     Text(
-                        text = "IND",
+                        text = profileCountryCode,
                         maxLines = 1,
                         fontSize = 13.sp,
 
@@ -93,7 +102,7 @@ fun ProfileHeadingCard(modifier: Modifier) {
 
 
                 Text(
-                    text = "#7323493874934",
+                    text = "#$profileId",
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight(300),
                     fontSize = 12.sp
@@ -140,5 +149,13 @@ fun ProfileHeadingCard(modifier: Modifier) {
 @Preview(showBackground = true, showSystemUi = false)
 
 fun ProfileHeadingCardPreview() {
-    ProfileHeadingCard(modifier = Modifier)
+    ProfileHeadingCard(
+        modifier = Modifier,
+        profileName = "Musaib Shabir",
+        profilePicture = painterResource(id = R.drawable.ic_launcher_background),
+        profileCountryFlag = painterResource(id = R.drawable.flag_in),
+        profileCountryCode = "IND",
+        profileId = 234567890
+    )
+
 }
