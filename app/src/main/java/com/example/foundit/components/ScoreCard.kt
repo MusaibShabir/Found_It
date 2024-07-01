@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import com.example.foundit.R
 
 @Composable
-fun FoundReportedCard(
+fun ScoreCard(
     modifier: Modifier
 ) {
     Card(
@@ -89,7 +89,7 @@ fun ScoreSection(
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 fun PreviewFoundReported() {
-    FoundReportedCard(
+    ScoreCard(
         modifier = Modifier
     )
 }
