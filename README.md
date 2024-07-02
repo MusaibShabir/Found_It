@@ -1,4 +1,4 @@
-# Found It - Lost and Found Items Android App
+# FoundIt - Lost and Found Items Android App
 
 Found It is an Android application designed to help individuals who have lost their belongings to connect with those who have found them. The app leverages modern technologies such as Kotlin, Jetpack Compose, and Firebase to provide a seamless and efficient lost and found experience.
 
