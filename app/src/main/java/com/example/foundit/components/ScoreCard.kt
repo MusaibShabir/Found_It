@@ -20,7 +20,9 @@ import com.example.foundit.R
 
 @Composable
 fun ScoreCard(
-    modifier: Modifier
+    modifier: Modifier,
+    foundScore: Int,
+    reportedScore: Int
 ) {
     Card(
         shape = RoundedCornerShape(15.dp),
@@ -30,26 +32,37 @@ fun ScoreCard(
             .height(100.dp),
     ) {
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
         ) {
             VerticalDivider(
                 color = Color.Black,
-                modifier = Modifier
+                modifier = modifier
                     .width(2.dp)
                     .height(70.dp)
                     .align(Alignment.Center)
             )
             Row(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceAround,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
 
-                ScoreSection(modifier = Modifier, sectionHeading = R.string.score_card_section_heading_left, sectionScore = 10)
-                ScoreSection(modifier = Modifier, sectionHeading = R.string.score_card_section_heading_right, sectionScore = 3)
+                //Found Score Section (which is to the Left)
+                ScoreSection(
+                    modifier = modifier,
+                    sectionHeading = R.string.score_card_section_heading_left,
+                    sectionScore = foundScore
+                )
+
+                //Reported Score Section (which is to the Right)
+                ScoreSection(
+                    modifier = modifier,
+                    sectionHeading = R.string.score_card_section_heading_right,
+                    sectionScore = reportedScore
+                )
             }
         }
 
@@ -86,11 +99,14 @@ fun ScoreSection(
     }
 }
 
+
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 fun PreviewFoundReported() {
     ScoreCard(
-        modifier = Modifier
+        modifier = Modifier,
+        foundScore = 10,
+        reportedScore = 5
     )
 }
 
