@@ -14,5 +14,10 @@
     <string name="found_card_sub_title">Report a found item here. Provide details to help the owner identify and reclaim it.</string>
     <string name="found_card_button">List Here</string>
 
+    <!-- Profile Screen (Main)-->
+    <string name="member_card_heading">FoundIt Member Since</string>
+    <string name="score_card_section_heading_left">Found</string>
+    <string name="score_card_section_heading_right">Reported</string>
+
 
 </resources>
