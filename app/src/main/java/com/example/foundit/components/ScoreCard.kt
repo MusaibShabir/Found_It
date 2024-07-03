@@ -1,6 +1,5 @@
 package com.example.foundit.components
 
-
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -70,8 +69,18 @@ fun ScoreCard(
 }
 
 
+@Composable
+@Preview(showBackground = true, showSystemUi = true)
+fun PreviewFoundReported() {
+    ScoreCard(
+        modifier = Modifier,
+        foundScore = 10,
+        reportedScore = 5
+    )
+}
 
 
+//Child Function of the ScoreCard
 @Composable
 fun ScoreSection(
     modifier: Modifier,
@@ -97,17 +106,6 @@ fun ScoreSection(
             fontWeight = FontWeight.Bold
         )
     }
-}
-
-
-@Composable
-@Preview(showBackground = true, showSystemUi = true)
-fun PreviewFoundReported() {
-    ScoreCard(
-        modifier = Modifier,
-        foundScore = 10,
-        reportedScore = 5
-    )
 }
 
 
