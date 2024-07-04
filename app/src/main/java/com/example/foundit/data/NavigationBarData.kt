@@ -40,12 +40,12 @@ val NavigationItems = listOf(
             selectedIcon = Icons.Filled.Notifications,
             unselectedIcon = Icons.Outlined.Notifications,
             hasNews = true,
-            ),
+    ),
     BottomNavigationItem(
             title = "Profile",
             selectedIcon = Icons.Filled.Person,
             unselectedIcon = Icons.Outlined.Person,
             hasNews = true,
-            ),
+    ),
 )
 
