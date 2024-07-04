@@ -1,4 +1,4 @@
-package com.example.foundit.data;
+package com.example.foundit.data
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
@@ -36,7 +36,7 @@ val NavigationItems = listOf(
             badgeCount = 3
     ),
     BottomNavigationItem(
-            title = "Settings",
+            title = "Notifications",
             selectedIcon = Icons.Filled.Notifications,
             unselectedIcon = Icons.Outlined.Notifications,
             hasNews = true,
