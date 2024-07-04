@@ -1,10 +1,15 @@
 package com.example.foundit.components
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,16 +23,14 @@ fun BadgeCard(badges: List<Int>) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp,15.dp),
+            .padding(10.dp, 15.dp),
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.LightGray // light green background
-        )
+        colors = CardDefaults.cardColors(containerColor = Color.Green) // light green background
     ) {
         LazyRow(
             modifier = Modifier
-                .padding(10.dp,15.dp)
+                .padding(10.dp, 15.dp)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -46,12 +49,12 @@ fun BadgeItem(badgeImageRes: Int) {
         modifier = Modifier.size(48.dp),
         tint = Color.Black
     )
+    // Icon(imageVector = Icons.Filled.Star , contentDescription = "")
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun DefaultPreview() {
-    MaterialTheme {
+fun PreviewBadgeCard() {
         // Preview with a sample list of drawable resource IDs
         val badgeImages = listOf(
             R.drawable.ic_launcher_foreground,
@@ -60,5 +63,5 @@ fun DefaultPreview() {
             R.drawable.ic_launcher_foreground
         )
         BadgeCard(badges = badgeImages)
-    }
+
 }
