@@ -49,7 +49,7 @@ fun BadgeItem(badgeImageRes: Int) {
         modifier = Modifier.size(48.dp),
         tint = Color.Black
     )
-    // Icon(imageVector = Icons.Filled.Star , contentDescription = "")
+
 }
 
 @Preview(showBackground = true, showSystemUi = true)
