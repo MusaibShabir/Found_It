@@ -95,8 +95,8 @@ fun ScoreSection(
     ){
         Text(
             text = stringResource(id = sectionHeading),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Light
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Light,
         )
         Spacer(modifier = modifier.height(5.dp))
 
