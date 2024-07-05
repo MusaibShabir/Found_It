@@ -43,7 +43,7 @@ fun MemberSinceCard(
                 Text(
                     text = stringResource(id = R.string.member_card_heading),
                     fontWeight = FontWeight.Light,
-                    fontSize = 20.sp,
+                    fontSize = 16.sp,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
             }
