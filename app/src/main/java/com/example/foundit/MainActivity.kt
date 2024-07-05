@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.foundit.screens.HomeScreen
+import com.example.foundit.screens.MainScreen
 import com.example.foundit.ui.theme.FoundItTheme
 
 
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FoundItTheme {
-                HomeScreen(modifier = Modifier)
+                MainScreen(modifier = Modifier)
             }
         }
     }

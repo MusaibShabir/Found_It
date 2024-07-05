@@ -16,19 +16,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.foundit.data.NavigationItems
 import com.example.foundit.ui.theme.SelectedIcon
 
 
 @Composable
-fun NavigationBar(modifier: Modifier) {
-    var selectedItemIndex by rememberSaveable {
+fun NavigationBar(
+    modifier: Modifier,
+    onItemSelected: (Int) -> Unit,
+    navController: NavHostController
+) {
+    val selectedItemIndex by rememberSaveable {
         mutableIntStateOf(0)
     }
 
@@ -48,7 +52,8 @@ fun NavigationBar(modifier: Modifier) {
                     NavigationBarItem(
                         selected = selectedItemIndex == index,
                         onClick = {
-                            selectedItemIndex = index
+                            onItemSelected(index)
+                            navController.navigate(if (index == 0) "home" else "profile") // Navigate based on index
 
                         },
                         colors = NavigationBarItemColors(
@@ -92,9 +97,10 @@ fun NavigationBar(modifier: Modifier) {
 }
 
 
-
+/*
 @Composable
 @Preview(showBackground = true, showSystemUi = false)
 fun PreviewMainScreen() {
     NavigationBar(modifier = Modifier)
 }
+ */

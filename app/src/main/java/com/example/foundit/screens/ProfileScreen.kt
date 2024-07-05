@@ -13,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.foundit.R
 import com.example.foundit.components.BadgeCard
 import com.example.foundit.components.MemberSinceCard
-import com.example.foundit.components.NavigationBar
 import com.example.foundit.components.ProfileHeadingCard
 import com.example.foundit.components.ScoreCard
 
@@ -33,7 +32,6 @@ fun ProfileScreen(
 ) {
     Scaffold(
         modifier = modifier,
-        bottomBar = { NavigationBar(modifier = modifier) }
     ) {innerPadding ->
         Column(
             modifier = modifier
