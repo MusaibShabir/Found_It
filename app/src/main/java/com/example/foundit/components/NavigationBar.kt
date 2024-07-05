@@ -94,7 +94,7 @@ fun NavigationBar(modifier: Modifier) {
 
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = false)
 fun PreviewMainScreen() {
     NavigationBar(modifier = Modifier)
 }
