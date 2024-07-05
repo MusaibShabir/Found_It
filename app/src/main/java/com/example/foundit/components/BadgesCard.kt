@@ -23,10 +23,10 @@ fun BadgeCard(badges: List<Int>) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp, 15.dp),
-        shape = RoundedCornerShape(8.dp),
+            .padding(16.dp),
+        shape = RoundedCornerShape(15.dp),
         elevation = CardDefaults.cardElevation(8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.Green) // light green background
+
     ) {
         LazyRow(
             modifier = Modifier
