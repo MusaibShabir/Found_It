@@ -25,7 +25,8 @@ import com.example.foundit.ui.theme.MainRed
 @Composable
 fun HomeScreen(modifier: Modifier) {
     Scaffold(
-        modifier, bottomBar = { NavigationBar(modifier = modifier) }
+        modifier = modifier,
+        bottomBar = { NavigationBar(modifier = modifier) }
     ) { innerPadding ->
         Column(
             modifier = modifier
@@ -36,7 +37,6 @@ fun HomeScreen(modifier: Modifier) {
         ) {
             AppName(modifier = modifier)
             Greetings(modifier = modifier, name =  "Musaib Shabir")
-
 
             Column(
                 modifier = modifier
