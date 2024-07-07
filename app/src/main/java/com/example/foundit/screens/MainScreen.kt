@@ -3,10 +3,6 @@ package com.example.foundit.screens
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.compose.NavHost
@@ -14,27 +10,24 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.foundit.R
 import com.example.foundit.components.NavigationBar
+import com.example.foundit.data.NavRoutes
 
 @Composable
 fun MainScreen(modifier: Modifier) {
-    var currentScreenIndex by rememberSaveable { mutableIntStateOf(0) }
     val navController = rememberNavController()
     Scaffold(
         modifier = modifier,
-        bottomBar = { NavigationBar(
-            modifier = modifier,
-            onItemSelected = { index -> currentScreenIndex = index },
-            navController = navController
-        ) }
+        bottomBar = { NavigationBar(modifier = modifier, navController = navController) }
     ) { innerPadding ->
-
         NavHost(
             navController = navController,
-            startDestination = "home",
+            startDestination = NavRoutes.HOME,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable("home") { HomeScreen(modifier = modifier) }
-            composable("profile") {
+            composable(NavRoutes.HOME) { HomeScreen(modifier = modifier) }
+            composable(NavRoutes.PROCESS) { ProcessScreen(modifier = modifier) }
+            composable(NavRoutes.NOTIFICATIONS) { NotificationScreen(modifier = modifier) }
+            composable(NavRoutes.PROFILE) {
                 ProfileScreen(
                     modifier = Modifier,
                     profileName = "Musaib Shabir",

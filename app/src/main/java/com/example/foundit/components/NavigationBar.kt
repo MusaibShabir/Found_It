@@ -13,31 +13,32 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.foundit.data.NavigationItems
 import com.example.foundit.ui.theme.SelectedIcon
 
 
 @Composable
-fun NavigationBar(
-    modifier: Modifier,
-    onItemSelected: (Int) -> Unit,
-    navController: NavHostController
-) {
-    val selectedItemIndex by rememberSaveable {
-        mutableIntStateOf(0)
+fun NavigationBar(modifier: Modifier, navController: NavHostController) {
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+    var selectedItemIndex by rememberSaveable { mutableIntStateOf(0) }
+
+    LaunchedEffect(currentRoute) {
+        selectedItemIndex = NavigationItems.indexOfFirst { it.title == currentRoute }
     }
 
     Card(
-        onClick = { /*TODO*/ },
         shape = RoundedCornerShape(42.dp),
     ) {
         Row(
@@ -52,9 +53,13 @@ fun NavigationBar(
                     NavigationBarItem(
                         selected = selectedItemIndex == index,
                         onClick = {
-                            onItemSelected(index)
-                            navController.navigate(if (index == 0) "home" else "profile") // Navigate based on index
-
+                            navController.navigate(item.title) {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
                         },
                         colors = NavigationBarItemColors(
                             selectedIndicatorColor = SelectedIcon,
@@ -95,8 +100,6 @@ fun NavigationBar(
         }
     }
 }
-
-
 /*
 @Composable
 @Preview(showBackground = true, showSystemUi = false)
