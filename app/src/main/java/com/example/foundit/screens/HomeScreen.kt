@@ -4,7 +4,9 @@ package com.example.foundit.screens
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -28,9 +30,10 @@ fun HomeScreen(modifier: Modifier) {
     ) { innerPadding ->
         Column(
             modifier = modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(top = 1.dp, start = 20.dp, end = 20.dp),
+                .fillMaxWidth()
+                .fillMaxHeight(.9f)
+                //.padding(innerPadding)
+                .padding(start = 20.dp, end = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AppName(modifier = modifier)
@@ -65,7 +68,7 @@ fun HomeScreen(modifier: Modifier) {
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
-fun PreviewMainScreen() {
+@Preview(showBackground = true, showSystemUi = true, device = "id:pixel_2")
+fun PreviewHomeScreen() {
     HomeScreen(modifier = Modifier)
 }
