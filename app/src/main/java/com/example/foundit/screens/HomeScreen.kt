@@ -68,7 +68,7 @@ fun HomeScreen(modifier: Modifier) {
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true, device = "id:pixel_2")
+@Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
 fun PreviewHomeScreen() {
     HomeScreen(modifier = Modifier)
 }
