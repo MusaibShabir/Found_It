@@ -3,6 +3,7 @@ package com.example.foundit.components
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.foundit.R
@@ -44,7 +46,7 @@ fun MainCard(
         onClick = { /*TODO*/ },
         modifier = modifier
             .fillMaxWidth()
-            .height(250.dp)
+            .height(intrinsicSize = IntrinsicSize.Max)
             .padding(vertical = 10.dp),
         shape = RoundedCornerShape(size = 42.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp, hoveredElevation = 5.dp),
@@ -121,12 +123,25 @@ fun MainCard(
                     Text(
                         text = stringResource(id = buttonName),
                         style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.ExtraBold,
                         color = cardColor,
-                        fontSize = 15.sp,
+                        fontSize = 12.sp,
                     )
                 }
             }
         }
     }
+}
+
+
+@Composable
+@Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
+fun PreviewMainCard() {
+    MainCard(
+        modifier = Modifier,
+        cardHeading = R.string.lost_card_heading,
+        cardTitle = R.string.lost_card_sub_title,
+        buttonName = R.string.lost_card_button,
+        cardColor = Color.Red
+    )
 }
