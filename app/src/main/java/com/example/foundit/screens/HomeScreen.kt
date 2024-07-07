@@ -27,7 +27,7 @@ import com.example.foundit.ui.theme.MainRed
 fun HomeScreen(modifier: Modifier) {
     Scaffold(
         modifier = modifier,
-    ) { innerPadding ->
+    ) {
         Column(
             modifier = modifier
                 .fillMaxWidth()
