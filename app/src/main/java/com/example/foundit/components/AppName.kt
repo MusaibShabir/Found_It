@@ -32,7 +32,7 @@ fun AppName(modifier: Modifier) {
             .fillMaxWidth()
             .height(80.dp)
             .width(376.dp)
-            .padding(10.dp),
+            .padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
         shape = RoundedCornerShape(size = 42.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp, hoveredElevation = 5.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
