@@ -60,10 +60,10 @@ fun ProcessScreen(modifier: Modifier) {
         ) { page ->
             when (page) {
                 0 -> {
-                    InProcessCardList(modifier = modifier, cardData = inProcessItems) // Directly use InProcessCardList
+                    InProcessCardList(modifier = modifier, cardData = inProcessItems)
                 }
                 1 -> {
-                    FinishedProcessCardList(modifier = modifier, cardData =finishedItems) // Directly use FinishedProcessCardList
+                    FinishedProcessCardList(modifier = modifier, cardData =finishedItems)
                 }
             }
         }
