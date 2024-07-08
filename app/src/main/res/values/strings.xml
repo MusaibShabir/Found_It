@@ -19,5 +19,10 @@
     <string name="score_card_section_heading_left">Found</string>
     <string name="score_card_section_heading_right">Reported</string>
 
+    <!-- Process Screen (Main)-->
+    <string name="left_tab">In-Process</string>
+    <string name="right_tab">Finished</string>
+
+
 
 </resources>
