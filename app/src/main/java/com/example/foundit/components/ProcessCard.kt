@@ -20,9 +20,9 @@ fun ProcessCard(
 ) {
     // Defining Card Color
     val cardColor = when (cardColorCode) {
-        0 -> MainRed
-        1 -> MainGreen
-        else -> Color.Gray
+        0 -> MainRed.copy(alpha = 0.2f)
+        1 -> MainGreen.copy(alpha = 0.2f)
+        else -> Color.Gray.copy(alpha = 0.2f)
     }
     Card(
         onClick = { /*TODO*/ },
