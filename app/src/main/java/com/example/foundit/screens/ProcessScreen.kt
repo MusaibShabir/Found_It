@@ -23,6 +23,7 @@ fun ProcessScreen(modifier: Modifier) {
     val pagerState = rememberPagerState(
         pageCount = { 2 }
     )
+
     val coroutineScope = rememberCoroutineScope()
 
     Column(modifier = modifier) {
@@ -47,7 +48,6 @@ fun ProcessScreen(modifier: Modifier) {
             )
         }
 
-
         HorizontalPager(
             state = pagerState,
             userScrollEnabled = true
@@ -61,7 +61,6 @@ fun ProcessScreen(modifier: Modifier) {
                     ) {
                         Text(text = "In-Process Screen")
                     }
-
                 }
                 1 -> {
                     Column(
@@ -71,7 +70,6 @@ fun ProcessScreen(modifier: Modifier) {
                     ) {
                         Text(text = "Finished Screen")
                     }
-
                 }
             }
         }
