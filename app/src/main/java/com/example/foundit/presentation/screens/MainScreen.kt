@@ -1,4 +1,4 @@
-package com.example.foundit.ui.theme.screens
+package com.example.foundit.presentation.screens
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -10,8 +10,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.foundit.R
-import com.example.foundit.components.NavigationBar
+import com.example.foundit.presentation.navigation.NavigationBar
 import com.example.foundit.data.NavRoutes
+import com.example.foundit.presentation.screens.home_screen.HomeScreen
+import com.example.foundit.presentation.screens.notification_screen.NotificationScreen
+import com.example.foundit.presentation.screens.process_screen.ProcessScreen
+import com.example.foundit.presentation.screens.profile_screen.ProfileScreen
+import com.example.foundit.presentation.screens.profile_screen.badgeImages
 
 @Composable
 fun MainScreen(modifier: Modifier) {

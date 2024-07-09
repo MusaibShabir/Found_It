@@ -1,4 +1,4 @@
-package com.example.foundit.components
+package com.example.foundit.presentation.screens.profile_screen.components
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.*

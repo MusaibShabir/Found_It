@@ -1,4 +1,4 @@
-package com.example.foundit.components
+package com.example.foundit.presentation.navigation
 
 
 import androidx.compose.foundation.layout.Arrangement

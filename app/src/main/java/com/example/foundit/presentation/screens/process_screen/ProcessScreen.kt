@@ -1,4 +1,4 @@
-package com.example.foundit.ui.theme.screens
+package com.example.foundit.presentation.screens.process_screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
@@ -13,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.foundit.R
-import com.example.foundit.components.FinishedProcessCardList
-import com.example.foundit.components.InProcessCardList
-import com.example.foundit.components.ProcessCardItem
+import com.example.foundit.presentation.screens.process_screen.components.FinishedProcessCardList
+import com.example.foundit.presentation.screens.process_screen.components.InProcessCardList
+import com.example.foundit.presentation.screens.process_screen.components.ProcessCardItem
 import com.example.foundit.data.FinishedProcessData
 import com.example.foundit.data.InProcessData
 import kotlinx.coroutines.launch

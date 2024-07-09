@@ -1,4 +1,4 @@
-package com.example.foundit.components
+package com.example.foundit.presentation.screens.notification_screen.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack

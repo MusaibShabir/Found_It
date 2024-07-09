@@ -1,4 +1,4 @@
-package com.example.foundit.ui.theme.screens
+package com.example.foundit.presentation.screens.notification_screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
-import com.example.foundit.components.NotificationsTopAppBar
+import com.example.foundit.presentation.screens.notification_screen.components.NotificationsTopAppBar
 
 @Composable
 fun NotificationScreen(

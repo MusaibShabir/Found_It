@@ -1,4 +1,4 @@
-package com.example.foundit.ui.theme.screens
+package com.example.foundit.presentation.screens.home_screen
 
 
 import android.annotation.SuppressLint
@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.foundit.R
-import com.example.foundit.components.AppName
-import com.example.foundit.components.Greetings
-import com.example.foundit.components.MainCard
+import com.example.foundit.presentation.screens.home_screen.components.AppName
+import com.example.foundit.presentation.screens.home_screen.components.Greetings
+import com.example.foundit.presentation.screens.home_screen.components.MainCard
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
 
