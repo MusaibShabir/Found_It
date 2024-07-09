@@ -1,4 +1,4 @@
-package com.example.foundit.screens
+package com.example.foundit.ui.theme.screens
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -26,7 +26,7 @@ fun MainScreen(modifier: Modifier) {
         ) {
             composable(NavRoutes.HOME) { HomeScreen(modifier = modifier) }
             composable(NavRoutes.PROCESS) { ProcessScreen(modifier = modifier) }
-            composable(NavRoutes.NOTIFICATIONS) { NotificationScreen(modifier = modifier) }
+            composable(NavRoutes.NOTIFICATIONS) { NotificationScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.PROFILE) {
                 ProfileScreen(
                     modifier = modifier,

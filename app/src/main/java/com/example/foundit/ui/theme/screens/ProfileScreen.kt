@@ -1,4 +1,4 @@
-package com.example.foundit.screens
+package com.example.foundit.ui.theme.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,8 +17,8 @@ import com.example.foundit.R
 import com.example.foundit.components.BadgeCard
 import com.example.foundit.components.MemberSinceCard
 import com.example.foundit.components.ProfileHeadingCard
+import com.example.foundit.components.ProfileTopAppBar
 import com.example.foundit.components.ScoreCard
-import com.example.foundit.components.TheTopAppBar
 
 @Composable
 fun ProfileScreen(
@@ -34,7 +34,7 @@ fun ProfileScreen(
     navController: NavController
 ) {
     Scaffold(
-        topBar = { TheTopAppBar(title = "Profile", navController = navController) }
+        topBar = { ProfileTopAppBar(title = "Profile", navController = navController) }
     ) {innerPadding ->
         Column(
             modifier = modifier

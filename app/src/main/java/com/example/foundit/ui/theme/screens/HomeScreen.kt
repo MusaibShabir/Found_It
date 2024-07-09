@@ -1,4 +1,4 @@
-package com.example.foundit.screens
+package com.example.foundit.ui.theme.screens
 
 
 import android.annotation.SuppressLint
