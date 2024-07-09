@@ -1,41 +1,47 @@
 package com.example.foundit.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.example.foundit.R
 import com.example.foundit.components.BadgeCard
 import com.example.foundit.components.MemberSinceCard
 import com.example.foundit.components.ProfileHeadingCard
 import com.example.foundit.components.ScoreCard
+import com.example.foundit.components.TheTopAppBar
 
 @Composable
 fun ProfileScreen(
     modifier: Modifier,
     profileName: String,
-    profilePicture: Painter,
-    profileCountryFlag: Painter,
+    profilePicture: Painter,profileCountryFlag: Painter,
     profileCountryCode: String,
     profileId: Long,
     badges: List<Int>,
     foundScore: Int,
     reportedScore: Int,
-    memberSince: String
-
+    memberSince: String,
+    navController: NavController
 ) {
     Scaffold(
-        modifier = modifier,
+        topBar = { TheTopAppBar(title = "Profile", navController = navController) }
     ) {innerPadding ->
         Column(
             modifier = modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxSize()
+                .padding(innerPadding),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
         ) {
             ProfileHeadingCard(
                 modifier = modifier,
@@ -48,14 +54,11 @@ fun ProfileScreen(
 
             BadgeCard(badges = badges)
 
-            ScoreCard(modifier = modifier , foundScore = foundScore, reportedScore = reportedScore)
+            ScoreCard(modifier = modifier, foundScore = foundScore, reportedScore = reportedScore)
             MemberSinceCard(modifier = modifier, date = memberSince)
-
         }
-
     }
 }
-
 // Sample Badges Painter Images (Later to be Changed)
 val badgeImages = listOf(
     R.drawable.ic_launcher_foreground,
@@ -67,7 +70,7 @@ val badgeImages = listOf(
 
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
 fun PreviewProfileScreen() {
     ProfileScreen(
         modifier = Modifier,
@@ -79,6 +82,7 @@ fun PreviewProfileScreen() {
         badges = badgeImages,
         foundScore = 10,
         reportedScore = 5,
-        memberSince = "10 - June - 2024"
+        memberSince = "10 - June - 2024",
+        navController = NavController(LocalContext.current)
     )
 }

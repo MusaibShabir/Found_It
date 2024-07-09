@@ -25,9 +25,7 @@ import com.example.foundit.ui.theme.MainRed
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(modifier: Modifier) {
-    Scaffold(
-        modifier = modifier,
-    ) {
+    Scaffold {
         Column(
             modifier = modifier
                 .fillMaxWidth()

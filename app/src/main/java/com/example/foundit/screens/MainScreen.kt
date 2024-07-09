@@ -17,20 +17,19 @@ import com.example.foundit.data.NavRoutes
 fun MainScreen(modifier: Modifier) {
     val navController = rememberNavController()
     Scaffold(
-        modifier = modifier,
         bottomBar = { NavigationBar(modifier = modifier, navController = navController) }
     ) { innerPadding ->
         NavHost(
             navController = navController,
             startDestination = NavRoutes.HOME,
-            modifier = Modifier.padding(innerPadding)
+            modifier = modifier.padding(innerPadding)
         ) {
             composable(NavRoutes.HOME) { HomeScreen(modifier = modifier) }
             composable(NavRoutes.PROCESS) { ProcessScreen(modifier = modifier) }
             composable(NavRoutes.NOTIFICATIONS) { NotificationScreen(modifier = modifier) }
             composable(NavRoutes.PROFILE) {
                 ProfileScreen(
-                    modifier = Modifier,
+                    modifier = modifier,
                     profileName = "Musaib Shabir",
                     profilePicture = painterResource(id = R.drawable.ic_launcher_background),
                     profileCountryFlag = painterResource(id = R.drawable.flag_in),
@@ -39,7 +38,8 @@ fun MainScreen(modifier: Modifier) {
                     badges = badgeImages,
                     foundScore = 10,
                     reportedScore = 5,
-                    memberSince = "10 - June - 2024"
+                    memberSince = "10 - June - 2024",
+                    navController = navController
                 )
             }
         }
