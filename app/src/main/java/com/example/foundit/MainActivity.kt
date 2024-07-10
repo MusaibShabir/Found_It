@@ -15,6 +15,7 @@ import com.example.foundit.ui.theme.FoundItTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.setFlags(
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS,
@@ -22,6 +23,7 @@ class MainActivity : ComponentActivity() {
             )
         }
         window.statusBarColor = Color.TRANSPARENT
+
         setContent {
             FoundItTheme {
                 MainScreen(modifier = Modifier)
