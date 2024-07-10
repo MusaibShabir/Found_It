@@ -77,5 +77,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     //for profile picture
-    implementation ("io.coil-kt:coil-compose:2.1.0")
+    implementation (libs.coil.compose)
 }
