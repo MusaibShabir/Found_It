@@ -2,6 +2,7 @@ package com.example.foundit.presentation.screens.profile_screen.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
@@ -23,6 +24,7 @@ fun BadgeCard(badges: List<Int>) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .height(100.dp)
             .padding(16.dp),
         shape = RoundedCornerShape(15.dp),
         elevation = CardDefaults.cardElevation(8.dp),
