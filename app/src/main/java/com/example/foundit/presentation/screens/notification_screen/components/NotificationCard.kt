@@ -45,7 +45,7 @@ fun NotificationItem(notification: Notification) {
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = notification.message,
+                    text = notification.msg,
                     style = MaterialTheme.typography.bodySmall
                 )
             }
@@ -58,7 +58,7 @@ fun NotificationItem(notification: Notification) {
 ///////////////////////////
 
 @Composable
-fun NotificationScreen(notifications: List<Notification>) {
+fun NotificationColumn(notifications: List<Notification>) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -76,7 +76,7 @@ fun NotificationScreen(notifications: List<Notification>) {
 ////////////////////////
 
 @Composable
-fun NotificationApp() {
+fun NotificationCard() {
     val notifications = remember {
         listOf(
             Notification(1, "title", "Check its live movement now."),
@@ -97,11 +97,12 @@ fun NotificationApp() {
             Notification(16, "title", "Check its live movement now."),
             Notification(17, "title", "Check its live movement now."),
             Notification(18, "title", "Check its live movement now."),
-            Notification(19, "title", "Check its live movement now.")
+            Notification(19, "title", "Check its live movement now."),
+            Notification(20, "title", "Check its live movement now.")
         )
     }
 
-    NotificationScreen(notifications = notifications)
+    NotificationColumn(notifications = notifications)
 }
 
 
@@ -109,7 +110,7 @@ fun NotificationApp() {
 @Preview(showBackground = true,showSystemUi = true)
 @Composable
 fun PreviewNotificationApp() {
-    NotificationApp()
+    NotificationCard()
 }
 
 
