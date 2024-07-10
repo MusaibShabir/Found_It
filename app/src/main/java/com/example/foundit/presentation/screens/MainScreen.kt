@@ -52,7 +52,7 @@ fun MainScreen(modifier: Modifier) {
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
 fun PreviewMainScreen() {
     MainScreen(modifier = Modifier)
 }
