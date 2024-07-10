@@ -1,6 +1,8 @@
 package com.example.foundit.presentation.screens.profile_screen.components
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -12,6 +14,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -24,20 +27,25 @@ fun BadgeCard(badges: List<Int>) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp)
-            .padding(16.dp),
+            .padding(16.dp)
+            .height(100.dp),
         shape = RoundedCornerShape(15.dp),
         elevation = CardDefaults.cardElevation(8.dp),
-
     ) {
-        LazyRow(
+        Box(
             modifier = Modifier
-                .padding(10.dp, 15.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                .padding(horizontal = 10.dp)
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
         ) {
-            items(badges) { badge ->
-                BadgeItem(badgeImageRes = badge)
+            LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(badges) { badge ->
+                    BadgeItem(badgeImageRes = badge)
+                }
             }
         }
     }
