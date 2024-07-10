@@ -31,8 +31,7 @@ fun HomeScreen(modifier: Modifier) {
         Column(
             modifier = modifier
                 .fillMaxWidth()
-                .fillMaxHeight(.9f)
-                //.padding(innerPadding)
+                .fillMaxHeight()
                 .padding(start = 20.dp, end = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -69,7 +68,7 @@ fun HomeScreen(modifier: Modifier) {
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
+@Preview(showBackground = true, showSystemUi = true, device = "id:pixel_2")
 fun PreviewHomeScreen() {
     HomeScreen(modifier = Modifier)
 }
