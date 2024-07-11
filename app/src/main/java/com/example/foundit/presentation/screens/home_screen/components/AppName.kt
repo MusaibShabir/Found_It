@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -31,7 +32,7 @@ fun AppName(modifier: Modifier) {
             .fillMaxWidth()
             .height(80.dp)
             .width(376.dp)
-            .padding(start = 10.dp, end = 10.dp, top = 10.dp,bottom = 10.dp),
+            .padding(start = 10.dp, end = 10.dp, top = 10.dp, bottom = 10.dp),
         shape = RoundedCornerShape(size = 42.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp, hoveredElevation = 5.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
@@ -43,7 +44,7 @@ fun AppName(modifier: Modifier) {
 
         ){
             Text(
-                text = "Found It",
+                text = stringResource(id = R.string.app_name),
                 fontFamily = FontFamily(Font(R.font.roboto_bold)),
                 fontWeight = FontWeight.Bold,
                 fontSize = 30.sp,
