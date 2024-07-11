@@ -18,6 +18,7 @@
     <string name="member_card_heading">Found-It Member Since</string>
     <string name="score_card_section_heading_left">Found</string>
     <string name="score_card_section_heading_right">Reported</string>
+    <string name="edit_profile_button">Edit Profile</string>
 
     <!-- Process Screen (Main)-->
     <string name="left_tab">In-Process</string>

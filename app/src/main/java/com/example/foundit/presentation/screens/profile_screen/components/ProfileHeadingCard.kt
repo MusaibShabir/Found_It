@@ -29,7 +29,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -72,12 +77,15 @@ fun ProfileHeadingCard(
                 modifier = modifier
                     .fillMaxSize()
                     .weight(.6f)
-                    .padding(16.dp)
+                    .padding(top = 5.dp)
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Top
             ) {
                 Text(
                     text = profileName,
                     style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight(500),
+                    fontWeight = FontWeight(600),
                     maxLines = 1,
 
 
@@ -100,19 +108,30 @@ fun ProfileHeadingCard(
                     )
                 }
 
-
                 Text(
-                    text = "#$profileId",
+                    text = buildAnnotatedString {
+                        withStyle(style = SpanStyle(fontWeight= FontWeight.ExtraBold, fontStyle = FontStyle.Normal)) {
+                            append("#")
+                        }
+                        append(profileId.toString())
+                    },
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight(300),
-                    fontSize = 12.sp
+                    fontStyle = FontStyle.Italic,
+                    fontSize = 12.sp,
+                    modifier = modifier.padding(top = 1.dp, bottom = 1.dp)
                 )
+
 
                 Button(
                     onClick = { /*TODO*/ },
+                    shape = RoundedCornerShape(15.dp),
                     elevation = buttonElevation(defaultElevation = 20.dp, pressedElevation = 25.dp),
                     colors = buttonColors(containerColor = Color.Gray),
-                    modifier = modifier.height(35.dp)
+                    modifier = modifier
+                        .padding(top = 3.dp)
+                        .height(35.dp)
+
 
                 ) {
                     Row (modifier = modifier,
@@ -129,7 +148,7 @@ fun ProfileHeadingCard(
                         )
                         Spacer(modifier = modifier.width(5.dp))
                         Text(
-                            text = "Edit Profile",
+                            text = stringResource(id = R.string.edit_profile_button),
                             color = Color.Black,
                             fontSize = 11.sp,
 
