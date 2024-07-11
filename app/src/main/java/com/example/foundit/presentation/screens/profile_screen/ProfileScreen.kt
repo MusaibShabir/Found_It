@@ -21,15 +21,16 @@ import com.example.foundit.presentation.screens.profile_screen.components.Member
 import com.example.foundit.presentation.screens.profile_screen.components.ProfileHeadingCard
 import com.example.foundit.presentation.screens.profile_screen.components.ProfileTopAppBar
 import com.example.foundit.presentation.screens.profile_screen.components.ScoreCard
+import com.example.foundit.presentation.screens.profile_screen.components.userBadgeCodes
 
 @Composable
 fun ProfileScreen(
     modifier: Modifier,
     profileName: String,
-    profilePicture: Painter,profileCountryFlag: Painter,
+    profilePicture: Painter, profileCountryFlag: Painter,
     profileCountryCode: String,
     profileId: Long,
-    badges: List<Int>,
+    badgesCodes: List<Int>,
     foundScore: Int,
     reportedScore: Int,
     memberSince: String,
@@ -55,22 +56,13 @@ fun ProfileScreen(
                 profileId = profileId
             )
 
-            BadgeCard(badges = badges)
+            BadgeCard(userBadgeCodes = badgesCodes)
 
             ScoreCard(modifier = modifier, foundScore = foundScore, reportedScore = reportedScore)
             MemberSinceCard(modifier = modifier, date = memberSince)
         }
     }
 }
-// Sample Badges Painter Images (Later to be Changed)
-val badgeImages = listOf(
-    R.drawable.ic_launcher_foreground,
-    R.drawable.ic_launcher_foreground,
-    R.drawable.ic_launcher_foreground,
-    R.drawable.ic_launcher_foreground
-)
-
-
 
 @Composable
 @Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
@@ -82,7 +74,7 @@ fun PreviewProfileScreen() {
         profileCountryFlag = painterResource(id = R.drawable.flag_in),
         profileCountryCode = "IND",
         profileId = 234567890,
-        badges = badgeImages,
+        badgesCodes = userBadgeCodes,
         foundScore = 10,
         reportedScore = 5,
         memberSince = "10 - June - 2024",

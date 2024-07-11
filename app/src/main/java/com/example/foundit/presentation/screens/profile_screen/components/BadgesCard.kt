@@ -17,13 +17,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.foundit.R
+import com.example.foundit.data.BadgesCardData
+
+
+val userBadgeCodes = listOf(1,2,3,4,5,6,7)
 
 @Composable
-fun BadgeCard(badges: List<Int>) {
+fun BadgeCard(userBadgeCodes: List<Int>) {
+    val badgesToDisplay = BadgesCardData.filter { it.badgeCode in userBadgeCodes }
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -41,10 +45,11 @@ fun BadgeCard(badges: List<Int>) {
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(14.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                items(badges) { badge ->
-                    BadgeItem(badgeImageRes = badge)
+                items(badgesToDisplay) { badgeData ->
+                    BadgeItem(badgeImageVector = badgeData.badgeImageVector)
                 }
             }
         }
@@ -52,26 +57,17 @@ fun BadgeCard(badges: List<Int>) {
 }
 
 @Composable
-fun BadgeItem(badgeImageRes: Int) {
+fun BadgeItem(badgeImageVector: ImageVector) {
     Icon(
-        painter = painterResource(id = badgeImageRes),
+        imageVector = badgeImageVector,
         contentDescription = "Badge",
         modifier = Modifier.size(48.dp),
-        tint = Color.Black
+        tint= Color.Black
     )
-
 }
-
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun PreviewBadgeCard() {
-        // Preview with a sample list of drawable resource IDs
-        val badgeImages = listOf(
-            R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground
-        )
-        BadgeCard(badges = badgeImages)
+        BadgeCard(userBadgeCodes = userBadgeCodes)
 
 }
