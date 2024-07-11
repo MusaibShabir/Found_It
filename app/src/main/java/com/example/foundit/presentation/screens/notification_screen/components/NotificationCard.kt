@@ -17,10 +17,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.foundit.data.NotificationItemData
 
 
 @Composable
-fun NotificationItem(notification: Notification) {
+fun NotificationItem(notification: NotificationItemData) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -58,7 +59,7 @@ fun NotificationItem(notification: Notification) {
 ///////////////////////////
 
 @Composable
-fun NotificationColumn(notifications: List<Notification>) {
+fun NotificationColumn(notifications: List<NotificationItemData>) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -79,26 +80,26 @@ fun NotificationColumn(notifications: List<Notification>) {
 fun NotificationCard() {
     val notifications = remember {
         listOf(
-            Notification(1, "title", "Check its live movement now."),
-            Notification(2, "title", "Check its live movement now."),
-            Notification(3, "title", "Check its live movement now."),
-            Notification(4, "title", "Check its live movement now."),
-            Notification(5, "title", "Check its live movement now."),
-            Notification(6, "title", "Check its live movement now."),
-            Notification(7, "title", "Check its live movement now."),
-            Notification(8, "title", "Check its live movement now."),
-            Notification(9, "title", "Check its live movement now."),
-            Notification(10, "title", "Check its live movement now."),
-            Notification(11, "title", "Check its live movement now."),
-            Notification(12, "title", "Check its live movement now."),
-            Notification(13, "title", "Check its live movement now."),
-            Notification(14, "title", "Check its live movement now."),
-            Notification(15, "title", "Check its live movement now."),
-            Notification(16, "title", "Check its live movement now."),
-            Notification(17, "title", "Check its live movement now."),
-            Notification(18, "title", "Check its live movement now."),
-            Notification(19, "title", "Check its live movement now."),
-            Notification(20, "title", "Check its live movement now.")
+            NotificationItemData(1, "title", "Check its live movement now."),
+            NotificationItemData(2, "title", "Check its live movement now."),
+            NotificationItemData(3, "title", "Check its live movement now."),
+            NotificationItemData(4, "title", "Check its live movement now."),
+            NotificationItemData(5, "title", "Check its live movement now."),
+            NotificationItemData(6, "title", "Check its live movement now."),
+            NotificationItemData(7, "title", "Check its live movement now."),
+            NotificationItemData(8, "title", "Check its live movement now."),
+            NotificationItemData(9, "title", "Check its live movement now."),
+            NotificationItemData(10, "title", "Check its live movement now."),
+            NotificationItemData(11, "title", "Check its live movement now."),
+            NotificationItemData(12, "title", "Check its live movement now."),
+            NotificationItemData(13, "title", "Check its live movement now."),
+            NotificationItemData(14, "title", "Check its live movement now."),
+            NotificationItemData(15, "title", "Check its live movement now."),
+            NotificationItemData(16, "title", "Check its live movement now."),
+            NotificationItemData(17, "title", "Check its live movement now."),
+            NotificationItemData(18, "title", "Check its live movement now."),
+            NotificationItemData(19, "title", "Check its live movement now."),
+            NotificationItemData(20, "title", "Check its live movement now.")
         )
     }
 
