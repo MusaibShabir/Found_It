@@ -27,12 +27,11 @@ import com.example.foundit.R
 @Composable
 fun AppName(modifier: Modifier) {
     Card(
-        onClick = { /*TODO*/ },
         modifier = modifier
             .fillMaxWidth()
             .height(80.dp)
             .width(376.dp)
-            .padding(start = 10.dp, end = 10.dp, top = 5.dp,bottom = 10.dp),
+            .padding(start = 10.dp, end = 10.dp, top = 10.dp,bottom = 10.dp),
         shape = RoundedCornerShape(size = 42.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp, hoveredElevation = 5.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
@@ -55,7 +54,7 @@ fun AppName(modifier: Modifier) {
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = false)
 fun PreviewAppName() {
     AppName(
         modifier = Modifier,
