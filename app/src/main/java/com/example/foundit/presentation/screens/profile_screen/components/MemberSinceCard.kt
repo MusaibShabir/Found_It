@@ -3,6 +3,7 @@ package com.example.foundit.presentation.screens.profile_screen.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -35,9 +36,10 @@ fun MemberSinceCard(
         ) {
         Column(
             modifier = modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.Start
+                .padding(vertical = 16.dp, horizontal = 24.dp)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
             Row(
                 modifier = modifier.fillMaxWidth()
@@ -45,7 +47,7 @@ fun MemberSinceCard(
                 Text(
                     text = stringResource(id = R.string.member_card_heading),
                     fontWeight = FontWeight.Light,
-                    fontSize = 16.sp,
+                    fontSize = 18.sp,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
             }
@@ -55,15 +57,19 @@ fun MemberSinceCard(
             ) {
                 Text(
                     text =  date, //"10 - June - 2024",
-                    fontSize = 20.sp,
-                    fontStyle = FontStyle.Italic
+                    fontSize = 22.sp,
+                    fontStyle = FontStyle.Italic,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(bottom = 10.dp)
                 )
             }
         }
     }
 }
+
+
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = false)
 fun PreviewMemberSince() {
     MemberSinceCard(
         modifier = Modifier,
