@@ -83,9 +83,9 @@ fun ProcessCard(
 
 
     val cardColor = when (colorCode) {
-        0 -> MainRed.copy(alpha = 0.2f)
-        1 -> MainGreen.copy(alpha = 0.2f)
-        else -> Color.Gray.copy(alpha = 0.2f)
+        0 -> MainRed.copy(alpha = 0.4f)
+        1 -> MainGreen.copy(alpha = 0.4f)
+        else -> Color.Gray.copy(alpha = 0.4f)
     }
 
     Card(
