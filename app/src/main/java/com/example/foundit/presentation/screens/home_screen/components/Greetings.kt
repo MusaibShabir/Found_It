@@ -42,7 +42,7 @@ fun Greetings(
         animatedProgress.animateTo(
             targetValue = 1f,
             animationSpec = keyframes {
-                durationMillis = name.length * 40
+                durationMillis = name.length * 73
                 0.0f at 0 using LinearEasing
             })
     }
