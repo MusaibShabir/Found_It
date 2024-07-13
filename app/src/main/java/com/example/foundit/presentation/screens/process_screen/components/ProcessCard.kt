@@ -106,6 +106,7 @@ fun ProcessCard(
             Row (
                 modifier = Modifier.fillMaxWidth() ,
                 horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
 
             ){
                 Text(
@@ -172,13 +173,13 @@ fun CardLinearProgressIndicator() {
             while (true) {
                 if (isIncreasing) {
                     while (progress < 1f) {
-                        progress += 0.04f
+                        progress += 0.03f
                         delay(1)
                     }
                     isIncreasing = false
                 } else {
                     while (progress > 0f) {
-                        progress -= 0.01f
+                        progress -= 0.03f
                         delay(1)
                     }
                     isIncreasing = true
@@ -190,7 +191,7 @@ fun CardLinearProgressIndicator() {
     LinearProgressIndicator(
         progress = { progress },
         modifier = Modifier
-            .width(28.dp)
+            .width(18.dp)
             .height(3.dp),
         color = Color.Blue,
         trackColor = Color.White,
