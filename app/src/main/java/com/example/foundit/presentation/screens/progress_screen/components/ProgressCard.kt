@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.process_screen.components
+package com.example.foundit.presentation.screens.progress_screen.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

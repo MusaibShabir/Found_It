@@ -14,7 +14,7 @@ import com.example.foundit.data.NavRoutes
 import com.example.foundit.presentation.navigation.NavigationBar
 import com.example.foundit.presentation.screens.home_screen.HomeScreen
 import com.example.foundit.presentation.screens.notification_screen.NotificationScreen
-import com.example.foundit.presentation.screens.process_screen.ProcessScreen
+import com.example.foundit.presentation.screens.progress_screen.ProcessScreen
 import com.example.foundit.presentation.screens.profile_screen.ProfileScreen
 import com.example.foundit.presentation.screens.profile_screen.components.userBadgeCodes
 
