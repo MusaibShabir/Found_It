@@ -8,7 +8,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.Text
@@ -21,7 +20,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -86,12 +86,11 @@ fun NavigationBar(modifier: Modifier, navController: NavHostController) {
                                     }
                                 }
                             ) {
-                                Icon(
-                                    imageVector = if (index == selectedItemIndex) {
-                                        item.selectedIcon
-                                    } else item.unselectedIcon,
-                                    contentDescription = item.title
-                                )
+                                if (index == selectedItemIndex) {
+                                    item.selectedIcon()
+                                } else {
+                                    item.unselectedIcon()
+                                }
                             }
                         }
                     )
@@ -100,10 +99,14 @@ fun NavigationBar(modifier: Modifier, navController: NavHostController) {
         }
     }
 }
-/*
+
+
 @Composable
 @Preview(showBackground = true, showSystemUi = false)
 fun PreviewMainScreen() {
-    NavigationBar(modifier = Modifier)
+    NavigationBar(
+        modifier = Modifier,
+        navController = NavHostController(LocalContext.current)
+    )
 }
- */
+
