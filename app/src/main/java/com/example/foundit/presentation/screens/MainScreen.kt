@@ -30,7 +30,7 @@ fun MainScreen(modifier: Modifier) {
             modifier = modifier.padding(innerPadding)
         ) {
             composable(NavRoutes.HOME) { HomeScreen(modifier = modifier) }
-            composable(NavRoutes.PROGRESS) { ProcessScreen(modifier = modifier) }
+            composable(NavRoutes.PROGRESS) { ProcessScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.NOTIFICATIONS) { NotificationScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.PROFILE) {
                 ProfileScreen(
