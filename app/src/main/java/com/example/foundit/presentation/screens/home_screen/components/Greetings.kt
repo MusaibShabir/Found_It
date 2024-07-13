@@ -64,7 +64,7 @@ fun Greetings(
             Text(
                 text = displayedText,
                 fontFamily = FontFamily(Font(resId = R.font.roboto_thin_italic)),
-                fontSize = 24.sp,
+                fontSize = 22.sp,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1,
                 modifier = modifier.padding(start = 5.dp)
