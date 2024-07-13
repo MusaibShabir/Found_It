@@ -173,13 +173,13 @@ fun CardLinearProgressIndicator() {
             while (true) {
                 if (isIncreasing) {
                     while (progress < 1f) {
-                        progress += 0.03f
+                        progress += 0.02f
                         delay(1)
                     }
                     isIncreasing = false
                 } else {
                     while (progress > 0f) {
-                        progress -= 0.03f
+                        progress -= 0.02f
                         delay(1)
                     }
                     isIncreasing = true
@@ -192,7 +192,7 @@ fun CardLinearProgressIndicator() {
         progress = { progress },
         modifier = Modifier
             .width(18.dp)
-            .height(3.dp),
+            .height(2.dp),
         color = Color.Blue,
         trackColor = Color.White,
         strokeCap = StrokeCap.Round
