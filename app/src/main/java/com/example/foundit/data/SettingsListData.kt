@@ -5,7 +5,7 @@ data class SettingsListData(
 )
 
 val settingsOptionList: List<String> = listOf(
-    "Account Information",
+    "Account Center",
     "Language",
     "Appearance",
     "Security",
