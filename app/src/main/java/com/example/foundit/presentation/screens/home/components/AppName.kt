@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.home_screen.components
+package com.example.foundit.presentation.screens.home.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

@@ -1,4 +1,4 @@
-package com.example.foundit.data
+package com.example.foundit.presentation.data
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocalPolice

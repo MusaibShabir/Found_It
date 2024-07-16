@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.profile_screen
+package com.example.foundit.presentation.screens.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,12 +16,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.example.foundit.R
-import com.example.foundit.presentation.screens.profile_screen.components.BadgeCard
-import com.example.foundit.presentation.screens.profile_screen.components.MemberSinceCard
-import com.example.foundit.presentation.screens.profile_screen.components.ProfileHeadingCard
-import com.example.foundit.presentation.screens.profile_screen.components.ProfileTopAppBar
-import com.example.foundit.presentation.screens.profile_screen.components.ScoreCard
-import com.example.foundit.presentation.screens.profile_screen.components.userBadgeCodes
+import com.example.foundit.presentation.screens.profile.components.BadgeCard
+import com.example.foundit.presentation.screens.profile.components.MemberSinceCard
+import com.example.foundit.presentation.screens.profile.components.ProfileHeadingCard
+import com.example.foundit.presentation.screens.profile.components.ProfileTopAppBar
+import com.example.foundit.presentation.screens.profile.components.ScoreCard
+import com.example.foundit.presentation.screens.profile.components.userBadgeCodes
 
 @Composable
 fun ProfileScreen(

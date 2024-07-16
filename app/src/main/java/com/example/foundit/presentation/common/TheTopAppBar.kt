@@ -9,7 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.example.foundit.data.NavRoutes
+import com.example.foundit.presentation.data.NavRoutes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

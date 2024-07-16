@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.notification_screen.components
+package com.example.foundit.presentation.screens.notification.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -17,7 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.foundit.data.NotificationItemData
+import com.example.foundit.presentation.data.NotificationItemData
 
 
 @Composable

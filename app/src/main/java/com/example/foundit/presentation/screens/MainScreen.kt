@@ -10,13 +10,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.foundit.R
-import com.example.foundit.data.NavRoutes
+import com.example.foundit.presentation.data.NavRoutes
 import com.example.foundit.presentation.navigation.NavigationBar
-import com.example.foundit.presentation.screens.home_screen.HomeScreen
-import com.example.foundit.presentation.screens.notification_screen.NotificationScreen
-import com.example.foundit.presentation.screens.progress_screen.ProcessScreen
-import com.example.foundit.presentation.screens.profile_screen.ProfileScreen
-import com.example.foundit.presentation.screens.profile_screen.components.userBadgeCodes
+import com.example.foundit.presentation.screens.home.HomeScreen
+import com.example.foundit.presentation.screens.notification.NotificationScreen
+import com.example.foundit.presentation.screens.progress.ProcessScreen
+import com.example.foundit.presentation.screens.profile.ProfileScreen
+import com.example.foundit.presentation.screens.profile.components.userBadgeCodes
 
 @Composable
 fun MainScreen(modifier: Modifier) {

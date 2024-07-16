@@ -1,4 +1,4 @@
-package com.example.foundit.data
+package com.example.foundit.presentation.data
 
 import com.example.foundit.R
 

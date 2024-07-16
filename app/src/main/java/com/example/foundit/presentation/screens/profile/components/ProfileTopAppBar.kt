@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.profile_screen.components
+package com.example.foundit.presentation.screens.profile.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -9,7 +9,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.example.foundit.data.NavRoutes
+import com.example.foundit.presentation.data.NavRoutes
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)

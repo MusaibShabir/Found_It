@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.progress_screen.components
+package com.example.foundit.presentation.screens.progress.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,8 +38,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.foundit.data.FinishedProcessDataItem
-import com.example.foundit.data.InProcessDataItem
+import com.example.foundit.presentation.data.FinishedProcessDataItem
+import com.example.foundit.presentation.data.InProcessDataItem
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
 import kotlinx.coroutines.delay

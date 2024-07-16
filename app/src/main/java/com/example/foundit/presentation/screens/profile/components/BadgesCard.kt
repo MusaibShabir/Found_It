@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.profile_screen.components
+package com.example.foundit.presentation.screens.profile.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.foundit.data.BadgesCardData
+import com.example.foundit.presentation.data.BadgesCardData
 
 
 val userBadgeCodes = listOf(1,2,3,4,5,6,7)

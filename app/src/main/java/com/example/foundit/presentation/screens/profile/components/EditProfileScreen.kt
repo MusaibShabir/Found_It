@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.profile_screen.components
+package com.example.foundit.presentation.screens.profile.components
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -23,7 +23,7 @@ import com.example.foundit.R
 
 
 @Composable
-fun EditProfileCard() {
+fun EditProfileScreen() {
     var firstName by remember { mutableStateOf("Musaib") }
     var lastName by remember { mutableStateOf("Shabir") }
     var email by remember { mutableStateOf("musaibShabir145@gmail.com") }
@@ -128,10 +128,9 @@ fun EditProfileCard() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun EditProfileCardPreview() {
-    MaterialTheme {
-        EditProfileCard()
-    }
+fun PreviewEditProfileScreen() {
+    EditProfileScreen()
 }
+
