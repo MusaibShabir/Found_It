@@ -1,26 +1,18 @@
 package com.example.foundit.data
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.List
-import androidx.compose.material.icons.automirrored.outlined.List
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Notifications
-import androidx.compose.material.icons.outlined.Person
-import androidx.compose.ui.graphics.vector.ImageVector
+import com.example.foundit.R
+
 object NavRoutes {
     const val HOME = "Home"
-    const val PROCESS = "Process"
+    const val PROGRESS = "Progress"
     const val NOTIFICATIONS = "Notifications"
     const val PROFILE = "Profile"
 }
 
 data class BottomNavigationItem(
     val title: String,
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector,
+    val selectedIcon: Int,
+    val unselectedIcon: Int,
     val hasNews: Boolean,
     val badgeCount: Int? = null
 )
@@ -28,27 +20,27 @@ data class BottomNavigationItem(
 val NavigationItems = listOf(
     BottomNavigationItem(
         title = NavRoutes.HOME,
-        selectedIcon = Icons.Filled.Home,
-        unselectedIcon = Icons.Outlined.Home,
+        selectedIcon = R.drawable.filled_home,
+        unselectedIcon =  R.drawable.outline_home,
         hasNews = false,
     ),
     BottomNavigationItem(
-        title = NavRoutes.PROCESS,
-        selectedIcon = Icons.AutoMirrored.Filled.List,
-        unselectedIcon = Icons.AutoMirrored.Outlined.List,
-        hasNews = false,
-        badgeCount = 3
+        title = NavRoutes.PROGRESS,
+        selectedIcon =  R.drawable.outline_progress_activity,
+        unselectedIcon = R.drawable.outline_progress_activity,
+        hasNews = true,
     ),
     BottomNavigationItem(
         title = NavRoutes.NOTIFICATIONS,
-        selectedIcon = Icons.Filled.Notifications,
-        unselectedIcon = Icons.Outlined.Notifications,
+        selectedIcon =  R.drawable.filled_notifications,
+        unselectedIcon =  R.drawable.outline_notifications,
         hasNews = true,
     ),
     BottomNavigationItem(
         title = NavRoutes.PROFILE,
-        selectedIcon = Icons.Filled.Person,
-        unselectedIcon = Icons.Outlined.Person,
+        selectedIcon =  R.drawable.filled_person,
+        unselectedIcon =  R.drawable.outline_profile,
         hasNews = true,
     ),
 )
+

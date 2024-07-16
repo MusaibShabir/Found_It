@@ -2,18 +2,26 @@ package com.example.foundit.data
 
 data class FinishedProcessDataItem (
     val cardColorCode: Int,
-    val cardTitle: String,
+    val itemTitle: String,
+    val itemDescription: String,
+    val itemLocation: String,
+    val progressIndicator: Boolean
 )
 val FinishedProcessData = listOf(
-    FinishedProcessDataItem(cardColorCode = 0, cardTitle = "Card 8"),
-    FinishedProcessDataItem(cardColorCode = 1, cardTitle = "Card 9"),
-    FinishedProcessDataItem(cardColorCode = 0, cardTitle = "Card 10"),
-    FinishedProcessDataItem(cardColorCode = 1, cardTitle = "Card 11"),
-    FinishedProcessDataItem(cardColorCode = 0, cardTitle = "Card 12"),
-    FinishedProcessDataItem(cardColorCode = 1, cardTitle = "Card 13"),
-    FinishedProcessDataItem(cardColorCode = 0, cardTitle = "Card 14"),
-    FinishedProcessDataItem(cardColorCode = 1, cardTitle = "Card 15"),
-    FinishedProcessDataItem(cardColorCode = 0, cardTitle = "Card 16"),
-    FinishedProcessDataItem(cardColorCode = 1, cardTitle = "Card 17"),
+    FinishedProcessDataItem(
+        cardColorCode = 1,
+        itemTitle = "Card 2",
+        itemDescription = "This is the description of the card, which will specify the item and its details.",
+        itemLocation = "Srinagar Jammu & Kashmir",
+        progressIndicator = false
+    ),
 
-)
+    FinishedProcessDataItem(
+        cardColorCode = 0,
+        itemTitle = "Ring",
+        itemDescription = "This is the description of the card, which will specify the item and its details.",
+        itemLocation = "Baramulla Jammu & Kashmir",
+        progressIndicator = false
+    ),
+
+    )

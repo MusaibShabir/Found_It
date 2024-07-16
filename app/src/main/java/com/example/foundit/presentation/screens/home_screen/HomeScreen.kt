@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,7 +38,11 @@ fun HomeScreen(modifier: Modifier) {
         ) {
             AppName(modifier = modifier)
             Greetings(modifier = modifier, name =  "Musaib Shabir")
-
+            HorizontalDivider(
+                thickness = 1.dp,
+                modifier = modifier
+                    .padding(top = 10.dp, start = 10.dp, end = 10.dp)
+            )
             Column(
                 modifier = modifier
                     .fillMaxSize()
@@ -46,6 +51,7 @@ fun HomeScreen(modifier: Modifier) {
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+
                 MainCard(
                     modifier = Modifier,
                     cardHeading = R.string.lost_card_heading,
