@@ -18,14 +18,13 @@ fun SettingsScreen(
     navController: NavHostController
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         topBar ={
             TheTopAppBar(title = "Settings", navController = navController)
         }
     ) {innerPadding ->
         Column(
             modifier = modifier
-                .fillMaxSize()
                 .padding(innerPadding),
         ) {
             SettingsCard(modifier = modifier)
