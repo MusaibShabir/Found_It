@@ -33,7 +33,7 @@ val aboutOptionList: List<String> = listOf(
     "Privacy Policy",
     "Acknowledgments",
     "Developer Info",
-    "Follow Us"
+    "Follow us"
 )
 
 val securityOptionList: List<String> = listOf(
