@@ -51,6 +51,6 @@ fun DeleteAccountScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun D(){
+fun DeleteAccountScreenPreview(){
     DeleteAccountScreen(onDeleteAccount = { },navController = NavHostController(LocalContext.current))
 }
