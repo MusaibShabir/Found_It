@@ -28,6 +28,20 @@ val helpAndSupportOptionList: List<String> = listOf(
     "Contact Support"
 )
 
+val aboutOptionList: List<String> = listOf(
+    "Version",
+    "Privacy Policy",
+    "Acknowledgments",
+    "Developer Info",
+    "Follow Us"
+)
+
+val securityOptionList: List<String> = listOf(
+    "Change Password",
+    "Change Phone Number",
+    "Change Email"
+)
+
 val themes: List<String> = listOf(
     "Light",
     "Dark",
