@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.foundit.presentation.navigation.components.NavigationIcon
-import com.example.foundit.data.NavigationItems
+import com.example.foundit.presentation.data.NavigationItems
 import com.example.foundit.ui.theme.SelectedIcon
 
 
