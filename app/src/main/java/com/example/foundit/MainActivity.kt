@@ -1,7 +1,6 @@
 package com.example.foundit
 
 
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
@@ -22,9 +21,8 @@ class MainActivity : ComponentActivity() {
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
             )
         }
-        window.statusBarColor = Color.TRANSPARENT
 
-        setContent {
+        setContent{
             FoundItTheme {
                 MainScreen(modifier = Modifier)
             }

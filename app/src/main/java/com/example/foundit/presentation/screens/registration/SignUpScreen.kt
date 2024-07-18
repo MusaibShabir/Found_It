@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Man
@@ -28,6 +29,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -92,7 +94,15 @@ fun SignUpScreen(modifier: Modifier) {
                 label = { Text("First Name") },
                 leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "Person icon") },
                 placeholder = { Text("Enter Your First Name", fontStyle = FontStyle.Italic) },
-                shape = MaterialTheme.shapes.medium
+                shape = MaterialTheme.shapes.medium,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedLabelColor = Color.Blue,
+                    cursorColor = Color.Gray,
+                    focusedBorderColor = Color.Blue
+                ),
+
+
+
 
             )
             // Last Name
@@ -105,7 +115,12 @@ fun SignUpScreen(modifier: Modifier) {
                 label = { Text("Last Name") },
                 placeholder = { Text("Enter Your Last Name", fontStyle = FontStyle.Italic) },
                 leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "Person icon") },
-                shape = MaterialTheme.shapes.medium
+                shape = MaterialTheme.shapes.medium,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedLabelColor = Color.Blue,
+                    cursorColor = Color.Gray,
+                    focusedBorderColor = Color.Blue
+                ),
 
             )
 
@@ -126,6 +141,11 @@ fun SignUpScreen(modifier: Modifier) {
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                     placeholder = { Text("Select Your Gender", fontStyle = FontStyle.Italic) },
                     shape = MaterialTheme.shapes.medium,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedLabelColor = Color.Blue,
+                        cursorColor = Color.Gray,
+                        focusedBorderColor = Color.Blue
+                    ),
                     modifier = modifier
                         .fillMaxWidth()
                         .menuAnchor()
@@ -161,9 +181,17 @@ fun SignUpScreen(modifier: Modifier) {
                     isEmailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches()},
                 label = { Text("Email") },
                 leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = "Email icon") },
+                trailingIcon = { if (!isEmailValid && email.isNotBlank()) {
+                    Icon(Icons.Filled.Error, contentDescription = "Email icon", tint = MaterialTheme.colorScheme.error) }
+                },
                 placeholder = { Text("Enter Your Email", fontStyle = FontStyle.Italic) },
                 shape = MaterialTheme.shapes.medium,
                 isError = !isEmailValid,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedLabelColor = Color.Blue,
+                    cursorColor = Color.Gray,
+                    focusedBorderColor = Color.Blue
+                ),
                 supportingText = {
                     if (!isEmailValid && email.isNotBlank()) {
                         Text("Invalid email address", color = MaterialTheme.colorScheme.error)
@@ -197,6 +225,11 @@ fun SignUpScreen(modifier: Modifier) {
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 shape = MaterialTheme.shapes.medium,
                 isError = !isPasswordValid,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedLabelColor = Color.Blue,
+                    cursorColor = Color.Gray,
+                    focusedBorderColor = Color.Blue
+                ),
                 supportingText = {
                     if (!isPasswordValid && password.isNotBlank()) {
                         Text("Password must be at least 8 characters", color = MaterialTheme.colorScheme.error)
@@ -224,7 +257,7 @@ fun SignUpScreen(modifier: Modifier) {
                     disabledContainerColor = Color.Gray,
                     disabledContentColor = MaterialTheme.colorScheme.onSurface
                 ),
-                elevation = ButtonDefaults.elevatedButtonElevation(20.dp)
+                elevation = ButtonDefaults.elevatedButtonElevation(10.dp)
 
             ) {
                 Text(
