@@ -15,7 +15,7 @@ import androidx.navigation.NavController
 fun TheTopAppBar(
     title: String,
     navController: NavController,
-    backRoute: String
+    backRoute: String? =null
 ) {
     TopAppBar(
         title = {
@@ -24,7 +24,11 @@ fun TheTopAppBar(
             )
         },
         navigationIcon = {
-            IconButton(onClick = { navController.navigate(backRoute) }) {
+            IconButton(onClick = { if (backRoute != null) {
+                navController.navigate(backRoute)
+            } else {
+                navController.popBackStack()
+            }}) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                     contentDescription = null

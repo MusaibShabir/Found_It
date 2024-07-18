@@ -10,7 +10,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun AccountCenterCard(
@@ -32,7 +31,7 @@ fun AccountCenterScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar ={
-            TheTopAppBar(title = "Account Center", navController = navController, backRoute = NavRoutes.HOME)
+            TheTopAppBar(title = "Account Center", navController = navController)
         }
     ) {innerPadding ->
         Column(
