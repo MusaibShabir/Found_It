@@ -10,7 +10,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun AboutCard(
@@ -32,7 +31,7 @@ fun AboutScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar ={
-            TheTopAppBar(title = "About", navController = navController, backRoute = NavRoutes.HOME)
+            TheTopAppBar(title = "About", navController = navController)
         }
     ) {innerPadding ->
         Column(

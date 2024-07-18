@@ -11,7 +11,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun ChangeEmailScreen(
@@ -26,7 +25,7 @@ fun ChangeEmailScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar ={
-            TheTopAppBar(title = "Change Email", navController = navController, backRoute = NavRoutes.HOME)
+            TheTopAppBar(title = "Change Email", navController = navController)
         }
     ) {innerPadding ->
         Column(
@@ -115,7 +114,7 @@ fun ChangeEmailScreen(
 
 @Preview (showBackground = true, showSystemUi = true)
 @Composable
-fun ChangeEmailScreenPreview() {
+fun PreviewChangeEmailScreen() {
     ChangeEmailScreen(navController = NavHostController(LocalContext.current))
 }
 

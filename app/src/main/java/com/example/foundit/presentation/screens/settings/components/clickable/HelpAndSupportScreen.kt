@@ -10,7 +10,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun HelpAndSupportCard(
@@ -32,7 +31,7 @@ fun HelpAndSupportScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar ={
-            TheTopAppBar(title = "Help and Support", navController = navController, backRoute = NavRoutes.HOME)
+            TheTopAppBar(title = "Help and Support", navController = navController)
         }
     ) {innerPadding ->
         Column(
@@ -46,6 +45,6 @@ fun HelpAndSupportScreen(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun HelpAndSupportScreenPreview(){
+fun PreviewHelpAndSupportScreen(){
     HelpAndSupportScreen(navController = NavHostController(LocalContext.current))
 }

@@ -16,7 +16,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun ChangePasswordScreen(
@@ -35,7 +34,7 @@ fun ChangePasswordScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TheTopAppBar(title = "Change Password", navController = navController, backRoute = NavRoutes.HOME)
+            TheTopAppBar(title = "Change Password", navController = navController)
         }
     ) { innerPadding ->
         Column(
@@ -170,6 +169,6 @@ fun ChangePasswordScreen(
 
 @Preview (showBackground = true, showSystemUi = true)
 @Composable
-fun ChangePasswordScreenPreview() {
+fun PreviewChangePasswordScreen() {
     ChangePasswordScreen(navController = NavHostController(LocalContext.current))
 }

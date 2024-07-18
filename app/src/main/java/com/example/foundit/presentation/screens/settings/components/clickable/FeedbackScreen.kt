@@ -24,7 +24,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun FeedbackScreen(
@@ -37,7 +36,7 @@ fun FeedbackScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TheTopAppBar(title = "Feedback", navController = navController, backRoute = NavRoutes.HOME)
+            TheTopAppBar(title = "Feedback", navController = navController)
         }
     ) { innerPadding ->
         Column(
@@ -84,6 +83,6 @@ fun FeedbackScreen(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun FeedbackScreenPreview(){
+fun PreviewFeedbackScreen(){
     FeedbackScreen(navController = NavHostController(LocalContext.current))
 }

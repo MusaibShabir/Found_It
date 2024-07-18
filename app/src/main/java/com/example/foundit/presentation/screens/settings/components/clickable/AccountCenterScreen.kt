@@ -45,6 +45,6 @@ fun AccountCenterScreen(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun AccountCenterScreenPreview(){
+fun PreviewAccountCenterScreen(){
     AccountCenterScreen(navController = NavHostController(LocalContext.current))
 }
