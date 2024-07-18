@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,7 +40,7 @@ fun ContinueWithGoogleCard(modifier: Modifier) {
             onClick = { /*TODO*/ },
             shape = RoundedCornerShape(6.dp),
             colors = CardDefaults.elevatedCardColors(Color.White),
-            elevation = CardDefaults.elevatedCardElevation(5.dp)
+            elevation = CardDefaults.elevatedCardElevation(10.dp)
         ) {
             Row (modifier = modifier
                 .fillMaxSize()
@@ -58,7 +59,9 @@ fun ContinueWithGoogleCard(modifier: Modifier) {
                 Text(
                     text = "CONTINUE WITH GOOGLE",
                     fontSize = 18.sp,
-                    color = Color.Blue
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Blue,
+
                 )
             }
 
@@ -68,7 +71,7 @@ fun ContinueWithGoogleCard(modifier: Modifier) {
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = false)
 fun PreviewContinueWithGoogleCard() {
     ContinueWithGoogleCard(modifier = Modifier)
 }
