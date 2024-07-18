@@ -29,13 +29,13 @@ fun SettingsScreen(
                 .padding(innerPadding),
         ) {
             SettingsOptionCard(modifier = modifier, settingsOptionName = "Account Center", forwardNavigation = NavRoutes.PROFILE, navController = navController)
-            SettingsOptionCard(modifier = modifier, settingsOptionName = "Language", forwardNavigation = NavRoutes.HOME, navController = navController)
-            SettingsOptionCard(modifier = modifier, settingsOptionName = "Appearance", forwardNavigation = NavRoutes.HOME, navController = navController)
-            SettingsOptionCard(modifier = modifier, settingsOptionName = "Security", forwardNavigation = NavRoutes.HOME, navController = navController)
-            SettingsOptionCard(modifier = modifier, settingsOptionName = "Help and Support", forwardNavigation = NavRoutes.HOME, navController = navController)
-            SettingsOptionCard(modifier = modifier, settingsOptionName = "Feedback", forwardNavigation = NavRoutes.HOME, navController = navController)
-            SettingsOptionCard(modifier = modifier, settingsOptionName = "Share", forwardNavigation = NavRoutes.HOME, navController = navController)
-            SettingsOptionCard(modifier = modifier, settingsOptionName = "About", forwardNavigation = NavRoutes.HOME, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Language", forwardNavigation = NavRoutes.LANGUAGE, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Appearance", forwardNavigation = NavRoutes.APPEARANCE, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Security", forwardNavigation = NavRoutes.SECURITY, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Help and Support", forwardNavigation = NavRoutes.HELP_AND_SUPPORT, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Feedback", forwardNavigation = NavRoutes.FEEDBACK, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Share", forwardNavigation = NavRoutes.SHARE, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "About", forwardNavigation = NavRoutes.ABOUT, navController = navController)
         }
     }
 }
