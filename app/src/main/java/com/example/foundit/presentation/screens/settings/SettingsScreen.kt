@@ -28,7 +28,14 @@ fun SettingsScreen(
             modifier = modifier
                 .padding(innerPadding),
         ) {
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Account Center", forwardNavigation = NavRoutes.PROFILE, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Language", forwardNavigation = NavRoutes.HOME, navController = navController)
             SettingsOptionCard(modifier = modifier, settingsOptionName = "Appearance", forwardNavigation = NavRoutes.HOME, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Security", forwardNavigation = NavRoutes.HOME, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Help and Support", forwardNavigation = NavRoutes.HOME, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Feedback", forwardNavigation = NavRoutes.HOME, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Share", forwardNavigation = NavRoutes.HOME, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "About", forwardNavigation = NavRoutes.HOME, navController = navController)
         }
     }
 }
