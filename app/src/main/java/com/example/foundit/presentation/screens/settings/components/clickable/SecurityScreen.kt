@@ -31,7 +31,7 @@ fun SecurityScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar ={
-            TheTopAppBar(title = "About", navController = navController)
+            TheTopAppBar(title = "Security", navController = navController)
         }
     ) {innerPadding ->
         Column(
