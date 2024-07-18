@@ -26,12 +26,23 @@ import androidx.compose.ui.unit.sp
 import com.example.foundit.R
 
 @Composable
-fun ContinueWithGoogleCard(modifier: Modifier) {
+fun ContinueWithGoogleCard(modifier: Modifier, colorScheme: Int = 1) {
+    val containerColor = when(colorScheme) {
+        1 -> Color.White
+        2 -> Color.Blue
+        else -> Color.White
+    }
+    val textColor = when (colorScheme) {
+        1 -> Color.Blue
+        2 -> Color.White
+        else -> Color.Blue
+    }
     Row (modifier = modifier
         .fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
         ){
+
 
         ElevatedCard(
             modifier = modifier
@@ -39,7 +50,7 @@ fun ContinueWithGoogleCard(modifier: Modifier) {
                 .height(52.dp),
             onClick = { /*TODO*/ },
             shape = RoundedCornerShape(6.dp),
-            colors = CardDefaults.elevatedCardColors(Color.White),
+            colors = CardDefaults.elevatedCardColors(containerColor = containerColor),
             elevation = CardDefaults.elevatedCardElevation(10.dp)
         ) {
             Row (modifier = modifier
@@ -60,7 +71,7 @@ fun ContinueWithGoogleCard(modifier: Modifier) {
                     text = "CONTINUE WITH GOOGLE",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
-                    color = Color.Blue,
+                    color = textColor,
 
                 )
             }
@@ -73,7 +84,10 @@ fun ContinueWithGoogleCard(modifier: Modifier) {
 @Composable
 @Preview(showBackground = true, showSystemUi = false)
 fun PreviewContinueWithGoogleCard() {
-    ContinueWithGoogleCard(modifier = Modifier)
+    ContinueWithGoogleCard(
+        modifier = Modifier,
+        colorScheme = 1
+    )
 }
 
 
