@@ -19,9 +19,11 @@ import com.example.foundit.presentation.common.TheTopAppBar
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 
@@ -57,10 +59,16 @@ fun ReportProblemScreen(
                 value = issueDescription,
                 onValueChange = { issueDescription = it },
                 label = { Text("Issue Description") },
-                modifier = Modifier
-                    .fillMaxWidth()
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    errorContainerColor = Color.Transparent
+                ),
+                modifier = Modifier.fillMaxWidth()
             )
+
             Spacer(modifier = Modifier.height(8.dp))
+
             Button(
                 onClick = {
                     imagePickerLauncher.launch("image/*")
