@@ -23,6 +23,7 @@ import com.example.foundit.presentation.screens.progress.components.ProcessCardI
 import com.example.foundit.presentation.data.FinishedProcessData
 import com.example.foundit.presentation.data.InProcessData
 import com.example.foundit.presentation.common.TheTopAppBar
+import com.example.foundit.presentation.data.navigation.NavRoutes
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -40,7 +41,7 @@ fun ProcessScreen(modifier: Modifier, navController: NavHostController) {
 
     Scaffold(
         modifier = modifier,
-        topBar = { TheTopAppBar(title = "Progress", navController = navController)}
+        topBar = { TheTopAppBar(title = "Progress", navController = navController, backRoute = NavRoutes.HOME)}
     ){paddingValues ->
         Column(modifier = modifier.padding(paddingValues)) {
             TabRow(selectedTabIndex = pagerState.currentPage) {

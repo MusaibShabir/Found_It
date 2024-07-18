@@ -9,8 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
-import com.example.foundit.data.accountCenterOptionList
+import com.example.foundit.presentation.data.accountCenterOptionList
 import com.example.foundit.presentation.common.TheTopAppBar
+import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.settings.components.SettingsOption
 
 @Composable
@@ -34,7 +35,7 @@ fun AccountCenterScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar ={
-            TheTopAppBar(title = "Account Center", navController = navController)
+            TheTopAppBar(title = "Account Center", navController = navController, backRoute = NavRoutes.HOME)
         }
     ) {innerPadding ->
         Column(

@@ -17,7 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.foundit.presentation.data.NotificationItemData
+import com.example.foundit.presentation.data.navigation.NotificationItemData
 
 
 @Composable

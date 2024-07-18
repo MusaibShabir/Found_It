@@ -10,7 +10,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.data.themes
+import com.example.foundit.presentation.data.navigation.NavRoutes
+import com.example.foundit.presentation.data.themes
 
 @Composable
 fun AppearanceScreen(
@@ -23,7 +24,7 @@ fun AppearanceScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TheTopAppBar(title = "Appearance Settings", navController = navController)
+            TheTopAppBar(title = "Appearance Settings", navController = navController, backRoute = NavRoutes.HOME)
         }
     ) { innerPadding ->
         Column(

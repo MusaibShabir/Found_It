@@ -1,4 +1,4 @@
-package com.example.foundit.data
+package com.example.foundit.presentation.data
 
 /*
 data class SettingsListData(

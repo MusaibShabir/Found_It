@@ -9,13 +9,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.example.foundit.presentation.data.NavRoutes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TheTopAppBar(
     title: String,
     navController: NavController,
+    backRoute: String
 ) {
     TopAppBar(
         title = {
@@ -24,7 +24,7 @@ fun TheTopAppBar(
             )
         },
         navigationIcon = {
-            IconButton(onClick = { navController.navigate(NavRoutes.HOME) }) {
+            IconButton(onClick = { navController.navigate(backRoute) }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                     contentDescription = null

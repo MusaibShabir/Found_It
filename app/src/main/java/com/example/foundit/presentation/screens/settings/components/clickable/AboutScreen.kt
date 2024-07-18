@@ -9,8 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
-import com.example.foundit.data.aboutOptionList
+import com.example.foundit.presentation.data.aboutOptionList
 import com.example.foundit.presentation.common.TheTopAppBar
+import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.settings.components.SettingsOption
 
 @Composable
@@ -34,7 +35,7 @@ fun AboutScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar ={
-            TheTopAppBar(title = "About", navController = navController)
+            TheTopAppBar(title = "About", navController = navController, backRoute = NavRoutes.HOME)
         }
     ) {innerPadding ->
         Column(

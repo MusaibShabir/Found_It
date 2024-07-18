@@ -1,13 +1,6 @@
-package com.example.foundit.presentation.data
+package com.example.foundit.presentation.data.navigation
 
 import com.example.foundit.R
-
-object NavRoutes {
-    const val HOME = "Home"
-    const val PROGRESS = "Progress"
-    const val NOTIFICATIONS = "Notifications"
-    const val PROFILE = "Profile"
-}
 
 data class BottomNavigationItem(
     val title: String,
