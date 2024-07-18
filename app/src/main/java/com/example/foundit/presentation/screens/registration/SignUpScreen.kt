@@ -100,11 +100,8 @@ fun SignUpScreen(modifier: Modifier) {
                     cursorColor = Color.Gray,
                     focusedBorderColor = Color.Blue
                 ),
-
-
-
-
             )
+
             // Last Name
             OutlinedTextField(
                 modifier = modifier
@@ -228,7 +225,8 @@ fun SignUpScreen(modifier: Modifier) {
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
                     cursorColor = Color.Gray,
-                    focusedBorderColor = Color.Blue
+                    focusedBorderColor = Color.Blue,
+                    errorTrailingIconColor = MaterialTheme.colorScheme.onSurface
                 ),
                 supportingText = {
                     if (!isPasswordValid && password.isNotBlank()) {
