@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.foundit.presentation.data.navigation.NavRoutes
 
 
 @Composable
@@ -46,7 +47,7 @@ fun ReportProblemScreen(
     Scaffold(
         modifier= modifier,
         topBar ={
-            TheTopAppBar(title = "Report a problem", navController = navController)
+            TheTopAppBar(title = "Report a problem", navController = navController, backRoute = NavRoutes.HOME)
         }
     ){innerPadding ->
         Column(

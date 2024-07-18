@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
+import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun DeleteAccountScreen(
@@ -25,7 +26,7 @@ fun DeleteAccountScreen(
 ) {
     Scaffold(
         topBar ={
-            TheTopAppBar(title = "Delete Account", navController = navController)
+            TheTopAppBar(title = "Delete Account", navController = navController, backRoute = NavRoutes.HOME)
         }
     ){innerPadding ->
         Column(

@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
+import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun ContactSupportScreen(
@@ -25,7 +26,7 @@ fun ContactSupportScreen(
     Scaffold(
         modifier= modifier,
         topBar ={
-            TheTopAppBar(title = "Contact Support", navController = navController)
+            TheTopAppBar(title = "Contact Support", navController = navController, backRoute = NavRoutes.HOME)
         }
     ){innerPadding ->
         Column(

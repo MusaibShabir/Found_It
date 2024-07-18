@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
+import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun FollowUsScreen(
@@ -22,7 +23,7 @@ fun FollowUsScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TheTopAppBar(title = "Follow us", navController = navController)
+            TheTopAppBar(title = "Follow us", navController = navController, backRoute = NavRoutes.HOME)
         }
     ) { innerPadding ->
         Column(

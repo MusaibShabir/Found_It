@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun VersionScreen(
@@ -22,7 +23,7 @@ fun VersionScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TheTopAppBar(title = "Version", navController = navController)
+            TheTopAppBar(title = "Version", navController = navController, backRoute = NavRoutes.HOME)
         }
     ) { innerPadding ->
         Column(

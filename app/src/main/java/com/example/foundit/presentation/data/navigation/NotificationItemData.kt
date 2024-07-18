@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.data
+package com.example.foundit.presentation.data.navigation
 
 data class NotificationItemData(
     val id: Int,

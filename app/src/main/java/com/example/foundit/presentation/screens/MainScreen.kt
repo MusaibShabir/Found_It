@@ -10,13 +10,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.foundit.R
-import com.example.foundit.presentation.data.NavRoutes
+import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.navigation.NavigationBar
 import com.example.foundit.presentation.screens.home.HomeScreen
 import com.example.foundit.presentation.screens.notification.NotificationScreen
 import com.example.foundit.presentation.screens.progress.ProcessScreen
 import com.example.foundit.presentation.screens.profile.ProfileScreen
 import com.example.foundit.presentation.screens.profile.components.userBadgeCodes
+import com.example.foundit.presentation.screens.settings.SettingsScreen
 
 @Composable
 fun MainScreen(modifier: Modifier) {
@@ -47,6 +48,7 @@ fun MainScreen(modifier: Modifier) {
                     navController = navController
                 )
             }
+            composable(NavRoutes.SETTINGS) { SettingsScreen(modifier = modifier, navController = navController)}
         }
     }
 }

@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
+import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.settings.components.SettingsCard
 
 @Composable
@@ -20,7 +21,7 @@ fun SettingsScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar ={
-            TheTopAppBar(title = "Settings", navController = navController)
+            TheTopAppBar(title = "Settings", navController = navController, backRoute = NavRoutes.PROFILE)
         }
     ) {innerPadding ->
         Column(

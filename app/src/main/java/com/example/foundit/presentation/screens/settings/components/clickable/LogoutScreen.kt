@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
+import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun LogoutScreen(
@@ -26,7 +27,7 @@ fun LogoutScreen(
     Scaffold(
         modifier= modifier,
         topBar ={
-            TheTopAppBar(title = "Log out", navController = navController)
+            TheTopAppBar(title = "Log out", navController = navController, backRoute = NavRoutes.HOME)
         }
     ){innerPadding ->
         Column(
