@@ -22,6 +22,7 @@ import com.example.foundit.presentation.screens.settings.SettingsScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.AboutScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.AccountCenterScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.AcknowledgementScreen
+import com.example.foundit.presentation.screens.settings.components.clickable.AppearanceScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.ChangeEmailScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.ChangePasswordScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.ChangePhoneNumberScreen
@@ -71,7 +72,7 @@ fun MainScreen(modifier: Modifier) {
 
             composable(NavRoutes.ACCOUNT_CENTER) { AccountCenterScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.LANGUAGE) { LanguageScreen(modifier = modifier, navController = navController)}
-            composable(NavRoutes.APPEARANCE) { SettingsScreen(modifier = modifier, navController = navController)}
+            composable(NavRoutes.APPEARANCE) { AppearanceScreen(modifier = modifier, navController = navController, onThemeChange = { /*TODO*/ }) }
             composable(NavRoutes.SECURITY) { SecurityScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.HELP_AND_SUPPORT) { HelpAndSupportScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.FEEDBACK) { FeedbackScreen(modifier = modifier, navController = navController) }
