@@ -13,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun DeveloperInfoScreen(
@@ -23,7 +22,7 @@ fun DeveloperInfoScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TheTopAppBar(title = "Developer Information", navController = navController, backRoute = NavRoutes.HOME)
+            TheTopAppBar(title = "Developer Information", navController = navController)
         }
     ) { innerPadding ->
         Column(
@@ -60,6 +59,6 @@ fun DeveloperInfoScreen(
 
 @Preview (showBackground = true, showSystemUi = true)
 @Composable
-fun DeveloperInfoScreenPreview() {
+fun PreviewDeveloperInfoScreen() {
     DeveloperInfoScreen(navController = NavHostController(LocalContext.current))
 }

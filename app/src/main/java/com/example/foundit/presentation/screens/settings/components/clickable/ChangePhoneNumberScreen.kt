@@ -11,7 +11,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun ChangePhoneNumberScreen(
@@ -26,7 +25,7 @@ fun ChangePhoneNumberScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TheTopAppBar(title = "Change Phone Number", navController = navController, backRoute = NavRoutes.HOME)
+            TheTopAppBar(title = "Change Phone Number", navController = navController)
         }
     ) { innerPadding ->
         Column(
@@ -120,6 +119,6 @@ fun ChangePhoneNumberScreen(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun ChangePhoneNumberScreenPreview() {
+fun PreviewChangePhoneNumberScreen() {
     ChangePhoneNumberScreen(navController = NavHostController(LocalContext.current))
 }

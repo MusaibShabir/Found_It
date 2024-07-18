@@ -31,7 +31,7 @@ import com.example.foundit.presentation.screens.settings.components.clickable.De
 import com.example.foundit.presentation.screens.settings.components.clickable.FeedbackScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.FollowUsScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.HelpAndSupportScreen
-import com.example.foundit.presentation.screens.settings.components.clickable.LaunguageScreen
+import com.example.foundit.presentation.screens.settings.components.clickable.LanguageScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.LogoutScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.PrivacyPolicyScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.ReportProblemScreen
@@ -70,7 +70,7 @@ fun MainScreen(modifier: Modifier) {
             composable(NavRoutes.SETTINGS) { SettingsScreen(modifier = modifier, navController = navController)}
 
             composable(NavRoutes.ACCOUNT_CENTER) { AccountCenterScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.LANGUAGE) { LaunguageScreen(modifier = modifier, navController = navController)}
+            composable(NavRoutes.LANGUAGE) { LanguageScreen(modifier = modifier, navController = navController)}
             composable(NavRoutes.APPEARANCE) { SettingsScreen(modifier = modifier, navController = navController)}
             composable(NavRoutes.SECURITY) { SecurityScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.HELP_AND_SUPPORT) { HelpAndSupportScreen(modifier = modifier, navController = navController) }
