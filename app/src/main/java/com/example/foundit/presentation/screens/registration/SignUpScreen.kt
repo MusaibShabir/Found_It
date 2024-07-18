@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Man
@@ -180,6 +181,9 @@ fun SignUpScreen(modifier: Modifier) {
                     isEmailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches()},
                 label = { Text("Email") },
                 leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = "Email icon") },
+                trailingIcon = { if (!isEmailValid && email.isNotBlank()) {
+                    Icon(Icons.Filled.Error, contentDescription = "Email icon", tint = MaterialTheme.colorScheme.error) }
+                },
                 placeholder = { Text("Enter Your Email", fontStyle = FontStyle.Italic) },
                 shape = MaterialTheme.shapes.medium,
                 isError = !isEmailValid,
