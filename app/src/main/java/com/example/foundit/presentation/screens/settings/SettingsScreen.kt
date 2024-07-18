@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
 import com.example.foundit.presentation.data.navigation.NavRoutes
-import com.example.foundit.presentation.screens.settings.components.SettingsCard
+import com.example.foundit.presentation.screens.settings.components.SettingsOptionCard
 
 @Composable
 fun SettingsScreen(
@@ -28,7 +28,7 @@ fun SettingsScreen(
             modifier = modifier
                 .padding(innerPadding),
         ) {
-            SettingsCard(modifier = modifier)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Appearance", forwardNavigation = NavRoutes.HOME, navController = navController)
         }
     }
 }
