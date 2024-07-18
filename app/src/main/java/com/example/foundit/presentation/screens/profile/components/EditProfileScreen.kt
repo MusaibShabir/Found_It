@@ -125,8 +125,7 @@ fun EditProfileScreen(
                 onClick = {
                     // Handle cancel action
 
-                },
-                enabled = firstName.isNotBlank() && lastName.isNotBlank(),
+                }
             ) {
                 Text("Cancel", fontSize = 20.sp, modifier = Modifier.padding(5.dp,2.dp))
             }
