@@ -9,10 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
-import com.example.foundit.presentation.data.aboutOptionList
 import com.example.foundit.presentation.common.TheTopAppBar
 import com.example.foundit.presentation.data.navigation.NavRoutes
-import com.example.foundit.presentation.screens.settings.components.SettingsOption
 
 @Composable
 fun AboutCard(
@@ -21,8 +19,7 @@ fun AboutCard(
     Column (
         modifier = modifier,
     ) {
-        for (option in aboutOptionList)
-            SettingsOption(option)
+
     }
 }
 

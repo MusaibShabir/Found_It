@@ -19,13 +19,18 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.foundit.R.drawable.ic_launcher_background
 
 
 @Composable
-fun EditProfileScreen() {
+fun EditProfileScreen(
+    modifier: Modifier,
+    navController: NavController
+) {
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var profilePicture by remember { mutableStateOf<Uri?>(null) }
@@ -36,7 +41,7 @@ fun EditProfileScreen() {
     )
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -48,13 +53,13 @@ fun EditProfileScreen() {
             fontSize = 28.sp
         )
 
-        Spacer(modifier = Modifier.height(46.dp))
+        Spacer(modifier = modifier.height(46.dp))
 
         // Profile picture Input Field
         AsyncImage(
             model = profilePicture ?: ic_launcher_background,
             contentDescription = "Profile Picture",
-            modifier = Modifier
+            modifier = modifier
                 .size(180.dp)
                 .clip(CircleShape)
                 .clickable {
@@ -88,7 +93,7 @@ fun EditProfileScreen() {
             )
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = modifier.height(16.dp))
 
         // Last name Input Field
         TextField(
@@ -109,11 +114,11 @@ fun EditProfileScreen() {
             )
         )
 
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = modifier.height(30.dp))
 
         Row (
             horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxWidth()
+            modifier = modifier.fillMaxWidth()
         ){
             // Save Button
             Button(
@@ -143,6 +148,9 @@ fun EditProfileScreen() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewEditProfileScreen() {
-    EditProfileScreen()
+    EditProfileScreen(
+        modifier = Modifier,
+        navController = NavController(LocalContext.current)
+    )
 }
 

@@ -12,7 +12,6 @@ object NavRoutes {
     const val SECURITY = "Security"
     const val HELP_AND_SUPPORT = "Help and Support"
     const val FEEDBACK = "Feedback"
-    const val SHARE = "Share"
     const val REPORT_A_PROBLEM = "Report a problem"
     const val CONTACT_SUPPORT = "Contact Support"
     const val VERSION = "Version"
@@ -26,5 +25,6 @@ object NavRoutes {
     const val ABOUT = "About"
     const val EDIT_PROFILE = "Edit Profile"
     const val LOG_OUT = "Log out"
+    const val DELETE_ACCOUNT = "Delete Account"
 
 }
