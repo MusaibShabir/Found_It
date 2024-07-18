@@ -2,6 +2,7 @@ package com.example.foundit.presentation.screens.registration
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -68,9 +69,10 @@ fun LoginScreen(modifier: Modifier) {
 
         Column(
             modifier = modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
             //Email
             var isEmailValid by remember { mutableStateOf(true) }
