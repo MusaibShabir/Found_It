@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.foundit.R.drawable.ic_launcher_background
+import com.example.foundit.presentation.common.TheTopAppBar
 
 
 @Composable
@@ -37,107 +38,130 @@ fun EditProfileScreen(
 
     val profilePicturePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
-        onResult = {uri -> profilePicture = uri }
+        onResult = { uri -> profilePicture = uri }
     )
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "Edit Profile",
-            style = MaterialTheme.typography.titleLarge,
-            fontSize = 28.sp
-        )
-
-        Spacer(modifier = modifier.height(46.dp))
-
-        // Profile picture Input Field
-        AsyncImage(
-            model = profilePicture ?: ic_launcher_background,
-            contentDescription = "Profile Picture",
+    Scaffold(
+        topBar = { TheTopAppBar(title = "Edit Profile", navController = navController) }
+    ) { paddingValues ->
+        Column(
             modifier = modifier
-                .size(180.dp)
-                .clip(CircleShape)
-                .clickable {
-                    // profile picture change logic
-                    profilePicturePickerLauncher.launch(
-                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                    )
-                },
-            contentScale = ContentScale.Crop
-        )
+                .fillMaxSize()
+                .padding(paddingValues),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
 
-        Spacer(modifier = Modifier.height(26.dp))
+            Spacer(modifier = modifier.height(46.dp))
 
-
-        // First name Input Field
-        TextField(
-            value = firstName,
-            onValueChange = {
-                firstName = it.filter { char -> char.isLetter() || char.isWhitespace() }
-            },
-            singleLine = true,
-            label = { Text("First name", fontSize = 16.sp, fontWeight = FontWeight.Medium) },
-            modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(
-                KeyboardCapitalization.Words // Capitalize the first letter of each word
-            ),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
-                errorContainerColor = Color.Transparent
+            // Profile picture Input Field
+            AsyncImage(
+                model = profilePicture ?: ic_launcher_background,
+                contentDescription = "Profile Picture",
+                modifier = modifier
+                    .size(180.dp)
+                    .clip(CircleShape)
+                    .clickable {
+                        // profile picture change logic
+                        profilePicturePickerLauncher.launch(
+                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                        )
+                    },
+                contentScale = ContentScale.Crop
             )
-        )
 
-        Spacer(modifier = modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(26.dp))
 
-        // Last name Input Field
-        TextField(
-            value = lastName,
-            onValueChange = {
-                lastName = it.filter { char -> char.isLetter() || char.isWhitespace() }
-            },
-            singleLine = true,
-            label = { Text("Last name", fontSize = 16.sp, fontWeight = FontWeight.Medium) },
-            modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(
-                KeyboardCapitalization.Words // Capitalize the first letter of each word
-            ),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
-                errorContainerColor = Color.Transparent
-            )
-        )
-
-        Spacer(modifier = modifier.height(30.dp))
-
-        Row (
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = modifier.fillMaxWidth()
-        ){
-
-            // Cancel Button
-            Button(
-                onClick = {
-                    navController.popBackStack()
-                }
+            Column(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .height(IntrinsicSize.Min)
+                    .padding(horizontal = 32.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                Text("Cancel", fontSize = 20.sp, modifier = Modifier.padding(5.dp,2.dp))
+                // First name Input Field
+                TextField(
+                    value = firstName,
+                    onValueChange = {
+                        firstName = it.filter { char -> char.isLetter() || char.isWhitespace() }
+                    },
+                    singleLine = true,
+                    label = {
+                        Text(
+                            "First name",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(
+                        KeyboardCapitalization.Words // Capitalize the first letter of each word
+                    ),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        errorContainerColor = Color.Transparent
+                    )
+                )
+
+                Spacer(modifier = modifier.height(16.dp))
+
+                // Last name Input Field
+                TextField(
+                    value = lastName,
+                    onValueChange = {
+                        lastName = it.filter { char -> char.isLetter() || char.isWhitespace() }
+                    },
+                    singleLine = true,
+                    label = { Text("Last name", fontSize = 16.sp, fontWeight = FontWeight.Medium) },
+                    modifier = Modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(
+                        KeyboardCapitalization.Words
+                    ),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        errorContainerColor = Color.Transparent
+                    )
+                )
             }
 
-            // Save Button
-            Button(
-                onClick = {
-                    navController.popBackStack()
-                },
-                enabled = firstName.isNotBlank() && lastName.isNotBlank(),
+            Spacer(modifier = modifier.height(30.dp))
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = modifier.fillMaxWidth()
             ) {
-                Text("Save Changes", fontSize = 20.sp, modifier = Modifier.padding(5.dp,2.dp))
+
+                // Cancel Button
+                Button(
+                    onClick = {
+                        navController.popBackStack()
+                    }
+                ) {
+                    Text(
+                        text = "Cancel",
+                        fontSize = 20.sp,
+                        modifier = modifier
+                            .padding(5.dp, 2.dp)
+                    )
+                }
+
+                // Save Button
+                Button(
+                    onClick = {
+                        navController.popBackStack()
+                    },
+                    enabled = firstName.isNotBlank() && lastName.isNotBlank(),
+                ) {
+                    Text(
+                        text = "Save Changes",
+                        fontSize = 20.sp,
+                        modifier = modifier
+                            .padding(5.dp, 2.dp)
+                    )
+                }
             }
         }
     }
