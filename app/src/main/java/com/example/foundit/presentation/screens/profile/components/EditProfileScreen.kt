@@ -16,18 +16,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import coil.compose.AsyncImage
-import com.example.foundit.R
+import com.example.foundit.R.drawable.ic_launcher_background
 
 
 @Composable
 fun EditProfileScreen() {
-    var firstName by remember { mutableStateOf("Musaib") }
-    var lastName by remember { mutableStateOf("Shabir") }
-    var email by remember { mutableStateOf("musaibShabir145@gmail.com") }
-    var phoneNumber by remember { mutableStateOf("9545652895") }
+    var firstName by remember { mutableStateOf("") }
+    var lastName by remember { mutableStateOf("") }
     var profilePicture by remember { mutableStateOf<Uri?>(null) }
 
     val profilePicturePickerLauncher = rememberLauncherForActivityResult(
@@ -44,16 +44,15 @@ fun EditProfileScreen() {
     ) {
         Text(
             text = "Edit Profile",
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
+            style = MaterialTheme.typography.titleLarge,
+            fontSize = 28.sp
         )
 
-        Spacer(modifier = Modifier.height(56.dp))
+        Spacer(modifier = Modifier.height(46.dp))
 
         // Profile picture Input Field
         AsyncImage(
-            model = profilePicture ?: R.drawable.ic_launcher_background,
+            model = profilePicture ?: ic_launcher_background,
             contentDescription = "Profile Picture",
             modifier = Modifier
                 .size(180.dp)
@@ -71,59 +70,72 @@ fun EditProfileScreen() {
 
 
         // First name Input Field
-        OutlinedTextField(
+        TextField(
             value = firstName,
-            onValueChange = { firstName = it },
+            onValueChange = {
+                firstName = it.filter { char -> char.isLetter() || char.isWhitespace() }
+            },
             singleLine = true,
             label = { Text("First name", fontSize = 16.sp, fontWeight = FontWeight.Medium) },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(
+                KeyboardCapitalization.Words // Capitalize the first letter of each word
+            ),
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent,
+                errorContainerColor = Color.Transparent
+            )
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // Last name Input Field
-        OutlinedTextField(
+        TextField(
             value = lastName,
-            onValueChange = { lastName = it },
+            onValueChange = {
+                lastName = it.filter { char -> char.isLetter() || char.isWhitespace() }
+            },
             singleLine = true,
             label = { Text("Last name", fontSize = 16.sp, fontWeight = FontWeight.Medium) },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(
+                KeyboardCapitalization.Words // Capitalize the first letter of each word
+            ),
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent,
+                errorContainerColor = Color.Transparent
+            )
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
-        // Email Input Field
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            singleLine = true,
-            label = { Text("Email", fontSize = 16.sp, fontWeight = FontWeight.Medium) },
+        Row (
+            horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth()
-        )
+        ){
+            // Save Button
+            Button(
+                onClick = {
+                    // Handle cancel action
 
-        Spacer(modifier = Modifier.height(16.dp))
+                },
+                enabled = firstName.isNotBlank() && lastName.isNotBlank(),
+            ) {
+                Text("Cancel", fontSize = 20.sp, modifier = Modifier.padding(5.dp,2.dp))
+            }
 
-        // Phone number Input Field
-        OutlinedTextField(
-            value = phoneNumber,
-            onValueChange = { phoneNumber = it },
-            singleLine = true,
-            label = { Text("Phone Number", fontSize = 16.sp, fontWeight = FontWeight.Medium) },
-            modifier = Modifier.fillMaxWidth()
-        )
+            // Save Button
+            Button(
+                onClick = {
+                    // Handle save action
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-
-        // Save Button
-        Button(
-            onClick = {
-                // Handle save action
-                println("First name: $firstName, First name: $lastName, Email: $email, Phone Number: $phoneNumber")
-            },
-            modifier = Modifier.align(Alignment.End)
-        ) {
-            Text("Save", fontSize = 20.sp, modifier = Modifier.padding(5.dp,2.dp))
+                },
+                enabled = firstName.isNotBlank() && lastName.isNotBlank(),
+            ) {
+                Text("Save Changes", fontSize = 20.sp, modifier = Modifier.padding(5.dp,2.dp))
+            }
         }
     }
 }

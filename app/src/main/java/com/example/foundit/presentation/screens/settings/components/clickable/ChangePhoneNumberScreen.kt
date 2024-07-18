@@ -5,6 +5,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,6 +46,11 @@ fun ChangePhoneNumberScreen(
                 label = { Text("Current Phone Number") },
                 singleLine = true,
                 isError = currentPhoneNumberError,
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    errorContainerColor = Color.Transparent
+                ),
                 modifier = Modifier.fillMaxWidth()
             )
             if (currentPhoneNumberError) {
@@ -65,6 +71,11 @@ fun ChangePhoneNumberScreen(
                 },
                 label = { Text("New Phone Number") },
                 singleLine = true,
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    errorContainerColor = Color.Transparent
+                ),
                 isError = newPhoneNumberError,
                 modifier = Modifier.fillMaxWidth()
             )
