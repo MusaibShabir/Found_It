@@ -10,18 +10,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
-
-@Composable
-fun AccountCenterCard(
-    modifier: Modifier = Modifier
-){
-    Column (
-        modifier = modifier,
-    ) {
-
-    }
-}
-
+import com.example.foundit.presentation.data.navigation.NavRoutes
+import com.example.foundit.presentation.screens.settings.components.SettingsOptionCard
 
 @Composable
 fun AccountCenterScreen(
@@ -38,7 +28,9 @@ fun AccountCenterScreen(
             modifier = modifier
                 .padding(innerPadding),
         ) {
-            AccountCenterCard()
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Edit Profile", forwardNavigation = NavRoutes.EDIT_PROFILE, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Delete Account", forwardNavigation = NavRoutes.DELETE_ACCOUNT, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Log out", forwardNavigation = NavRoutes.LOG_OUT, navController = navController)
         }
     }
 }

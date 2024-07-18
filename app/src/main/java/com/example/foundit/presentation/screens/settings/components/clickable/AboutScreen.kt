@@ -10,18 +10,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
-
-@Composable
-fun AboutCard(
-    modifier: Modifier = Modifier
-){
-    Column (
-        modifier = modifier,
-    ) {
-
-    }
-}
-
+import com.example.foundit.presentation.data.navigation.NavRoutes
+import com.example.foundit.presentation.screens.settings.components.SettingsOptionCard
 
 @Composable
 fun AboutScreen(
@@ -38,7 +28,11 @@ fun AboutScreen(
             modifier = modifier
                 .padding(innerPadding),
         ) {
-            AboutCard()
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Version", forwardNavigation = NavRoutes.VERSION, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Privacy Policy", forwardNavigation = NavRoutes.PRIVACY_POLICY, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Acknowledgments", forwardNavigation = NavRoutes.ACKNOWLEDGMENTS, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Developer Information", forwardNavigation = NavRoutes.DEVELOPER_INFO, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Follow us", forwardNavigation = NavRoutes.FOLLOW_US, navController = navController)
         }
     }
 }
