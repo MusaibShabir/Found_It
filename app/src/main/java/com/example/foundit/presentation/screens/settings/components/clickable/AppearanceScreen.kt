@@ -10,7 +10,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.data.themes
 
 @Composable
@@ -24,7 +23,7 @@ fun AppearanceScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TheTopAppBar(title = "Appearance Settings", navController = navController, backRoute = NavRoutes.HOME)
+            TheTopAppBar(title = "Appearance Settings", navController = navController)
         }
     ) { innerPadding ->
         Column(
@@ -62,7 +61,7 @@ fun AppearanceScreen(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun AppearanceScreenPreview() {
+fun PreviewAppearanceScreen() {
     val navController = NavHostController(LocalContext.current)
     AppearanceScreen(
         navController = navController,

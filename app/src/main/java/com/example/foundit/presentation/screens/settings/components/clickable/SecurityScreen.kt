@@ -10,7 +10,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun SecurityCard(
@@ -32,7 +31,7 @@ fun SecurityScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar ={
-            TheTopAppBar(title = "About", navController = navController, backRoute = NavRoutes.HOME)
+            TheTopAppBar(title = "About", navController = navController)
         }
     ) {innerPadding ->
         Column(
@@ -46,6 +45,6 @@ fun SecurityScreen(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun SecurityScreenPreview(){
+fun PreviewSecurityScreen(){
     SecurityScreen(navController = NavHostController(LocalContext.current))
 }

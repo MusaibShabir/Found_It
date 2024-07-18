@@ -13,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun AcknowledgementScreen(
@@ -23,7 +22,7 @@ fun AcknowledgementScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TheTopAppBar(title = "Acknowledgments", navController = navController, backRoute = NavRoutes.HOME)
+            TheTopAppBar(title = "Acknowledgments", navController = navController)
         }
     ) { innerPadding ->
         Column(
@@ -57,6 +56,6 @@ fun AcknowledgementScreen(
 
 @Preview (showBackground = true, showSystemUi = true)
 @Composable
-fun AcknowledgementScreenPreview() {
+fun PreviewAcknowledgementScreen() {
     AcknowledgementScreen(navController = NavHostController(LocalContext.current))
 }
