@@ -120,11 +120,11 @@ fun EditProfileScreen(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = modifier.fillMaxWidth()
         ){
-            // Save Button
+
+            // Cancel Button
             Button(
                 onClick = {
-                    // Handle cancel action
-
+                    navController.popBackStack()
                 }
             ) {
                 Text("Cancel", fontSize = 20.sp, modifier = Modifier.padding(5.dp,2.dp))
@@ -133,8 +133,7 @@ fun EditProfileScreen(
             // Save Button
             Button(
                 onClick = {
-                    // Handle save action
-
+                    navController.popBackStack()
                 },
                 enabled = firstName.isNotBlank() && lastName.isNotBlank(),
             ) {
