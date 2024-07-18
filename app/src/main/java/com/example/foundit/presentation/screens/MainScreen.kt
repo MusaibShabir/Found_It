@@ -34,7 +34,7 @@ import com.example.foundit.presentation.screens.settings.components.clickable.Fo
 import com.example.foundit.presentation.screens.settings.components.clickable.HelpAndSupportScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.LanguageScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.LogoutScreen
-import com.example.foundit.presentation.screens.settings.components.clickable.PrivacyPolicyScreen
+import com.example.foundit.presentation.screens.documentation.PrivacyPolicyScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.ReportProblemScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.SecurityScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.VersionScreen
