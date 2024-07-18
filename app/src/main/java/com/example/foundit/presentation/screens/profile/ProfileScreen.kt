@@ -53,7 +53,8 @@ fun ProfileScreen(
                 profilePicture = profilePicture,
                 profileCountryFlag = profileCountryFlag,
                 profileCountryCode = profileCountryCode,
-                profileId = profileId
+                profileId = profileId,
+                navController = navController
             )
 
             BadgeCard(userBadgeCodes = badgesCodes)
