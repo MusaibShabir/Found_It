@@ -30,7 +30,7 @@ fun SettingsOptionCard(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier
-            .padding(12.dp)
+            .padding(8.dp)
             .fillMaxWidth()
             .clickable {navController.navigate(forwardNavigation)},
     ) {
