@@ -29,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 
 @Composable
-fun ReportProblemScreen(
+fun ReportBugScreen(
     modifier:Modifier = Modifier,
     navController: NavHostController,
     //onSubmitReport: ((String, Uri?) -> Unit)? // Modify the parameters based on your needs
@@ -98,5 +98,5 @@ fun ReportProblemScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewReportProblemScreen(){
-    ReportProblemScreen(navController = NavHostController(LocalContext.current))
+    ReportBugScreen(navController = NavHostController(LocalContext.current))
 }
