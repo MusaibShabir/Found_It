@@ -12,7 +12,7 @@ object NavRoutes {
     const val SECURITY = "Security"
     const val HELP_AND_SUPPORT = "Help and Support"
     const val FEEDBACK = "Feedback"
-    const val REPORT_A_PROBLEM = "Report a problem"
+    const val REPORT_A_BUG = "Report a Bug"
     const val CONTACT_SUPPORT = "Contact Support"
     const val VERSION = "Version"
     const val PRIVACY_POLICY = "Privacy Policy"

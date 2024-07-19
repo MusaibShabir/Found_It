@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -38,7 +39,9 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.foundit.R
+import com.example.foundit.presentation.data.navigation.NavRoutes
 
 
 @Composable
@@ -49,6 +52,7 @@ fun ProfileHeadingCard(
     profileCountryFlag: Painter,
     profileCountryCode: String,
     profileId: Long,
+    navController: NavController
     ) {
     Card(
         shape = RoundedCornerShape(15.dp),
@@ -124,7 +128,7 @@ fun ProfileHeadingCard(
 
 
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { navController.navigate(NavRoutes.EDIT_PROFILE) },
                     shape = RoundedCornerShape(15.dp),
                     elevation = buttonElevation(defaultElevation = 20.dp, pressedElevation = 25.dp),
                     colors = buttonColors(containerColor = Color.Gray),
@@ -174,7 +178,8 @@ fun ProfileHeadingCardPreview() {
         profilePicture = painterResource(id = R.drawable.ic_launcher_background),
         profileCountryFlag = painterResource(id = R.drawable.flag_in),
         profileCountryCode = "IND",
-        profileId = 234567890
+        profileId = 234567890,
+        navController = NavController(LocalContext.current)
     )
 
 }

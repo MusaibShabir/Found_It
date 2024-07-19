@@ -13,6 +13,7 @@ import com.example.foundit.presentation.common.TheTopAppBar
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.settings.components.SettingsOptionCard
 
+
 @Composable
 fun AccountCenterScreen(
     modifier: Modifier = Modifier,

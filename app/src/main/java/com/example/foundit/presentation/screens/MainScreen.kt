@@ -12,12 +12,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.foundit.R
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.navigation.NavigationBar
+import com.example.foundit.presentation.screens.documentation.PrivacyPolicyScreen
 import com.example.foundit.presentation.screens.home.HomeScreen
 import com.example.foundit.presentation.screens.notification.NotificationScreen
-import com.example.foundit.presentation.screens.progress.ProcessScreen
 import com.example.foundit.presentation.screens.profile.ProfileScreen
 import com.example.foundit.presentation.screens.profile.components.EditProfileScreen
 import com.example.foundit.presentation.screens.profile.components.userBadgeCodes
+import com.example.foundit.presentation.screens.progress.ProcessScreen
 import com.example.foundit.presentation.screens.settings.SettingsScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.AboutScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.AccountCenterScreen
@@ -34,8 +35,7 @@ import com.example.foundit.presentation.screens.settings.components.clickable.Fo
 import com.example.foundit.presentation.screens.settings.components.clickable.HelpAndSupportScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.LanguageScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.LogoutScreen
-import com.example.foundit.presentation.screens.documentation.PrivacyPolicyScreen
-import com.example.foundit.presentation.screens.settings.components.clickable.ReportProblemScreen
+import com.example.foundit.presentation.screens.settings.components.clickable.ReportBugScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.SecurityScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.VersionScreen
 
@@ -80,7 +80,7 @@ fun MainScreen(modifier: Modifier) {
             composable(NavRoutes.EDIT_PROFILE) { EditProfileScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.DELETE_ACCOUNT) { DeleteAccountScreen(modifier = modifier, navController = navController, onDeleteAccount = { /*TODO*/ }) }
             composable(NavRoutes.LOG_OUT) { LogoutScreen(modifier = modifier, navController = navController, onLogout = { /*TODO*/ })}
-            composable(NavRoutes.REPORT_A_PROBLEM) { ReportProblemScreen(modifier = modifier, navController = navController)}
+            composable(NavRoutes.REPORT_A_BUG) { ReportBugScreen(modifier = modifier, navController = navController)}
             composable(NavRoutes.CONTACT_SUPPORT) { ContactSupportScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.VERSION) { VersionScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.PRIVACY_POLICY) { PrivacyPolicyScreen(modifier = modifier, navController = navController) }
