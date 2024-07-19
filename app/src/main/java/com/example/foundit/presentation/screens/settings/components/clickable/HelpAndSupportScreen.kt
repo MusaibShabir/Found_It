@@ -28,7 +28,7 @@ fun HelpAndSupportScreen(
             modifier = modifier
                 .padding(innerPadding),
         ) {
-            SettingsOptionCard(modifier = modifier, settingsOptionName = "Report a Problem", forwardNavigation = NavRoutes.REPORT_A_PROBLEM, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Report a Problem", forwardNavigation = NavRoutes.REPORT_A_BUG, navController = navController)
             SettingsOptionCard(modifier = modifier, settingsOptionName = "Contact Support", forwardNavigation = NavRoutes.CONTACT_SUPPORT, navController = navController)
         }
     }
