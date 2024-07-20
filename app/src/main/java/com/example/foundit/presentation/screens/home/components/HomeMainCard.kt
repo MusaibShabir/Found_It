@@ -39,7 +39,9 @@ import com.example.foundit.R
 fun MainCard(
     modifier: Modifier,
     @StringRes
-    cardHeading: Int, cardTitle: Int, buttonName: Int,
+    cardHeading: Int,
+    cardTitle: Int,
+    buttonName: Int,
     cardColor: Color,
 ) {
     Card(

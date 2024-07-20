@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.registration
+package com.example.foundit.presentation.screens.registration.signup
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,6 +32,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,6 +47,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.foundit.presentation.screens.registration.components.ClickableTextToWebpage
 import com.example.foundit.presentation.screens.registration.components.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.OrDivider
@@ -53,12 +55,16 @@ import com.example.foundit.presentation.screens.registration.components.OrDivide
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpScreen(modifier: Modifier) {
-    var firstName by remember { mutableStateOf("") }
-    var lastName by remember { mutableStateOf("") }
-    var gender by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+fun SignUpScreen(
+    modifier: Modifier,
+    viewModel: SignUpViewModel = viewModel()
+) {
+    val firstName by viewModel.firstName.collectAsState()
+    val lastName by viewModel.lastName.collectAsState()
+    val gender by viewModel.gender.collectAsState()
+    val email by viewModel.email.collectAsState()
+    val password by viewModel.password.collectAsState()
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -90,7 +96,7 @@ fun SignUpScreen(modifier: Modifier) {
                     .fillMaxWidth()
                     .padding(bottom = 18.dp),
                 value = firstName,
-                onValueChange = {firstName = it},
+                onValueChange = { viewModel.onFirstNameChange(it) },
                 label = { Text("First Name") },
                 leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "Person icon") },
                 placeholder = { Text("Enter Your First Name", fontStyle = FontStyle.Italic) },
@@ -108,7 +114,7 @@ fun SignUpScreen(modifier: Modifier) {
                     .fillMaxWidth()
                     .padding(bottom = 18.dp),
                 value = lastName,
-                onValueChange = {lastName = it},
+                onValueChange = { viewModel.onLastNameChange(it) },
                 label = { Text("Last Name") },
                 placeholder = { Text("Enter Your Last Name", fontStyle = FontStyle.Italic) },
                 leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "Person icon") },
@@ -158,7 +164,7 @@ fun SignUpScreen(modifier: Modifier) {
                         DropdownMenuItem(
                             text = { Text(selectionOption) },
                             onClick = {
-                                gender = selectionOption
+                                viewModel.onGenderChange(selectionOption)
                                 expanded = false
                             }
                         )
@@ -167,30 +173,31 @@ fun SignUpScreen(modifier: Modifier) {
             }
 
             //Email
-            var isEmailValid by remember { mutableStateOf(true) }
+            var hasEmailInteracted by remember { mutableStateOf(false) }
             OutlinedTextField(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(bottom = if (!isEmailValid && email.isNotBlank()) 10.dp else 0.dp),
+                    .padding(bottom = if ( !viewModel.validateEmail(email) && email.isNotBlank() ) 10.dp else 0.dp),
                 value = email,
                 onValueChange = {
-                    email = it
-                    isEmailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches()},
+                    hasEmailInteracted = true
+                    viewModel.onEmailChange(it)
+                                },
                 label = { Text("Email") },
                 leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = "Email icon") },
-                trailingIcon = { if (!isEmailValid && email.isNotBlank()) {
+                trailingIcon = { if (!viewModel.validateEmail(email) && email.isNotBlank()) {
                     Icon(Icons.Filled.Error, contentDescription = "Email icon", tint = MaterialTheme.colorScheme.error) }
                 },
                 placeholder = { Text("Enter Your Email", fontStyle = FontStyle.Italic) },
                 shape = MaterialTheme.shapes.medium,
-                isError = !isEmailValid,
+                isError = hasEmailInteracted && !viewModel.validateEmail(email),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
                     cursorColor = Color.Gray,
                     focusedBorderColor = Color.Blue
                 ),
                 supportingText = {
-                    if (!isEmailValid && email.isNotBlank()) {
+                    if (hasEmailInteracted && !viewModel.validateEmail(email) && email.isNotBlank()) {
                         Text("Invalid email address", color = MaterialTheme.colorScheme.error)
                     }
                 },
@@ -200,16 +207,16 @@ fun SignUpScreen(modifier: Modifier) {
             
             //Password
             var passwordVisible by remember { mutableStateOf(false) }
-            var isPasswordValid by remember { mutableStateOf(true) }
+            var hasPasswordInteracted by remember { mutableStateOf(false) }
             val icon = if (!passwordVisible) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility
             OutlinedTextField(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(bottom = if (!isPasswordValid && password.isNotBlank()) 10.dp else 0.dp),
+                    .padding(bottom = if (!viewModel.validatePassword(password) && password.isNotBlank()) 10.dp else 0.dp),
                 value = password,
                 onValueChange = {
-                    password = it
-                    isPasswordValid = it.length >= 8
+                    hasPasswordInteracted = true
+                    viewModel.onPasswordChange(it)
                 },
                 label = { Text("Password") },
                 leadingIcon = { Icon(Icons.Outlined.Lock, contentDescription = "Lock icon") },
@@ -221,7 +228,7 @@ fun SignUpScreen(modifier: Modifier) {
                 placeholder ={ Text("Enter Your Password", fontStyle = FontStyle.Italic) },
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 shape = MaterialTheme.shapes.medium,
-                isError = !isPasswordValid,
+                isError = hasPasswordInteracted && !viewModel.validatePassword(password),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
                     cursorColor = Color.Gray,
@@ -229,7 +236,7 @@ fun SignUpScreen(modifier: Modifier) {
                     errorTrailingIconColor = MaterialTheme.colorScheme.onSurface
                 ),
                 supportingText = {
-                    if (!isPasswordValid && password.isNotBlank()) {
+                    if (hasPasswordInteracted && !viewModel.validatePassword(password) && password.isNotBlank()) {
                         Text("Password must be at least 8 characters", color = MaterialTheme.colorScheme.error)
                     }
                 }

@@ -30,7 +30,7 @@ fun NotificationScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            NotificationCard()
+            NotificationCard(modifier = modifier)
         }
     }
 }

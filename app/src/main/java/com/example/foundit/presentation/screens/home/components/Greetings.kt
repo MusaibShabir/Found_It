@@ -77,6 +77,8 @@ fun Greetings(
 
     }
 }
+
+
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun PreviewGreetings() {
