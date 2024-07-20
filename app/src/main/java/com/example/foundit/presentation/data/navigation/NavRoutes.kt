@@ -26,5 +26,8 @@ object NavRoutes {
     const val EDIT_PROFILE = "Edit Profile"
     const val LOG_OUT = "Log out"
     const val DELETE_ACCOUNT = "Delete Account"
+    const val GET_STARTED = "Get Started"
+    const val LOGIN = "Login"
+    const val SIGN_UP = "Sign Up"
 
 }

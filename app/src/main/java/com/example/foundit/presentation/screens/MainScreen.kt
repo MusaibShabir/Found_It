@@ -19,6 +19,9 @@ import com.example.foundit.presentation.screens.profile.ProfileScreen
 import com.example.foundit.presentation.screens.profile.components.EditProfileScreen
 import com.example.foundit.presentation.screens.profile.components.userBadgeCodes
 import com.example.foundit.presentation.screens.progress.ProcessScreen
+import com.example.foundit.presentation.screens.registration.GetStartedScreen
+import com.example.foundit.presentation.screens.registration.LoginScreen
+import com.example.foundit.presentation.screens.registration.SignUpScreen
 import com.example.foundit.presentation.screens.settings.SettingsScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.AboutScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.AccountCenterScreen
@@ -47,7 +50,7 @@ fun MainScreen(modifier: Modifier) {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = NavRoutes.HOME,
+            startDestination = NavRoutes.GET_STARTED,
             modifier = modifier.padding(innerPadding)
         ) {
             composable(NavRoutes.HOME) { HomeScreen(modifier = modifier) }
@@ -90,12 +93,16 @@ fun MainScreen(modifier: Modifier) {
             composable(NavRoutes.CHANGE_PASSWORD) { ChangePasswordScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.CHANGE_EMAIL) { ChangeEmailScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.CHANGE_PHONE_NUMBER) { ChangePhoneNumberScreen(modifier = modifier, navController = navController) }
+
+            composable(NavRoutes.GET_STARTED) { GetStartedScreen(modifier = modifier, navController = navController, forwardNavigation = NavRoutes.LOGIN)}
+            composable(NavRoutes.LOGIN) { LoginScreen(modifier = modifier)}
+            composable(NavRoutes.SIGN_UP) { SignUpScreen(modifier = modifier)}
         }
     }
 }
 
-@Composable
 @Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
+@Composable
 fun PreviewMainScreen() {
     MainScreen(modifier = Modifier)
 }

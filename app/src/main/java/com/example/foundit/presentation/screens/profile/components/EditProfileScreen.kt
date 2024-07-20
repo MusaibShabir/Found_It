@@ -20,6 +20,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -51,9 +52,6 @@ fun EditProfileScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-
-            Spacer(modifier = modifier.height(46.dp))
-
             // Profile picture Input Field
             AsyncImage(
                 model = profilePicture ?: ic_launcher_background,
@@ -96,7 +94,8 @@ fun EditProfileScreen(
                     },
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(
-                        KeyboardCapitalization.Words // Capitalize the first letter of each word
+                        capitalization = KeyboardCapitalization.Words,
+                        imeAction = ImeAction.Next
                     ),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.Transparent,
@@ -117,7 +116,7 @@ fun EditProfileScreen(
                     label = { Text("Last name", fontSize = 16.sp, fontWeight = FontWeight.Medium) },
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(
-                        KeyboardCapitalization.Words
+                        capitalization = KeyboardCapitalization.Words, // Sets the keyboard type to email
                     ),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.Transparent,
@@ -131,7 +130,9 @@ fun EditProfileScreen(
 
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = modifier.fillMaxWidth()
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 80.dp)
             ) {
 
                 // Cancel Button
