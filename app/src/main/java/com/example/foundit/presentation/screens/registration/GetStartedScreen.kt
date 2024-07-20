@@ -57,15 +57,14 @@ fun GetStartedScreen(
     var showButton by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        delay(2000)
         showCard = true
-        delay(2000)
+        delay(3000)
         showImage = true
         delay(2000)
         showTitle = true
-        delay(5000)
+        delay(5500)
         showDescription = true
-        delay(3000)
+        delay(4000)
         showButton = true
     }
 
@@ -82,14 +81,14 @@ fun GetStartedScreen(
             AnimatedVisibility(
                 visible = showCard,
                 enter = slideInVertically(
-                    initialOffsetY = { it },
-                    animationSpec = tween(durationMillis = 5000)
+                    initialOffsetY = { it + 450 },
+                    animationSpec = tween(durationMillis = 2000)
                 )
             ) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .fillMaxHeight(0.59f),
+                        .fillMaxHeight(0.55f),
                     shape = RoundedCornerShape(16.dp),
                     colors = CardDefaults.cardColors(
                         containerColor = Color.White
@@ -101,12 +100,12 @@ fun GetStartedScreen(
                         verticalArrangement = Arrangement.spacedBy(16.dp),
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(horizontal = 16.dp, vertical = 18.dp)
+                            .padding(horizontal = 16.dp, vertical = 20.dp)
 
                     ) {
                         AnimatedVisibility(
                             visible = showImage,
-                            enter = fadeIn(animationSpec = tween(durationMillis = 2000))
+                            enter = fadeIn(animationSpec = tween(durationMillis = 1500))
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.google), // Replace with your image resource
@@ -118,7 +117,7 @@ fun GetStartedScreen(
                         AnimatedVisibility(
                             visible = showTitle
                         ) {
-                            TypingTextEffect(text = "Welcome to Found it", typingDelay = 220)
+                            TypingTextEffect(text = "Welcome to Found it", typingDelay = 200)
                         }
 
                         AnimatedVisibility(
@@ -145,7 +144,7 @@ fun GetStartedScreen(
                                 },
                                 modifier = Modifier
                                     .fillMaxWidth(0.6f)
-                                    .padding(top = 16.dp)
+                                    .padding(top = 20.dp)
                                     .height(52.dp)
                             ) {
                                 Text(
@@ -189,7 +188,7 @@ fun TypingTextEffect(
     )
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
 @Composable
 fun PreviewGetStartedScreen() {
     GetStartedScreen(navController = NavHostController(LocalContext.current), forwardNavigation = NavRoutes.HOME)

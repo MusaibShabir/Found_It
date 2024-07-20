@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.outlined.Email
@@ -41,6 +44,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -62,7 +67,8 @@ fun SignUpScreen(modifier: Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(horizontal = 32.dp),
+            .padding(horizontal = 32.dp)
+            .verticalScroll(rememberScrollState()),
     ) {
         Row(
             modifier = modifier
@@ -95,6 +101,11 @@ fun SignUpScreen(modifier: Modifier) {
                 leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "Person icon") },
                 placeholder = { Text("Enter Your First Name", fontStyle = FontStyle.Italic) },
                 shape = MaterialTheme.shapes.medium,
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                    imeAction = ImeAction.Next
+                ),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
                     cursorColor = Color.Gray,
@@ -113,6 +124,11 @@ fun SignUpScreen(modifier: Modifier) {
                 placeholder = { Text("Enter Your Last Name", fontStyle = FontStyle.Italic) },
                 leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "Person icon") },
                 shape = MaterialTheme.shapes.medium,
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                    imeAction = ImeAction.Next
+                ),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
                     cursorColor = Color.Gray,
@@ -183,6 +199,10 @@ fun SignUpScreen(modifier: Modifier) {
                 },
                 placeholder = { Text("Enter Your Email", fontStyle = FontStyle.Italic) },
                 shape = MaterialTheme.shapes.medium,
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next
+                ),
                 isError = !isEmailValid,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
@@ -221,6 +241,7 @@ fun SignUpScreen(modifier: Modifier) {
                 placeholder ={ Text("Enter Your Password", fontStyle = FontStyle.Italic) },
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 shape = MaterialTheme.shapes.medium,
+                singleLine = true,
                 isError = !isPasswordValid,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
