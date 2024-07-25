@@ -26,15 +26,15 @@ import com.example.foundit.presentation.screens.profile.components.userBadgeCode
 @Composable
 fun ProfileScreen(
     modifier: Modifier,
-    profileName: String,
     profilePicture: Painter, profileCountryFlag: Painter,
     profileCountryCode: String,
-    profileId: Long,
+    //profileId: Long,
     badgesCodes: List<Int>,
     foundScore: Int,
     reportedScore: Int,
     memberSince: String,
-    navController: NavController
+    navController: NavController,
+    viewModel: ProfileViewModel
 ) {
     Scaffold(
         topBar = { ProfileTopAppBar(title = "Profile", navController = navController) }
@@ -43,17 +43,17 @@ fun ProfileScreen(
             modifier = modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .verticalScroll(rememberScrollState(),  true),
+                .verticalScroll(rememberScrollState(), true),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
             ProfileHeadingCard(
                 modifier = modifier,
-                profileName = profileName,
                 profilePicture = profilePicture,
                 profileCountryFlag = profileCountryFlag,
                 profileCountryCode = profileCountryCode,
-                profileId = profileId,
+                //profileId = profileId,
+                viewModel = viewModel ,
                 navController = navController
             )
 
@@ -65,12 +65,12 @@ fun ProfileScreen(
     }
 }
 
+/*
 @Composable
 @Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
 fun PreviewProfileScreen() {
     ProfileScreen(
         modifier = Modifier,
-        profileName = "Musaib Shabir",
         profilePicture = painterResource(id = R.drawable.ic_launcher_background),
         profileCountryFlag = painterResource(id = R.drawable.flag_in),
         profileCountryCode = "IND",
@@ -82,3 +82,5 @@ fun PreviewProfileScreen() {
         navController = NavController(LocalContext.current)
     )
 }
+
+ */

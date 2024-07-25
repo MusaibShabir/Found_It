@@ -51,3 +51,4 @@ kotlinx-coroutines-android-v164 = { module = "org.jetbrains.kotlinx:kotlinx-coro
 android-application = { id = "com.android.application", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+

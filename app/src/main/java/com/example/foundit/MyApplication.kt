@@ -1,6 +1,9 @@
 package com.example.foundit
 
 import android.app.Application
+
+import com.example.foundit.presentation.data.local.repo.ProfileDataRepository
+import com.example.foundit.presentation.data.local.tables.ProfileData
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -9,6 +12,7 @@ import javax.inject.Inject
 
 @HiltAndroidApp
 class MyApplication : Application() {
+
     @Inject
     lateinit var profileRepository: ProfileDataRepository
 
