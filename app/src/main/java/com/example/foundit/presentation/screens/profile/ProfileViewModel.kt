@@ -12,15 +12,23 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(private val repository: ProfileDataRepository) : ViewModel() {
+class ProfileViewModel @Inject constructor(private val profileRepository: ProfileDataRepository) : ViewModel() {
+
     private val _profileData = MutableStateFlow<ProfileData?>(null)
     val profileData: StateFlow<ProfileData?> = _profileData.asStateFlow()
 
     init {
         viewModelScope.launch {
-            repository.getProfileById(1).collect { profile ->
-                _profileData.value = profile
-            }
+            profileRepository.getProfileData().collect { _profileData.value = it}
         }
     }
+
+    fun upsertProfile(profileData: ProfileData) {
+        viewModelScope.launch {
+            profileRepository.upsertProfile(profileData)
+            profileRepository.getProfileData().collect { _profileData.value = it}
+        }
+    }
+
+
 }

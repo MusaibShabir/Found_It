@@ -28,12 +28,13 @@ fun ProfileScreen(
     modifier: Modifier,
     profilePicture: Painter, profileCountryFlag: Painter,
     profileCountryCode: String,
-    profileId: Long,
+    //profileId: Long,
     badgesCodes: List<Int>,
     foundScore: Int,
     reportedScore: Int,
     memberSince: String,
     navController: NavController,
+    viewModel: ProfileViewModel
 ) {
     Scaffold(
         topBar = { ProfileTopAppBar(title = "Profile", navController = navController) }
@@ -51,7 +52,8 @@ fun ProfileScreen(
                 profilePicture = profilePicture,
                 profileCountryFlag = profileCountryFlag,
                 profileCountryCode = profileCountryCode,
-                profileId = profileId,
+                //profileId = profileId,
+                viewModel = viewModel ,
                 navController = navController
             )
 
@@ -63,6 +65,7 @@ fun ProfileScreen(
     }
 }
 
+/*
 @Composable
 @Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
 fun PreviewProfileScreen() {
@@ -79,3 +82,5 @@ fun PreviewProfileScreen() {
         navController = NavController(LocalContext.current)
     )
 }
+
+ */

@@ -42,7 +42,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.foundit.R
 import com.example.foundit.presentation.data.navigation.NavRoutes
@@ -55,11 +54,11 @@ fun ProfileHeadingCard(
     profilePicture: Painter,
     profileCountryFlag: Painter,
     profileCountryCode: String,
-    profileId: Long,
+    //profileId: Long,
     navController: NavController,
+    viewModel: ProfileViewModel
 
     ) {
-    val viewModel: ProfileViewModel = viewModel()
     val profileData by viewModel.profileData.collectAsState()
 
     Card(
@@ -125,7 +124,7 @@ fun ProfileHeadingCard(
                             withStyle(style = SpanStyle(fontWeight= FontWeight.ExtraBold, fontStyle = FontStyle.Normal)) {
                                 append("#")
                             }
-                            append(profileId.toString())
+                            append("${it.id}" )
                         }, // id here
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight(300),
@@ -181,7 +180,7 @@ fun ProfileHeadingCard(
 }
 
 
-
+/*
 @Composable
 @Preview(showBackground = true, showSystemUi = false)
 
@@ -191,8 +190,10 @@ fun ProfileHeadingCardPreview() {
         profilePicture = painterResource(id = R.drawable.ic_launcher_background),
         profileCountryFlag = painterResource(id = R.drawable.flag_in),
         profileCountryCode = "IND",
-        profileId = 234567890,
+        //profileId = 234567890,
         navController = NavController(LocalContext.current)
     )
 
 }
+
+ */

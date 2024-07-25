@@ -7,12 +7,13 @@ import javax.inject.Inject
 
 
 class ProfileDataRepository @Inject constructor(private val profileDataDao: ProfileDataDao) {
-    fun getProfileById(id: Int): Flow<ProfileData>{
-        return profileDataDao.getProfileById(id)
+
+    suspend fun upsertProfile(profileData: ProfileData){
+        profileDataDao.upsertProfile(profileData)
     }
 
-    suspend fun upsert(profileData: ProfileData){
-        profileDataDao.upsertProfile(profileData)
+    fun getProfileData(): Flow<ProfileData>{
+        return profileDataDao.getProfileData()
     }
 
 }

@@ -12,6 +12,6 @@ interface ProfileDataDao {
     @Upsert
     suspend fun upsertProfile(profileData: ProfileData)
 
-    @Query("SELECT * FROM ProfileData WHERE id = :id")
-    fun getProfileById(id: Int): Flow<ProfileData>
+    @Query("SELECT * FROM ProfileData")
+    fun getProfileData(): Flow<ProfileData>
 }

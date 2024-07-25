@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -16,6 +17,7 @@ import com.example.foundit.presentation.screens.documentation.PrivacyPolicyScree
 import com.example.foundit.presentation.screens.home.HomeScreen
 import com.example.foundit.presentation.screens.notification.NotificationScreen
 import com.example.foundit.presentation.screens.profile.ProfileScreen
+import com.example.foundit.presentation.screens.profile.ProfileViewModel
 import com.example.foundit.presentation.screens.profile.components.EditProfileScreen
 import com.example.foundit.presentation.screens.profile.components.userBadgeCodes
 import com.example.foundit.presentation.screens.progress.ProcessScreen
@@ -42,6 +44,7 @@ import com.example.foundit.presentation.screens.settings.components.clickable.Ve
 @Composable
 fun MainScreen(modifier: Modifier) {
     val navController = rememberNavController()
+    val viewmodel: ProfileViewModel = viewModel()
     Scaffold(
         bottomBar = { NavigationBar(modifier = modifier, navController = navController) }
     ) { innerPadding ->
@@ -59,12 +62,13 @@ fun MainScreen(modifier: Modifier) {
                     profilePicture = painterResource(id = R.drawable.ic_launcher_background),
                     profileCountryFlag = painterResource(id = R.drawable.flag_in),
                     profileCountryCode = "IND",
-                    profileId = 234567890,
+                    //profileId = 234567890,
                     badgesCodes = userBadgeCodes,
                     foundScore = 10,
                     reportedScore = 5,
                     memberSince = "10 - June - 2024",
-                    navController = navController
+                    navController = navController,
+                    viewModel = viewmodel
                 )
             }
             composable(NavRoutes.SETTINGS) { SettingsScreen(modifier = modifier, navController = navController)}
