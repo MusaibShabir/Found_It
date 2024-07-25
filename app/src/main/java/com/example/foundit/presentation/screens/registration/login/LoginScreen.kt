@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.registration.login
+package com.example.foundit.presentation.screens.registration
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,7 +25,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,20 +39,14 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.foundit.presentation.screens.registration.components.ClickableTextToWebpage
 import com.example.foundit.presentation.screens.registration.components.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.OrDivider
 
 @Composable
-fun LoginScreen(
-    modifier: Modifier,
-    viewModel: LoginViewModel = viewModel()
-
-) {
-    val email by viewModel.email.collectAsState()
-    val password by viewModel.password.collectAsState()
-
+fun LoginScreen(modifier: Modifier) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -81,32 +74,30 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
-
             //Email
-            var hasEmailInteracted by remember { mutableStateOf(false) }
+            var isEmailValid by remember { mutableStateOf(true) }
             OutlinedTextField(
                 modifier = modifier
                     .fillMaxWidth(),
                 value = email,
                 onValueChange = {
-                    hasEmailInteracted = true
-                    viewModel.onEmailChange(it)
-                    },
+                    email = it
+                    isEmailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches()},
                 label = { Text("Email") },
                 leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = "Email icon") },
-                trailingIcon = { if (!viewModel.validateEmail(email) && email.isNotBlank()) {
+                trailingIcon = { if (!isEmailValid && email.isNotBlank()) {
                     Icon(Icons.Filled.Error, contentDescription = "Email icon") }
                 },
                 placeholder = { Text("Enter Your Email", fontStyle = FontStyle.Italic) },
                 shape = MaterialTheme.shapes.medium,
-                isError = hasEmailInteracted && !viewModel.validateEmail(email),
+                isError = !isEmailValid,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
                     cursorColor = Color.Gray,
                     focusedBorderColor = Color.Blue
                 ),
                 supportingText = {
-                    if (hasEmailInteracted && !viewModel.validateEmail(email) && email.isNotBlank()) {
+                    if (!isEmailValid && email.isNotBlank()) {
                         Text("Invalid email address", color = MaterialTheme.colorScheme.error)
                     }
                 },
@@ -114,15 +105,15 @@ fun LoginScreen(
 
             //Password
             var passwordVisible by remember { mutableStateOf(false) }
-            var hasPasswordInteracted by remember { mutableStateOf(false) }
+            var isPasswordValid by remember { mutableStateOf(true) }
             val icon = if (!passwordVisible) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility
             OutlinedTextField(
                 modifier = modifier
                     .fillMaxWidth(),
                 value = password,
                 onValueChange = {
-                    hasPasswordInteracted = true
-                    viewModel.onPasswordChange(it)
+                    password = it
+                    isPasswordValid = it.length >= 8
                 },
                 label = { Text("Password") },
                 leadingIcon = { Icon(Icons.Outlined.Lock, contentDescription = "Lock icon") },
@@ -134,7 +125,7 @@ fun LoginScreen(
                 placeholder ={ Text("Enter Your Password", fontStyle = FontStyle.Italic) },
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 shape = MaterialTheme.shapes.medium,
-                isError = hasPasswordInteracted && !viewModel.validatePassword(password),
+                isError = !isPasswordValid,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
                     cursorColor = Color.Gray,
@@ -142,7 +133,7 @@ fun LoginScreen(
                     errorTrailingIconColor = MaterialTheme.colorScheme.onSurface
                 ),
                 supportingText = {
-                    if (hasPasswordInteracted && !viewModel.validatePassword(password) && password.isNotBlank()) {
+                    if (!isPasswordValid && password.isNotBlank()) {
                         Text("Password must be at least 8 characters", color = MaterialTheme.colorScheme.error)
                     }
                 }

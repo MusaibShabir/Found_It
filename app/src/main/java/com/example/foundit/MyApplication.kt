@@ -1,6 +1,7 @@
 package com.example.foundit
 
 import android.app.Application
+
 import com.example.foundit.presentation.data.local.repo.ProfileDataRepository
 import com.example.foundit.presentation.data.local.tables.ProfileData
 import dagger.hilt.android.HiltAndroidApp
@@ -25,4 +26,5 @@ class MyApplication : Application() {
         }
 
     }
+
 }
