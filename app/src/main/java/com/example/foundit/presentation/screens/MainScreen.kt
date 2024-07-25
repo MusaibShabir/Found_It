@@ -56,7 +56,6 @@ fun MainScreen(modifier: Modifier) {
             composable(NavRoutes.PROFILE) {
                 ProfileScreen(
                     modifier = modifier,
-                    profileName = "Musaib Shabir",
                     profilePicture = painterResource(id = R.drawable.ic_launcher_background),
                     profileCountryFlag = painterResource(id = R.drawable.flag_in),
                     profileCountryCode = "IND",
