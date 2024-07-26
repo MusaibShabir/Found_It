@@ -17,17 +17,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.foundit.R
 import com.example.foundit.presentation.screens.home.components.AppName
 import com.example.foundit.presentation.screens.home.components.Greetings
 import com.example.foundit.presentation.screens.home.components.MainCard
+import com.example.foundit.presentation.screens.profile.ProfileViewModel
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(modifier: Modifier) {
+fun HomeScreen(
+    modifier: Modifier,
+    viewModel: ProfileViewModel
+) {
     Scaffold {
         Column(
             modifier = modifier
@@ -37,7 +42,7 @@ fun HomeScreen(modifier: Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AppName(modifier = modifier)
-            Greetings(modifier = modifier, name =  "Musaib Shabir")
+            Greetings(modifier = modifier, viewModel = viewModel)
             HorizontalDivider(
                 thickness = 1.dp,
                 modifier = modifier
@@ -73,8 +78,11 @@ fun HomeScreen(modifier: Modifier) {
     }
 }
 
+/*
 @Composable
 @Preview(showBackground = true, showSystemUi = true, device = "id:pixel_2")
 fun PreviewHomeScreen() {
     HomeScreen(modifier = Modifier)
 }
+
+ */

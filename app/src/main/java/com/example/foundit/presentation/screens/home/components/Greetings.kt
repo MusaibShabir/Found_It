@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,30 +26,38 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.foundit.R
+import com.example.foundit.presentation.screens.profile.ProfileViewModel
 import kotlinx.coroutines.delay
 
 @Composable
 fun Greetings(
     modifier: Modifier,
-    name: String
+    viewModel: ProfileViewModel
 ) {
+
+    val profileData by viewModel.profileData.collectAsState()
+    val profileName = profileData?.let { "${it.firstName} ${it.lastName}" }
+
     val greetingPrefix = stringResource(id = R.string.greeting_prefix)
     var isAnimationStarted by remember { mutableStateOf(false) }
     val animatedProgress = remember { Animatable(0f) }
 
-    LaunchedEffect(key1 = name) {
+    LaunchedEffect(key1 = profileName) {
         isAnimationStarted = true
         delay(1000)
         animatedProgress.animateTo(
             targetValue = 1f,
             animationSpec = keyframes {
-                durationMillis = name.length * 73
+                if (profileName != null) {
+                    durationMillis = profileName.length * 73
+                }
                 0.0f at 0 using LinearEasing
             })
     }
 
     val displayedText = if (isAnimationStarted) {
-        greetingPrefix + " " + name.substring(0, (animatedProgress.value * name.length).toInt())
+        "$greetingPrefix " + (profileName?.substring(0, (animatedProgress.value * profileName.length).toInt())
+            ?: run {  } )
     } else {
         ""
     }
@@ -61,6 +70,7 @@ fun Greetings(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column {
+
             Text(
                 text = displayedText,
                 fontFamily = FontFamily(Font(resId = R.font.roboto_thin_italic)),
@@ -69,8 +79,6 @@ fun Greetings(
                 maxLines = 1,
                 modifier = modifier.padding(start = 5.dp)
             )
-
-
         }
 
 
@@ -79,6 +87,7 @@ fun Greetings(
 }
 
 
+/*
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun PreviewGreetings() {
@@ -87,3 +96,5 @@ fun PreviewGreetings() {
         name = "Musaib"
     )
 }
+
+ */
