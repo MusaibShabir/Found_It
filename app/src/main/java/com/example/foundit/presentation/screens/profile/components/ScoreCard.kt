@@ -1,28 +1,40 @@
 package com.example.foundit.presentation.screens.profile.components
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.foundit.R
+import com.example.foundit.presentation.screens.profile.ProfileViewModel
 
 @Composable
 fun ScoreCard(
     modifier: Modifier,
-    foundScore: Int,
-    reportedScore: Int
+    viewModel: ProfileViewModel
 ) {
+    val profileData by viewModel.profileData.collectAsState()
     Card(
         shape = RoundedCornerShape(15.dp),
         modifier = modifier
@@ -49,19 +61,30 @@ fun ScoreCard(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
 
-                //Found Score Section (which is to the Left)
-                ScoreSection(
-                    modifier = modifier,
-                    sectionHeading = R.string.score_card_section_heading_left,
-                    sectionScore = foundScore
-                )
 
-                //Reported Score Section (which is to the Right)
-                ScoreSection(
-                    modifier = modifier,
-                    sectionHeading = R.string.score_card_section_heading_right,
-                    sectionScore = reportedScore
-                )
+                profileData?.let {
+
+                    //Found Score Section (which is to the Left)
+                    ScoreSection(
+                        modifier = modifier,
+                        sectionHeading = R.string.score_card_section_heading_left,
+                        sectionScore = it.totalFound
+                    )
+
+                    //Reported Score Section (which is to the Right)
+                    ScoreSection(
+                        modifier = modifier,
+                        sectionHeading = R.string.score_card_section_heading_right,
+                        sectionScore = it.totalReported
+                    )
+
+                }?: run {
+                CircularProgressIndicator()
+            }
+
+
+
+
             }
         }
 
@@ -69,8 +92,9 @@ fun ScoreCard(
 }
 
 
+/*
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = false)
 fun PreviewFoundReported() {
     ScoreCard(
         modifier = Modifier,
@@ -78,6 +102,8 @@ fun PreviewFoundReported() {
         reportedScore = 5
     )
 }
+
+ */
 
 
 //Child Function of the ScoreCard
@@ -108,7 +134,7 @@ fun ScoreSection(
     }
 }
 
-
+/*
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 fun PreviewScoreSection() {
@@ -118,3 +144,5 @@ fun PreviewScoreSection() {
         sectionScore = 10
     )
 }
+
+ */

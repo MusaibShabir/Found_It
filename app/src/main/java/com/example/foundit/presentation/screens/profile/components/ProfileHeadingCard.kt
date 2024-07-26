@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -49,14 +50,13 @@ import com.example.foundit.presentation.screens.profile.ProfileViewModel
 fun ProfileHeadingCard(
     modifier: Modifier,
     profilePicture: Painter,
-    profileCountryFlag: Painter,
     profileCountryCode: String,
-    //profileId: Long,
     navController: NavController,
     viewModel: ProfileViewModel
 
     ) {
     val profileData by viewModel.profileData.collectAsState()
+
 
     Card(
         shape = RoundedCornerShape(15.dp),
@@ -102,18 +102,25 @@ fun ProfileHeadingCard(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Start
                     ) {
-                        Image(
-                            painter = profileCountryFlag,
-                            contentDescription = "Flag",
-                            modifier = Modifier.size(14.dp)
-                        )
-                        Spacer(modifier = modifier.width(5.dp))
-                        Text(
-                            text = profileCountryCode, //countryCode here
-                            maxLines = 1,
-                            fontSize = 13.sp,
+
+                        val countryCode = it.countryCode
+                        if (countryCode == 91) {
+
+                            Image(
+                                painter = painterResource(id = R.drawable.flag_in),
+                                contentDescription = "Flag",
+                                modifier = Modifier
+                                    .size(14.dp)
 
                             )
+                            Text(
+                                text = profileCountryCode,
+                                maxLines = 1,
+                                fontSize = 13.sp,
+                                modifier = modifier.padding(start = 5.dp)
+                            )
+                        }
+
                     }
 
                     Text(

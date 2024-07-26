@@ -11,28 +11,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
-import com.example.foundit.R
 import com.example.foundit.presentation.screens.profile.components.BadgeCard
 import com.example.foundit.presentation.screens.profile.components.MemberSinceCard
 import com.example.foundit.presentation.screens.profile.components.ProfileHeadingCard
 import com.example.foundit.presentation.screens.profile.components.ProfileTopAppBar
 import com.example.foundit.presentation.screens.profile.components.ScoreCard
-import com.example.foundit.presentation.screens.profile.components.userBadgeCodes
 
 @Composable
 fun ProfileScreen(
     modifier: Modifier,
-    profilePicture: Painter, profileCountryFlag: Painter,
+    profilePicture: Painter,
     profileCountryCode: String,
-    //profileId: Long,
     badgesCodes: List<Int>,
-    foundScore: Int,
-    reportedScore: Int,
-    memberSince: String,
     navController: NavController,
     viewModel: ProfileViewModel
 ) {
@@ -50,17 +41,15 @@ fun ProfileScreen(
             ProfileHeadingCard(
                 modifier = modifier,
                 profilePicture = profilePicture,
-                profileCountryFlag = profileCountryFlag,
                 profileCountryCode = profileCountryCode,
-                //profileId = profileId,
                 viewModel = viewModel ,
                 navController = navController
             )
 
             BadgeCard(userBadgeCodes = badgesCodes)
 
-            ScoreCard(modifier = modifier, foundScore = foundScore, reportedScore = reportedScore)
-            MemberSinceCard(modifier = modifier, date = memberSince)
+            ScoreCard(modifier = modifier, viewModel = viewModel)
+            MemberSinceCard(modifier = modifier, viewModel = viewModel)
         }
     }
 }

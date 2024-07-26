@@ -63,12 +63,8 @@ fun MainScreen(modifier: Modifier) {
                 ProfileScreen(
                     modifier = modifier,
                     profilePicture = painterResource(id = R.drawable.ic_launcher_background),
-                    profileCountryFlag = painterResource(id = R.drawable.flag_in),
                     profileCountryCode = "IND",
                     badgesCodes = userBadgeCodes,
-                    foundScore = 10,
-                    reportedScore = 5,
-                    memberSince = "10 - June - 2024",
                     navController = navController,
                     viewModel = viewmodel
                 )
