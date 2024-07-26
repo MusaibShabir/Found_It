@@ -3,6 +3,7 @@ package com.example.foundit.di
 import android.content.Context
 import androidx.room.Room
 import com.example.foundit.presentation.data.local.FoundItDatabase
+import com.example.foundit.presentation.data.local.FoundItDatabase.Companion.MIGRATION_1_2
 import com.example.foundit.presentation.data.local.dao.ProfileDataDao
 import com.example.foundit.presentation.data.local.repo.ProfileDataRepository
 import dagger.Module
@@ -24,7 +25,8 @@ object AppModule {
             FoundItDatabase::class.java,
             "Local Database"
 
-        ).build()
+        ).addMigrations(MIGRATION_1_2)
+            .build()
     }
 
     @Provides

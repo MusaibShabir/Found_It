@@ -12,7 +12,7 @@ data class ProfileData(
     val countryCode: Int,
     val totalFound: Int,
     val totalReported: Int,
-    val memberSince: LocalDate = LocalDate.now(),
+    val memberSince: String = LocalDate.now().toString(),
 
     @PrimaryKey(autoGenerate = true)
     val id: Int,
