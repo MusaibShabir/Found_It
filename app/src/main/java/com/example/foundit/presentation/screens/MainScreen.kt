@@ -53,7 +53,7 @@ fun MainScreen(modifier: Modifier) {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = NavRoutes.GET_STARTED,
+            startDestination = NavRoutes.HOME,
             modifier = modifier.padding(innerPadding)
         ) {
             composable(NavRoutes.HOME) { HomeScreen(modifier = modifier) }
@@ -65,7 +65,6 @@ fun MainScreen(modifier: Modifier) {
                     profilePicture = painterResource(id = R.drawable.ic_launcher_background),
                     profileCountryFlag = painterResource(id = R.drawable.flag_in),
                     profileCountryCode = "IND",
-                    //profileId = 234567890,
                     badgesCodes = userBadgeCodes,
                     foundScore = 10,
                     reportedScore = 5,
@@ -103,6 +102,8 @@ fun MainScreen(modifier: Modifier) {
         }
     }
 }
+
+
 
 @Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
 @Composable
