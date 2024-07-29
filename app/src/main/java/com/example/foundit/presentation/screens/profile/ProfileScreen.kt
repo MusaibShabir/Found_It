@@ -17,7 +17,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.example.foundit.R
 import com.example.foundit.presentation.data.navigation.NavRoutes
@@ -84,6 +86,7 @@ fun ProfileScreenContent(
     }
 }
 
+
 // ViewModel Composable
 @Composable
 fun ProfileScreen(
@@ -129,22 +132,24 @@ fun ProfileScreen(
 
 }
 
-/*
+
 @Composable
 @Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
 fun PreviewProfileScreen() {
-    ProfileScreen(
+    ProfileScreenContent(
         modifier = Modifier,
         profilePicture = painterResource(id = R.drawable.ic_launcher_background),
-        profileCountryFlag = painterResource(id = R.drawable.flag_in),
-        profileCountryCode = "IND",
+        profileFirstName = "Musaib",
+        profileLastName = "Shabir",
+        profileCountryCode = 91,
+        badgesCodes = listOf(1,2,3,4,5,6,7),
         profileId = 234567890,
-        badgesCodes = userBadgeCodes,
         foundScore = 10,
         reportedScore = 5,
         memberSince = "10 - June - 2024",
+        onEditProfileClick = { },
         navController = NavController(LocalContext.current)
+
     )
 }
 
- */
