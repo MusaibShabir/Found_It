@@ -1,4 +1,4 @@
-package com.example.foundit.di
+package com.example.foundit.presentation.di
 
 import com.example.foundit.presentation.data.local.repo.ProfileDataRepository
 import com.example.foundit.presentation.screens.profile.ProfileViewModel

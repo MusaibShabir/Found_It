@@ -30,5 +30,11 @@ class ProfileViewModel @Inject constructor(private val profileRepository: Profil
         }
     }
 
+    fun updateProfileData(id: Long, firstName: String, lastName: String) {
+        viewModelScope.launch {
+            profileRepository.updateProfileData(id, firstName, lastName)
+        }
+    }
+
 
 }

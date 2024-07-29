@@ -65,7 +65,7 @@ fun MainScreen(modifier: Modifier) {
             composable(NavRoutes.HELP_AND_SUPPORT) { HelpAndSupportScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.FEEDBACK) { FeedbackScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.ABOUT) { AboutScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.EDIT_PROFILE) { EditProfileScreen(modifier = modifier, navController = navController) }
+            composable(NavRoutes.EDIT_PROFILE) { EditProfileScreen(modifier = modifier, navController = navController, viewModel = viewmodel) }
             composable(NavRoutes.DELETE_ACCOUNT) { DeleteAccountScreen(modifier = modifier, navController = navController, onDeleteAccount = { /*TODO*/ }) }
             composable(NavRoutes.LOG_OUT) { LogoutScreen(modifier = modifier, navController = navController, onLogout = { /*TODO*/ })}
             composable(NavRoutes.REPORT_A_BUG) { ReportBugScreen(modifier = modifier, navController = navController)}

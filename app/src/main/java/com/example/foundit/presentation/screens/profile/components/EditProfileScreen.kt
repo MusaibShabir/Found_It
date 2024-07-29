@@ -4,37 +4,61 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.foundit.R.drawable.ic_launcher_background
 import com.example.foundit.presentation.common.TheTopAppBar
+import com.example.foundit.presentation.screens.profile.ProfileViewModel
 
-
+//UI-Only Composable
 @Composable
-fun EditProfileScreen(
+fun EditProfileScreenContent(
     modifier: Modifier,
+    firstName: String,
+    lastName: String,
+    onFirstNameChange: (String) -> Unit,
+    onLastNameChange: (String) -> Unit,
+    onCancelClick: () -> Unit,
+    onSaveClick: () -> Unit,
     navController: NavController
 ) {
-    var firstName by remember { mutableStateOf("") }
-    var lastName by remember { mutableStateOf("") }
     var profilePicture by remember { mutableStateOf<Uri?>(null) }
 
     val profilePicturePickerLauncher = rememberLauncherForActivityResult(
@@ -81,15 +105,11 @@ fun EditProfileScreen(
                 // First name Input Field
                 TextField(
                     value = firstName,
-                    onValueChange = {
-                        firstName = it.filter { char -> char.isLetter() || char.isWhitespace() }
-                    },
+                    onValueChange = { onFirstNameChange(it) },
                     singleLine = true,
                     label = {
                         Text(
-                            "First name",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Medium
+                            text = "First name",
                         )
                     },
                     modifier = Modifier.fillMaxWidth(),
@@ -98,9 +118,9 @@ fun EditProfileScreen(
                         imeAction = ImeAction.Next
                     ),
                     colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent,
-                        errorContainerColor = Color.Transparent
+                        focusedContainerColor = Color.Unspecified,
+                        unfocusedContainerColor = Color.Unspecified,
+                        errorContainerColor = MaterialTheme.colorScheme.onError
                     )
                 )
 
@@ -109,19 +129,17 @@ fun EditProfileScreen(
                 // Last name Input Field
                 TextField(
                     value = lastName,
-                    onValueChange = {
-                        lastName = it.filter { char -> char.isLetter() || char.isWhitespace() }
-                    },
+                    onValueChange = { onLastNameChange(it) },
                     singleLine = true,
-                    label = { Text("Last name", fontSize = 16.sp, fontWeight = FontWeight.Medium) },
+                    label = { Text(text = "Last name") },
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(
-                        capitalization = KeyboardCapitalization.Words, // Sets the keyboard type to email
+                        capitalization = KeyboardCapitalization.Words,
                     ),
                     colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent,
-                        errorContainerColor = Color.Transparent
+                        focusedContainerColor = Color.Unspecified,
+                        unfocusedContainerColor = Color.Unspecified,
+                        errorContainerColor = MaterialTheme.colorScheme.onError
                     )
                 )
             }
@@ -137,9 +155,7 @@ fun EditProfileScreen(
 
                 // Cancel Button
                 Button(
-                    onClick = {
-                        navController.popBackStack()
-                    }
+                    onClick = { onCancelClick() }
                 ) {
                     Text(
                         text = "Cancel",
@@ -149,11 +165,9 @@ fun EditProfileScreen(
                     )
                 }
 
-                // Save Button
+                //Save Button
                 Button(
-                    onClick = {
-                        navController.popBackStack()
-                    },
+                    onClick = { onSaveClick() },
                     enabled = firstName.isNotBlank() && lastName.isNotBlank(),
                 ) {
                     Text(
@@ -168,11 +182,50 @@ fun EditProfileScreen(
     }
 }
 
+
+//ViewModel Composable
+@Composable
+fun EditProfileScreen(
+    modifier: Modifier,
+    navController: NavController,
+    viewModel: ProfileViewModel
+) {
+    val profileData by viewModel.profileData.collectAsState()
+    var profileFirstName by remember { mutableStateOf(profileData?.firstName ?: "") }
+    var profileLastName by remember { mutableStateOf(profileData?.lastName ?: "") }
+    val profileId by remember { mutableLongStateOf(profileData?.id ?: 0) }
+
+
+    EditProfileScreenContent(
+        modifier = modifier,
+        firstName = profileFirstName,
+        lastName = profileLastName,
+        onFirstNameChange = { profileFirstName = it },
+        onLastNameChange = { profileLastName = it },
+        onCancelClick = { navController.popBackStack() },
+        onSaveClick = {
+            viewModel.updateProfileData(profileId, profileFirstName, profileLastName)
+            navController.popBackStack()
+        },
+        navController = navController
+    )
+
+}
+
+
+
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewEditProfileScreen() {
-    EditProfileScreen(
+    EditProfileScreenContent(
         modifier = Modifier,
+        firstName = "Musaib",
+        lastName = "Shabir",
+        onFirstNameChange = {},
+        onLastNameChange = {},
+        onCancelClick = {},
+        onSaveClick = {},
         navController = NavController(LocalContext.current)
     )
 }
