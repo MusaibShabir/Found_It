@@ -17,24 +17,23 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.foundit.R
-import com.example.foundit.presentation.screens.profile.ProfileViewModel
 
+// UI-Only Composable
 @Composable
 fun ScoreCard(
-    modifier: Modifier,
-    viewModel: ProfileViewModel
+    modifier: Modifier = Modifier,
+    foundScore: Int?,
+    reportedScore: Int?
 ) {
-    val profileData by viewModel.profileData.collectAsState()
     Card(
         shape = RoundedCornerShape(15.dp),
         modifier = modifier
@@ -60,42 +59,29 @@ fun ScoreCard(
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-
-
-                profileData?.let {
-
-                    //Found Score Section (which is to the Left)
+                if (foundScore != null && reportedScore != null) {
                     ScoreSection(
                         modifier = modifier,
                         sectionHeading = R.string.score_card_section_heading_left,
-                        sectionScore = it.totalFound
+                        sectionScore = foundScore
                     )
 
-                    //Reported Score Section (which is to the Right)
                     ScoreSection(
                         modifier = modifier,
                         sectionHeading = R.string.score_card_section_heading_right,
-                        sectionScore = it.totalReported
+                        sectionScore = reportedScore
                     )
-
-                }?: run {
-                CircularProgressIndicator()
-            }
-
-
-
-
+                } else {
+                    CircularProgressIndicator()
+                }
             }
         }
-
     }
 }
 
-
-/*
 @Composable
 @Preview(showBackground = true, showSystemUi = false)
-fun PreviewFoundReported() {
+fun PreviewScoreCard() {
     ScoreCard(
         modifier = Modifier,
         foundScore = 10,
@@ -103,7 +89,6 @@ fun PreviewFoundReported() {
     )
 }
 
- */
 
 
 //Child Function of the ScoreCard
@@ -134,10 +119,11 @@ fun ScoreSection(
     }
 }
 
-/*
+
+//Score Section Left
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
-fun PreviewScoreSection() {
+@Preview(showBackground = true, showSystemUi = false)
+fun PreviewScoreSectionLeft() {
     ScoreSection(
         modifier = Modifier,
         sectionHeading = R.string.score_card_section_heading_left,
@@ -145,4 +131,16 @@ fun PreviewScoreSection() {
     )
 }
 
- */
+
+//Score Section Right
+@Composable
+@Preview(showBackground = true, showSystemUi = false)
+fun PreviewScoreSectionRight() {
+    ScoreSection(
+        modifier = Modifier,
+        sectionHeading = R.string.score_card_section_heading_right,
+        sectionScore = 5
+    )
+}
+
+

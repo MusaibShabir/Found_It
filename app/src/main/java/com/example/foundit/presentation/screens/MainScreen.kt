@@ -4,13 +4,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.foundit.R
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.navigation.NavigationBar
 import com.example.foundit.presentation.screens.documentation.PrivacyPolicyScreen
@@ -19,7 +16,6 @@ import com.example.foundit.presentation.screens.notification.NotificationScreen
 import com.example.foundit.presentation.screens.profile.ProfileScreen
 import com.example.foundit.presentation.screens.profile.ProfileViewModel
 import com.example.foundit.presentation.screens.profile.components.EditProfileScreen
-import com.example.foundit.presentation.screens.profile.components.userBadgeCodes
 import com.example.foundit.presentation.screens.progress.ProcessScreen
 import com.example.foundit.presentation.screens.registration.GetStartedScreen
 import com.example.foundit.presentation.screens.registration.LoginScreen
@@ -59,16 +55,7 @@ fun MainScreen(modifier: Modifier) {
             composable(NavRoutes.HOME) { HomeScreen(modifier = modifier, viewModel = viewmodel) }
             composable(NavRoutes.PROGRESS) { ProcessScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.NOTIFICATIONS) { NotificationScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.PROFILE) {
-                ProfileScreen(
-                    modifier = modifier,
-                    profilePicture = painterResource(id = R.drawable.ic_launcher_background),
-                    profileCountryCode = "IND",
-                    badgesCodes = userBadgeCodes,
-                    navController = navController,
-                    viewModel = viewmodel
-                )
-            }
+            composable(NavRoutes.PROFILE) { ProfileScreen(modifier = modifier, navController = navController, viewModel = viewmodel) }
             composable(NavRoutes.SETTINGS) { SettingsScreen(modifier = modifier, navController = navController)}
 
             composable(NavRoutes.ACCOUNT_CENTER) { AccountCenterScreen(modifier = modifier, navController = navController) }
@@ -97,12 +84,4 @@ fun MainScreen(modifier: Modifier) {
             composable(NavRoutes.SIGN_UP) { SignUpScreen(modifier = modifier)}
         }
     }
-}
-
-
-
-@Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
-@Composable
-fun PreviewMainScreen() {
-    MainScreen(modifier = Modifier)
 }

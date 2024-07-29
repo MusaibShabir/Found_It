@@ -19,13 +19,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults.buttonColors
 import androidx.compose.material3.ButtonDefaults.buttonElevation
 import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,26 +35,23 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.foundit.R
-import com.example.foundit.presentation.data.navigation.NavRoutes
-import com.example.foundit.presentation.screens.profile.ProfileViewModel
 
 
+// UI-Only Composable
 @Composable
 fun ProfileHeadingCard(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     profilePicture: Painter,
-    profileCountryCode: String,
-    navController: NavController,
-    viewModel: ProfileViewModel
-
-    ) {
-    val profileData by viewModel.profileData.collectAsState()
-
-
+    firstName: String,
+    lastName: String,
+    profileCountryCode: Int,
+    profileId: Int,
+    onEditProfileClick: () -> Unit,
+) {
     Card(
         shape = RoundedCornerShape(15.dp),
         modifier = modifier
@@ -90,9 +84,8 @@ fun ProfileHeadingCard(
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Top
             ) {
-                profileData?.let {
                     Text(
-                        text = "${it.firstName} ${it.lastName}",
+                        text = "$firstName $lastName",
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight(600),
                         maxLines = 1,
@@ -103,8 +96,7 @@ fun ProfileHeadingCard(
                         horizontalArrangement = Arrangement.Start
                     ) {
 
-                        val countryCode = it.countryCode
-                        if (countryCode == 91) {
+                        if (profileCountryCode == 91) {
 
                             Image(
                                 painter = painterResource(id = R.drawable.flag_in),
@@ -113,14 +105,14 @@ fun ProfileHeadingCard(
                                     .size(14.dp)
 
                             )
+
                             Text(
-                                text = profileCountryCode,
+                                text = "INDIA",
                                 maxLines = 1,
                                 fontSize = 13.sp,
                                 modifier = modifier.padding(start = 5.dp)
                             )
                         }
-
                     }
 
                     Text(
@@ -128,8 +120,8 @@ fun ProfileHeadingCard(
                             withStyle(style = SpanStyle(fontWeight= FontWeight.ExtraBold, fontStyle = FontStyle.Normal)) {
                                 append("#")
                             }
-                            append("${it.id}" )
-                        }, // id here
+                            append(profileId.toString())
+                        },
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight(300),
                         fontStyle = FontStyle.Italic,
@@ -137,9 +129,8 @@ fun ProfileHeadingCard(
                         modifier = modifier.padding(top = 1.dp, bottom = 1.dp)
                     )
 
-
                     Button(
-                        onClick = { navController.navigate(NavRoutes.EDIT_PROFILE) },
+                        onClick = { onEditProfileClick() },
                         shape = RoundedCornerShape(15.dp),
                         elevation = buttonElevation(defaultElevation = 20.dp, pressedElevation = 25.dp),
                         colors = buttonColors(containerColor = Color.Gray),
@@ -155,36 +146,57 @@ fun ProfileHeadingCard(
                         )
                         {
                             Icon(
-                                imageVector =  Icons.Filled.Edit,
+                                imageVector = Icons.Filled.Edit,
                                 contentDescription = "Edit",
                                 tint = Color.Black,
                                 modifier = Modifier.size(11.dp)
 
                             )
                             Spacer(modifier = modifier.width(5.dp))
+
                             Text(
                                 text = stringResource(id = R.string.edit_profile_button),
                                 color = Color.Black,
                                 fontSize = 11.sp,
-
-                                )
+                            )
                         }
-
                     }
-                }?: run {
-                    CircularProgressIndicator()
-                }
-
-
             }
 
-
         }
+
+
     }
+
 }
 
 
+
 /*
+// ViewModel Composable
+@Composable
+fun ProfileHeadingCard(
+    modifier: Modifier,
+    profilePicture: Painter,
+    profileCountryCode: String,
+    navController: NavController,
+    viewModel: ProfileViewModel
+) {
+    val profileData by viewModel.profileData.collectAsState()
+
+    ProfileHeadingCardContent(
+        modifier = modifier,
+        profilePicture = profilePicture,
+        profileData = profileData,
+        profileCountryCode = profileCountryCode,
+        onEditProfileClick = { navController.navigate(NavRoutes.EDIT_PROFILE) }
+    )
+}
+
+ */
+
+
+
 @Composable
 @Preview(showBackground = true, showSystemUi = false)
 
@@ -192,12 +204,14 @@ fun ProfileHeadingCardPreview() {
     ProfileHeadingCard(
         modifier = Modifier,
         profilePicture = painterResource(id = R.drawable.ic_launcher_background),
-        profileCountryFlag = painterResource(id = R.drawable.flag_in),
-        profileCountryCode = "IND",
-        //profileId = 234567890,
-        navController = NavController(LocalContext.current)
+        profileCountryCode = 91,
+        firstName = "Musaib",
+        lastName = "Shabir",
+        profileId = 234567890,
+        onEditProfileClick = { /*TODO*/ },
+
+
     )
 
 }
 
- */

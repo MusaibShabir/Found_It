@@ -19,26 +19,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.foundit.R
 import com.example.foundit.presentation.screens.profile.ProfileViewModel
 
+// UI-Only Composable
 @Composable
-fun MemberSinceCard(
-    modifier: Modifier,
-    viewModel: ProfileViewModel
+fun MemberSinceCardContent(
+    modifier: Modifier = Modifier,
+    memberSince: String?
 ) {
-    val profileData by viewModel.profileData.collectAsState()
-
     Card(
         shape = RoundedCornerShape(15.dp),
         modifier = modifier
             .padding(16.dp)
             .height(100.dp)
             .fillMaxWidth(),
-
-        ) {
+    ) {
         Column(
             modifier = modifier
                 .padding(vertical = 16.dp, horizontal = 24.dp)
@@ -60,31 +59,44 @@ fun MemberSinceCard(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Start,
             ) {
-                profileData?.let{
+                if (memberSince != null) {
                     Text(
-                        text =  it.memberSince,
+                        text = memberSince,
                         fontSize = 22.sp,
                         fontStyle = FontStyle.Normal,
                         fontWeight = FontWeight.SemiBold,
                         letterSpacing = 5.sp,
                     )
-                }?: run {
+                } else {
                     CircularProgressIndicator()
                 }
-
             }
         }
     }
 }
 
-/*
+
+// ViewModel Composable
+@Composable
+fun MemberSinceCard(
+    modifier: Modifier,
+    viewModel: ProfileViewModel
+) {
+    val profileData by viewModel.profileData.collectAsState()
+
+    MemberSinceCardContent(modifier = modifier, memberSince = profileData?.memberSince)
+}
+
+
+
 @Composable
 @Preview(showBackground = true, showSystemUi = false)
 fun PreviewMemberSince() {
-    MemberSinceCard(
+    MemberSinceCardContent(
         modifier = Modifier,
+        memberSince = "10 - June - 2024"
+
 
     )
 }
 
- */
