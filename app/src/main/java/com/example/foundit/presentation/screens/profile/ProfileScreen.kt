@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -37,7 +38,7 @@ fun ProfileScreenContent(
     profileLastName: String,
     profilePicture: Painter,
     profileCountryCode: Int,
-    profileId: Int,
+    profileId: Long,
     badgesCodes: List<Int>,
     foundScore: Int?,
     reportedScore: Int?,
@@ -102,7 +103,7 @@ fun ProfileScreen(
     val profileLastName by remember { mutableStateOf(profileData?.lastName ?: "") }
     val profileCountryCode by remember { mutableIntStateOf(profileData?.countryCode ?: 0) }
     val profilePicture = painterResource(id = R.drawable.ic_launcher_background)
-    val profileId by remember { mutableIntStateOf(profileData?.id ?: 0) }
+    val profileId by remember { mutableLongStateOf(profileData?.id ?: 0) }
 
     //Badges Card
     val badgesCodes = listOf(1,2,3,4,5,6,7)
