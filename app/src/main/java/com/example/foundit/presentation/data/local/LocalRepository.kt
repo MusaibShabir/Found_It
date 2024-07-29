@@ -11,12 +11,15 @@ abstract class FoundItDatabase : RoomDatabase() {
     abstract fun foundItDao(): ProfileDataDao
 
     companion object {
-         val MIGRATION_1_2 = Migration(1, 2) {
+
+        //  New Columns Added [totalFound, totalReported, memberSince]
+        val MIGRATION_1_2 = Migration(1, 2) {
              it.execSQL("ALTER TABLE ProfileData ADD COLUMN totalFound INTEGER NOT NULL DEFAULT 0")
              it.execSQL("ALTER TABLE ProfileData ADD COLUMN totalReported INTEGER NOT NULL DEFAULT 0")
              it.execSQL("ALTER TABLE ProfileData ADD COLUMN memberSince TEXT NOT NULL DEFAULT '0000-00-00'")
          }
 
+        // Profile_Id Data Type modified from Int -> Long
         val MIGRATION_2_3 = Migration(2, 3) {
             it.execSQL(
                 """
