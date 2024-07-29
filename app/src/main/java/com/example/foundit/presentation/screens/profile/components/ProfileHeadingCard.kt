@@ -49,7 +49,7 @@ fun ProfileHeadingCard(
     firstName: String,
     lastName: String,
     profileCountryCode: Int,
-    profileId: Int,
+    profileId: Long,
     onEditProfileClick: () -> Unit,
 ) {
     Card(

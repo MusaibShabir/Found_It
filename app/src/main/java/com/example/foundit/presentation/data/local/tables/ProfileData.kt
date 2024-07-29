@@ -15,7 +15,7 @@ data class ProfileData(
     val memberSince: String = LocalDate.now().toString(),
 
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Long,
 )
 
 
