@@ -12,6 +12,10 @@ class ProfileDataRepository @Inject constructor(private val profileDataDao: Prof
         profileDataDao.upsertProfile(profileData)
     }
 
+    suspend fun updateProfileData(id: Long,firstName: String, lastName: String) {
+        profileDataDao.updateProfileData(id, firstName, lastName)
+    }
+
     fun getProfileData(): Flow<ProfileData>{
         return profileDataDao.getProfileData()
     }

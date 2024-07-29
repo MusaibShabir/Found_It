@@ -12,6 +12,9 @@ interface ProfileDataDao {
     @Upsert
     suspend fun upsertProfile(profileData: ProfileData)
 
+    @Query("UPDATE ProfileData SET firstName = :firstName, lastName = :lastName WHERE id = :id")
+    suspend fun updateProfileData(id: Long, firstName: String, lastName: String)
+
     @Query("SELECT * FROM ProfileData")
     fun getProfileData(): Flow<ProfileData>
 }
