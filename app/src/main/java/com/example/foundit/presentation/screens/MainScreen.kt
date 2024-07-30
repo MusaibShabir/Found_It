@@ -57,7 +57,6 @@ fun MainScreen(modifier: Modifier) {
             composable(NavRoutes.NOTIFICATIONS) { NotificationScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.PROFILE) { ProfileScreen(modifier = modifier, navController = navController, viewModel = viewmodel) }
             composable(NavRoutes.SETTINGS) { SettingsScreen(modifier = modifier, navController = navController)}
-
             composable(NavRoutes.ACCOUNT_CENTER) { AccountCenterScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.LANGUAGE) { LanguageScreen(modifier = modifier, navController = navController)}
             composable(NavRoutes.APPEARANCE) { AppearanceScreen(modifier = modifier, navController = navController, onThemeChange = { /*TODO*/ }) }
@@ -78,7 +77,6 @@ fun MainScreen(modifier: Modifier) {
             composable(NavRoutes.CHANGE_PASSWORD) { ChangePasswordScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.CHANGE_EMAIL) { ChangeEmailScreen(modifier = modifier, navController = navController) }
             composable(NavRoutes.CHANGE_PHONE_NUMBER) { ChangePhoneNumberScreen(modifier = modifier, navController = navController) }
-
             composable(NavRoutes.GET_STARTED) { GetStartedScreen(modifier = modifier, navController = navController, forwardNavigation = NavRoutes.LOGIN)}
             composable(NavRoutes.LOGIN) { LoginScreen(modifier = modifier)}
             composable(NavRoutes.SIGN_UP) { SignUpScreen(modifier = modifier)}
