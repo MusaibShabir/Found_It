@@ -1,7 +1,6 @@
 package com.example.foundit.presentation.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -43,64 +42,6 @@ import com.example.foundit.presentation.screens.settings.components.clickable.Re
 import com.example.foundit.presentation.screens.settings.components.clickable.SecurityScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.VersionScreen
 
-
-/*
-@Composable
-fun MainScreen(modifier: Modifier) {
-    val navController = rememberNavController()
-
-    val loginViewModel: LoginViewModel = hiltViewModel()
-    val signUpViewModel: SignUpViewModel = hiltViewModel()
-    val profileViewModel: ProfileViewModel = hiltViewModel()
-
-
-    Scaffold(
-        bottomBar = { NavigationBar(modifier = modifier, navController = navController) }
-    ) { innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = NavRoutes.GET_STARTED,
-            modifier = modifier.padding(innerPadding)
-        ) {
-            composable(NavRoutes.HOME) { HomeScreen(modifier = modifier, viewModel = profileViewModel) }
-            composable(NavRoutes.PROGRESS) { ProcessScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.NOTIFICATIONS) { NotificationScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.PROFILE) { ProfileScreen(modifier = modifier, navController = navController, viewModel = profileViewModel) }
-            composable(NavRoutes.SETTINGS) { SettingsScreen(modifier = modifier, navController = navController)}
-            composable(NavRoutes.ACCOUNT_CENTER) { AccountCenterScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.LANGUAGE) { LanguageScreen(modifier = modifier, navController = navController)}
-            composable(NavRoutes.APPEARANCE) { AppearanceScreen(modifier = modifier, navController = navController, onThemeChange = { /*TODO*/ }) }
-            composable(NavRoutes.SECURITY) { SecurityScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.HELP_AND_SUPPORT) { HelpAndSupportScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.FEEDBACK) { FeedbackScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.ABOUT) { AboutScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.EDIT_PROFILE) { EditProfileScreen(modifier = modifier, navController = navController, viewModel = profileViewModel) }
-            composable(NavRoutes.DELETE_ACCOUNT) { DeleteAccountScreen(modifier = modifier, navController = navController, onDeleteAccount = { /*TODO*/ }) }
-            composable(NavRoutes.LOG_OUT) { LogoutScreen(modifier = modifier, navController = navController, onLogout = { /*TODO*/ })}
-            composable(NavRoutes.REPORT_A_BUG) { ReportBugScreen(modifier = modifier, navController = navController)}
-            composable(NavRoutes.CONTACT_SUPPORT) { ContactSupportScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.VERSION) { VersionScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.PRIVACY_POLICY) { PrivacyPolicyScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.ACKNOWLEDGMENTS) { AcknowledgementScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.DEVELOPER_INFO) { DeveloperInfoScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.FOLLOW_US) { FollowUsScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.CHANGE_PASSWORD) { ChangePasswordScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.CHANGE_EMAIL) { ChangeEmailScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.CHANGE_PHONE_NUMBER) { ChangePhoneNumberScreen(modifier = modifier, navController = navController) }
-            composable(NavRoutes.GET_STARTED) { GetStartedScreen(modifier = modifier, navController = navController, forwardNavigation = NavRoutes.LOGIN)}
-            composable(NavRoutes.LOGIN) { LoginScreen(modifier = modifier, navController = navController, viewModel = loginViewModel) }
-            composable(NavRoutes.SIGN_UP) { SignUpScreen(modifier = modifier, navController = navController, viewModel = signUpViewModel) }
-            composable(NavRoutes.GET_STARTED) { GetStartedScreen(forwardNavigation = NavRoutes.LOGIN, navController = navController)}
-        }
-
-    }
-}
-
- */
-
-
-
-
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen(modifier: Modifier) {
@@ -126,7 +67,8 @@ fun MainScreen(modifier: Modifier) {
                 ProcessScreen(modifier, navController)
             }
         }
-        composable(NavRoutes.NOTIFICATIONS) {Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
+        composable(NavRoutes.NOTIFICATIONS) {
+            Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
             NotificationScreen(modifier, navController)
         }
         }
@@ -138,6 +80,41 @@ fun MainScreen(modifier: Modifier) {
         composable(NavRoutes.SETTINGS) {
             Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
                 SettingsScreen(modifier, navController)
+            }
+        }
+        composable(NavRoutes.ACCOUNT_CENTER) {
+            Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
+                AccountCenterScreen(modifier, navController)
+            }
+        }
+        composable(NavRoutes.LANGUAGE) {
+            Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
+                LanguageScreen(modifier, navController)
+            }
+        }
+        composable(NavRoutes.APPEARANCE) {
+            Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
+                AppearanceScreen(modifier = modifier, navController = navController, onThemeChange = { /*TODO*/ })
+            }
+        }
+        composable(NavRoutes.SECURITY) {
+            Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
+                SecurityScreen(modifier, navController)
+            }
+        }
+        composable(NavRoutes.HELP_AND_SUPPORT) {
+            Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
+                HelpAndSupportScreen(modifier, navController)
+            }
+        }
+        composable(NavRoutes.FEEDBACK) {
+            Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
+                FeedbackScreen(modifier, navController)
+            }
+        }
+        composable(NavRoutes.ABOUT) {
+            Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
+                AboutScreen(modifier, navController)
             }
         }
         composable(NavRoutes.EDIT_PROFILE) {
@@ -158,6 +135,57 @@ fun MainScreen(modifier: Modifier) {
             }
 
         }
+        composable(NavRoutes.REPORT_A_BUG) {
+            Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
+                ReportBugScreen(modifier, navController)
+            }
+        }
+        composable(NavRoutes.CONTACT_SUPPORT) {
+            Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
+                ContactSupportScreen(modifier, navController)
+            }
+        }
+        composable(NavRoutes.VERSION) {
+            Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
+                VersionScreen(modifier = modifier, navController = navController)
+            }
+        }
+        composable(NavRoutes.PRIVACY_POLICY) {
+            Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
+                PrivacyPolicyScreen(modifier = modifier, navController = navController)
+            }
+        }
+        composable(NavRoutes.ACKNOWLEDGMENTS) {
+            Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
+                AcknowledgementScreen(modifier = modifier, navController = navController)
+            }
+        }
+        composable(NavRoutes.DEVELOPER_INFO) {
+            Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
+                DeveloperInfoScreen(modifier = modifier, navController = navController)
+            }
+        }
+        composable(NavRoutes.FOLLOW_US) {
+            Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
+                FollowUsScreen(modifier = modifier, navController = navController)
+            }
+        }
+        composable(NavRoutes.CHANGE_PASSWORD) {
+            Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
+                ChangePasswordScreen(modifier = modifier, navController = navController)
+            }
+        }
+        composable(NavRoutes.CHANGE_EMAIL) {
+            Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
+                ChangeEmailScreen(modifier = modifier, navController = navController)
+            }
+        }
+        composable(NavRoutes.CHANGE_PHONE_NUMBER) {
+            Scaffold(bottomBar = { NavigationBar(modifier, navController) }) {
+                ChangePhoneNumberScreen(modifier = modifier, navController = navController)
+            }
+        }
+
 
         // Screens WITHOUT Navigation Bar
         composable(NavRoutes.LOGIN) {
@@ -171,7 +199,7 @@ fun MainScreen(modifier: Modifier) {
 
         }
 
-        }
+    }
 
 
 }
