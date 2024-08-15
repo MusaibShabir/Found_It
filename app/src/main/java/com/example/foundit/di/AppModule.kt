@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.di
+package com.example.foundit.di
 
 import android.content.Context
 import androidx.room.Room
