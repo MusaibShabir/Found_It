@@ -1,5 +1,6 @@
-package com.example.foundit.presentation.screens.registration
+package com.example.foundit.presentation.screens.registration.login
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -39,12 +40,19 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.foundit.presentation.data.navigation.NavRoutes
+import com.example.foundit.presentation.screens.profile.ProfileViewModel
 import com.example.foundit.presentation.screens.registration.components.ClickableTextToWebpage
 import com.example.foundit.presentation.screens.registration.components.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.OrDivider
 
 @Composable
-fun LoginScreen(modifier: Modifier) {
+fun LoginScreen(
+    modifier: Modifier,
+    viewModel: LoginViewModel,
+    navController: NavController
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     Column(
@@ -163,7 +171,20 @@ fun LoginScreen(modifier: Modifier) {
                 modifier = modifier
                     .width(200.dp)
                     .height(52.dp),
-                onClick = { /*TODO*/ },
+                onClick = {
+                    try {
+                        viewModel.login(email, password) { isSuccess ->
+                            if (isSuccess) {
+                                Log.d("Login", "Login successful")
+                                navController.navigate(NavRoutes.HOME)
+                            } else {
+                                Log.d("Login", "Authentication failed")
+                            }
+                        }
+                    } catch (e: Exception) {
+                        Log.d("Login", "error (login screen) $e")
+                    }
+                },
                 colors = ButtonColors(
                     containerColor = Color.Blue,
                     contentColor = MaterialTheme.colorScheme.surface,
@@ -180,9 +201,23 @@ fun LoginScreen(modifier: Modifier) {
                     fontWeight = FontWeight.Normal,
                 )
             }
-        }// Button Row Scope
+        } // Button Row Scope
+
         OrDivider(modifier = modifier)
-        ContinueWithGoogleCard(modifier = modifier, colorScheme = 2)
+
+        ContinueWithGoogleCard(
+            modifier = modifier,
+            colorScheme = 2
+        ){ credential ->
+            viewModel.onSignInWithGoogle(credential) { isSuccess ->
+                if (isSuccess) {
+                    Log.d("SignUp", "User created successfully")
+                    navController.navigate(NavRoutes.HOME)
+                } else {
+                    Log.d("SignUp", "Authentication failed")
+                }
+            }
+        }
     }
 }
 
@@ -190,5 +225,5 @@ fun LoginScreen(modifier: Modifier) {
 @Composable
 @Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
 fun PreviewLoginScreen() {
-    LoginScreen(modifier = Modifier)
+    //LoginScreen(modifier = Modifier)
 }
