@@ -12,7 +12,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(private val profileRepository: ProfileDataRepository) : ViewModel() {
+class ProfileViewModel @Inject constructor(
+    private val profileRepository: ProfileDataRepository
+) : ViewModel() {
 
     private val _profileData = MutableStateFlow<ProfileData?>(null)
     val profileData: StateFlow<ProfileData?> = _profileData.asStateFlow()

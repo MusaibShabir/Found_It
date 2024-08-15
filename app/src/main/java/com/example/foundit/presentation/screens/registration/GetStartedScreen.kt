@@ -50,6 +50,7 @@ fun GetStartedScreen(
     forwardNavigation: String,
     navController: NavHostController
 ) {
+
     var showCard by remember { mutableStateOf(false) }
     var showImage by remember { mutableStateOf(false) }
     var showTitle by remember { mutableStateOf(false) }
@@ -58,13 +59,13 @@ fun GetStartedScreen(
 
     LaunchedEffect(Unit) {
         showCard = true
-        delay(3000)
+        delay(1000)
         showImage = true
-        delay(2000)
+        delay(100)
         showTitle = true
-        delay(5500)
+        delay(100)
         showDescription = true
-        delay(4000)
+        delay(100)
         showButton = true
     }
 
@@ -117,7 +118,7 @@ fun GetStartedScreen(
                         AnimatedVisibility(
                             visible = showTitle
                         ) {
-                            TypingTextEffect(text = "Welcome to Found it", typingDelay = 200)
+                            TypingTextEffect(text = "Welcome to Found it", typingDelay = 20)
                         }
 
                         AnimatedVisibility(
@@ -187,6 +188,7 @@ fun TypingTextEffect(
         modifier = modifier
     )
 }
+
 
 @Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
 @Composable

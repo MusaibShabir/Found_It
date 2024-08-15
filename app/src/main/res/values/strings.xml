@@ -1,4 +1,6 @@
 <resources>
+
+    <!-- App Name -->
     <string name="app_name">Found It</string>
 
     <!-- User Greetings (Main)-->
@@ -23,6 +25,9 @@
     <!-- Process Screen (Main)-->
     <string name="left_tab">In-Process</string>
     <string name="right_tab">Finished</string>
+
+    <!-- FireBase-->
+    <string name="web_client_id">513829197730-vk4nd6ioipo4fvmaci6e0e5utflejga2.apps.googleusercontent.com</string>
 
 
 

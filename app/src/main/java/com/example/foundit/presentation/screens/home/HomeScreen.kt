@@ -46,7 +46,11 @@ fun HomeScreenContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AppName(modifier = modifier)
-            Greetings(modifier = modifier, greetingPrefix = greetingPrefix, profileName = profileName)
+            Greetings(
+                modifier = modifier,
+                greetingPrefix = greetingPrefix,
+                profileName = profileName
+            )
             HorizontalDivider(
                 thickness = 1.dp,
                 modifier = modifier

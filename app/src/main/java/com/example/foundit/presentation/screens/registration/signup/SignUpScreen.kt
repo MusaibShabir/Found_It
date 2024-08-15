@@ -1,5 +1,6 @@
-package com.example.foundit.presentation.screens.registration
+package com.example.foundit.presentation.screens.registration.signup
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -46,6 +47,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.registration.components.ClickableTextToWebpage
 import com.example.foundit.presentation.screens.registration.components.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.OrDivider
@@ -53,7 +56,13 @@ import com.example.foundit.presentation.screens.registration.components.OrDivide
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpScreen(modifier: Modifier) {
+fun SignUpScreen(
+    modifier: Modifier,
+    viewModel: SignUpViewModel,
+    navController: NavController
+) {
+
+
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf("") }
@@ -248,7 +257,16 @@ fun SignUpScreen(modifier: Modifier) {
                 modifier = modifier
                     .width(200.dp)
                     .height(52.dp),
-                onClick = { /*TODO*/ },
+                onClick = {
+                    viewModel.createAccount(email, password, firstName, lastName) {isSuccess ->
+                        if (isSuccess) {
+                            Log.d("SignUp", "User created successfully")
+                            navController.navigate(NavRoutes.HOME)
+                        } else {
+                            Log.d("SignUp", "Authentication failed")
+                        }
+                    }
+                },
                 colors = ButtonColors(
                     containerColor = Color.Blue,
                     contentColor = MaterialTheme.colorScheme.surface,
@@ -268,7 +286,20 @@ fun SignUpScreen(modifier: Modifier) {
         }// Button Row
 
         OrDivider(modifier = modifier)
-        ContinueWithGoogleCard(modifier = modifier)
+        ContinueWithGoogleCard(
+            modifier = modifier,
+            colorScheme = 1,
+        ){credential ->
+            viewModel.onSignUpWithGoogle(credential) { isSuccess ->
+                if (isSuccess) {
+                    Log.d("SignUp", "User created successfully")
+
+                } else {
+                    navController.navigate(NavRoutes.HOME)
+                    Log.d("SignUp", "Authentication failed")
+                }
+            }
+        }
 
         Column(modifier = modifier
             .fillMaxSize()
@@ -315,6 +346,6 @@ fun SignUpScreen(modifier: Modifier) {
 @Composable
 @Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
 fun PreviewSignUpScreen() {
-    SignUpScreen(modifier = Modifier)
+    //SignUpScreen(modifier = Modifier)
 }
 

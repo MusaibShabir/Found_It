@@ -1,11 +1,11 @@
 package com.example.foundit.presentation.screens.notification
 
-import androidx.lifecycle.ViewModel
+import com.example.foundit.presentation.MainViewModel
 import com.example.foundit.presentation.data.navigation.sampleNotifications
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class NotificationBaseViewModel: ViewModel() {
+class NotificationBaseViewModel: MainViewModel() {
     private val _notifications = MutableStateFlow(sampleNotifications)
     val notifications = _notifications.asStateFlow()
 
