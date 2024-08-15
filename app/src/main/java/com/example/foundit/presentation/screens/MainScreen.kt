@@ -69,7 +69,7 @@ fun MainScreen(modifier: Modifier) {
 
     NavHost(
         navController = navController,
-        startDestination = NavRoutes.HOME,
+        startDestination = NavRoutes.GET_STARTED,
         modifier = modifier
     ) {
 
