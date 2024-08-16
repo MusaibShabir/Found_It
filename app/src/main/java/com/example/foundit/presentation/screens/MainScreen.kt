@@ -3,11 +3,13 @@ package com.example.foundit.presentation.screens
 import android.annotation.SuppressLint
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.navigation.NavigationBar
@@ -43,183 +45,205 @@ import com.example.foundit.presentation.screens.settings.components.clickable.Re
 import com.example.foundit.presentation.screens.settings.components.clickable.SecurityScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.VersionScreen
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+/*
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedContentLambdaTargetStateParameter")
 @Composable
 fun ScreenWithNavigationBar(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     content: @Composable () -> Unit
 ) {
-
     Scaffold(
-        bottomBar = { NavigationBar(modifier = modifier, navController = navController) }) {
-        content()
+        bottomBar = { NavigationBar(modifier = modifier, navController = navController) }
+    ) {
+        val currentRoute = navController.currentBackStackEntry?.destination?.route
+        AnimatedContent(
+            targetState = currentRoute,
+            transitionSpec = {
+
+                slideInHorizontally(
+                    initialOffsetX = { fullWidth -> fullWidth },
+                    animationSpec = tween(500000, easing = FastOutSlowInEasing)
+                ) togetherWith
+                        slideOutHorizontally(
+                            targetOffsetX = { fullWidth -> -fullWidth },
+                            animationSpec = tween(5200000, easing = FastOutSlowInEasing)
+                        ) using(SizeTransform(clip = false))
+            },
+            label = ""
+        ) {
+            content()
+        }
     }
 }
 
+ */
 
+// Helper function to get the current route
+@Composable
+fun currentRoute(navController: NavHostController): String {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    return navBackStackEntry?.destination?.route ?: ""
+}
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen(modifier: Modifier) {
     val navController = rememberNavController()
+    val currentRoute = currentRoute(navController)
 
     // ViewModels Instances
     val loginViewModel: LoginViewModel = hiltViewModel()
     val signUpViewModel: SignUpViewModel = hiltViewModel()
     val profileViewModel: ProfileViewModel = hiltViewModel()
 
-    NavHost(
-        navController = navController,
-        startDestination = NavRoutes.GET_STARTED,
-        modifier = modifier
-    ) {
+    Scaffold(
+        bottomBar = {
 
-        // Screens WITH Navigation Bar
-        composable(NavRoutes.HOME) {
-            ScreenWithNavigationBar(modifier, navController) {
+            // Conditionally include the NavigationBar based on the current route
+            if (shouldShowBottomBar(currentRoute)) {
+                NavigationBar(modifier = modifier, navController = navController)
+            }
+        }
+    ) {
+        NavHost(
+            navController = navController,
+            startDestination = NavRoutes.GET_STARTED,
+            modifier = modifier
+        ) {
+            // Screens WITH Navigation Bar
+            composable(NavRoutes.HOME) {
                 HomeScreen(modifier, profileViewModel)
             }
-        }
-        composable(NavRoutes.PROGRESS) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.PROGRESS) {
                 ProcessScreen(modifier, navController)
             }
-        }
-        composable(NavRoutes.NOTIFICATIONS) {
-            ScreenWithNavigationBar(modifier, navController) {
-            NotificationScreen(modifier, navController)
-        }
-        }
-        composable(NavRoutes.PROFILE) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.NOTIFICATIONS) {
+                NotificationScreen(modifier, navController)
+            }
+
+            composable(NavRoutes.PROFILE) {
                 ProfileScreen(modifier, navController, profileViewModel)
             }
-        }
-        composable(NavRoutes.SETTINGS) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.SETTINGS) {
                 SettingsScreen(modifier, navController)
             }
-        }
-        composable(NavRoutes.ACCOUNT_CENTER) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.ACCOUNT_CENTER) {
                 AccountCenterScreen(modifier, navController)
             }
-        }
-        composable(NavRoutes.LANGUAGE) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.LANGUAGE) {
                 LanguageScreen(modifier, navController)
             }
-        }
-        composable(NavRoutes.APPEARANCE) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.APPEARANCE) {
                 AppearanceScreen(modifier = modifier, navController = navController, onThemeChange = { /*TODO*/ })
             }
-        }
-        composable(NavRoutes.SECURITY) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.SECURITY) {
                 SecurityScreen(modifier, navController)
             }
-        }
-        composable(NavRoutes.HELP_AND_SUPPORT) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.HELP_AND_SUPPORT) {
                 HelpAndSupportScreen(modifier, navController)
             }
-        }
-        composable(NavRoutes.FEEDBACK) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.FEEDBACK) {
                 FeedbackScreen(modifier, navController)
             }
-        }
-        composable(NavRoutes.ABOUT) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.ABOUT) {
                 AboutScreen(modifier, navController)
             }
-        }
-        composable(NavRoutes.EDIT_PROFILE) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.EDIT_PROFILE) {
                 EditProfileScreen(modifier, navController, profileViewModel)
             }
 
-        }
-        composable(NavRoutes.DELETE_ACCOUNT) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.DELETE_ACCOUNT) {
                 DeleteAccountScreen(modifier = modifier, navController = navController, onDeleteAccount = { /*TODO*/ })
             }
 
-        }
-        composable(NavRoutes.LOG_OUT) {
-            ScreenWithNavigationBar(modifier, navController) {
+            composable(NavRoutes.LOG_OUT) {
                 LogoutScreen(modifier = modifier, navController = navController, onLogout = { /*TODO*/ })
             }
 
-        }
-        composable(NavRoutes.REPORT_A_BUG) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.REPORT_A_BUG) {
                 ReportBugScreen(modifier, navController)
             }
-        }
-        composable(NavRoutes.CONTACT_SUPPORT) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.CONTACT_SUPPORT) {
                 ContactSupportScreen(modifier, navController)
             }
-        }
-        composable(NavRoutes.VERSION) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.VERSION) {
                 VersionScreen(modifier = modifier, navController = navController)
             }
-        }
-        composable(NavRoutes.PRIVACY_POLICY) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.PRIVACY_POLICY) {
                 PrivacyPolicyScreen(modifier = modifier, navController = navController)
             }
-        }
-        composable(NavRoutes.ACKNOWLEDGMENTS) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.ACKNOWLEDGMENTS) {
                 AcknowledgementScreen(modifier = modifier, navController = navController)
             }
-        }
-        composable(NavRoutes.DEVELOPER_INFO) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.DEVELOPER_INFO) {
                 DeveloperInfoScreen(modifier = modifier, navController = navController)
             }
-        }
-        composable(NavRoutes.FOLLOW_US) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.FOLLOW_US) {
                 FollowUsScreen(modifier = modifier, navController = navController)
             }
-        }
-        composable(NavRoutes.CHANGE_PASSWORD) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.CHANGE_PASSWORD) {
                 ChangePasswordScreen(modifier = modifier, navController = navController)
             }
-        }
-        composable(NavRoutes.CHANGE_EMAIL) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.CHANGE_EMAIL) {
                 ChangeEmailScreen(modifier = modifier, navController = navController)
             }
-        }
-        composable(NavRoutes.CHANGE_PHONE_NUMBER) {
-            ScreenWithNavigationBar(modifier, navController) {
+
+            composable(NavRoutes.CHANGE_PHONE_NUMBER) {
                 ChangePhoneNumberScreen(modifier = modifier, navController = navController)
             }
-        }
 
 
-        // Screens WITHOUT Navigation Bar
-        composable(NavRoutes.LOGIN) {
-            LoginScreen(modifier = modifier, navController = navController, viewModel = loginViewModel)
-        }
-        composable(NavRoutes.SIGN_UP) {
-            SignUpScreen(modifier = modifier, navController = navController, viewModel = signUpViewModel)
-        }
-        composable(NavRoutes.GET_STARTED) {
-            GetStartedScreen(modifier = modifier, navController = navController, forwardNavigation = NavRoutes.SIGN_UP)
+            // Screens WITHOUT Navigation Bar
+            composable(NavRoutes.LOGIN) {
+                LoginScreen(modifier = modifier, navController = navController, viewModel = loginViewModel)
+            }
 
-        }
+            composable(NavRoutes.SIGN_UP) {
+                SignUpScreen(modifier = modifier, navController = navController, viewModel = signUpViewModel)
+            }
 
+            composable(NavRoutes.GET_STARTED) {
+                GetStartedScreen(modifier = modifier, navController = navController, forwardNavigation = NavRoutes.SIGN_UP)
+
+            }
+        }
     }
-
-
 }
+
+// Helper function to determine if the navigation bar should be shown
+@Composable
+fun shouldShowBottomBar(currentRoute: String?): Boolean {
+    return when (currentRoute) {
+        NavRoutes.GET_STARTED,
+        NavRoutes.LOGIN,
+        NavRoutes.SIGN_UP -> false
+        else -> true
+    }
+}
+
+
 
 
 
