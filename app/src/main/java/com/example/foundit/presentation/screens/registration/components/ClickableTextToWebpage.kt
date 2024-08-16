@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.data.navigation.NavRoutes
 
@@ -15,7 +16,7 @@ import com.example.foundit.presentation.data.navigation.NavRoutes
 fun ClickableTextToNavigationRoute(
     text: String,
     navRoute: String,
-    navController: NavHostController,
+    navController: NavController,
     modifier: Modifier
 ) {
     Text(

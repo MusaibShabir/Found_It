@@ -104,7 +104,7 @@ fun ContinueWithGoogleCard(
                     modifier = modifier
                         .size(18.dp)
                 )
-                Spacer(modifier = Modifier.width(10.dp))
+                Spacer(modifier = Modifier.width(15.dp))
                 Text(
                     text = "CONTINUE WITH GOOGLE",
                     fontSize = 18.sp,

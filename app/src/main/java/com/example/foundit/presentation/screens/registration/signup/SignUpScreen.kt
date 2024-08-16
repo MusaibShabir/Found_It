@@ -49,7 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.foundit.presentation.data.navigation.NavRoutes
-import com.example.foundit.presentation.screens.registration.components.ClickableTextToWebpage
+import com.example.foundit.presentation.screens.registration.components.ClickableTextToNavigationRoute
 import com.example.foundit.presentation.screens.registration.components.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.OrDivider
 
@@ -76,7 +76,7 @@ fun SignUpScreen(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(vertical = 30.dp),
+                .padding(vertical = 10.dp),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.Top
         ){
@@ -284,6 +284,27 @@ fun SignUpScreen(
                 )
             }
         }// Button Row
+        Spacer(modifier = modifier.height(10.dp))
+        Row (
+            modifier = modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Text(
+                text = "Already have an account ?",
+                fontWeight = FontWeight.Medium
+            )
+
+            ClickableTextToNavigationRoute(
+                text = "Login",
+                navRoute = NavRoutes.LOGIN,
+                modifier = modifier.padding(start = 8.dp),
+                navController = navController
+            )
+
+
+        }
+
 
         OrDivider(modifier = modifier)
         ContinueWithGoogleCard(
@@ -322,18 +343,22 @@ fun SignUpScreen(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
             ) {
-                ClickableTextToWebpage(
+                ClickableTextToNavigationRoute(
                     text = "Terms of Service",
-                    url = "https://www.google.com",
-                    modifier = Modifier.padding(end = 8.dp)
+                    navRoute = "",
+                    modifier = modifier.padding(end = 8.dp),
+                    navController = navController
                 )
+
                 Text(text = "&")
 
-                ClickableTextToWebpage(
+                ClickableTextToNavigationRoute(
                     text = "Privacy Policy",
-                    url = "https://www.google.com",
-                    modifier = Modifier.padding(start = 8.dp)
+                    navRoute = NavRoutes.PRIVACY_POLICY,
+                    modifier = modifier.padding(start = 8.dp),
+                    navController = navController
                 )
+
             }
         }
 
