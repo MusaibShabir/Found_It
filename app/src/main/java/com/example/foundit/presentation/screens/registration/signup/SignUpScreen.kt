@@ -307,17 +307,25 @@ fun SignUpScreen(
 
 
         OrDivider(modifier = modifier)
+
         ContinueWithGoogleCard(
             modifier = modifier,
-            colorScheme = 1,
-        ){credential ->
-            viewModel.onSignUpWithGoogle(credential) { isSuccess ->
-                if (isSuccess) {
-                    Log.d("SignUp", "User created successfully")
+            colorScheme = 1
+        ) { credential ->
+            viewModel.onSignUpWithGoogle(credential) { result ->
+                when (result) {
+                    SignUpViewModel.SignInResult.Success -> {
+                        Log.d("SignUp", "User created successfully")
+                        navController.navigate(NavRoutes.HOME)
 
-                } else {
-                    navController.navigate(NavRoutes.HOME)
-                    Log.d("SignUp", "Authentication failed")
+                    }
+                    is SignUpViewModel.SignInResult.Failure -> {
+                        Log.d(
+                            "SignUp",
+                            "Authentication failed: Code ${result.errorCode}, Message: ${result.errorMessage}"
+                        )
+
+                    }
                 }
             }
         }

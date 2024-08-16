@@ -7,7 +7,10 @@ import com.example.foundit.di.FireBaseModule
 import com.example.foundit.presentation.data.account.AccountService
 import com.example.foundit.presentation.screens.registration.RegistrationBaseViewModel
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.userProfileChangeRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -113,22 +116,41 @@ class SignUpViewModel @Inject constructor(
 //            }
 //    }
 
+    sealed class SignInResult {
+        data object Success : SignInResult()
+        data class Failure(val errorCode: Int, val errorMessage: String) : SignInResult()
+    }
+
     fun onSignUpWithGoogle(
         credential: Credential,
-        onResult: (Boolean) -> Unit
+        onResult: (SignInResult) -> Unit
     ) {
         viewModelScope.launch {
             try {
-                //if (credential is CustomCredential && credential.type == TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
                 val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
                 accountService.signInWithGoogle(googleIdTokenCredential.idToken)
-                onResult(true)
-
+                onResult(SignInResult.Success)
             } catch (e: Exception) {
-                onResult(false)
+                val (errorCode, errorMessage) = when (e) {
+                    is FirebaseAuthInvalidCredentialsException -> {
+                        Pair(101, "Invalid credentials.")
+                    }
+                    is FirebaseAuthUserCollisionException -> {
+                        Pair(102, "An account already exists with this email.")
+                    }
+                    is FirebaseNetworkException -> {
+                        Pair(201, "Network error. Please check your connection.")
+                    }// ... handle other specific exceptions
+                    else -> {
+                        Pair(999, "An unknown error occurred.")
+                    }
+                }
+                onResult(SignInResult.Failure(errorCode, errorMessage))
             }
         }
     }
+
+
 
 
 }
