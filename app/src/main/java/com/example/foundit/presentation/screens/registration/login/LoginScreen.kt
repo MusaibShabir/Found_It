@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -42,8 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.foundit.presentation.data.navigation.NavRoutes
-import com.example.foundit.presentation.screens.profile.ProfileViewModel
-import com.example.foundit.presentation.screens.registration.components.ClickableTextToWebpage
+import com.example.foundit.presentation.screens.registration.components.ClickableTextToNavigationRoute
 import com.example.foundit.presentation.screens.registration.components.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.OrDivider
 
@@ -153,17 +153,22 @@ fun LoginScreen(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(top = 5.dp),
+                .padding(top = 5.dp, bottom = 15.dp),
             horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.Top
         ) {
-            ClickableTextToWebpage(text = "Forgot Password", url = "https://www.google.com") // Later to be changed to from url -> screen
+
+            ClickableTextToNavigationRoute(
+                text = "Forgot Password",
+                navRoute = "",
+                modifier = modifier,
+                navController = navController
+            )
         }
 
         Row(
             modifier = modifier
-                .fillMaxWidth()
-                .padding(vertical = 30.dp),
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -202,6 +207,27 @@ fun LoginScreen(
                 )
             }
         } // Button Row Scope
+
+        Spacer(modifier = modifier.height(30.dp))
+        Row (
+            modifier = modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Text(
+                text = "Don't have an account ?",
+                fontWeight = FontWeight.Medium
+            )
+
+            ClickableTextToNavigationRoute(
+                text = "Sign Up",
+                navRoute = NavRoutes.SIGN_UP,
+                modifier = modifier.padding(start = 8.dp),
+                navController = navController
+            )
+
+
+        }
 
         OrDivider(modifier = modifier)
 
