@@ -5,19 +5,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
-fun ClickableTextToWebpage(text: String, url: String, modifier: Modifier = Modifier) {
-    val uriHandler = LocalUriHandler.current
-
+fun ClickableTextToNavigationRoute(
+    text: String,
+    navRoute: String,
+    navController: NavHostController,
+    modifier: Modifier
+) {
     Text(
         text = text,
         textDecoration = TextDecoration.Underline,
         modifier = modifier
-            .clickable { uriHandler.openUri(url) },
+            .clickable { navController.navigate(navRoute) },
         color = Color.Blue,
     )
 }
@@ -25,10 +30,11 @@ fun ClickableTextToWebpage(text: String, url: String, modifier: Modifier = Modif
 @Composable
 @Preview(showBackground = true, showSystemUi = false)
 fun PreviewClickableTextToWebpage() {
-    ClickableTextToWebpage(
+    ClickableTextToNavigationRoute(
         modifier = Modifier,
         text = "Terms of Service",
-        url = "https://www.google.com"
+        navRoute = NavRoutes.HOME,
+        navController = NavHostController(LocalContext.current)
     )
 }
 
