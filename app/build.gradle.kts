@@ -89,6 +89,7 @@ dependencies {
     //navigation
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.navigation.compose)
 
     // Feature module Support
     implementation(libs.androidx.navigation.dynamic.features.fragment)
