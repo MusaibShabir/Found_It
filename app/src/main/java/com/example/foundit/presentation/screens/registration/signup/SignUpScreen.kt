@@ -258,7 +258,7 @@ fun SignUpScreen(
                     .width(200.dp)
                     .height(52.dp),
                 onClick = {
-                    viewModel.createAccount(email, password, firstName, lastName) {isSuccess ->
+                    viewModel.signUpUser(email, password, firstName, lastName) {isSuccess ->
                         if (isSuccess) {
                             Log.d("SignUp", "User created successfully")
                             navController.navigate(NavRoutes.HOME)

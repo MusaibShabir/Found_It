@@ -48,13 +48,7 @@ class SignUpViewModel @Inject constructor(
 
 
     //SignUp Button
-    fun signUpUser() {
-        viewModelScope.launch {
-
-        }
-    }
-
-    fun createAccount(
+    fun signUpUser(
         email: String,
         password: String,
         firstName: String,
@@ -62,16 +56,15 @@ class SignUpViewModel @Inject constructor(
         onResult: (Boolean) -> Unit
     ) {
         viewModelScope.launch {
-
-            try {
-                accountService.createAccount(email,password)
-                accountService.sendEmailVerification()
-                update(firstName,lastName)
-                onResult(true)
-            } catch (e: Exception) {
-                onResult(false)
-                Log.d("SignUp", "login error: ${e.message}")
-            }
+                try {
+                    accountService.createAccount(email,password)
+                    accountService.sendEmailVerification()
+                    update(firstName,lastName)
+                    onResult(true)
+                } catch (e: Exception) {
+                    onResult(false)
+                    Log.d("SignUp", "login error: ${e.message}")
+                }
 
 //            auth.createUserWithEmailAndPassword(email, password)
 //                .addOnCompleteListener { task ->
@@ -85,8 +78,8 @@ class SignUpViewModel @Inject constructor(
 //                        onResult(false)
 //                    }
 //                }
+            }
         }
-    }
 
     private val firebaseAuth: FirebaseAuth = FireBaseModule.provideFirebaseAuth()
 
