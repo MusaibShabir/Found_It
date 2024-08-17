@@ -45,6 +45,7 @@ import com.example.foundit.presentation.screens.settings.components.clickable.Lo
 import com.example.foundit.presentation.screens.settings.components.clickable.ReportBugScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.SecurityScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.VersionScreen
+import com.example.foundit.presentation.splash.SplashScreen
 
 /*
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedContentLambdaTargetStateParameter")
@@ -109,9 +110,14 @@ fun MainScreen(modifier: Modifier) {
     ) {
         NavHost(
             navController = navController,
-            startDestination = NavRoutes.GET_STARTED,
+            startDestination = NavRoutes.SPLASH,
             modifier = modifier
         ) {
+
+            composable(NavRoutes.SPLASH) {
+                SplashScreen(modifier = Modifier ,navController = navController, forwardNavigation = NavRoutes.GET_STARTED)
+            }
+
             // Screens WITH Navigation Bar
             composable(NavRoutes.HOME) {
                 HomeScreen(modifier, profileViewModel)
@@ -244,6 +250,7 @@ fun shouldShowBottomBar(currentRoute: String?): Boolean {
         NavRoutes.GET_STARTED,
         NavRoutes.FORGOT_PASSWORD,
         NavRoutes.LOGIN,
+        NavRoutes.SPLASH,
         NavRoutes.SIGN_UP -> false
         else -> true
     }
