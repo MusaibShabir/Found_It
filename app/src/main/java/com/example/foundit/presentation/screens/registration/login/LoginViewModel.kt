@@ -15,9 +15,13 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val accountService: AccountService,
-) : ViewModel() {
-
-    fun login(email: String, password: String, onResult: (Boolean) -> Unit) {
+) : ViewModel()
+{
+    fun login(
+        email: String,
+        password: String,
+        onResult: (Boolean) -> Unit)
+    {
         viewModelScope.launch {
             try {
                 accountService.login(email,password)
