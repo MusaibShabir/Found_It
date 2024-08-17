@@ -137,7 +137,7 @@ fun MainCard(
 
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
+@Preview(showBackground = true, showSystemUi = false, device = "id:pixel_6_pro")
 fun PreviewMainCard() {
     MainCard(
         modifier = Modifier,
