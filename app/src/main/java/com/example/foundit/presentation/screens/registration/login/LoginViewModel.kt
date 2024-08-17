@@ -49,7 +49,10 @@ class LoginViewModel @Inject constructor(
 
      */
 
-    fun onSignInWithGoogle(credential: Credential, onResult: (Boolean) -> Unit) {
+    fun onSignInWithGoogle(
+        credential: Credential,
+        onResult: (Boolean) -> Unit)
+    {
         viewModelScope.launch {
             try {
                 if (credential is CustomCredential && credential.type == TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
