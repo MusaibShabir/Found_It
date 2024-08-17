@@ -30,5 +30,6 @@ object NavRoutes {
     const val FORGOT_PASSWORD = "Forgot Password"
     const val LOGIN = "Login"
     const val SIGN_UP = "Sign Up"
+    const val SPLASH = "Splash"
 
 }
