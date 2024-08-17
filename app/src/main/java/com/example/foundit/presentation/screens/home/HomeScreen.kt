@@ -42,7 +42,7 @@ fun HomeScreenContent(
             modifier = modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(start = 25.dp, end = 25.dp),
+                .padding(start = 20.dp, end = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AppName(modifier = modifier)
