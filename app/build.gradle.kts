@@ -106,6 +106,7 @@ dependencies {
 
     //Authentication with Credential Manager
     implementation(libs.play.services.auth)
+    implementation(libs.credentials.play.services.auth) //Android 13 or Below
     implementation(libs.androidx.credentials)
     implementation(libs.credentials.play.services.auth)
     implementation(libs.googleid)
