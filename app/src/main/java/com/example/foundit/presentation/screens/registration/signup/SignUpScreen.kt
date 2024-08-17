@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.outlined.Email
@@ -106,9 +107,13 @@ fun SignUpScreen(
                 shape = MaterialTheme.shapes.medium,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
-                    cursorColor = Color.Gray,
-                    focusedBorderColor = Color.Blue
-                ),
+                    cursorColor = Color.Blue,
+                    focusedBorderColor = Color.Blue,
+                    selectionColors =  TextSelectionColors(
+                        handleColor = Color.Blue,
+                        backgroundColor = Color.Transparent,
+                    ),
+                )
             )
 
             // Last Name
@@ -124,9 +129,14 @@ fun SignUpScreen(
                 shape = MaterialTheme.shapes.medium,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
-                    cursorColor = Color.Gray,
-                    focusedBorderColor = Color.Blue
-                ),
+                    cursorColor = Color.Blue,
+                    focusedBorderColor = Color.Blue,
+                    selectionColors =  TextSelectionColors(
+                        handleColor = Color.Blue,
+                        backgroundColor = Color.Transparent,
+                    ),
+                )
+
 
             )
 
@@ -149,8 +159,12 @@ fun SignUpScreen(
                     shape = MaterialTheme.shapes.medium,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedLabelColor = Color.Blue,
-                        cursorColor = Color.Gray,
-                        focusedBorderColor = Color.Blue
+                        cursorColor = Color.Blue,
+                        focusedBorderColor = Color.Blue,
+                        selectionColors =  TextSelectionColors(
+                            handleColor = Color.Blue,
+                            backgroundColor = Color.Transparent,
+                        ),
                     ),
                     modifier = modifier
                         .fillMaxWidth()
@@ -195,9 +209,14 @@ fun SignUpScreen(
                 isError = !isEmailValid,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
-                    cursorColor = Color.Gray,
-                    focusedBorderColor = Color.Blue
+                    cursorColor = Color.Blue,
+                    focusedBorderColor = Color.Blue,
+                    selectionColors =  TextSelectionColors(
+                        handleColor = Color.Blue,
+                        backgroundColor = Color.Transparent,
+                    ),
                 ),
+
                 supportingText = {
                     if (!isEmailValid && email.isNotBlank()) {
                         Text("Invalid email address", color = MaterialTheme.colorScheme.error)
@@ -233,10 +252,14 @@ fun SignUpScreen(
                 isError = !isPasswordValid,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
-                    cursorColor = Color.Gray,
+                    cursorColor = Color.Blue,
                     focusedBorderColor = Color.Blue,
-                    errorTrailingIconColor = MaterialTheme.colorScheme.onSurface
+                    selectionColors =  TextSelectionColors(
+                        handleColor = Color.Blue,
+                        backgroundColor = Color.Transparent,
+                    ),
                 ),
+
                 supportingText = {
                     if (!isPasswordValid && password.isNotBlank()) {
                         Text("Password must be at least 8 characters", color = MaterialTheme.colorScheme.error)
