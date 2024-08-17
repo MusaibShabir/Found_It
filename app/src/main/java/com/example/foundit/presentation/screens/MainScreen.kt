@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.foundit.presentation.data.navigation.NavRoutes
+import com.example.foundit.presentation.splash.SplashScreen
 import com.example.foundit.presentation.navigation.NavigationBar
 import com.example.foundit.presentation.screens.documentation.PrivacyPolicyScreen
 import com.example.foundit.presentation.screens.home.HomeScreen
@@ -45,7 +46,6 @@ import com.example.foundit.presentation.screens.settings.components.clickable.Lo
 import com.example.foundit.presentation.screens.settings.components.clickable.ReportBugScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.SecurityScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.VersionScreen
-import com.example.foundit.presentation.splash.SplashScreen
 
 /*
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedContentLambdaTargetStateParameter")
@@ -115,7 +115,7 @@ fun MainScreen(modifier: Modifier) {
         ) {
 
             composable(NavRoutes.SPLASH) {
-                SplashScreen(modifier = Modifier ,navController = navController, forwardNavigation = NavRoutes.GET_STARTED)
+                SplashScreen(navController = navController, forwardNavigation = NavRoutes.GET_STARTED)
             }
 
             // Screens WITH Navigation Bar

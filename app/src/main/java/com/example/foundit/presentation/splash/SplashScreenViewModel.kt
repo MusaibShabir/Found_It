@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.data.splash
+package com.example.foundit.presentation.splash
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

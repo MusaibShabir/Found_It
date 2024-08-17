@@ -1,9 +1,8 @@
-package com.example.foundit.presentation.data.splash
+package com.example.foundit.presentation.splash
 
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.data.navigation.NavRoutes
@@ -11,7 +10,6 @@ import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun SplashScreen(
-    modifier: Modifier,
     forwardNavigation: String,
     navController: NavHostController
 ){
