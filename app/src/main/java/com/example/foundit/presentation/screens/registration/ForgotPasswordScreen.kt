@@ -1,13 +1,38 @@
 package com.example.foundit.presentation.screens.registration
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.outlined.Email
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,9 +44,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun ForgotPasswordScreen(
+    modifier: Modifier,
     navController: NavHostController
 ) {
     var email by remember { mutableStateOf("") }
@@ -87,7 +114,7 @@ fun ForgotPasswordScreen(
                     */
 
                     OutlinedTextField(
-                        modifier = Modifier
+                        modifier = modifier
                             .fillMaxWidth(),
                         value = email,
                         onValueChange = {
@@ -104,7 +131,7 @@ fun ForgotPasswordScreen(
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedLabelColor = Color.Blue,
                             cursorColor = Color.Gray,
-                            focusedBorderColor = Color.Blue
+                            focusedBorderColor = Color.Blue,
                         ),
                         supportingText = {
                             if (!isEmailValid && email.isNotBlank()) {
@@ -113,23 +140,41 @@ fun ForgotPasswordScreen(
                         },
                     )
 
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Button(
-                        onClick = {
-                            // Handle sending reset link logic
-                            emailSent = true
-                            errorOccurred = true
-                            if (emailSent && !errorOccurred) {
-                                // Navigate back to the login screen if email is sent
-                                navController.popBackStack()
-                            }
-                        },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Blue),
-                        modifier = Modifier.fillMaxWidth().height(48.dp),
-                        enabled = isEmailValid && email.isNotBlank()
+                    Spacer(modifier = modifier.height(20.dp))
+                    Row(
+                        modifier = modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(text = "Send Reset Link", color = Color.White, fontSize = 18.sp)
+                        ElevatedButton(
+                            modifier = modifier
+                                .width(200.dp)
+                                .height(52.dp),
+                            onClick = {
+                                emailSent = true
+                                errorOccurred = true
+                                if (emailSent && !errorOccurred) {
+                                    navController.navigate(NavRoutes.LOGIN)
+                                }
+                            },
+                            colors = ButtonColors(
+                                containerColor = Color.Blue,
+                                contentColor = MaterialTheme.colorScheme.surface,
+                                disabledContainerColor = Color.Gray,
+                                disabledContentColor = MaterialTheme.colorScheme.onSurface,
+
+                            ),
+                            elevation = ButtonDefaults.elevatedButtonElevation(10.dp)
+
+                        ) {
+                            Text(
+                                text = "Send Reset Link",
+                                color = MaterialTheme.colorScheme.surface,
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Normal,
+                            )
+                        }
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -145,15 +190,31 @@ fun ForgotPasswordScreen(
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    Text(
-                        text = "Back to Login",
-                        style = MaterialTheme.typography.bodyMedium.copy(fontSize = 16.sp, color = Color.Blue),
-                        modifier = Modifier.clickable {
-                            // Navigate back to the login screen
-                            navController.popBackStack()
-                        },
-                        textAlign = TextAlign.Center
-                    )
+                    Row(
+                        modifier = modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+                        Icon(
+                            imageVector = Icons.Default.ArrowBackIosNew,
+                            contentDescription = "Back Arrow",
+                            tint = Color.Blue,
+                            modifier = modifier.size(16.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "Back to Login",
+                            fontSize = 16.sp,
+                            color = Color.Blue,
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.clickable {
+                                navController.navigate(NavRoutes.LOGIN)
+                            },
+                            textAlign = TextAlign.Center
+                        )
+                    }
+
                 }
             }
         }
@@ -166,5 +227,8 @@ fun ForgotPasswordScreen(
 @Preview (showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewForgotPasswordScreen(){
-    ForgotPasswordScreen(navController = NavHostController(LocalContext.current))
+    ForgotPasswordScreen(
+        modifier = Modifier,
+        navController = NavHostController(LocalContext.current)
+    )
 }
