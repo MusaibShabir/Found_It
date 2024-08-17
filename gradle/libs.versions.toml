@@ -13,7 +13,7 @@ googleGmsGoogleServices = "4.4.2"
 
 hiltNavigationCompose = "1.2.0"
 
-hiltAndroidCompiler = "2.51.1"
+hiltAndroidCompiler = "2.52"
 kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
