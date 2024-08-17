@@ -17,7 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoundIt"
         android:hardwareAccelerated="true"
-        android:enableOnBackInvokedCallback="true"
         tools:targetApi="31">
 
         <activity
