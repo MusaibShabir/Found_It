@@ -160,7 +160,7 @@ fun LoginScreen(
 
             ClickableTextToNavigationRoute(
                 text = "Forgot Password",
-                navRoute = "",
+                navRoute = NavRoutes.FORGOT_PASSWORD,
                 modifier = modifier,
                 navController = navController
             )
@@ -208,7 +208,30 @@ fun LoginScreen(
             }
         } // Button Row Scope
 
-        Spacer(modifier = modifier.height(30.dp))
+
+
+
+
+
+        OrDivider(modifier = modifier)
+
+        ContinueWithGoogleCard(
+            modifier = modifier,
+            colorScheme = 2
+        ){ credential ->
+            viewModel.onSignInWithGoogle(credential) { isSuccess ->
+                if (isSuccess) {
+                    Log.d("SignUp", "User created successfully")
+                    navController.navigate(NavRoutes.HOME)
+                } else {
+                    Log.d("SignUp", "Authentication failed")
+                }
+            }
+        }
+
+        Spacer(modifier = modifier.height(50.dp))
+
+        //Don't have an account ?
         Row (
             modifier = modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
@@ -227,22 +250,6 @@ fun LoginScreen(
             )
 
 
-        }
-
-        OrDivider(modifier = modifier)
-
-        ContinueWithGoogleCard(
-            modifier = modifier,
-            colorScheme = 2
-        ){ credential ->
-            viewModel.onSignInWithGoogle(credential) { isSuccess ->
-                if (isSuccess) {
-                    Log.d("SignUp", "User created successfully")
-                    navController.navigate(NavRoutes.HOME)
-                } else {
-                    Log.d("SignUp", "Authentication failed")
-                }
-            }
         }
     }
 }

@@ -20,6 +20,7 @@ import com.example.foundit.presentation.screens.profile.ProfileScreen
 import com.example.foundit.presentation.screens.profile.ProfileViewModel
 import com.example.foundit.presentation.screens.profile.components.EditProfileScreen
 import com.example.foundit.presentation.screens.progress.ProcessScreen
+import com.example.foundit.presentation.screens.registration.ForgotPasswordScreen
 import com.example.foundit.presentation.screens.registration.GetStartedScreen
 import com.example.foundit.presentation.screens.registration.login.LoginScreen
 import com.example.foundit.presentation.screens.registration.login.LoginViewModel
@@ -228,6 +229,10 @@ fun MainScreen(modifier: Modifier) {
                 GetStartedScreen(modifier = modifier, navController = navController, forwardNavigation = NavRoutes.SIGN_UP)
 
             }
+            composable(NavRoutes.FORGOT_PASSWORD) {
+                ForgotPasswordScreen(modifier = modifier, navController = navController)
+
+            }
         }
     }
 }
@@ -237,6 +242,7 @@ fun MainScreen(modifier: Modifier) {
 fun shouldShowBottomBar(currentRoute: String?): Boolean {
     return when (currentRoute) {
         NavRoutes.GET_STARTED,
+        NavRoutes.FORGOT_PASSWORD,
         NavRoutes.LOGIN,
         NavRoutes.SIGN_UP -> false
         else -> true
