@@ -16,6 +16,7 @@ class SplashScreenViewModel @Inject constructor(
     fun onAppStart(onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
             try {
+                accountService.logout()
                 val user = accountService.hasUser()
                 Log.d("Session", "(viewModel) user id : $user - ${accountService.currentUserId}")
                 onResult(user)

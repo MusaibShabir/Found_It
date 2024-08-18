@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.foundit.presentation.data.navigation.NavRoutes
+import com.example.foundit.presentation.splash.SplashScreen
 import com.example.foundit.presentation.navigation.NavigationBar
 import com.example.foundit.presentation.screens.documentation.PrivacyPolicyScreen
 import com.example.foundit.presentation.screens.home.HomeScreen
@@ -109,9 +110,14 @@ fun MainScreen(modifier: Modifier) {
     ) {
         NavHost(
             navController = navController,
-            startDestination = NavRoutes.GET_STARTED,
+            startDestination = NavRoutes.SPLASH,
             modifier = modifier
         ) {
+
+            composable(NavRoutes.SPLASH) {
+                SplashScreen(navController = navController, forwardNavigation = NavRoutes.GET_STARTED)
+            }
+
             // Screens WITH Navigation Bar
             composable(NavRoutes.HOME) {
                 HomeScreen(modifier, profileViewModel)
@@ -244,6 +250,7 @@ fun shouldShowBottomBar(currentRoute: String?): Boolean {
         NavRoutes.GET_STARTED,
         NavRoutes.FORGOT_PASSWORD,
         NavRoutes.LOGIN,
+        NavRoutes.SPLASH,
         NavRoutes.SIGN_UP -> false
         else -> true
     }
