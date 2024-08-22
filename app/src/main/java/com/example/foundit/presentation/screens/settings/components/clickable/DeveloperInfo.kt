@@ -1,5 +1,6 @@
 package com.example.foundit.presentation.screens.settings.components.clickable
 
+import android.icu.text.CaseMap.Title
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,7 +33,6 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,8 +48,7 @@ fun DeveloperInfo(
     profilePicture: Painter,
     firstName: String,
     lastName: String,
-    navRoute: String,
-    navController: NavController,
+    title: String
 ) {
     val urlHandler: UriHandler = LocalUriHandler.current
 
@@ -60,14 +59,18 @@ fun DeveloperInfo(
             .height(180.dp)
             .padding(16.dp),
     ) {
-        Row(modifier = modifier.fillMaxSize()) {
+        Row(
+            modifier = modifier
+                .fillMaxSize()
+        ) {
             Column(
                 modifier = modifier
                     .fillMaxSize()
                     .weight(.4f)
-                    .padding(16.dp)
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-
                 Image(
                     painter = profilePicture,
                     contentDescription = "Developer's profile picture ",
@@ -85,21 +88,41 @@ fun DeveloperInfo(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
-                Text(
-                    text = "$firstName $lastName",
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight(600),
-                    color = Color.Black,
-                    maxLines = 1
-                )
-
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 5.dp),
-                    verticalArrangement = Arrangement.SpaceEvenly
-                    
+                Row(
+                    modifier = modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-//card
+                    Text(
+                        text = "$firstName $lastName",
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight(600),
+                        color = Color.Black,
+                        maxLines = 1
+                    )
+                }
+                Row(
+                    modifier = modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight(200),
+                        color = Color.Black,
+                        maxLines = 1
+                    )
+                }
+                Spacer(modifier = modifier.height(10.dp))
+                Row(
+                    modifier = modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Absolute.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Surface(
                         shape = RoundedCornerShape(15.dp),
                         color = Color.LightGray,
@@ -129,15 +152,10 @@ fun DeveloperInfo(
                                 fontWeight = FontWeight.Medium,
                                 modifier = modifier.clickable {
                                     urlHandler.openUri("https://github.com/MusaibShabir")
-
-                                    //navController.navigate(navRoute) },
-
                                 }
                             )
                         }
                     }
-                    // }
-                    Spacer(modifier = modifier.width(20.dp))
 
                     Surface(
                         shape = RoundedCornerShape(15.dp),
@@ -167,9 +185,11 @@ fun DeveloperInfo(
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Medium,
                                 modifier = modifier
-                                    .clickable {urlHandler.openUri("https://www.linkedin.com/in/musaib-shabir-49179b244/")
-                                        //navController.navigate(navRoute) },
-                            }
+                                    .clickable {
+                                        urlHandler.openUri(
+                                            "https://www.linkedin.com/in/musaib-shabir-49179b244/"
+                                        )
+                                    }
                             )
                         }
                     }
@@ -185,17 +205,14 @@ fun DeveloperInfo(
 
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
-
 fun PreviewDeveloperInfo() {
+    val profilePicture = painterResource(id =R.drawable.ic_launcher_background)
     DeveloperInfo(
         modifier = Modifier,
-        profilePicture = painterResource(id = R.drawable.profile_picture),
+        profilePicture = profilePicture,
         firstName = "Musaib",
         lastName = "Shabir Dar",
-        navRoute = NavRoutes.DEVELOPER_INFO,
-        navController = NavHostController(LocalContext.current)
-
-
+        title = "Android Developer"
     )
 }
 
