@@ -51,15 +51,17 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.registration.components.ClickableTextToNavigationRoute
-import com.example.foundit.presentation.screens.registration.components.ContinueWithGoogleCard
+import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.OrDivider
+import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogle
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpScreen(
     modifier: Modifier,
-    viewModel: SignUpViewModel,
+    signUpViewModel: SignUpViewModel,
+    googleViewModel: ContinueWithGoogle,
     navController: NavController
 ) {
 
@@ -281,7 +283,7 @@ fun SignUpScreen(
                     .width(200.dp)
                     .height(52.dp),
                 onClick = {
-                    viewModel.signUpUser(email, password, firstName, lastName) {isSuccess ->
+                    signUpViewModel.signUpUser(email, password, firstName, lastName) {isSuccess ->
                         if (isSuccess) {
                             Log.d("SignUp", "User created successfully")
                             navController.navigate(NavRoutes.HOME)
@@ -333,9 +335,10 @@ fun SignUpScreen(
 
         ContinueWithGoogleCard(
             modifier = modifier,
-            colorScheme = 1
+            colorScheme = 1,
+            viewModel = googleViewModel,
         ) { credential ->
-            viewModel.onSignUpWithGoogle(credential) { result ->
+            signUpViewModel.onSignUpWithGoogle(credential) { result ->
                 when (result) {
                     SignUpViewModel.SignInResult.Success -> {
                         Log.d("SignUp", "User created successfully")
@@ -347,7 +350,6 @@ fun SignUpScreen(
                             "SignUp",
                             "Authentication failed: Code ${result.errorCode}, Message: ${result.errorMessage}"
                         )
-
                     }
                 }
             }

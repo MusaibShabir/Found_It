@@ -6,8 +6,6 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     id("androidx.navigation.safeargs")
-
-
 }
 
 android {

@@ -23,6 +23,7 @@ import com.example.foundit.presentation.screens.profile.components.EditProfileSc
 import com.example.foundit.presentation.screens.progress.ProcessScreen
 import com.example.foundit.presentation.screens.registration.ForgotPasswordScreen
 import com.example.foundit.presentation.screens.registration.GetStartedScreen
+import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogle
 import com.example.foundit.presentation.screens.registration.login.LoginScreen
 import com.example.foundit.presentation.screens.registration.login.LoginViewModel
 import com.example.foundit.presentation.screens.registration.signup.SignUpScreen
@@ -98,6 +99,7 @@ fun MainScreen(modifier: Modifier) {
     val loginViewModel: LoginViewModel = hiltViewModel()
     val signUpViewModel: SignUpViewModel = hiltViewModel()
     val profileViewModel: ProfileViewModel = hiltViewModel()
+    val googleViewModel: ContinueWithGoogle = hiltViewModel()
 
     Scaffold(
         bottomBar = {
@@ -224,11 +226,11 @@ fun MainScreen(modifier: Modifier) {
 
             // Screens WITHOUT Navigation Bar
             composable(NavRoutes.LOGIN) {
-                LoginScreen(modifier = modifier, navController = navController, viewModel = loginViewModel)
+                LoginScreen(modifier = modifier, navController = navController, loginViewModel = loginViewModel, googleViewModel = googleViewModel)
             }
 
             composable(NavRoutes.SIGN_UP) {
-                SignUpScreen(modifier = modifier, navController = navController, viewModel = signUpViewModel)
+                SignUpScreen(modifier = modifier, navController = navController, signUpViewModel = signUpViewModel, googleViewModel = googleViewModel)
             }
 
             composable(NavRoutes.GET_STARTED) {
