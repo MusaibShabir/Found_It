@@ -81,6 +81,7 @@ fun ContinueWithGoogleCard(
                             context = context
                         )
 
+
                         onGetCredentialResponse(result.credential)
                     } catch (e: GetCredentialException) {
                         Log.d("error", e.message.orEmpty())
