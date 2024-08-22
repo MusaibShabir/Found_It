@@ -4,6 +4,7 @@ import android.app.Application
 
 import com.example.foundit.presentation.data.local.repo.ProfileDataRepository
 import com.example.foundit.presentation.data.local.tables.ProfileData
+import com.google.firebase.FirebaseApp
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -19,6 +20,9 @@ class MyApplication : Application() {
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate() {
         super.onCreate()
+
+
+        FirebaseApp.initializeApp(this)
 
         val dummyProfile = ProfileData(
             firstName = "Musaib",
