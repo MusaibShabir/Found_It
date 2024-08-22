@@ -8,6 +8,7 @@ import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialException
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.foundit.R
 import com.example.foundit.presentation.data.account.AccountService
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,20 +16,25 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ContinueWithGoogle   @Inject constructor(
+class ContinueWithGoogleViewModel @Inject constructor(
     private val accountService: AccountService
-) :ViewModel() {
+) : ViewModel() {
 
+    private fun getGoogleIdOption(context: Context): GetGoogleIdOption {
+        //Getting String from Resources
+        val webClientId = context.getString(R.string.web_client_id)
+        return GetGoogleIdOption.Builder()
+            .setFilterByAuthorizedAccounts(false)
+            .setServerClientId(webClientId)
+            .build()
+    }
 
-    private val googleIdOption = GetGoogleIdOption.Builder()
-        .setFilterByAuthorizedAccounts(false)
-        .setServerClientId("513829197730-vk4nd6ioipo4fvmaci6e0e5utflejga2.apps.googleusercontent.com")
-        .build()
-
-    private val request = GetCredentialRequest.Builder()
-        .addCredentialOption(googleIdOption)
-        .build()
-
+    private fun getRequest(context: Context): GetCredentialRequest {
+        val googleIdOption = getGoogleIdOption(context)
+        return GetCredentialRequest.Builder()
+            .addCredentialOption(googleIdOption)
+            .build()
+    }
 
     fun getCredentials(
         credentialManager: CredentialManager,
@@ -37,6 +43,8 @@ class ContinueWithGoogle   @Inject constructor(
     ) {
         viewModelScope.launch {
             try {
+                // Retrieve the request dynamically
+                val request = getRequest(context)
                 val result = credentialManager.getCredential(
                     request = request,
                     context = context
@@ -47,5 +55,4 @@ class ContinueWithGoogle   @Inject constructor(
             }
         }
     }
-
 }
