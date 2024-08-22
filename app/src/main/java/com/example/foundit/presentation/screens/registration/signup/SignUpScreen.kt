@@ -61,7 +61,7 @@ import com.example.foundit.presentation.screens.registration.components.google.C
 fun SignUpScreen(
     modifier: Modifier,
     signUpViewModel: SignUpViewModel,
-    googleViewModel: ContinueWithGoogleViewModel,
+    continueWithGoogleViewModel: ContinueWithGoogleViewModel,
     navController: NavController
 ) {
 
@@ -336,7 +336,7 @@ fun SignUpScreen(
         ContinueWithGoogleCard(
             modifier = modifier,
             colorScheme = 1,
-            viewModel = googleViewModel,
+            continueWithGoogleViewModel = continueWithGoogleViewModel,
         ) { credential ->
             signUpViewModel.onSignUpWithGoogle(credential) { result ->
                 when (result) {

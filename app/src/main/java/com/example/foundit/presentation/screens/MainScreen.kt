@@ -99,7 +99,7 @@ fun MainScreen(modifier: Modifier) {
     val loginViewModel: LoginViewModel = hiltViewModel()
     val signUpViewModel: SignUpViewModel = hiltViewModel()
     val profileViewModel: ProfileViewModel = hiltViewModel()
-    val googleViewModel: ContinueWithGoogleViewModel = hiltViewModel()
+    val continueWithGoogleViewModel: ContinueWithGoogleViewModel = hiltViewModel()
 
     Scaffold(
         bottomBar = {
@@ -226,11 +226,11 @@ fun MainScreen(modifier: Modifier) {
 
             // Screens WITHOUT Navigation Bar
             composable(NavRoutes.LOGIN) {
-                LoginScreen(modifier = modifier, navController = navController, loginViewModel = loginViewModel, googleViewModel = googleViewModel)
+                LoginScreen(modifier = modifier, navController = navController, loginViewModel = loginViewModel, continueWithGoogleViewModel = continueWithGoogleViewModel)
             }
 
             composable(NavRoutes.SIGN_UP) {
-                SignUpScreen(modifier = modifier, navController = navController, signUpViewModel = signUpViewModel, googleViewModel = googleViewModel)
+                SignUpScreen(modifier = modifier, navController = navController, signUpViewModel = signUpViewModel, continueWithGoogleViewModel = continueWithGoogleViewModel)
             }
 
             composable(NavRoutes.GET_STARTED) {

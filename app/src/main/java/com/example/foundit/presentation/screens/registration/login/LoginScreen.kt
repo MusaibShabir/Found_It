@@ -53,7 +53,7 @@ import com.example.foundit.presentation.screens.registration.components.google.C
 fun LoginScreen(
     modifier: Modifier,
     loginViewModel: LoginViewModel,
-    googleViewModel: ContinueWithGoogleViewModel,
+    continueWithGoogleViewModel: ContinueWithGoogleViewModel,
     navController: NavController
 ) {
     var email by remember { mutableStateOf("") }
@@ -230,7 +230,7 @@ fun LoginScreen(
         ContinueWithGoogleCard(
             modifier = modifier,
             colorScheme = 2,
-            viewModel = googleViewModel
+            continueWithGoogleViewModel = continueWithGoogleViewModel
         ){ credential ->
             loginViewModel.onSignInWithGoogle(credential) { isSuccess ->
                 if (isSuccess) {
