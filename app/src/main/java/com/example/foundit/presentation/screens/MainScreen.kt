@@ -177,7 +177,7 @@ fun MainScreen(modifier: Modifier) {
             }
 
             composable(NavRoutes.LOG_OUT) {
-                LogoutScreen(modifier = modifier, navController = navController, onLogout = { /*TODO*/ })
+                LogoutScreen(navController = navController, modifier = modifier)
             }
 
 

@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.splash
+package com.example.foundit.presentation.screens.settings.components.clickable
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -9,18 +9,18 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashScreenViewModel @Inject constructor(
+class LogoutViewModel @Inject constructor(
     private val accountService: AccountService
 ) : ViewModel() {
 
-    fun onAppStart(onResult: (Boolean) -> Unit) {
+    fun logout(onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
             try {
-                val user = accountService.hasUser()
-                onResult(user)
+                accountService.logout()
+                onResult(true)
             } catch (e: Exception) {
                 onResult(false)
-                Log.d("Session", "Session error: ${e.message}")
+                Log.d("Logout", "logout error: ${e.message}")
             }
         }
     }

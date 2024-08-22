@@ -18,10 +18,8 @@ fun SplashScreen(
         try {
             viewModel.onAppStart { isSuccess ->
                 if (isSuccess) {
-                    Log.d("Session", "(Splash Screen) true")
                     navController.navigate(NavRoutes.HOME)
                 } else {
-                    Log.d("Session", "false")
                     navController.navigate(forwardNavigation)
                 }
             }
