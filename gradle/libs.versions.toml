@@ -5,7 +5,6 @@ coilCompose = "2.7.0"
 credentials = "1.2.2"
 firebaseBom = "33.1.2"
 firebaseAuth = "23.0.0"
-credentialsPlayServicesAuth = "1.2.2"
 googleid = "1.1.1"
 playServicesAuth = "21.2.0"
 googleGmsGoogleServices = "4.4.2"
@@ -22,7 +21,7 @@ espressoCore = "3.6.1"
 kotlinxCoroutinesAndroid = "1.8.1"
 lifecycleRuntimeKtx = "2.8.4"
 activityCompose = "1.9.1"
-composeBom = "2024.06.00"
+composeBom = "2024.08.00"
 navigationFragment = "2.7.7"
 roomRuntime = "2.6.1"
 ksp = "2.0.0-1.0.23"
@@ -37,10 +36,10 @@ firebaseAuthKtx = "23.0.0"
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 
 #FireBase & Google
-androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
+androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" } #WARNING HERE
+androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentialsPlayServicesAuth" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 
