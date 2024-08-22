@@ -24,6 +24,7 @@ fun ClickableTextToNavigationRoute(
         textDecoration = TextDecoration.Underline,
         modifier = modifier
             .clickable { navController.navigate(navRoute) },
+            //.clickable { navController.navigate("https://www.google.com") },
         color = Color.Blue,
     )
 }
