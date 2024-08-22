@@ -3,6 +3,7 @@ agp = "8.5.2"
 coilCompose = "2.7.0"
 
 credentials = "1.2.2"
+featureDelivery = "2.1.0"
 firebaseBom = "33.1.2"
 firebaseAuth = "23.0.0"
 googleid = "1.1.1"
@@ -38,6 +39,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 #FireBase & Google
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" } #WARNING HERE
 androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }
+feature-delivery = { module = "com.google.android.play:feature-delivery", version.ref = "featureDelivery" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
