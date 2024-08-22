@@ -47,13 +47,13 @@ import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.registration.components.ClickableTextToNavigationRoute
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.OrDivider
-import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogle
+import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleViewModel
 
 @Composable
 fun LoginScreen(
     modifier: Modifier,
     loginViewModel: LoginViewModel,
-    googleViewModel: ContinueWithGoogle,
+    googleViewModel: ContinueWithGoogleViewModel,
     navController: NavController
 ) {
     var email by remember { mutableStateOf("") }

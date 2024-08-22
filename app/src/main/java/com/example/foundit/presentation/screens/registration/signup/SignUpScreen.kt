@@ -53,7 +53,7 @@ import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.registration.components.ClickableTextToNavigationRoute
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.OrDivider
-import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogle
+import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,7 +61,7 @@ import com.example.foundit.presentation.screens.registration.components.google.C
 fun SignUpScreen(
     modifier: Modifier,
     signUpViewModel: SignUpViewModel,
-    googleViewModel: ContinueWithGoogle,
+    googleViewModel: ContinueWithGoogleViewModel,
     navController: NavController
 ) {
 
