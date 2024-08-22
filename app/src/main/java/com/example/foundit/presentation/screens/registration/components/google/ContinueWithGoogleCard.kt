@@ -1,6 +1,5 @@
-package com.example.foundit.presentation.screens.registration.components
+package com.example.foundit.presentation.screens.registration.components.google
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +15,6 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,20 +26,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.credentials.Credential
 import androidx.credentials.CredentialManager
-import androidx.credentials.GetCredentialRequest
-import androidx.credentials.exceptions.GetCredentialException
 import com.example.foundit.R
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption
-import kotlinx.coroutines.launch
 
 @Composable
 fun ContinueWithGoogleCard(
     modifier: Modifier,
     colorScheme: Int = 1,
+    continueWithGoogleViewModel: ContinueWithGoogleViewModel,
     onGetCredentialResponse: (Credential) -> Unit
 ) {
     val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
     val credentialManager = CredentialManager.create(context)
 
 
@@ -65,28 +59,11 @@ fun ContinueWithGoogleCard(
                 .fillMaxWidth()
                 .height(52.dp),
             onClick = {
-                val googleIdOption = GetGoogleIdOption.Builder()
-                    .setFilterByAuthorizedAccounts(false)
-                    .setServerClientId(context.getString(R.string.web_client_id))
-                    .build()
-
-                val request = GetCredentialRequest.Builder()
-                    .addCredentialOption(googleIdOption)
-                    .build()
-
-                coroutineScope.launch {
-                    try {
-                        val result = credentialManager.getCredential(
-                            request = request,
-                            context = context
-                        )
-
-
-                        onGetCredentialResponse(result.credential)
-                    } catch (e: GetCredentialException) {
-                        Log.d("error", e.message.orEmpty())
-                    }
-                }
+                continueWithGoogleViewModel.getCredentials(
+                    credentialManager = credentialManager,
+                    context = context,
+                    onGetCredentialResponse = onGetCredentialResponse
+                )
             },
             shape = RoundedCornerShape(6.dp),
             colors = CardDefaults.elevatedCardColors(containerColor = containerColor),

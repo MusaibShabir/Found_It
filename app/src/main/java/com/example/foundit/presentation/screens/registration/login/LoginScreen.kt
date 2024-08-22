@@ -45,13 +45,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.registration.components.ClickableTextToNavigationRoute
-import com.example.foundit.presentation.screens.registration.components.ContinueWithGoogleCard
+import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.OrDivider
+import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleViewModel
 
 @Composable
 fun LoginScreen(
     modifier: Modifier,
-    viewModel: LoginViewModel,
+    loginViewModel: LoginViewModel,
+    continueWithGoogleViewModel: ContinueWithGoogleViewModel,
     navController: NavController
 ) {
     var email by remember { mutableStateOf("") }
@@ -188,7 +190,7 @@ fun LoginScreen(
                     .height(52.dp),
                 onClick = {
                     try {
-                        viewModel.login(email, password) { isSuccess ->
+                        loginViewModel.login(email, password) { isSuccess ->
                             if (isSuccess) {
                                 Log.d("Login", "Login successful")
                                 navController.navigate(NavRoutes.HOME)
@@ -227,9 +229,10 @@ fun LoginScreen(
 
         ContinueWithGoogleCard(
             modifier = modifier,
-            colorScheme = 2
+            colorScheme = 2,
+            continueWithGoogleViewModel = continueWithGoogleViewModel
         ){ credential ->
-            viewModel.onSignInWithGoogle(credential) { isSuccess ->
+            loginViewModel.onSignInWithGoogle(credential) { isSuccess ->
                 if (isSuccess) {
                     Log.d("SignUp", "User created successfully")
                     navController.navigate(NavRoutes.HOME)

@@ -6,8 +6,6 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     id("androidx.navigation.safeargs")
-
-
 }
 
 android {
@@ -76,6 +74,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.config.ktx)
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
 
