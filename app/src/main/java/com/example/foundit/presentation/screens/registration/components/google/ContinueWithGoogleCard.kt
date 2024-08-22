@@ -32,7 +32,7 @@ import com.example.foundit.R
 fun ContinueWithGoogleCard(
     modifier: Modifier,
     colorScheme: Int = 1,
-    viewModel: ContinueWithGoogle,
+    viewModel: ContinueWithGoogleViewModel,
     onGetCredentialResponse: (Credential) -> Unit
 ) {
     val context = LocalContext.current
