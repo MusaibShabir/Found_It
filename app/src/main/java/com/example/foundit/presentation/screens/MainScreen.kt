@@ -151,10 +151,6 @@ fun MainScreen(modifier: Modifier) {
                 ProfileScreen(modifier, navController, profileViewModel)
             }
 
-            composable(NavRoutes.SETTINGS) {
-                SettingsScreen(modifier, navController)
-            }
-
             composable(NavRoutes.ACCOUNT_CENTER) {
                 AccountCenterScreen(modifier, navController)
             }
@@ -254,6 +250,10 @@ fun MainScreen(modifier: Modifier) {
             composable(NavRoutes.FORGOT_PASSWORD) {
                 ForgotPasswordScreen(modifier = modifier, navController = navController)
             }
+
+            composable(NavRoutes.SETTINGS) {
+                SettingsScreen(modifier = modifier, navController = navController)
+            }
         }
     }
 }
@@ -262,15 +262,14 @@ fun MainScreen(modifier: Modifier) {
 @Composable
 fun shouldShowBottomBar(currentRoute: String?): Boolean {
     return when (currentRoute) {
-        NavRoutes.GET_STARTED,
-        NavRoutes.FORGOT_PASSWORD,
-        NavRoutes.LOGIN,
-        NavRoutes.SPLASH,
-        NavRoutes.ACTION_SCREEN,
-        NavRoutes.SIGN_UP -> false
-        else -> true
+        NavRoutes.HOME,
+        NavRoutes.PROGRESS,
+        NavRoutes.NOTIFICATIONS,
+        NavRoutes.PROFILE, -> true
+        else -> false
     }
 }
+
 
 
 
