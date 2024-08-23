@@ -123,7 +123,20 @@ fun MainScreen(modifier: Modifier) {
 
             // Screens WITH Navigation Bar
             composable(NavRoutes.HOME) {
-                HomeScreen(modifier, profileViewModel, navController, NavRoutes.ACTION_SCREEN)
+                HomeScreen(
+                    modifier = modifier,
+                    viewModel = profileViewModel,
+                    navController = navController,
+                    lostButtonClick = NavRoutes.ACTION_SCREEN,
+                    foundButtonClick = NavRoutes.ACTION_SCREEN
+                )
+            }
+
+            composable(NavRoutes.ACTION_SCREEN) {
+                ActionScreen(
+                    modifier = modifier,
+                    navController = navController
+                )
             }
 
             composable(NavRoutes.PROGRESS) {
@@ -240,10 +253,6 @@ fun MainScreen(modifier: Modifier) {
             }
             composable(NavRoutes.FORGOT_PASSWORD) {
                 ForgotPasswordScreen(modifier = modifier, navController = navController)
-            }
-
-            composable(NavRoutes.ACTION_SCREEN) {
-                ActionScreen(modifier, navController)
             }
         }
     }

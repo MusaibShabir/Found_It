@@ -23,7 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.foundit.R
-import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.home.components.AppName
 import com.example.foundit.presentation.screens.home.components.Greetings
 import com.example.foundit.presentation.screens.home.components.MainCard
@@ -40,7 +39,8 @@ fun HomeScreenContent(
     greetingPrefix: String,
     profileName: String?,
     navController: NavHostController,
-    forwardNavigation: String,
+    lostButtonClick: String,
+    foundButtonClick: String,
 ) {
     Scaffold {
         Column(
@@ -69,6 +69,7 @@ fun HomeScreenContent(
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                //Lost Card
                 MainCard(
                     modifier = Modifier,
                     cardHeading = R.string.lost_card_heading,
@@ -76,9 +77,10 @@ fun HomeScreenContent(
                     buttonName = R.string.lost_card_button,
                     cardColor = MainRed,
                     navController = navController,
-                    forwardNavigation = forwardNavigation
+                    forwardNavigation = lostButtonClick,
                 )
 
+                //Found Card
                 MainCard(
                     modifier = Modifier,
                     cardHeading = R.string.found_card_heading,
@@ -86,7 +88,7 @@ fun HomeScreenContent(
                     buttonName = R.string.found_card_button,
                     cardColor = MainGreen,
                     navController = navController,
-                    forwardNavigation = forwardNavigation
+                    forwardNavigation = foundButtonClick
                 )
             }
         }
@@ -99,14 +101,22 @@ fun HomeScreen(
     modifier: Modifier,
     viewModel: ProfileViewModel,
     navController: NavHostController,
-    forwardNavigation: String,
+    lostButtonClick: String,
+    foundButtonClick: String,
 ) {
     //Greetings
     val profileData by viewModel.profileData.collectAsState()
     val profileName = profileData?.let { "${it.firstName} ${it.lastName}" }
     val greetingPrefix = stringResource(id = R.string.greeting_prefix)
 
-    HomeScreenContent(modifier, greetingPrefix, profileName, navController, forwardNavigation)
+    HomeScreenContent(
+        modifier = modifier,
+        greetingPrefix = greetingPrefix,
+        profileName = profileName,
+        navController = navController,
+        lostButtonClick = lostButtonClick,
+        foundButtonClick = foundButtonClick
+    )
 }
 
 
@@ -119,7 +129,8 @@ fun PreviewHomeScreen() {
         greetingPrefix = "HI",
         profileName = "Musaib Shabir",
         navController = NavHostController(LocalContext.current),
-        forwardNavigation = NavRoutes.ACTION_SCREEN
+        lostButtonClick = "",
+        foundButtonClick = ""
     )
 }
 

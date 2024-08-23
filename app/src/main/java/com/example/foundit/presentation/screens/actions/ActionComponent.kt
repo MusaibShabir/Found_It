@@ -32,11 +32,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
+import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ActionComponent(
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     navController: NavHostController
 ) {
     var selectedPhone by remember { mutableStateOf("") }
@@ -196,15 +197,11 @@ fun ActionComponent(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Button(onClick = { }) {
+            Button(onClick = { navController.navigate(NavRoutes.HOME)}) {
                 Text(text = "Submit")
             }
 
-            Button(onClick = {
-                navController
-                    .popBackStack()
-                    .toString()
-            }) {
+            Button(onClick = {navController.navigate(NavRoutes.HOME)}) {
                 Text(text = "Cancel")
             }
         }
@@ -222,10 +219,7 @@ fun ActionScreen(
             TheTopAppBar(
                 title = "Action Screen",
                 navController = navController,
-                backRoute = navController
-                    .popBackStack()
-                    .toString()
-            )
+                )
         }
     ) {innerPadding ->
         Box(
@@ -240,7 +234,10 @@ fun ActionScreen(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewActionScreen() {
-    ActionScreen(modifier = Modifier, navController = NavHostController(LocalContext.current))
+    ActionScreen(
+        modifier = Modifier,
+        navController = NavHostController(LocalContext.current)
+    )
 }
 
 
