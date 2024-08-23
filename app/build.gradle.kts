@@ -108,7 +108,7 @@ dependencies {
     //Authentication with Credential Manager
 
    // Android 14 or above
-    implementation(libs.androidx.credentials)
+    //implementation(libs.androidx.credentials)
     // Android 13 or below
     implementation(libs.androidx.credentials.play.services.auth)
 
