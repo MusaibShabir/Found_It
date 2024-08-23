@@ -58,6 +58,11 @@ fun LoginScreen(
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    // For Validation
+    var isEmailValid by remember { mutableStateOf(true) }
+    var isPasswordValid by remember { mutableStateOf(true) }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -86,13 +91,12 @@ fun LoginScreen(
             verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
             //Email
-            var isEmailValid by remember { mutableStateOf(true) }
             OutlinedTextField(
                 modifier = modifier
                     .fillMaxWidth(),
                 value = email,
                 onValueChange = {
-                    email = it
+                    email = it//.filter { char -> char.isLetterOrDigit() || char == '@' || char == '.' }
                     isEmailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches()},
                 label = { Text("Email") },
                 leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = "Email icon") },
@@ -101,6 +105,7 @@ fun LoginScreen(
                 },
                 placeholder = { Text("Enter Your Email", fontStyle = FontStyle.Italic) },
                 shape = MaterialTheme.shapes.medium,
+                singleLine = true,
                 isError = !isEmailValid,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
@@ -121,7 +126,6 @@ fun LoginScreen(
 
             //Password
             var passwordVisible by remember { mutableStateOf(false) }
-            var isPasswordValid by remember { mutableStateOf(true) }
             val icon = if (!passwordVisible) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility
             OutlinedTextField(
                 modifier = modifier
@@ -141,6 +145,7 @@ fun LoginScreen(
                 placeholder ={ Text("Enter Your Password", fontStyle = FontStyle.Italic) },
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 shape = MaterialTheme.shapes.medium,
+                singleLine = true,
                 isError = !isPasswordValid,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
@@ -208,7 +213,11 @@ fun LoginScreen(
                     disabledContainerColor = Color.Gray,
                     disabledContentColor = MaterialTheme.colorScheme.onSurface
                 ),
-                elevation = ButtonDefaults.elevatedButtonElevation(10.dp)
+                elevation = ButtonDefaults.elevatedButtonElevation(10.dp),
+                enabled = email.isNotEmpty()
+                        && password.isNotEmpty()
+                        && isEmailValid
+                        && isPasswordValid
 
             ) {
                 Text(

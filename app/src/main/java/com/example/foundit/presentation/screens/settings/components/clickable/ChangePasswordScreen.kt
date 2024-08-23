@@ -49,7 +49,7 @@ fun ChangePasswordScreen(
             TextField(
                 value = currentPassword,
                 onValueChange = {
-                    currentPassword = it
+                    currentPassword = it.filter { char -> !char.isWhitespace() }
                     currentPasswordError = it.length < 8
                 },
                 label = { Text("Current Password") },
@@ -82,7 +82,7 @@ fun ChangePasswordScreen(
             TextField(
                 value = newPassword,
                 onValueChange = {
-                    newPassword = it
+                    newPassword = it.filter { char -> !char.isWhitespace() }
                     newPasswordError = it.length < 8
                 },
                 label = { Text("New Password") },
@@ -115,7 +115,7 @@ fun ChangePasswordScreen(
             TextField(
                 value = confirmPassword,
                 onValueChange = {
-                    confirmPassword = it
+                    confirmPassword = it.filter { char -> !char.isWhitespace() }
                     confirmPasswordError = it != newPassword
                 },
                 label = { Text("Confirm Password") },

@@ -1,5 +1,6 @@
 package com.example.foundit.presentation.screens.registration
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -56,6 +57,7 @@ fun ForgotPasswordScreen(
     var emailSent by remember { mutableStateOf(false) }
     var errorOccurred by remember { mutableStateOf(false) }
     var isEmailValid by remember { mutableStateOf(true) }
+    val context = LocalContext.current
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -97,29 +99,12 @@ fun ForgotPasswordScreen(
 
                     Spacer(modifier = Modifier.height(30.dp))
 
-                    /*
-                    TextField(
-                        value = email,
-                        onValueChange = { email = it },
-                        label = { Text("Enter your email address") },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = TextFieldDefaults.textFieldColors(
-                            containerColor = Color.LightGray,
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent,
-                            //textColor = Color.Black
-                        )
-                    )
-                    */
-
                     OutlinedTextField(
                         modifier = modifier
                             .fillMaxWidth(),
                         value = email,
                         onValueChange = {
-                            email = it
+                            email = it//.filter { char -> char.isLetterOrDigit() || char == '@' || char == '.' }
                             isEmailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches()},
                         label = { Text("Email") },
                         leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = "Email icon") },
@@ -128,6 +113,7 @@ fun ForgotPasswordScreen(
                         },
                         placeholder = { Text("Enter Your Email", fontStyle = FontStyle.Italic) },
                         shape = MaterialTheme.shapes.medium,
+                        singleLine = true,
                         isError = !isEmailValid,
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedLabelColor = Color.Blue,
@@ -159,9 +145,10 @@ fun ForgotPasswordScreen(
                                 .height(52.dp),
                             onClick = {
                                 emailSent = true
-                                errorOccurred = true
+                                errorOccurred = false
                                 if (emailSent && !errorOccurred) {
                                     navController.navigate(NavRoutes.LOGIN)
+                                    Toast.makeText(context,"mail sent!",Toast.LENGTH_LONG).show()
                                 }
                             },
                             colors = ButtonColors(
@@ -171,7 +158,8 @@ fun ForgotPasswordScreen(
                                 disabledContentColor = MaterialTheme.colorScheme.onSurface,
 
                             ),
-                            elevation = ButtonDefaults.elevatedButtonElevation(10.dp)
+                            elevation = ButtonDefaults.elevatedButtonElevation(10.dp),
+                            enabled = email.isNotEmpty() && isEmailValid
 
                         ) {
                             Text(
