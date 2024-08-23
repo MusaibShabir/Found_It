@@ -40,7 +40,7 @@ fun ChangeEmailScreen(
             TextField(
                 value = currentEmail,
                 onValueChange = {
-                    currentEmail = it
+                    currentEmail = it.filter { char -> char.isLetterOrDigit() || char == '@' || char == '.' }
                     currentEmailError = !isValidEmail(it)
                 },
                 label = { Text("Current Email") },

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
@@ -43,6 +44,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -71,6 +74,12 @@ fun SignUpScreen(
     var gender by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    // For Validation
+    var isEmailValid by remember { mutableStateOf(true) }
+    var passwordVisible by remember { mutableStateOf(false) }
+    var isPasswordValid by remember { mutableStateOf(true) }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -102,11 +111,12 @@ fun SignUpScreen(
                     .fillMaxWidth()
                     .padding(bottom = 18.dp),
                 value = firstName,
-                onValueChange = {firstName = it},
+                onValueChange = {firstName = it.filter { char -> char.isLetter() }},
                 label = { Text("First Name") },
                 leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "Person icon") },
                 placeholder = { Text("Enter Your First Name", fontStyle = FontStyle.Italic) },
                 shape = MaterialTheme.shapes.medium,
+                singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
                     cursorColor = Color.Blue,
@@ -115,6 +125,10 @@ fun SignUpScreen(
                         handleColor = Color.Blue,
                         backgroundColor = Color.Transparent,
                     ),
+                ),
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                    imeAction = ImeAction.Next
                 )
             )
 
@@ -124,11 +138,12 @@ fun SignUpScreen(
                     .fillMaxWidth()
                     .padding(bottom = 18.dp),
                 value = lastName,
-                onValueChange = {lastName = it},
+                onValueChange = {lastName = it.filter { char -> char.isLetter() }},
                 label = { Text("Last Name") },
                 placeholder = { Text("Enter Your Last Name", fontStyle = FontStyle.Italic) },
                 leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "Person icon") },
                 shape = MaterialTheme.shapes.medium,
+                singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
                     cursorColor = Color.Blue,
@@ -137,9 +152,11 @@ fun SignUpScreen(
                         handleColor = Color.Blue,
                         backgroundColor = Color.Transparent,
                     ),
+                ),
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Words,
+                    imeAction = ImeAction.Next
                 )
-
-
             )
 
             //Gender
@@ -159,6 +176,7 @@ fun SignUpScreen(
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                     placeholder = { Text("Select Your Gender", fontStyle = FontStyle.Italic) },
                     shape = MaterialTheme.shapes.medium,
+                    singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedLabelColor = Color.Blue,
                         cursorColor = Color.Blue,
@@ -192,14 +210,13 @@ fun SignUpScreen(
             }
 
             //Email
-            var isEmailValid by remember { mutableStateOf(true) }
             OutlinedTextField(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(bottom = if (!isEmailValid && email.isNotBlank()) 10.dp else 0.dp),
                 value = email,
                 onValueChange = {
-                    email = it
+                    email = it//.filter { char -> char.isLetterOrDigit() || char == '@' || char == '.' }
                     isEmailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches()},
                 label = { Text("Email") },
                 leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = "Email icon") },
@@ -208,6 +225,7 @@ fun SignUpScreen(
                 },
                 placeholder = { Text("Enter Your Email", fontStyle = FontStyle.Italic) },
                 shape = MaterialTheme.shapes.medium,
+                singleLine = true,
                 isError = !isEmailValid,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
@@ -217,6 +235,9 @@ fun SignUpScreen(
                         handleColor = Color.Blue,
                         backgroundColor = Color.Transparent,
                     ),
+                ),
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next
                 ),
 
                 supportingText = {
@@ -229,8 +250,6 @@ fun SignUpScreen(
             )
             
             //Password
-            var passwordVisible by remember { mutableStateOf(false) }
-            var isPasswordValid by remember { mutableStateOf(true) }
             val icon = if (!passwordVisible) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility
             OutlinedTextField(
                 modifier = modifier
@@ -238,7 +257,7 @@ fun SignUpScreen(
                     .padding(bottom = if (!isPasswordValid && password.isNotBlank()) 10.dp else 0.dp),
                 value = password,
                 onValueChange = {
-                    password = it
+                    password = it.filter { char -> !char.isWhitespace() }
                     isPasswordValid = it.length >= 8
                 },
                 label = { Text("Password") },
@@ -251,6 +270,7 @@ fun SignUpScreen(
                 placeholder ={ Text("Enter Your Password", fontStyle = FontStyle.Italic) },
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 shape = MaterialTheme.shapes.medium,
+                singleLine = true,
                 isError = !isPasswordValid,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedLabelColor = Color.Blue,
@@ -298,7 +318,14 @@ fun SignUpScreen(
                     disabledContainerColor = Color.Gray,
                     disabledContentColor = MaterialTheme.colorScheme.onSurface
                 ),
-                elevation = ButtonDefaults.elevatedButtonElevation(10.dp)
+                elevation = ButtonDefaults.elevatedButtonElevation(10.dp),
+                enabled = firstName.isNotEmpty()
+                        && lastName.isNotEmpty()
+                        && gender.isNotEmpty()
+                        && email.isNotEmpty()
+                        && password.isNotEmpty()
+                        && isEmailValid
+                        && isPasswordValid
 
             ) {
                 Text(

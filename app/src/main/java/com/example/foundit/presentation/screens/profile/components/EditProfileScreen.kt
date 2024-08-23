@@ -105,7 +105,7 @@ fun EditProfileScreenContent(
                 // First name Input Field
                 TextField(
                     value = firstName,
-                    onValueChange = { onFirstNameChange(it) },
+                    onValueChange = { onFirstNameChange(it.filter { char -> char.isLetter() }) },
                     singleLine = true,
                     label = {
                         Text(
@@ -118,8 +118,8 @@ fun EditProfileScreenContent(
                         imeAction = ImeAction.Next
                     ),
                     colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Unspecified,
-                        unfocusedContainerColor = Color.Unspecified,
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
                         errorContainerColor = MaterialTheme.colorScheme.onError
                     )
                 )
@@ -129,7 +129,7 @@ fun EditProfileScreenContent(
                 // Last name Input Field
                 TextField(
                     value = lastName,
-                    onValueChange = { onLastNameChange(it) },
+                    onValueChange = { onLastNameChange(it.filter { char -> char.isLetter() }) },
                     singleLine = true,
                     label = { Text(text = "Last name") },
                     modifier = Modifier.fillMaxWidth(),
@@ -137,8 +137,8 @@ fun EditProfileScreenContent(
                         capitalization = KeyboardCapitalization.Words,
                     ),
                     colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Unspecified,
-                        unfocusedContainerColor = Color.Unspecified,
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
                         errorContainerColor = MaterialTheme.colorScheme.onError
                     )
                 )
