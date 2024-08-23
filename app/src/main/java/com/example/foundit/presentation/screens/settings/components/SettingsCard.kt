@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 
 @Composable
 fun SettingsOptionCard(
@@ -58,6 +59,6 @@ fun PreviewSettingsOptionCard(){
         modifier = Modifier,
         settingsOptionName = "Appearance",
         forwardNavigation = "Settings",
-        navController = NavController(LocalContext.current)
+        navController = NavHostController(LocalContext.current)
     )
 }

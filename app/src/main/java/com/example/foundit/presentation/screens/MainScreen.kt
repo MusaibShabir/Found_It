@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.splash.SplashScreen
 import com.example.foundit.presentation.navigation.NavigationBar
+import com.example.foundit.presentation.screens.actions.ActionScreen
 import com.example.foundit.presentation.screens.documentation.PrivacyPolicyScreen
 import com.example.foundit.presentation.screens.home.HomeScreen
 import com.example.foundit.presentation.screens.notification.NotificationScreen
@@ -122,7 +123,7 @@ fun MainScreen(modifier: Modifier) {
 
             // Screens WITH Navigation Bar
             composable(NavRoutes.HOME) {
-                HomeScreen(modifier, profileViewModel)
+                HomeScreen(modifier, profileViewModel, navController, NavRoutes.ACTION_SCREEN)
             }
 
             composable(NavRoutes.PROGRESS) {
@@ -239,7 +240,10 @@ fun MainScreen(modifier: Modifier) {
             }
             composable(NavRoutes.FORGOT_PASSWORD) {
                 ForgotPasswordScreen(modifier = modifier, navController = navController)
+            }
 
+            composable(NavRoutes.ACTION_SCREEN) {
+                ActionScreen(modifier, navController)
             }
         }
     }
@@ -253,6 +257,7 @@ fun shouldShowBottomBar(currentRoute: String?): Boolean {
         NavRoutes.FORGOT_PASSWORD,
         NavRoutes.LOGIN,
         NavRoutes.SPLASH,
+        NavRoutes.ACTION_SCREEN,
         NavRoutes.SIGN_UP -> false
         else -> true
     }

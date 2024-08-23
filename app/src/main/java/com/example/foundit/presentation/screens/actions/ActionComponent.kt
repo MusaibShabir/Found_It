@@ -3,9 +3,10 @@ package com.example.foundit.presentation.screens.actions
 import androidx.compose.runtime.Composable
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.TextSelectionColors
@@ -17,6 +18,7 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,13 +26,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.example.foundit.presentation.common.TheTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ActionScreen() {
+fun ActionComponent(
+    modifier: Modifier = Modifier,
+    navController: NavHostController
+) {
     var selectedPhone by remember { mutableStateOf("") }
     var selectedModel by remember { mutableStateOf("") }
     var selectedColor by remember { mutableStateOf("") }
@@ -46,7 +54,8 @@ fun ActionScreen() {
     val colorOptions = listOf("Red", "Green", "Blue")
 
     Column(
-        modifier = Modifier.padding(14.dp)
+        modifier = modifier
+            .padding(14.dp)
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -184,17 +193,46 @@ fun ActionScreen() {
         }
 
         Row(
-            modifier = Modifier.fillMaxHeight(),
-            //verticalAlignment = Alignment.Bottom,
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Button(onClick = { }) {
                 Text(text = "Submit")
             }
 
-            Button(onClick = { }) {
+            Button(onClick = {
+                navController
+                    .popBackStack()
+                    .toString()
+            }) {
                 Text(text = "Cancel")
             }
+        }
+    }
+}
+
+@Composable
+fun ActionScreen(
+    modifier: Modifier = Modifier,
+    navController: NavHostController
+) {
+    Scaffold(
+        modifier = modifier.fillMaxSize(),
+        topBar ={
+            TheTopAppBar(
+                title = "Action Screen",
+                navController = navController,
+                backRoute = navController
+                    .popBackStack()
+                    .toString()
+            )
+        }
+    ) {innerPadding ->
+        Box(
+            modifier = modifier
+                .padding(innerPadding),
+        ) {
+            ActionComponent(modifier,navController)
         }
     }
 }
@@ -202,7 +240,7 @@ fun ActionScreen() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewActionScreen() {
-    ActionScreen()
+    ActionScreen(modifier = Modifier, navController = NavHostController(LocalContext.current))
 }
 
 
