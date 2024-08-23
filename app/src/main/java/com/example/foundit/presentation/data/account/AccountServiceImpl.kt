@@ -1,5 +1,6 @@
 package com.example.foundit.presentation.data.account
 
+import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.tasks.await
@@ -12,8 +13,24 @@ class AccountServiceImpl @Inject constructor(
     override val currentUserId: String
         get() = firebaseAuth.currentUser?.uid.orEmpty()
 
+    override val currentUserName: String
+        get() = firebaseAuth.currentUser?.displayName ?: "User"
+
+    override val currentUserEmail: String
+        get() = firebaseAuth.currentUser?.email.orEmpty()
+
+    override val currentUserPhotoUrl: Uri?
+        get() = firebaseAuth.currentUser?.photoUrl
+
+    override val currentUserEmailVerified: Boolean
+        get() = firebaseAuth.currentUser?.isEmailVerified ?: false
+
     override fun hasUser(): Boolean {
         return firebaseAuth.currentUser != null
+    }
+
+    override suspend fun refreshCurrentUser() {
+        firebaseAuth.currentUser?.reload()?.await()
     }
 
     override suspend fun createAccount(email: String, password: String) {
