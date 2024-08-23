@@ -38,7 +38,7 @@ firebaseConfigKtx = "22.0.0"
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 
 #FireBase & Google
-androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" } #WARNING HERE
+#androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" } #WARNING HERE
 androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }
 feature-delivery = { module = "com.google.android.play:feature-delivery", version.ref = "featureDelivery" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
