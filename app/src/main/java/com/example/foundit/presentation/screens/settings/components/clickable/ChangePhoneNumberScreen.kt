@@ -1,11 +1,15 @@
 package com.example.foundit.presentation.screens.settings.components.clickable
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -44,8 +48,17 @@ fun ChangePhoneNumberScreen(
                 },
                 label = { Text("Current Phone Number") },
                 singleLine = true,
-                isError = currentPhoneNumberError,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next
+                ),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    errorContainerColor = Color.Transparent
+                ),
+                isError = currentPhoneNumberError
             )
             if (currentPhoneNumberError) {
                 Text(
@@ -65,8 +78,16 @@ fun ChangePhoneNumberScreen(
                 },
                 label = { Text("New Phone Number") },
                 singleLine = true,
-                isError = newPhoneNumberError,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number
+                ),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    errorContainerColor = Color.Transparent
+                ),
+                isError = newPhoneNumberError
             )
             if (newPhoneNumberError) {
                 Text(
@@ -108,6 +129,6 @@ fun ChangePhoneNumberScreen(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun ChangePhoneNumberScreenPreview() {
+fun PreviewChangePhoneNumberScreen() {
     ChangePhoneNumberScreen(navController = NavHostController(LocalContext.current))
 }

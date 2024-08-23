@@ -17,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -27,28 +26,32 @@ import androidx.compose.ui.unit.sp
 import com.example.foundit.R
 import kotlinx.coroutines.delay
 
+
+// UI-Only Composable
 @Composable
 fun Greetings(
-    modifier: Modifier,
-    name: String
+    modifier: Modifier = Modifier,
+    greetingPrefix: String,
+    profileName: String?
 ) {
-    val greetingPrefix = stringResource(id = R.string.greeting_prefix)
     var isAnimationStarted by remember { mutableStateOf(false) }
     val animatedProgress = remember { Animatable(0f) }
 
-    LaunchedEffect(key1 = name) {
+    LaunchedEffect(key1 = profileName) {
         isAnimationStarted = true
         delay(1000)
         animatedProgress.animateTo(
             targetValue = 1f,
             animationSpec = keyframes {
-                durationMillis = name.length * 73
+                if (profileName != null) {
+                    durationMillis = profileName.length * 73
+                }
                 0.0f at 0 using LinearEasing
             })
     }
 
     val displayedText = if (isAnimationStarted) {
-        greetingPrefix + " " + name.substring(0, (animatedProgress.value * name.length).toInt())
+        "$greetingPrefix " + (profileName?.substring(0, (animatedProgress.value * profileName.length).toInt()) ?: "")
     } else {
         ""
     }
@@ -69,19 +72,21 @@ fun Greetings(
                 maxLines = 1,
                 modifier = modifier.padding(start = 5.dp)
             )
-
-
         }
-
-
-
     }
 }
+
+
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun PreviewGreetings() {
     Greetings(
         modifier = Modifier,
-        name = "Musaib"
+        greetingPrefix = "HI",
+        profileName = "Musaib Shabir"
     )
 }
+
+
+
+

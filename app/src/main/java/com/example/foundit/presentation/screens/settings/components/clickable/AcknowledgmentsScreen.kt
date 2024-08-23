@@ -56,6 +56,6 @@ fun AcknowledgementScreen(
 
 @Preview (showBackground = true, showSystemUi = true)
 @Composable
-fun AcknowledgementScreenPreview() {
+fun PreviewAcknowledgementScreen() {
     AcknowledgementScreen(navController = NavHostController(LocalContext.current))
 }

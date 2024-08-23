@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.registration.components
+package com.example.foundit.presentation.screens.registration.components.google
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -18,28 +18,56 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.credentials.Credential
+import androidx.credentials.CredentialManager
 import com.example.foundit.R
 
 @Composable
-fun ContinueWithGoogleCard(modifier: Modifier) {
+fun ContinueWithGoogleCard(
+    modifier: Modifier,
+    colorScheme: Int = 1,
+    continueWithGoogleViewModel: ContinueWithGoogleViewModel,
+    onGetCredentialResponse: (Credential) -> Unit
+) {
+    val context = LocalContext.current
+    val credentialManager = CredentialManager.create(context)
+
+
+    val containerColor = when(colorScheme) {
+        1 -> Color.White
+        2 -> Color.Blue
+        else -> Color.White
+    }
+    val textColor = when (colorScheme) {
+        1 -> Color.Blue
+        2 -> Color.White
+        else -> Color.Blue
+    }
     Row (modifier = modifier
         .fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
         ){
-
         ElevatedCard(
             modifier = modifier
                 .fillMaxWidth()
                 .height(52.dp),
-            onClick = { /*TODO*/ },
+            onClick = {
+                continueWithGoogleViewModel.getCredentials(
+                    credentialManager = credentialManager,
+                    context = context,
+                    onGetCredentialResponse = onGetCredentialResponse
+                )
+            },
             shape = RoundedCornerShape(6.dp),
-            colors = CardDefaults.elevatedCardColors(Color.White),
-            elevation = CardDefaults.elevatedCardElevation(5.dp)
+            colors = CardDefaults.elevatedCardColors(containerColor = containerColor),
+            elevation = CardDefaults.elevatedCardElevation(10.dp)
         ) {
             Row (modifier = modifier
                 .fillMaxSize()
@@ -54,11 +82,13 @@ fun ContinueWithGoogleCard(modifier: Modifier) {
                     modifier = modifier
                         .size(18.dp)
                 )
-                Spacer(modifier = Modifier.width(10.dp))
+                Spacer(modifier = Modifier.width(15.dp))
                 Text(
                     text = "CONTINUE WITH GOOGLE",
                     fontSize = 18.sp,
-                    color = Color.Blue
+                    fontWeight = FontWeight.SemiBold,
+                    color = textColor,
+
                 )
             }
 
@@ -68,9 +98,14 @@ fun ContinueWithGoogleCard(modifier: Modifier) {
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
-fun PreviewContinueWithGoogleCard() {
-    ContinueWithGoogleCard(modifier = Modifier)
+@Preview(showBackground = true, showSystemUi = false)
+fun PreviewContinueWithGoogleCard() {}
+    /*
+    ContinueWithGoogleCard(
+        modifier = Modifier,
+        colorScheme = 1
+    )
 }
+     */
 
 

@@ -59,6 +59,6 @@ fun DeveloperInfoScreen(
 
 @Preview (showBackground = true, showSystemUi = true)
 @Composable
-fun DeveloperInfoScreenPreview() {
+fun PreviewDeveloperInfoScreen() {
     DeveloperInfoScreen(navController = NavHostController(LocalContext.current))
 }

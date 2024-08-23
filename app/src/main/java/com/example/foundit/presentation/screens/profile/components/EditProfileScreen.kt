@@ -4,133 +4,229 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.foundit.R
+import com.example.foundit.R.drawable.ic_launcher_background
+import com.example.foundit.presentation.common.TheTopAppBar
+import com.example.foundit.presentation.screens.profile.ProfileViewModel
 
-
+//UI-Only Composable
 @Composable
-fun EditProfileScreen() {
-    var firstName by remember { mutableStateOf("Musaib") }
-    var lastName by remember { mutableStateOf("Shabir") }
-    var email by remember { mutableStateOf("musaibShabir145@gmail.com") }
-    var phoneNumber by remember { mutableStateOf("9545652895") }
+fun EditProfileScreenContent(
+    modifier: Modifier,
+    firstName: String,
+    lastName: String,
+    onFirstNameChange: (String) -> Unit,
+    onLastNameChange: (String) -> Unit,
+    onCancelClick: () -> Unit,
+    onSaveClick: () -> Unit,
+    navController: NavController
+) {
     var profilePicture by remember { mutableStateOf<Uri?>(null) }
 
     val profilePicturePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
-        onResult = {uri -> profilePicture = uri }
+        onResult = { uri -> profilePicture = uri }
     )
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "Edit Profile",
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
-        )
-
-        Spacer(modifier = Modifier.height(56.dp))
-
-        // Profile picture Input Field
-        AsyncImage(
-            model = profilePicture ?: R.drawable.ic_launcher_background,
-            contentDescription = "Profile Picture",
-            modifier = Modifier
-                .size(180.dp)
-                .clip(CircleShape)
-                .clickable {
-                    // profile picture change logic
-                    profilePicturePickerLauncher.launch(
-                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                    )
-                },
-            contentScale = ContentScale.Crop
-        )
-
-        Spacer(modifier = Modifier.height(26.dp))
-
-
-        // First name Input Field
-        OutlinedTextField(
-            value = firstName,
-            onValueChange = { firstName = it },
-            singleLine = true,
-            label = { Text("First name", fontSize = 16.sp, fontWeight = FontWeight.Medium) },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Last name Input Field
-        OutlinedTextField(
-            value = lastName,
-            onValueChange = { lastName = it },
-            singleLine = true,
-            label = { Text("Last name", fontSize = 16.sp, fontWeight = FontWeight.Medium) },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Email Input Field
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            singleLine = true,
-            label = { Text("Email", fontSize = 16.sp, fontWeight = FontWeight.Medium) },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Phone number Input Field
-        OutlinedTextField(
-            value = phoneNumber,
-            onValueChange = { phoneNumber = it },
-            singleLine = true,
-            label = { Text("Phone Number", fontSize = 16.sp, fontWeight = FontWeight.Medium) },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-
-        // Save Button
-        Button(
-            onClick = {
-                // Handle save action
-                println("First name: $firstName, First name: $lastName, Email: $email, Phone Number: $phoneNumber")
-            },
-            modifier = Modifier.align(Alignment.End)
+    Scaffold(
+        topBar = { TheTopAppBar(title = "Edit Profile", navController = navController) }
+    ) { paddingValues ->
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Text("Save", fontSize = 20.sp, modifier = Modifier.padding(5.dp,2.dp))
+            // Profile picture Input Field
+            AsyncImage(
+                model = profilePicture ?: ic_launcher_background,
+                contentDescription = "Profile Picture",
+                modifier = modifier
+                    .size(180.dp)
+                    .clip(CircleShape)
+                    .clickable {
+                        // profile picture change logic
+                        profilePicturePickerLauncher.launch(
+                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                        )
+                    },
+                contentScale = ContentScale.Crop
+            )
+
+            Spacer(modifier = Modifier.height(26.dp))
+
+            Column(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .height(IntrinsicSize.Min)
+                    .padding(horizontal = 32.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                // First name Input Field
+                TextField(
+                    value = firstName,
+                    onValueChange = { onFirstNameChange(it) },
+                    singleLine = true,
+                    label = {
+                        Text(
+                            text = "First name",
+                        )
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.Words,
+                        imeAction = ImeAction.Next
+                    ),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.Unspecified,
+                        unfocusedContainerColor = Color.Unspecified,
+                        errorContainerColor = MaterialTheme.colorScheme.onError
+                    )
+                )
+
+                Spacer(modifier = modifier.height(16.dp))
+
+                // Last name Input Field
+                TextField(
+                    value = lastName,
+                    onValueChange = { onLastNameChange(it) },
+                    singleLine = true,
+                    label = { Text(text = "Last name") },
+                    modifier = Modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.Words,
+                    ),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.Unspecified,
+                        unfocusedContainerColor = Color.Unspecified,
+                        errorContainerColor = MaterialTheme.colorScheme.onError
+                    )
+                )
+            }
+
+            Spacer(modifier = modifier.height(30.dp))
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 80.dp)
+            ) {
+
+                // Cancel Button
+                Button(
+                    onClick = { onCancelClick() }
+                ) {
+                    Text(
+                        text = "Cancel",
+                        fontSize = 20.sp,
+                        modifier = modifier
+                            .padding(5.dp, 2.dp)
+                    )
+                }
+
+                //Save Button
+                Button(
+                    onClick = { onSaveClick() },
+                    enabled = firstName.isNotBlank() && lastName.isNotBlank(),
+                ) {
+                    Text(
+                        text = "Save Changes",
+                        fontSize = 20.sp,
+                        modifier = modifier
+                            .padding(5.dp, 2.dp)
+                    )
+                }
+            }
         }
     }
 }
 
+
+//ViewModel Composable
+@Composable
+fun EditProfileScreen(
+    modifier: Modifier,
+    navController: NavController,
+    viewModel: ProfileViewModel
+) {
+    val profileData by viewModel.profileData.collectAsState()
+    var profileFirstName by remember { mutableStateOf(profileData?.firstName ?: "") }
+    var profileLastName by remember { mutableStateOf(profileData?.lastName ?: "") }
+    val profileId by remember { mutableLongStateOf(profileData?.id ?: 0) }
+
+
+    EditProfileScreenContent(
+        modifier = modifier,
+        firstName = profileFirstName,
+        lastName = profileLastName,
+        onFirstNameChange = { profileFirstName = it },
+        onLastNameChange = { profileLastName = it },
+        onCancelClick = { navController.popBackStack() },
+        onSaveClick = {
+            viewModel.updateProfileData(profileId, profileFirstName, profileLastName)
+            navController.popBackStack()
+        },
+        navController = navController
+    )
+
+}
+
+
+
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewEditProfileScreen() {
-    EditProfileScreen()
+    EditProfileScreenContent(
+        modifier = Modifier,
+        firstName = "Musaib",
+        lastName = "Shabir",
+        onFirstNameChange = {},
+        onLastNameChange = {},
+        onCancelClick = {},
+        onSaveClick = {},
+        navController = NavController(LocalContext.current)
+    )
 }
 

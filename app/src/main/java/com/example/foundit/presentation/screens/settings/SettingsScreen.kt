@@ -10,7 +10,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.screens.settings.components.SettingsCard
+import com.example.foundit.presentation.data.navigation.NavRoutes
+import com.example.foundit.presentation.screens.settings.components.SettingsOptionCard
 
 @Composable
 fun SettingsScreen(
@@ -20,14 +21,21 @@ fun SettingsScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar ={
-            TheTopAppBar(title = "Settings", navController = navController)
+            TheTopAppBar(title = "Settings", navController = navController, backRoute = NavRoutes.PROFILE)
         }
     ) {innerPadding ->
         Column(
             modifier = modifier
                 .padding(innerPadding),
         ) {
-            SettingsCard(modifier = modifier)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Account Center", forwardNavigation = NavRoutes.ACCOUNT_CENTER, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Language", forwardNavigation = NavRoutes.LANGUAGE, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Appearance", forwardNavigation = NavRoutes.APPEARANCE, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Security", forwardNavigation = NavRoutes.SECURITY, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Help and Support", forwardNavigation = NavRoutes.HELP_AND_SUPPORT, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Feedback", forwardNavigation = NavRoutes.FEEDBACK, navController = navController)
+            //SettingsOptionCard(modifier = modifier, settingsOptionName = "Share", forwardNavigation = NavRoutes.SHARE, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "About", forwardNavigation = NavRoutes.ABOUT, navController = navController)
         }
     }
 }

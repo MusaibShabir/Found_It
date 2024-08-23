@@ -10,7 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.data.themes
+import com.example.foundit.presentation.data.themes
 
 @Composable
 fun AppearanceScreen(
@@ -61,7 +61,7 @@ fun AppearanceScreen(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun AppearanceScreenPreview() {
+fun PreviewAppearanceScreen() {
     val navController = NavHostController(LocalContext.current)
     AppearanceScreen(
         navController = navController,

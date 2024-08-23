@@ -9,22 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
-import com.example.foundit.data.securityOptionList
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.screens.settings.components.SettingsOption
-
-@Composable
-fun SecurityCard(
-    modifier: Modifier = Modifier
-){
-    Column (
-        modifier = modifier,
-    ) {
-        for (option in securityOptionList)
-            SettingsOption(option)
-    }
-}
-
+import com.example.foundit.presentation.data.navigation.NavRoutes
+import com.example.foundit.presentation.screens.settings.components.SettingsOptionCard
 
 @Composable
 fun SecurityScreen(
@@ -34,20 +21,22 @@ fun SecurityScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar ={
-            TheTopAppBar(title = "About", navController = navController)
+            TheTopAppBar(title = "Security", navController = navController)
         }
     ) {innerPadding ->
         Column(
             modifier = modifier
                 .padding(innerPadding),
         ) {
-            SecurityCard()
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Change Password", forwardNavigation = NavRoutes.CHANGE_PASSWORD, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Change Phone Number", forwardNavigation = NavRoutes.CHANGE_PHONE_NUMBER, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Change Email", forwardNavigation = NavRoutes.CHANGE_EMAIL, navController = navController)
         }
     }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun SecurityScreenPreview(){
+fun PreviewSecurityScreen(){
     SecurityScreen(navController = NavHostController(LocalContext.current))
 }

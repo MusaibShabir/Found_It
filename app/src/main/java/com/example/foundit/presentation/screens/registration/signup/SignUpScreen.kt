@@ -1,5 +1,6 @@
-package com.example.foundit.presentation.screens.registration
+package com.example.foundit.presentation.screens.registration.signup
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -10,7 +11,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Man
@@ -28,6 +31,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,14 +48,24 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.foundit.presentation.screens.registration.components.ClickableTextToWebpage
-import com.example.foundit.presentation.screens.registration.components.ContinueWithGoogleCard
+import androidx.navigation.NavController
+import com.example.foundit.presentation.data.navigation.NavRoutes
+import com.example.foundit.presentation.screens.registration.components.ClickableTextToNavigationRoute
+import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.OrDivider
+import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpScreen(modifier: Modifier) {
+fun SignUpScreen(
+    modifier: Modifier,
+    signUpViewModel: SignUpViewModel,
+    continueWithGoogleViewModel: ContinueWithGoogleViewModel,
+    navController: NavController
+) {
+
+
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf("") }
@@ -65,7 +79,7 @@ fun SignUpScreen(modifier: Modifier) {
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(vertical = 30.dp),
+                .padding(vertical = 10.dp),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.Top
         ){
@@ -92,9 +106,18 @@ fun SignUpScreen(modifier: Modifier) {
                 label = { Text("First Name") },
                 leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "Person icon") },
                 placeholder = { Text("Enter Your First Name", fontStyle = FontStyle.Italic) },
-                shape = MaterialTheme.shapes.medium
-
+                shape = MaterialTheme.shapes.medium,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedLabelColor = Color.Blue,
+                    cursorColor = Color.Blue,
+                    focusedBorderColor = Color.Blue,
+                    selectionColors =  TextSelectionColors(
+                        handleColor = Color.Blue,
+                        backgroundColor = Color.Transparent,
+                    ),
+                )
             )
+
             // Last Name
             OutlinedTextField(
                 modifier = modifier
@@ -105,7 +128,17 @@ fun SignUpScreen(modifier: Modifier) {
                 label = { Text("Last Name") },
                 placeholder = { Text("Enter Your Last Name", fontStyle = FontStyle.Italic) },
                 leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "Person icon") },
-                shape = MaterialTheme.shapes.medium
+                shape = MaterialTheme.shapes.medium,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedLabelColor = Color.Blue,
+                    cursorColor = Color.Blue,
+                    focusedBorderColor = Color.Blue,
+                    selectionColors =  TextSelectionColors(
+                        handleColor = Color.Blue,
+                        backgroundColor = Color.Transparent,
+                    ),
+                )
+
 
             )
 
@@ -126,6 +159,15 @@ fun SignUpScreen(modifier: Modifier) {
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                     placeholder = { Text("Select Your Gender", fontStyle = FontStyle.Italic) },
                     shape = MaterialTheme.shapes.medium,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedLabelColor = Color.Blue,
+                        cursorColor = Color.Blue,
+                        focusedBorderColor = Color.Blue,
+                        selectionColors =  TextSelectionColors(
+                            handleColor = Color.Blue,
+                            backgroundColor = Color.Transparent,
+                        ),
+                    ),
                     modifier = modifier
                         .fillMaxWidth()
                         .menuAnchor()
@@ -161,9 +203,22 @@ fun SignUpScreen(modifier: Modifier) {
                     isEmailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches()},
                 label = { Text("Email") },
                 leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = "Email icon") },
+                trailingIcon = { if (!isEmailValid && email.isNotBlank()) {
+                    Icon(Icons.Filled.Error, contentDescription = "Email icon", tint = MaterialTheme.colorScheme.error) }
+                },
                 placeholder = { Text("Enter Your Email", fontStyle = FontStyle.Italic) },
                 shape = MaterialTheme.shapes.medium,
                 isError = !isEmailValid,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedLabelColor = Color.Blue,
+                    cursorColor = Color.Blue,
+                    focusedBorderColor = Color.Blue,
+                    selectionColors =  TextSelectionColors(
+                        handleColor = Color.Blue,
+                        backgroundColor = Color.Transparent,
+                    ),
+                ),
+
                 supportingText = {
                     if (!isEmailValid && email.isNotBlank()) {
                         Text("Invalid email address", color = MaterialTheme.colorScheme.error)
@@ -197,6 +252,16 @@ fun SignUpScreen(modifier: Modifier) {
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 shape = MaterialTheme.shapes.medium,
                 isError = !isPasswordValid,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedLabelColor = Color.Blue,
+                    cursorColor = Color.Blue,
+                    focusedBorderColor = Color.Blue,
+                    selectionColors =  TextSelectionColors(
+                        handleColor = Color.Blue,
+                        backgroundColor = Color.Transparent,
+                    ),
+                ),
+
                 supportingText = {
                     if (!isPasswordValid && password.isNotBlank()) {
                         Text("Password must be at least 8 characters", color = MaterialTheme.colorScheme.error)
@@ -217,14 +282,23 @@ fun SignUpScreen(modifier: Modifier) {
                 modifier = modifier
                     .width(200.dp)
                     .height(52.dp),
-                onClick = { /*TODO*/ },
+                onClick = {
+                    signUpViewModel.signUpUser(email, password, firstName, lastName) {isSuccess ->
+                        if (isSuccess) {
+                            Log.d("SignUp", "User created successfully")
+                            navController.navigate(NavRoutes.HOME)
+                        } else {
+                            Log.d("SignUp", "Authentication failed")
+                        }
+                    }
+                },
                 colors = ButtonColors(
                     containerColor = Color.Blue,
                     contentColor = MaterialTheme.colorScheme.surface,
                     disabledContainerColor = Color.Gray,
                     disabledContentColor = MaterialTheme.colorScheme.onSurface
                 ),
-                elevation = ButtonDefaults.elevatedButtonElevation(20.dp)
+                elevation = ButtonDefaults.elevatedButtonElevation(10.dp)
 
             ) {
                 Text(
@@ -235,9 +309,51 @@ fun SignUpScreen(modifier: Modifier) {
                 )
             }
         }// Button Row
+        Spacer(modifier = modifier.height(10.dp))
+        Row (
+            modifier = modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Text(
+                text = "Already have an account ?",
+                fontWeight = FontWeight.Medium
+            )
+
+            ClickableTextToNavigationRoute(
+                text = "Login",
+                navRoute = NavRoutes.LOGIN,
+                modifier = modifier.padding(start = 8.dp),
+                navController = navController
+            )
+
+
+        }
+
 
         OrDivider(modifier = modifier)
-        ContinueWithGoogleCard(modifier = modifier)
+
+        ContinueWithGoogleCard(
+            modifier = modifier,
+            colorScheme = 1,
+            continueWithGoogleViewModel = continueWithGoogleViewModel,
+        ) { credential ->
+            signUpViewModel.onSignUpWithGoogle(credential) { result ->
+                when (result) {
+                    SignUpViewModel.SignInResult.Success -> {
+                        Log.d("SignUp", "User created successfully")
+                        navController.navigate(NavRoutes.HOME)
+
+                    }
+                    is SignUpViewModel.SignInResult.Failure -> {
+                        Log.d(
+                            "SignUp",
+                            "Authentication failed: Code ${result.errorCode}, Message: ${result.errorMessage}"
+                        )
+                    }
+                }
+            }
+        }
 
         Column(modifier = modifier
             .fillMaxSize()
@@ -260,18 +376,22 @@ fun SignUpScreen(modifier: Modifier) {
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
             ) {
-                ClickableTextToWebpage(
+                ClickableTextToNavigationRoute(
                     text = "Terms of Service",
-                    url = "https://www.google.com",
-                    modifier = Modifier.padding(end = 8.dp)
+                    navRoute = "",
+                    modifier = modifier.padding(end = 8.dp),
+                    navController = navController
                 )
+
                 Text(text = "&")
 
-                ClickableTextToWebpage(
+                ClickableTextToNavigationRoute(
                     text = "Privacy Policy",
-                    url = "https://www.google.com",
-                    modifier = Modifier.padding(start = 8.dp)
+                    navRoute = NavRoutes.PRIVACY_POLICY,
+                    modifier = modifier.padding(start = 8.dp),
+                    navController = navController
                 )
+
             }
         }
 
@@ -284,6 +404,6 @@ fun SignUpScreen(modifier: Modifier) {
 @Composable
 @Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
 fun PreviewSignUpScreen() {
-    SignUpScreen(modifier = Modifier)
+    //SignUpScreen(modifier = Modifier)
 }
 

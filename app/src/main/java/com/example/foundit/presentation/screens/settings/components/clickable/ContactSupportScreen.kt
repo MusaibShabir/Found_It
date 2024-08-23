@@ -74,6 +74,6 @@ fun ContactSupportScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun ContactSupportPreview(){
+fun PreviewContactSupportScreen(){
     ContactSupportScreen(navController = NavHostController(LocalContext.current))
 }

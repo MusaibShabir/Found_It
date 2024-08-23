@@ -1,11 +1,14 @@
 package com.example.foundit.presentation.screens.settings.components.clickable
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -43,6 +46,14 @@ fun ChangeEmailScreen(
                 label = { Text("Current Email") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next
+                ),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    errorContainerColor = Color.Transparent
+                ),
                 isError = currentEmailError
             )
             if (currentEmailError) {
@@ -62,6 +73,11 @@ fun ChangeEmailScreen(
                 label = { Text("New Email") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    errorContainerColor = Color.Transparent
+                ),
                 isError = newEmailError
             )
             if (newEmailError) {
@@ -103,7 +119,7 @@ fun ChangeEmailScreen(
 
 @Preview (showBackground = true, showSystemUi = true)
 @Composable
-fun ChangeEmailScreenPreview() {
+fun PreviewChangeEmailScreen() {
     ChangeEmailScreen(navController = NavHostController(LocalContext.current))
 }
 

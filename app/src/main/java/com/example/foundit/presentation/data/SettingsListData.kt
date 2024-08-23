@@ -1,4 +1,4 @@
-package com.example.foundit.data
+package com.example.foundit.presentation.data
 
 /*
 data class SettingsListData(
@@ -33,7 +33,7 @@ val aboutOptionList: List<String> = listOf(
     "Privacy Policy",
     "Acknowledgments",
     "Developer Info",
-    "Follow Us"
+    "Follow us"
 )
 
 val securityOptionList: List<String> = listOf(

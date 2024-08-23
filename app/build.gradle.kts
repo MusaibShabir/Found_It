@@ -1,7 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.google.gms.google.services)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -41,16 +45,18 @@ android {
     buildFeatures {
         compose = true
     }
-    
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    buildToolsVersion = "35.0.0"
+
+
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -59,19 +65,74 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.navigation.compose)
-    implementation (libs.coil.compose)
     implementation(libs.androidx.material.icons.extended)
+
+    //Play Feature Delivery
+    implementation(libs.feature.delivery)
+
+    //Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.config.ktx)
+    annotationProcessor(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
+
+    //Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    implementation (libs.androidx.hilt.navigation.compose)
+
+
+    //Coil
+    implementation(libs.coil.compose)
+
+    //navigation
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.navigation.compose)
+
+    // Feature module Support
+    implementation(libs.androidx.navigation.dynamic.features.fragment)
+
+    // Jetpack Compose Integration
+    implementation(libs.androidx.navigation.compose)
+
+    //Coroutines
+    implementation(libs.kotlinx.coroutines.android)
+
+    // firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+
+    //Authentication with Credential Manager
+
+   // Android 14 or above
+    //implementation(libs.androidx.credentials)
+    // Android 13 or below
+    implementation(libs.androidx.credentials.play.services.auth)
+
+    implementation(libs.play.services.auth)
+    implementation(libs.googleid)
+    implementation(libs.play.services.auth)
+
+
+
+
 
 
     testImplementation(libs.junit)
-
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+
+    //Testing Navigation
+    androidTestImplementation(libs.androidx.navigation.testing)
+
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
 
 }
+

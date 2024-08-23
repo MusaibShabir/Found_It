@@ -9,22 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
-import com.example.foundit.data.helpAndSupportOptionList
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.screens.settings.components.SettingsOption
-
-@Composable
-fun HelpAndSupportCard(
-    modifier: Modifier = Modifier
-){
-    Column (
-        modifier = modifier,
-    ) {
-        for (option in helpAndSupportOptionList)
-            SettingsOption(option)
-    }
-}
-
+import com.example.foundit.presentation.data.navigation.NavRoutes
+import com.example.foundit.presentation.screens.settings.components.SettingsOptionCard
 
 @Composable
 fun HelpAndSupportScreen(
@@ -41,13 +28,14 @@ fun HelpAndSupportScreen(
             modifier = modifier
                 .padding(innerPadding),
         ) {
-            HelpAndSupportCard()
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Report a Problem", forwardNavigation = NavRoutes.REPORT_A_BUG, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Contact Support", forwardNavigation = NavRoutes.CONTACT_SUPPORT, navController = navController)
         }
     }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun HelpAndSupportScreenPreview(){
+fun PreviewHelpAndSupportScreen(){
     HelpAndSupportScreen(navController = NavHostController(LocalContext.current))
 }

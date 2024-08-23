@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
@@ -33,17 +34,25 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.foundit.R
+import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun MainCard(
     modifier: Modifier,
     @StringRes
-    cardHeading: Int, cardTitle: Int, buttonName: Int,
+    cardHeading: Int,
+    cardTitle: Int,
+    buttonName: Int,
     cardColor: Color,
+    navController: NavHostController,
+    forwardNavigation: String,
 ) {
     Card(
-        onClick = { /*TODO*/ },
+        onClick = {
+
+        },
         modifier = modifier
             .fillMaxWidth()
             .height(intrinsicSize = IntrinsicSize.Max)
@@ -114,7 +123,9 @@ fun MainCard(
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        navController.navigate(forwardNavigation)
+                              },
                     elevation = buttonElevation(defaultElevation = 20.dp, pressedElevation = 25.dp),
                     colors = buttonColors(containerColor = Color.White),
                     modifier = modifier.fillMaxWidth()
@@ -135,13 +146,15 @@ fun MainCard(
 
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
+@Preview(showBackground = true, showSystemUi = false, device = "id:pixel_6_pro")
 fun PreviewMainCard() {
     MainCard(
         modifier = Modifier,
         cardHeading = R.string.lost_card_heading,
         cardTitle = R.string.lost_card_sub_title,
         buttonName = R.string.lost_card_button,
-        cardColor = Color.Red
+        cardColor = Color.Red,
+        navController = NavHostController(LocalContext.current),
+        forwardNavigation = NavRoutes.ACTION_SCREEN
     )
 }

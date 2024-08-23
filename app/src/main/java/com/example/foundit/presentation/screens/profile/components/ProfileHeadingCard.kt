@@ -41,15 +41,17 @@ import androidx.compose.ui.unit.sp
 import com.example.foundit.R
 
 
+// UI-Only Composable
 @Composable
 fun ProfileHeadingCard(
-    modifier: Modifier,
-    profileName: String,
+    modifier: Modifier = Modifier,
     profilePicture: Painter,
-    profileCountryFlag: Painter,
-    profileCountryCode: String,
+    firstName: String,
+    lastName: String,
+    profileCountryCode: Int,
     profileId: Long,
-    ) {
+    onEditProfileClick: () -> Unit,
+) {
     Card(
         shape = RoundedCornerShape(15.dp),
         modifier = modifier
@@ -82,87 +84,118 @@ fun ProfileHeadingCard(
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Top
             ) {
-                Text(
-                    text = profileName,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight(600),
-                    maxLines = 1,
-
-
-                    )
-                Row (modifier = modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start
-                ) {
-                    Image(
-                        painter = profileCountryFlag,
-                        contentDescription = "Flag",
-                        modifier = Modifier.size(14.dp)
-                    )
-                    Spacer(modifier = modifier.width(5.dp))
                     Text(
-                        text = profileCountryCode,
+                        text = "$firstName $lastName",
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight(600),
                         maxLines = 1,
-                        fontSize = 13.sp,
-
                     )
-                }
-
-                Text(
-                    text = buildAnnotatedString {
-                        withStyle(style = SpanStyle(fontWeight= FontWeight.ExtraBold, fontStyle = FontStyle.Normal)) {
-                            append("#")
-                        }
-                        append(profileId.toString())
-                    },
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight(300),
-                    fontStyle = FontStyle.Italic,
-                    fontSize = 12.sp,
-                    modifier = modifier.padding(top = 1.dp, bottom = 1.dp)
-                )
-
-
-                Button(
-                    onClick = { /*TODO*/ },
-                    shape = RoundedCornerShape(15.dp),
-                    elevation = buttonElevation(defaultElevation = 20.dp, pressedElevation = 25.dp),
-                    colors = buttonColors(containerColor = Color.Gray),
-                    modifier = modifier
-                        .padding(top = 3.dp)
-                        .height(35.dp)
-
-
-                ) {
-                    Row (modifier = modifier,
+                    Row (
+                        modifier = modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    )
-                    {
-                        Icon(
-                            imageVector =  Icons.Filled.Edit,
-                            contentDescription = "Edit",
-                            tint = Color.Black,
-                            modifier = Modifier.size(11.dp)
+                        horizontalArrangement = Arrangement.Start
+                    ) {
 
-                        )
-                        Spacer(modifier = modifier.width(5.dp))
-                        Text(
-                            text = stringResource(id = R.string.edit_profile_button),
-                            color = Color.Black,
-                            fontSize = 11.sp,
+                        if (profileCountryCode == 91) {
 
-                        )
+                            Image(
+                                painter = painterResource(id = R.drawable.flag_in),
+                                contentDescription = "Flag",
+                                modifier = Modifier
+                                    .size(14.dp)
+
+                            )
+
+                            Text(
+                                text = "INDIA",
+                                maxLines = 1,
+                                fontSize = 13.sp,
+                                modifier = modifier.padding(start = 5.dp)
+                            )
+                        }
                     }
 
-                }
+                    Text(
+                        text = buildAnnotatedString {
+                            withStyle(style = SpanStyle(fontWeight= FontWeight.ExtraBold, fontStyle = FontStyle.Normal)) {
+                                append("#")
+                            }
+                            append(profileId.toString())
+                        },
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight(300),
+                        fontStyle = FontStyle.Italic,
+                        fontSize = 12.sp,
+                        modifier = modifier.padding(top = 1.dp, bottom = 1.dp)
+                    )
 
+                    Button(
+                        onClick = { onEditProfileClick() },
+                        shape = RoundedCornerShape(15.dp),
+                        elevation = buttonElevation(defaultElevation = 20.dp, pressedElevation = 25.dp),
+                        colors = buttonColors(containerColor = Color.Gray),
+                        modifier = modifier
+                            .padding(top = 3.dp)
+                            .height(35.dp)
+
+
+                    ) {
+                        Row (modifier = modifier,
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        )
+                        {
+                            Icon(
+                                imageVector = Icons.Filled.Edit,
+                                contentDescription = "Edit",
+                                tint = Color.Black,
+                                modifier = Modifier.size(11.dp)
+
+                            )
+                            Spacer(modifier = modifier.width(5.dp))
+
+                            Text(
+                                text = stringResource(id = R.string.edit_profile_button),
+                                color = Color.Black,
+                                fontSize = 11.sp,
+                            )
+                        }
+                    }
             }
 
-
         }
+
+
     }
+
 }
+
+
+
+/*
+// ViewModel Composable
+@Composable
+fun ProfileHeadingCard(
+    modifier: Modifier,
+    profilePicture: Painter,
+    profileCountryCode: String,
+    navController: NavController,
+    viewModel: ProfileViewModel
+) {
+    val profileData by viewModel.profileData.collectAsState()
+
+    ProfileHeadingCardContent(
+        modifier = modifier,
+        profilePicture = profilePicture,
+        profileData = profileData,
+        profileCountryCode = profileCountryCode,
+        onEditProfileClick = { navController.navigate(NavRoutes.EDIT_PROFILE) }
+    )
+}
+
+ */
+
+
 
 @Composable
 @Preview(showBackground = true, showSystemUi = false)
@@ -170,11 +203,15 @@ fun ProfileHeadingCard(
 fun ProfileHeadingCardPreview() {
     ProfileHeadingCard(
         modifier = Modifier,
-        profileName = "Musaib Shabir",
         profilePicture = painterResource(id = R.drawable.ic_launcher_background),
-        profileCountryFlag = painterResource(id = R.drawable.flag_in),
-        profileCountryCode = "IND",
-        profileId = 234567890
+        profileCountryCode = 91,
+        firstName = "Musaib",
+        lastName = "Shabir",
+        profileId = 234567890,
+        onEditProfileClick = { /*TODO*/ },
+
+
     )
 
 }
+

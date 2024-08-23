@@ -1,5 +1,6 @@
 package com.example.foundit.presentation.screens.settings.components.clickable
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,15 +15,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
+import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 fun LogoutScreen(
-    onLogout: () -> Unit,
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
+
+    val viewModel: LogoutViewModel = hiltViewModel()
+    val context = LocalContext.current
+
     Scaffold(
         modifier= modifier,
         topBar ={
@@ -43,7 +49,21 @@ fun LogoutScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
-                onClick = onLogout,
+                onClick = {
+                    viewModel.logout { isSuccess ->
+                        if (isSuccess) {
+                            Toast.makeText(context, "Logged out successfully" , Toast.LENGTH_SHORT).show()
+                            navController.navigate(NavRoutes.SPLASH) {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    inclusive = true
+                                }
+                                launchSingleTop = true
+                            }
+                        } else {
+                            Toast.makeText(context, "Logged failed" , Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                },
                 modifier = Modifier.padding(start = 12.dp)
             ) {
                 Text(text = "Log out")
@@ -54,6 +74,6 @@ fun LogoutScreen(
 
 @Preview (showBackground = true)
 @Composable
-fun LogoutScreenPreview(){
-    LogoutScreen(onLogout = { }, navController = NavHostController(LocalContext.current))
+fun PreviewLogoutScreen(){
+    LogoutScreen(navController = NavHostController(LocalContext.current))
 }

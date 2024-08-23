@@ -38,6 +38,6 @@ fun VersionScreen(
 
 @Preview (showBackground = true, showSystemUi = true)
 @Composable
-fun VersionScreenPreview() {
+fun PreviewVersionScreen() {
     VersionScreen(navController = NavHostController(LocalContext.current))
 }

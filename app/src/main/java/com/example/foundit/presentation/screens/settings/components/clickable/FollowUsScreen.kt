@@ -52,6 +52,6 @@ fun FollowUsScreen(
 
 @Preview (showBackground = true, showSystemUi = true)
 @Composable
-fun FollowUsScreenPreview() {
+fun PreviewFollowUsScreen() {
     FollowUsScreen(navController = NavHostController(LocalContext.current))
 }

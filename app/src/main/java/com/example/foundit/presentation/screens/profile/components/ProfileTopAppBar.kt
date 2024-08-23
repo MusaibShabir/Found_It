@@ -9,7 +9,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.example.foundit.presentation.data.NavRoutes
+import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,7 +32,7 @@ fun ProfileTopAppBar(
             }
         },
         actions = {
-            IconButton(onClick = {}) {
+            IconButton(onClick = {navController.navigate(NavRoutes.SETTINGS)}) {
                 Icon(
                     imageVector = Icons.Rounded.Settings,
                     contentDescription = null
