@@ -4,7 +4,7 @@ coilCompose = "2.7.0"
 
 credentials = "1.2.2"
 featureDelivery = "2.1.0"
-firebaseBom = "33.1.2"
+firebaseBom = "33.2.0"
 firebaseAuth = "23.0.0"
 googleid = "1.1.1"
 playServicesAuth = "21.2.0"
