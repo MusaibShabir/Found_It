@@ -20,7 +20,7 @@ import com.example.foundit.presentation.common.TheTopAppBar
 import androidx.compose.ui.text.font.FontWeight
 
 @Composable
-fun PrivacyPolicyScreen(
+fun TermsOfServiceScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController
 ) {
@@ -37,242 +37,202 @@ fun PrivacyPolicyScreen(
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp)
         ) {
-                        // Effective Date
+            // Effective Date
             Text(
-                text = stringResource(id = R.string.privacy_policy_date),
+                text = stringResource(id = R.string.terms_of_service_date),
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
             // Welcome Message
             Text(
-                text = stringResource(id = R.string.privacy_policy_welcome),
+                text = stringResource(id = R.string.terms_of_service_welcome),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
-            // Information We Collect
+            // Acceptance of Terms
             Text(
-                text = stringResource(id = R.string.privacy_policy_info_collect),
+                text = stringResource(id = R.string.terms_of_service_acceptance),
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
             Text(
-                text = stringResource(id = R.string.privacy_policy_info_provide),
+                text = stringResource(id = R.string.terms_of_service_acceptance_text),
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            // Eligibility
+            Text(
+                text = stringResource(id = R.string.terms_of_service_eligibility),
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
             Text(
-                text = stringResource(id = R.string.privacy_policy_account_info),
+                text = stringResource(id = R.string.terms_of_service_eligibility_text),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
+            // How Found It Works
             Text(
-                text = stringResource(id = R.string.privacy_policy_user_content),
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(vertical = 8.dp)
-            )
-
-            Text(
-                text = stringResource(id = R.string.privacy_policy_auto_collect),
+                text = stringResource(id = R.string.terms_of_service_how_it_works),
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
             Text(
-                text = stringResource(id = R.string.privacy_policy_device_info),
+                text = stringResource(id = R.string.terms_of_service_data_collection),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
             Text(
-                text = stringResource(id = R.string.privacy_policy_location_data),
+                text = stringResource(id = R.string.terms_of_service_matching_system),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
             Text(
-                text = stringResource(id = R.string.privacy_policy_usage_data),
+                text = stringResource(id = R.string.terms_of_service_notifications),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
+            // User Responsibilities
             Text(
-                text = stringResource(id = R.string.privacy_policy_third_party),
+                text = stringResource(id = R.string.terms_of_service_user_responsibilities),
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
             Text(
-                text = stringResource(id = R.string.privacy_policy_social_media),
+                text = stringResource(id = R.string.terms_of_service_accuracy),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
-            // How We Use Your Information
             Text(
-                text = stringResource(id = R.string.privacy_policy_use_info),
+                text = stringResource(id = R.string.terms_of_service_privacy),
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.terms_of_service_compliance),
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            // Data Collection and Privacy
+            Text(
+                text = stringResource(id = R.string.terms_of_service_data_privacy),
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
             Text(
-                text = stringResource(id = R.string.privacy_policy_provide_improve),
+                text = stringResource(id = R.string.terms_of_service_data_collected),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
             Text(
-                text = stringResource(id = R.string.privacy_policy_communicate),
+                text = stringResource(id = R.string.terms_of_service_data_usage),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
             Text(
-                text = stringResource(id = R.string.privacy_policy_personalize),
+                text = stringResource(id = R.string.terms_of_service_data_security),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
+            // Intellectual Property
             Text(
-                text = stringResource(id = R.string.privacy_policy_security_fraud),
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(vertical = 8.dp)
-            )
-
-            // How We Share Your Information
-            Text(
-                text = stringResource(id = R.string.privacy_policy_share_info),
+                text = stringResource(id = R.string.terms_of_service_intellectual_property),
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
             Text(
-                text = stringResource(id = R.string.privacy_policy_consent),
+                text = stringResource(id = R.string.terms_of_service_intellectual_property_text),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
+            // Limitation of Liability
             Text(
-                text = stringResource(id = R.string.privacy_policy_service_providers),
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(vertical = 8.dp)
-            )
-
-            Text(
-                text = stringResource(id = R.string.privacy_policy_legal_compliance),
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(vertical = 8.dp)
-            )
-
-            Text(
-                text = stringResource(id = R.string.privacy_policy_business_transfers),
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(vertical = 8.dp)
-            )
-
-            // Your Choices
-            Text(
-                text = stringResource(id = R.string.privacy_policy_your_choices),
+                text = stringResource(id = R.string.terms_of_service_limitation_of_liability),
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
             Text(
-                text = stringResource(id = R.string.privacy_policy_access_correction),
+                text = stringResource(id = R.string.terms_of_service_limitation_of_liability_text),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
+            // Termination
             Text(
-                text = stringResource(id = R.string.privacy_policy_location_tracking),
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(vertical = 8.dp)
-            )
-
-            Text(
-                text = stringResource(id = R.string.privacy_policy_opt_out),
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(vertical = 8.dp)
-            )
-
-            // Security
-            Text(
-                text = stringResource(id = R.string.privacy_policy_security),
+                text = stringResource(id = R.string.terms_of_service_termination),
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
             Text(
-                text = stringResource(id = R.string.privacy_policy_security_text),
+                text = stringResource(id = R.string.terms_of_service_termination_text),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
-            // Children's Privacy
+            // Changes to the Terms
             Text(
-                text = stringResource(id = R.string.privacy_policy_children_privacy),
+                text = stringResource(id = R.string.terms_of_service_changes),
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
             Text(
-                text = stringResource(id = R.string.privacy_policy_children_privacy_text),
+                text = stringResource(id = R.string.terms_of_service_changes_text),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
-            // International Users
+            // Governing Law
             Text(
-                text = stringResource(id = R.string.privacy_policy_international_users),
+                text = stringResource(id = R.string.terms_of_service_governing_law),
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
             Text(
-                text = stringResource(id = R.string.privacy_policy_international_users_text),
+                text = stringResource(id = R.string.terms_of_service_governing_law_text),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
-            // Changes to This Privacy Policy
+            // Contact Information
             Text(
-                text = stringResource(id = R.string.privacy_policy_changes),
+                text = stringResource(id = R.string.terms_of_service_contact_information),
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
             Text(
-                text = stringResource(id = R.string.privacy_policy_changes_text),
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(vertical = 8.dp)
-            )
-
-            // Contact Us
-            Text(
-                text = stringResource(id = R.string.privacy_policy_contact),
-                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
-                modifier = Modifier.padding(vertical = 8.dp)
-            )
-
-            Text(
-                text = stringResource(id = R.string.privacy_policy_contact_text),
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(vertical = 8.dp)
-            )
-
-            Text(
-                text = stringResource(id = R.string.privacy_policy_contact_details),
+                text = stringResource(id = R.string.terms_of_service_contact_information_text),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
             // Thank You
             Text(
-                text = stringResource(id = R.string.privacy_policy_thank_you),
+                text = stringResource(id = R.string.terms_of_service_thank_you),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
@@ -280,8 +240,8 @@ fun PrivacyPolicyScreen(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PrivacyPolicyScreenPreview() {
-    PrivacyPolicyScreen(navController = rememberNavController())
+fun TermsOfServiceScreenPreview() {
+    TermsOfServiceScreen(navController = rememberNavController())
 }

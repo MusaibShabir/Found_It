@@ -197,6 +197,11 @@ fun MainScreen(modifier: Modifier) {
                 PrivacyPolicyScreen(modifier = modifier, navController = navController)
             }
 
+            //adding Terms of service
+            composable(NavRoutes.TERMS_OF_SERVICE) {
+                PrivacyPolicyScreen(modifier = modifier, navController = navController)
+            }
+
             composable(NavRoutes.ACKNOWLEDGMENTS) {
                 AcknowledgementScreen(modifier = modifier, navController = navController)
             }

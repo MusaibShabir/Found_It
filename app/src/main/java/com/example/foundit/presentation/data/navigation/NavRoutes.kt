@@ -16,6 +16,8 @@ object NavRoutes {
     const val CONTACT_SUPPORT = "Contact Support"
     const val VERSION = "Version"
     const val PRIVACY_POLICY = "Privacy Policy"
+    // adding terms of service
+    const val TERMS_OF_SERVICE = "Terms of Service"
     const val ACKNOWLEDGMENTS = "Acknowledgments"
     const val DEVELOPER_INFO = "Developer Info"
     const val FOLLOW_US = "Follow us"
