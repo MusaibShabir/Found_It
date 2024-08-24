@@ -39,7 +39,7 @@ object FireBaseModule {
 
     @Provides
     @Singleton
-    fun provideFirestoreServiceImpl(firestore: FirebaseFirestore): FirestoreService {
-        return FirestoreServiceImpl(firestore)
+    fun provideFirestoreServiceImpl(firestore: FirebaseFirestore, accountService: AccountService): FirestoreService {
+        return FirestoreServiceImpl(firestore, accountService)
     }
 }
