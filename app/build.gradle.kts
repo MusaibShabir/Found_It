@@ -106,13 +106,8 @@ dependencies {
     implementation(libs.firebase.auth)
 
     //Authentication with Credential Manager
-
-   // Android 14 or above
-    //implementation(libs.androidx.credentials)
-    // Android 13 or below
     implementation(libs.androidx.credentials.play.services.auth)
-
-    implementation(libs.play.services.auth)
+    implementation(libs.play.services.auth)  // Android 13 or below
     implementation(libs.googleid)
     implementation(libs.play.services.auth)
 
