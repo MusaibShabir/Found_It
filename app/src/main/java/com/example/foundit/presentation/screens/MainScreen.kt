@@ -12,7 +12,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.foundit.presentation.data.navigation.NavRoutes
-import com.example.foundit.presentation.splash.SplashScreen
 import com.example.foundit.presentation.navigation.NavigationBar
 import com.example.foundit.presentation.screens.actions.ActionScreen
 import com.example.foundit.presentation.screens.documentation.PrivacyPolicyScreen
@@ -47,7 +46,7 @@ import com.example.foundit.presentation.screens.settings.components.clickable.La
 import com.example.foundit.presentation.screens.settings.components.clickable.LogoutScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.ReportBugScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.SecurityScreen
-import com.example.foundit.presentation.screens.settings.components.clickable.VersionScreen
+import com.example.foundit.presentation.splash.SplashScreen
 
 /*
 
@@ -202,10 +201,6 @@ fun MainScreen(modifier: Modifier) {
 
             composable(NavRoutes.CONTACT_SUPPORT) {
                 ContactSupportScreen(modifier, navController)
-            }
-
-            composable(NavRoutes.VERSION) {
-                VersionScreen(modifier = modifier, navController = navController)
             }
 
             composable(NavRoutes.PRIVACY_POLICY) {
