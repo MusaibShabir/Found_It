@@ -50,6 +50,9 @@ import com.example.foundit.presentation.screens.settings.components.clickable.Se
 import com.example.foundit.presentation.screens.settings.components.clickable.VersionScreen
 
 /*
+
+It contains some of the Animations for the bottom navigation bar
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedContentLambdaTargetStateParameter")
 @Composable
 fun ScreenWithNavigationBar(
@@ -160,7 +163,7 @@ fun MainScreen(modifier: Modifier) {
             }
 
             composable(NavRoutes.APPEARANCE) {
-                AppearanceScreen(modifier = modifier, navController = navController, onThemeChange = { /*TODO*/ })
+                AppearanceScreen(modifier = modifier, navController = navController, onThemeChange = { })
             }
 
             composable(NavRoutes.SECURITY) {
@@ -185,7 +188,7 @@ fun MainScreen(modifier: Modifier) {
 
 
             composable(NavRoutes.DELETE_ACCOUNT) {
-                DeleteAccountScreen(modifier = modifier, navController = navController, onDeleteAccount = { /*TODO*/ })
+                DeleteAccountScreen(modifier = modifier, navController = navController, onDeleteAccount = { })
             }
 
             composable(NavRoutes.LOG_OUT) {
