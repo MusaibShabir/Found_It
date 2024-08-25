@@ -50,7 +50,6 @@ fun AboutScreen(
             modifier = modifier
                 .padding(innerPadding),
         ) {
-            SettingsOptionCard(modifier = modifier, settingsOptionName = "Version", forwardNavigation = NavRoutes.VERSION, navController = navController)
             SettingsOptionCard(modifier = modifier, settingsOptionName = "Privacy Policy", forwardNavigation = NavRoutes.PRIVACY_POLICY, navController = navController)
             SettingsOptionCard(modifier = modifier, settingsOptionName = "Acknowledgments", forwardNavigation = NavRoutes.ACKNOWLEDGMENTS, navController = navController)
             SettingsOptionCard(modifier = modifier, settingsOptionName = "Developer Information", forwardNavigation = NavRoutes.DEVELOPER_INFO, navController = navController)
