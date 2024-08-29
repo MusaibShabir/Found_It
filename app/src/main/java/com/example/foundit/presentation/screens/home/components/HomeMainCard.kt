@@ -28,9 +28,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,7 +51,7 @@ fun MainCard(
 ) {
     Card(
         onClick = {
-
+            // Handle card click here
         },
         modifier = modifier
             .fillMaxWidth()
@@ -85,7 +85,6 @@ fun MainCard(
                     fontWeight = FontWeight.ExtraBold,
                     color = Color.White,
                     fontSize = 22.sp
-
                 )
             } // Row Scope Ends
 
@@ -93,43 +92,39 @@ fun MainCard(
             Spacer(modifier = modifier.height(8.dp))
 
             // Sub-Column Start
-            Column (
+            Column(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(start = 200.dp),
+                    .padding(start = 50.dp),
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Top
-            ){
-
+            ) {
                 Text(
                     text = stringResource(id = cardTitle),
                     style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Bold,
                     color = Color.White,
-                    fontSize = 13.sp,
-                    fontStyle = FontStyle.Italic,
-                    lineHeight = 15.sp,
+                    fontSize = 15.sp,
+                    lineHeight = 18.sp,
                     textAlign = TextAlign.Left
                 )
             } // Sub-Column Ends
 
             Spacer(modifier = modifier.height(8.dp))
 
-            Row (
+            Row(
                 modifier = modifier
                     .fillMaxSize()
-                    .padding(start = 200.dp),
+                    .padding(start = 165.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
-            ){
+            ) {
                 Button(
                     onClick = {
                         navController.navigate(forwardNavigation)
-                              },
+                    },
                     elevation = buttonElevation(defaultElevation = 20.dp, pressedElevation = 25.dp),
                     colors = buttonColors(containerColor = Color.White),
                     modifier = modifier.fillMaxWidth()
-
                 ) {
                     Text(
                         text = stringResource(id = buttonName),
@@ -137,13 +132,14 @@ fun MainCard(
                         fontWeight = FontWeight.ExtraBold,
                         color = cardColor,
                         fontSize = 12.sp,
+                        maxLines = 1, // Ensures the text does not wrap to the next line
+                        overflow = TextOverflow.Ellipsis // Adds ellipsis if the text overflows
                     )
                 }
             }
         }
     }
 }
-
 
 @Composable
 @Preview(showBackground = true, showSystemUi = false, device = "id:pixel_6_pro")
@@ -158,3 +154,4 @@ fun PreviewMainCard() {
         forwardNavigation = NavRoutes.ACTION_SCREEN
     )
 }
+

@@ -1,7 +1,7 @@
 <resources>
 
     <!-- App Name -->
-    <string name="app_name">Found It</string>
+    <string name="app_name">Found It Clone</string>
 
     <!-- User Greetings (Main)-->
     <string name="greeting_prefix">Hi</string>

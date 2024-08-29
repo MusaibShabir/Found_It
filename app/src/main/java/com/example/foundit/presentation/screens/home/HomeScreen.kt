@@ -1,6 +1,5 @@
 package com.example.foundit.presentation.screens.home
 
-
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,8 +29,6 @@ import com.example.foundit.presentation.screens.profile.ProfileViewModel
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
 
-
-// UI-Only Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreenContent(
@@ -69,7 +66,7 @@ fun HomeScreenContent(
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                //Lost Card
+                // Lost Card
                 MainCard(
                     modifier = Modifier,
                     cardHeading = R.string.lost_card_heading,
@@ -80,7 +77,7 @@ fun HomeScreenContent(
                     forwardNavigation = lostButtonClick,
                 )
 
-                //Found Card
+                // Found Card
                 MainCard(
                     modifier = Modifier,
                     cardHeading = R.string.found_card_heading,
@@ -95,7 +92,6 @@ fun HomeScreenContent(
     }
 }
 
-// ViewModel Composable
 @Composable
 fun HomeScreen(
     modifier: Modifier,
@@ -104,7 +100,7 @@ fun HomeScreen(
     lostButtonClick: String,
     foundButtonClick: String,
 ) {
-    //Greetings
+    // Greetings
     val profileData by viewModel.profileData.collectAsState()
     val profileName = profileData?.let { "${it.firstName} ${it.lastName}" }
     val greetingPrefix = stringResource(id = R.string.greeting_prefix)
@@ -119,18 +115,15 @@ fun HomeScreen(
     )
 }
 
-
-
 @Composable
 @Preview(showBackground = true, showSystemUi = true, device = "id:pixel_2")
 fun PreviewHomeScreen() {
     HomeScreenContent(
         modifier = Modifier,
         greetingPrefix = "HI",
-        profileName = "Musaib Shabir",
+        profileName = "Adnan",
         navController = NavHostController(LocalContext.current),
         lostButtonClick = "",
         foundButtonClick = ""
     )
 }
-
