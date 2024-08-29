@@ -12,7 +12,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.foundit.presentation.data.navigation.NavRoutes
-import com.example.foundit.presentation.splash.SplashScreen
 import com.example.foundit.presentation.navigation.NavigationBar
 import com.example.foundit.presentation.screens.actions.ActionScreen
 import com.example.foundit.presentation.screens.documentation.PrivacyPolicyScreen
@@ -47,9 +46,12 @@ import com.example.foundit.presentation.screens.settings.components.clickable.La
 import com.example.foundit.presentation.screens.settings.components.clickable.LogoutScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.ReportBugScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.SecurityScreen
-import com.example.foundit.presentation.screens.settings.components.clickable.VersionScreen
+import com.example.foundit.presentation.splash.SplashScreen
 
 /*
+
+It contains some of the Animations for the bottom navigation bar
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedContentLambdaTargetStateParameter")
 @Composable
 fun ScreenWithNavigationBar(
@@ -160,7 +162,7 @@ fun MainScreen(modifier: Modifier) {
             }
 
             composable(NavRoutes.APPEARANCE) {
-                AppearanceScreen(modifier = modifier, navController = navController, onThemeChange = { /*TODO*/ })
+                AppearanceScreen(modifier = modifier, navController = navController, onThemeChange = { })
             }
 
             composable(NavRoutes.SECURITY) {
@@ -185,7 +187,7 @@ fun MainScreen(modifier: Modifier) {
 
 
             composable(NavRoutes.DELETE_ACCOUNT) {
-                DeleteAccountScreen(modifier = modifier, navController = navController, onDeleteAccount = { /*TODO*/ })
+                DeleteAccountScreen(modifier = modifier, navController = navController, onDeleteAccount = { })
             }
 
             composable(NavRoutes.LOG_OUT) {
@@ -199,10 +201,6 @@ fun MainScreen(modifier: Modifier) {
 
             composable(NavRoutes.CONTACT_SUPPORT) {
                 ContactSupportScreen(modifier, navController)
-            }
-
-            composable(NavRoutes.VERSION) {
-                VersionScreen(modifier = modifier, navController = navController)
             }
 
             composable(NavRoutes.PRIVACY_POLICY) {
