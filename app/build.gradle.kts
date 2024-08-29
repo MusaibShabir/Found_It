@@ -17,7 +17,7 @@ android {
         minSdk = 29
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -107,13 +107,8 @@ dependencies {
     implementation(libs.firebase.auth)
 
     //Authentication with Credential Manager
-
-   // Android 14 or above
-    //implementation(libs.androidx.credentials)
-    // Android 13 or below
     implementation(libs.androidx.credentials.play.services.auth)
-
-    implementation(libs.play.services.auth)
+    implementation(libs.play.services.auth)  // Android 13 or below
     implementation(libs.googleid)
     implementation(libs.play.services.auth)
 

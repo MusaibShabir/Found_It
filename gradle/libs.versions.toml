@@ -26,7 +26,7 @@ activityCompose = "1.9.1"
 composeBom = "2024.08.00"
 navigationFragment = "2.7.7"
 roomRuntime = "2.6.1"
-ksp = "2.0.0-1.0.23"
+ksp = "2.0.0-1.0.24"
 adnroidCompose = "1.6.8"
 androidComposeMaterial3 = "1.2.1"
 firebaseAuthKtx = "23.0.0"
@@ -60,9 +60,11 @@ androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fr
 androidx-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationFragment" }
 androidx-navigation-testing = { module = "androidx.navigation:navigation-testing", version.ref = "navigationFragment" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationFragment" }
+
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
-androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
-androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime"}
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime"}
+
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidCompiler" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
