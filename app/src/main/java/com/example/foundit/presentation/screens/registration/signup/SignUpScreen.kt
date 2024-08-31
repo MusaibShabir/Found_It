@@ -289,6 +289,7 @@ fun SignUpScreen(
                 }
             )
 
+
         }// Text Field Column Scope
 
         Row(
