@@ -2,6 +2,7 @@ package com.example.foundit.presentation.screens.notification.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.foundit.presentation.data.navigation.NotificationItemData
 import com.example.foundit.presentation.screens.notification.NotificationBaseViewModel
+import com.example.foundit.ui.theme.MainGreen
 
 
 @Composable
@@ -38,9 +40,11 @@ fun NotificationItem(notification: NotificationItemData) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .height(intrinsicSize = IntrinsicSize.Max)
             .padding(0.dp),
-        shape = RoundedCornerShape(0.dp),
-        elevation = CardDefaults.cardElevation(4.dp)
+        shape = RoundedCornerShape(35.dp),
+        elevation = CardDefaults.cardElevation(4.dp),
+        colors = CardDefaults.cardColors(containerColor = MainGreen),
     ) {
         Row(modifier = Modifier.padding(16.dp)) {
             Icon(
@@ -55,19 +59,20 @@ fun NotificationItem(notification: NotificationItemData) {
             Column {
                 Text(
                     text = notification.title,
-                    style = MaterialTheme.typography.bodyMedium.copy(fontSize = 16.sp)
+                    style = MaterialTheme.typography.bodyMedium.copy(fontSize = 18.sp),
+                    color = Color.White // Change text color to white
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = notification.msg,
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.bodySmall.copy(fontSize = 14.sp),
+                    color = Color.White, // Change text color to white
+                    maxLines = 1,
                 )
             }
         }
     }
 }
-
-
 
 ///////////////////////////
 
@@ -76,25 +81,22 @@ fun NotificationColumn(notifications: List<NotificationItemData>) {
     if (notifications.isEmpty()) {
         Text(
             text = "No notifications available.",
+            color = Color.White, // Optional: Change this text color to white as well
             modifier = Modifier.padding(16.dp)
         )
-
-    }else {
+    } else {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(0.dp)
+                .padding(16.dp) // Added padding around the LazyColumn
         ) {
             items(notifications) { notification ->
                 NotificationItem(notification = notification)
+                Spacer(modifier = Modifier.height(16.dp)) // Add space between each card
             }
         }
     }
-
 }
-
-
-
 
 ////////////////////////
 
@@ -103,14 +105,11 @@ fun NotificationCard(
     modifier: Modifier,
     viewModel: NotificationBaseViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
-
     val notifications by viewModel.notifications.collectAsState()
     NotificationColumn(notifications = notifications)
 }
 
-
-
-@Preview(showBackground = true,showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewNotificationApp() {
     NotificationCard(modifier = Modifier)
