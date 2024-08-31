@@ -25,8 +25,9 @@ fun NotificationScreen(
     ) {innerPadding ->
         Column(
             modifier = modifier
-                .fillMaxSize()
-                .padding(innerPadding),
+                .padding(innerPadding)
+            .fillMaxSize(),
+
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {

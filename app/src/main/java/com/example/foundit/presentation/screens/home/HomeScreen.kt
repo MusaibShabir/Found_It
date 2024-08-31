@@ -42,8 +42,7 @@ fun HomeScreenContent(
     Scaffold {
         Column(
             modifier = modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
+                .fillMaxSize()
                 .padding(start = 20.dp, end = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

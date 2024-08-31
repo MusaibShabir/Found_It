@@ -51,7 +51,6 @@ fun MainCard(
 ) {
     Card(
         onClick = {
-            // Handle card click here
         },
         modifier = modifier
             .fillMaxWidth()

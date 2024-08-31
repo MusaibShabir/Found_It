@@ -26,6 +26,7 @@ fun NotificationItem(notification: NotificationItemData) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .height(intrinsicSize = IntrinsicSize.Max)
             .padding(0.dp),
         shape = RoundedCornerShape(35.dp),
         elevation = CardDefaults.cardElevation(4.dp),
@@ -51,8 +52,9 @@ fun NotificationItem(notification: NotificationItemData) {
                 Text(
                     text = notification.msg,
                     style = MaterialTheme.typography.bodySmall.copy(fontSize = 14.sp),
-                    color = Color.White // Change text color to white
-                )
+                    color = Color.White, // Change text color to white
+                    maxLines = 1,
+                    )
             }
         }
     }
