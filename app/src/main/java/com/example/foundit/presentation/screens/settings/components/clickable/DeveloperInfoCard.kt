@@ -44,7 +44,7 @@ fun DeveloperInfoCard(
     profilePicture: Painter,
     firstName: String,
     lastName: String,
-    title: String
+    title: String,
 ) {
     val urlHandler: UriHandler = LocalUriHandler.current
 
