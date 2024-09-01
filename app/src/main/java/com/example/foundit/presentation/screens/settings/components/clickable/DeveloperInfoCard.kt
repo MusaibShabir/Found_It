@@ -1,6 +1,6 @@
 package com.example.foundit.presentation.screens.settings.components.clickable
 
-import android.icu.text.CaseMap.Title
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.res.painterResource
@@ -36,14 +35,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.example.foundit.R
-import com.example.foundit.presentation.data.navigation.NavRoutes
 
 
 @Composable
-fun DeveloperInfo(
+fun DeveloperInfoCard(
     modifier: Modifier = Modifier,
     profilePicture: Painter,
     firstName: String,
@@ -52,7 +48,7 @@ fun DeveloperInfo(
 ) {
     val urlHandler: UriHandler = LocalUriHandler.current
 
-        Card(
+    Card(
         shape = RoundedCornerShape(15.dp),
         modifier = modifier
             .fillMaxWidth()
@@ -206,8 +202,8 @@ fun DeveloperInfo(
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun PreviewDeveloperInfo() {
-    val profilePicture = painterResource(id =R.drawable.ic_launcher_background)
-    DeveloperInfo(
+    val profilePicture = painterResource(id = R.drawable.ic_launcher_background)
+    DeveloperInfoCard(
         modifier = Modifier,
         profilePicture = profilePicture,
         firstName = "Musaib",
