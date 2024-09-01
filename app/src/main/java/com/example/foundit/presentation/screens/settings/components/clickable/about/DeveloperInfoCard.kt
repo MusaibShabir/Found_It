@@ -60,12 +60,14 @@ fun DeveloperInfoCard(
         shape = RoundedCornerShape(15.dp),
         modifier = modifier
             .fillMaxWidth()
-            .height(220.dp)
+            .height(200.dp)
             .padding(16.dp),
     ) {
         Row(
             modifier = modifier
-                .fillMaxSize()
+                .fillMaxSize(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
                 modifier = modifier
@@ -96,7 +98,7 @@ fun DeveloperInfoCard(
                 Column(
                     modifier = modifier
                         .fillMaxWidth()
-                        .padding(top = 28.dp, bottom = 5.dp)
+                        .padding(top = 16.dp, bottom = 5.dp)
                 ){
                     //Name & Title Column
                     Column(

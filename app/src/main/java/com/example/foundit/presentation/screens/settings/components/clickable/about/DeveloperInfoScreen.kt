@@ -57,18 +57,6 @@ fun DeveloperInfoScreen(
                 instagramLink = "https://www.instagram.com/qazi_huzaif?igsh=OGQ5ZDc2ODk2ZA=="
             )
 
-            //Adnan Afzal
-            DeveloperInfoCard(
-                profilePicture = painterResource(id = R.drawable.adnan_afzal_dp),
-                firstName = "Adnan",
-                lastName = "Afzal",
-                title = "Contributor",
-                githubLink = "https://github.com/Adnan-Afzal",
-                linkedInLink = "https://www.linkedin.com/in/adnanafzal01/",
-                twitterLink = "https://x.com/Adnan___Afzal?t=AoFK8xT-m1WR8NcnkmJpdQ&s=09",
-                instagramLink = "https://www.instagram.com/adnan._.afzal?igsh=dXMwMjdnYjN1Mjhp"
-            )
-
             //Sofi Burhan
             DeveloperInfoCard(
                 profilePicture = painterResource(id = R.drawable.profile_picture),
@@ -79,6 +67,18 @@ fun DeveloperInfoScreen(
                 linkedInLink = "https://www.linkedin.com/in/sofi-burhon-ahmad-b41426228/",
                 twitterLink = "https://x.com/SBurhan09",
                 instagramLink = "https://www.instagram.com/sofi__burhan_/?hl=en"
+            )
+
+            //Adnan Afzal
+            DeveloperInfoCard(
+                profilePicture = painterResource(id = R.drawable.adnan_afzal_dp),
+                firstName = "Adnan",
+                lastName = "Afzal",
+                title = "Contributor",
+                githubLink = "https://github.com/Adnan-Afzal",
+                linkedInLink = "https://www.linkedin.com/in/adnanafzal01/",
+                twitterLink = "https://x.com/Adnan___Afzal?t=AoFK8xT-m1WR8NcnkmJpdQ&s=09",
+                instagramLink = "https://www.instagram.com/adnan._.afzal?igsh=dXMwMjdnYjN1Mjhp"
             )
         }
     }
