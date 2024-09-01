@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.settings.components.clickable
+package com.example.foundit.presentation.screens.settings.components.clickable.account_center
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -9,27 +9,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
 
 @Composable
-fun ChangeEmailScreen(
+fun ChangePhoneNumberScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController
 ) {
-    var currentEmail by remember { mutableStateOf("") }
-    var newEmail by remember { mutableStateOf("") }
-    var currentEmailError by remember { mutableStateOf(false) }
-    var newEmailError by remember { mutableStateOf(false) }
+    var currentPhoneNumber by remember { mutableStateOf("") }
+    var newPhoneNumber by remember { mutableStateOf("") }
+    var currentPhoneNumberError by remember { mutableStateOf(false) }
+    var newPhoneNumberError by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
-        topBar ={
-            TheTopAppBar(title = "Change Email", navController = navController)
+        topBar = {
+            TheTopAppBar(title = "Change Phone Number", navController = navController)
         }
-    ) {innerPadding ->
+    ) { innerPadding ->
         Column(
             modifier = modifier
                 .padding(innerPadding)
@@ -38,15 +39,18 @@ fun ChangeEmailScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             TextField(
-                value = currentEmail,
+                value = currentPhoneNumber,
                 onValueChange = {
-                    currentEmail = it.filter { char -> char.isLetterOrDigit() || char == '@' || char == '.' }
-                    currentEmailError = !isValidEmail(it)
+                    if (it.length <= 10) {
+                        currentPhoneNumber = it.filter { char -> char.isDigit() }
+                        currentPhoneNumberError = currentPhoneNumber.length != 10 && currentPhoneNumber.isNotEmpty()
+                    }
                 },
-                label = { Text("Current Email") },
+                label = { Text("Current Phone Number") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next
                 ),
                 colors = TextFieldDefaults.colors(
@@ -54,35 +58,40 @@ fun ChangeEmailScreen(
                     unfocusedContainerColor = Color.Transparent,
                     errorContainerColor = Color.Transparent
                 ),
-                isError = currentEmailError
+                isError = currentPhoneNumberError
             )
-            if (currentEmailError) {
+            if (currentPhoneNumberError) {
                 Text(
-                    text = "Invalid email format",
+                    text = "Phone number must be 10 digits",
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall
                 )
             }
 
             TextField(
-                value = newEmail,
+                value = newPhoneNumber,
                 onValueChange = {
-                    newEmail = it
-                    newEmailError = !isValidEmail(it)
+                    if (it.length <= 10) {
+                        newPhoneNumber = it.filter { char -> char.isDigit() }
+                        newPhoneNumberError = newPhoneNumber.length != 10 && newPhoneNumber.isNotEmpty()
+                    }
                 },
-                label = { Text("New Email") },
+                label = { Text("New Phone Number") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number
+                ),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent,
                     errorContainerColor = Color.Transparent
                 ),
-                isError = newEmailError
+                isError = newPhoneNumberError
             )
-            if (newEmailError) {
+            if (newPhoneNumberError) {
                 Text(
-                    text = "Invalid email format",
+                    text = "Phone number must be 10 digits",
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall
                 )
@@ -94,20 +103,21 @@ fun ChangeEmailScreen(
             ){
                 Button(
                     onClick = {
-                        // Handle email change logic
+                        // Handle phone number change logic
                     },
-                    modifier = Modifier.fillMaxWidth(),
-                    enabled = currentEmail.isNotEmpty()
-                            && newEmail.isNotEmpty()
-                            && currentEmail != newEmail
-                            && !currentEmailError
-                            && !newEmailError
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    enabled = currentPhoneNumber.isNotEmpty()
+                            && newPhoneNumber.isNotEmpty()
+                            && currentPhoneNumber != newPhoneNumber
+                            && !currentPhoneNumberError
+                            && !newPhoneNumberError
                 ) {
-                    Text("Change Email")
+                    Text("Change Phone Number")
                 }
-                if (newEmail == currentEmail && currentEmail.isNotEmpty()) {
+                if (newPhoneNumber == currentPhoneNumber && currentPhoneNumber.isNotEmpty() ) {
                     Text(
-                        text = "New email cannot be the same as the current email",
+                        text = "Current and new phone numbers must be different",
                         color = MaterialTheme.colorScheme.error,
                         style = MaterialTheme.typography.bodySmall
                     )
@@ -117,12 +127,8 @@ fun ChangeEmailScreen(
     }
 }
 
-@Preview (showBackground = true, showSystemUi = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewChangeEmailScreen() {
-    ChangeEmailScreen(navController = NavHostController(LocalContext.current))
-}
-
-private fun isValidEmail(email: String): Boolean {
-    return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+fun PreviewChangePhoneNumberScreen() {
+    ChangePhoneNumberScreen(navController = NavHostController(LocalContext.current))
 }

@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.settings.components.clickable
+package com.example.foundit.presentation.screens.settings.components.clickable.security
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,31 +13,30 @@ import com.example.foundit.presentation.common.TheTopAppBar
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.settings.components.SettingsOptionCard
 
-
 @Composable
-fun AccountCenterScreen(
+fun SecurityScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar ={
-            TheTopAppBar(title = "Account Center", navController = navController)
+            TheTopAppBar(title = "Security", navController = navController)
         }
     ) {innerPadding ->
         Column(
             modifier = modifier
                 .padding(innerPadding),
         ) {
-            SettingsOptionCard(modifier = modifier, settingsOptionName = "Edit Profile", forwardNavigation = NavRoutes.EDIT_PROFILE, navController = navController)
-            SettingsOptionCard(modifier = modifier, settingsOptionName = "Delete Account", forwardNavigation = NavRoutes.DELETE_ACCOUNT, navController = navController)
-            SettingsOptionCard(modifier = modifier, settingsOptionName = "Log out", forwardNavigation = NavRoutes.LOG_OUT, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Change Password", forwardNavigation = NavRoutes.CHANGE_PASSWORD, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Change Phone Number", forwardNavigation = NavRoutes.CHANGE_PHONE_NUMBER, navController = navController)
+            SettingsOptionCard(modifier = modifier, settingsOptionName = "Change Email", forwardNavigation = NavRoutes.CHANGE_EMAIL, navController = navController)
         }
     }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewAccountCenterScreen(){
-    AccountCenterScreen(navController = NavHostController(LocalContext.current))
+fun PreviewSecurityScreen(){
+    SecurityScreen(navController = NavHostController(LocalContext.current))
 }

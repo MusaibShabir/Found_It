@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.settings.components.clickable
+package com.example.foundit.presentation.screens.settings.components.clickable.language
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

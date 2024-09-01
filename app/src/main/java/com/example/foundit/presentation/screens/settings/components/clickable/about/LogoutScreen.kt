@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.settings.components.clickable
+package com.example.foundit.presentation.screens.settings.components.clickable.about
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -19,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
 import com.example.foundit.presentation.data.navigation.NavRoutes
+import com.example.foundit.presentation.screens.settings.components.clickable.LogoutViewModel
 
 @Composable
 fun LogoutScreen(

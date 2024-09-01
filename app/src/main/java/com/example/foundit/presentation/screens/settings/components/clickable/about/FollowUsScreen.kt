@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.settings.components.clickable
+package com.example.foundit.presentation.screens.settings.components.clickable.about
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,14 +15,14 @@ import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
 
 @Composable
-fun AcknowledgementScreen(
+fun FollowUsScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TheTopAppBar(title = "Acknowledgments", navController = navController)
+            TheTopAppBar(title = "Follow us", navController = navController)
         }
     ) { innerPadding ->
         Column(
@@ -33,20 +33,16 @@ fun AcknowledgementScreen(
         ) {
             Text(
                 text = """
-                    Acknowledgments
+                    Follow Us
 
-                    We would like to express our sincere gratitude to the following individuals and organizations for their support and contributions to the development of "Found it."
+                    Stay connected and updated with the latest news and updates from "Found it" by following us on social media:
 
-                    • SSM College of Engineering: For providing the educational resources and environment that made this project possible.
-                    • Our Mentors:
-                      - Mr. Irfan Rashid
-                      - Mr. Khalid Makhdoomi
-                      
-                    • Google Firebase: For providing the backend services that power our real-time data storage and user authentication.
-                    
-                    • Open Source Communities: For the invaluable tools and libraries that facilitated our development process.
+                    - Facebook: [Facebook Link]
+                    - Twitter: [Twitter Link]
+                    - Instagram: [Instagram Link]
+                    - LinkedIn: [LinkedIn Link]
 
-                    Thank you for your unwavering support and encouragement.
+                    We look forward to engaging with our community and hearing your feedback.
                 """.trimIndent(),
                 style = MaterialTheme.typography.bodySmall
             )
@@ -56,6 +52,6 @@ fun AcknowledgementScreen(
 
 @Preview (showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewAcknowledgementScreen() {
-    AcknowledgementScreen(navController = NavHostController(LocalContext.current))
+fun PreviewFollowUsScreen() {
+    FollowUsScreen(navController = NavHostController(LocalContext.current))
 }

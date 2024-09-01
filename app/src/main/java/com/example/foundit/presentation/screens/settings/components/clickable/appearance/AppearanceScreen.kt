@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.settings.components.clickable
+package com.example.foundit.presentation.screens.settings.components.clickable.appearance
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*

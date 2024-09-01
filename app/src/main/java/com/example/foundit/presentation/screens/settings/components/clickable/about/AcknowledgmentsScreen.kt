@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.settings.components.clickable
+package com.example.foundit.presentation.screens.settings.components.clickable.about
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,14 +15,14 @@ import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
 
 @Composable
-fun FollowUsScreen(
+fun AcknowledgementScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TheTopAppBar(title = "Follow us", navController = navController)
+            TheTopAppBar(title = "Acknowledgments", navController = navController)
         }
     ) { innerPadding ->
         Column(
@@ -33,16 +33,20 @@ fun FollowUsScreen(
         ) {
             Text(
                 text = """
-                    Follow Us
+                    Acknowledgments
 
-                    Stay connected and updated with the latest news and updates from "Found it" by following us on social media:
+                    We would like to express our sincere gratitude to the following individuals and organizations for their support and contributions to the development of "Found it."
 
-                    - Facebook: [Facebook Link]
-                    - Twitter: [Twitter Link]
-                    - Instagram: [Instagram Link]
-                    - LinkedIn: [LinkedIn Link]
+                    • SSM College of Engineering: For providing the educational resources and environment that made this project possible.
+                    • Our Mentors:
+                      - Mr. Irfan Rashid
+                      - Mr. Khalid Makhdoomi
+                      
+                    • Google Firebase: For providing the backend services that power our real-time data storage and user authentication.
+                    
+                    • Open Source Communities: For the invaluable tools and libraries that facilitated our development process.
 
-                    We look forward to engaging with our community and hearing your feedback.
+                    Thank you for your unwavering support and encouragement.
                 """.trimIndent(),
                 style = MaterialTheme.typography.bodySmall
             )
@@ -52,6 +56,6 @@ fun FollowUsScreen(
 
 @Preview (showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewFollowUsScreen() {
-    FollowUsScreen(navController = NavHostController(LocalContext.current))
+fun PreviewAcknowledgementScreen() {
+    AcknowledgementScreen(navController = NavHostController(LocalContext.current))
 }
