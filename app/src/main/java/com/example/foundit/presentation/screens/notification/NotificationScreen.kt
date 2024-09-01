@@ -8,8 +8,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.example.foundit.presentation.common.TheTopAppBar
 import com.example.foundit.presentation.data.navigation.NavRoutes
@@ -18,7 +16,8 @@ import com.example.foundit.presentation.screens.notification.components.Notifica
 @Composable
 fun NotificationScreen(
     modifier: Modifier,
-    navController: NavController
+    navController: NavController,
+    viewModel: NotificationBaseViewModel
 ) {
     Scaffold(
         topBar ={ TheTopAppBar(title = "Notifications", navController = navController, backRoute = NavRoutes.HOME) }
@@ -31,10 +30,12 @@ fun NotificationScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            NotificationCard(modifier = modifier)
+            NotificationCard(modifier = modifier, viewModel = viewModel)
         }
     }
 }
+
+/*
 @Composable
 @Preview(showBackground = true, showSystemUi = false)
 fun PreviewNotificationScreen() {
@@ -43,3 +44,5 @@ fun PreviewNotificationScreen() {
         navController = NavController(LocalContext.current)
     )
 }
+
+ */

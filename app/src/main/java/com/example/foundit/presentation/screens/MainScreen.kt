@@ -16,6 +16,7 @@ import com.example.foundit.presentation.navigation.NavigationBar
 import com.example.foundit.presentation.screens.actions.ActionScreen
 import com.example.foundit.presentation.screens.documentation.PrivacyPolicyScreen
 import com.example.foundit.presentation.screens.home.HomeScreen
+import com.example.foundit.presentation.screens.notification.NotificationBaseViewModel
 import com.example.foundit.presentation.screens.notification.NotificationScreen
 import com.example.foundit.presentation.screens.profile.ProfileScreen
 import com.example.foundit.presentation.screens.profile.ProfileViewModel
@@ -103,6 +104,7 @@ fun MainScreen(modifier: Modifier) {
     val signUpViewModel: SignUpViewModel = hiltViewModel()
     val profileViewModel: ProfileViewModel = hiltViewModel()
     val continueWithGoogleViewModel: ContinueWithGoogleViewModel = hiltViewModel()
+    val notificationBaseViewModel: NotificationBaseViewModel = hiltViewModel()
 
     Scaffold(
         bottomBar = {
@@ -146,7 +148,11 @@ fun MainScreen(modifier: Modifier) {
             }
 
             composable(NavRoutes.NOTIFICATIONS) {
-                NotificationScreen(modifier, navController)
+                NotificationScreen(
+                    modifier = modifier,
+                    navController = navController,
+                    viewModel = notificationBaseViewModel
+                )
             }
 
             composable(NavRoutes.PROFILE) {

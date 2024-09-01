@@ -26,6 +26,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
@@ -35,15 +37,17 @@ import androidx.compose.ui.unit.sp
 import com.example.foundit.presentation.data.navigation.NotificationItemData
 import com.example.foundit.presentation.screens.notification.NotificationBaseViewModel
 import com.example.foundit.ui.theme.MainGreen
-import androidx.compose.runtime.*
 
 
 @Composable
-fun NotificationItem(notification: NotificationItemData,
-                     isExpanded: Boolean,
-                     onClick:()-> Unit) {
+fun NotificationItem(
+    modifier: Modifier,
+    notification: NotificationItemData,
+    isExpanded: Boolean,
+    onClick:()-> Unit
+) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(intrinsicSize = IntrinsicSize.Max)
             .padding(0.dp)
@@ -52,23 +56,23 @@ fun NotificationItem(notification: NotificationItemData,
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(containerColor = MainGreen),
     ) {
-        Row(modifier = Modifier.padding(16.dp)) {
+        Row(modifier = modifier.padding(16.dp)) {
             Icon(
                 imageVector = Icons.Default.Notifications,
                 contentDescription = "Notification Icon",
-                modifier = Modifier
+                modifier = modifier
                     .size(40.dp)
                     .background(Color.LightGray, shape = CircleShape)
                     .padding(8.dp)
             )
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = modifier.width(16.dp))
             Column {
                 Text(
                     text = notification.title,
                     style = MaterialTheme.typography.bodyMedium.copy(fontSize = 18.sp),
                     color = Color.White
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = modifier.height(4.dp))
                 Text(
                     text = notification.msg,
                     style = MaterialTheme.typography.bodySmall.copy(fontSize = 14.sp),
@@ -81,45 +85,50 @@ fun NotificationItem(notification: NotificationItemData,
     }
 }
 
-///////////////////////////
+
 
 @Composable
-fun NotificationColumn(notifications: List<NotificationItemData>) {
+fun NotificationColumn(
+    modifier: Modifier,
+    notifications: List<NotificationItemData>
+) {
     val expandedStates = remember { mutableStateMapOf<NotificationItemData, Boolean>()}// to track the expansion
     if (notifications.isEmpty()) {
         Text(
-            text = "No notifications available.",
+            text = "No notification Available", //stringResource(id = R.string.when_no_notification),
             color = Color.White, //
-            modifier = Modifier.padding(16.dp)
+            modifier = modifier.padding(16.dp)
         )
     } else {
         LazyColumn(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
             items(notifications) { notification ->
                 val isExpanded = expandedStates[notification] ?: false
-                NotificationItem(notification = notification,
+                NotificationItem(
+                    modifier = modifier,
+                    notification = notification,
                     isExpanded = isExpanded,
                     onClick = {
                         expandedStates[notification] = !isExpanded //changes between states i.e expanded or collapsed
                     })
-                Spacer(modifier = Modifier.height(16.dp)) // Add space between each card
+                Spacer(modifier = modifier.height(16.dp)) // Add space between each card
             }
         }
     }
 }
 
-////////////////////////
 
+// View-Model Composable
 @Composable
 fun NotificationCard(
     modifier: Modifier,
     viewModel: NotificationBaseViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
     val notifications by viewModel.notifications.collectAsState()
-    NotificationColumn(notifications = notifications)
+    NotificationColumn(modifier = modifier, notifications = notifications)
 }
 
 @Preview(showBackground = true, showSystemUi = true)
