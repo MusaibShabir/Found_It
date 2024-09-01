@@ -1,5 +1,6 @@
 package com.example.foundit.presentation.data.account
 
+import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.tasks.await
@@ -9,34 +10,63 @@ class AccountServiceImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ): AccountService {
 
+    // provides Id of current firebase user
     override val currentUserId: String
         get() = firebaseAuth.currentUser?.uid.orEmpty()
 
+    // provides Name of current firebase user
+    override val currentUserName: String
+        get() = firebaseAuth.currentUser?.displayName ?: "User"
+
+    // provides Email of current firebase user
+    override val currentUserEmail: String
+        get() = firebaseAuth.currentUser?.email.orEmpty()
+
+    // provides Profile photo of current firebase user
+    override val currentUserPhotoUrl: Uri?
+        get() = firebaseAuth.currentUser?.photoUrl
+
+    // checks whether the current user email is verified or not : returns Boolean value
+    override val currentUserEmailVerified: Boolean
+        get() = firebaseAuth.currentUser?.isEmailVerified ?: false
+
+    // checks whether current user object is empty or not for handling session : returns Boolean value
     override fun hasUser(): Boolean {
         return firebaseAuth.currentUser != null
     }
 
+    // it is used to reload current user object
+    override suspend fun refreshCurrentUser() {
+        firebaseAuth.currentUser?.reload()?.await()
+    }
+
+    // it is used to create account with custom email and password : it takes email and password as input
     override suspend fun createAccount(email: String, password: String) {
         firebaseAuth.createUserWithEmailAndPassword(email,password).await()
     }
 
+    // it is used to login user with custom email and password : it takes email and password as input
     override suspend fun login(email: String, password: String) {
         firebaseAuth.signInWithEmailAndPassword(email,password).await()
     }
 
+    // it is used to sign-up or sign-in user with Google : it takes idToken string as input
     override suspend fun signInWithGoogle(idToken: String) {
         val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
         firebaseAuth.signInWithCredential(firebaseCredential).await()
     }
 
+    // it is used to send verification email
     override suspend fun sendEmailVerification() {
         firebaseAuth.currentUser?.sendEmailVerification()?.await()
     }
 
+    // it is used to logout current user
     override suspend fun logout() {
         firebaseAuth.signOut()
     }
 
+    // it is used to delete account of current user
     override suspend fun deleteAccount() {
         firebaseAuth.currentUser?.delete()?.await()
     }

@@ -75,6 +75,8 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.config.ktx)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.firestore.ktx)
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
 

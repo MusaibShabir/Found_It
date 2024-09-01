@@ -31,6 +31,8 @@ adnroidCompose = "1.6.8"
 androidComposeMaterial3 = "1.2.1"
 firebaseAuthKtx = "23.0.0"
 firebaseConfigKtx = "22.0.0"
+firebaseFirestore = "25.1.0"
+firebaseFirestoreKtx = "25.1.0"
 
 
 
@@ -88,6 +90,8 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3",
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 firebase-config-ktx = { group = "com.google.firebase", name = "firebase-config-ktx", version.ref = "firebaseConfigKtx" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 
 
 [plugins]

@@ -1,7 +1,7 @@
 package com.example.foundit.presentation.screens.actions
 
+import android.widget.Toast
 import androidx.compose.runtime.Composable
-
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,9 +30,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.data.navigation.NavRoutes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,6 +40,10 @@ fun ActionComponent(
     modifier: Modifier,
     navController: NavHostController
 ) {
+    val viewModel: ActionComponentViewModel = hiltViewModel()
+
+    val context = LocalContext.current
+
     var selectedPhone by remember { mutableStateOf("") }
     var selectedModel by remember { mutableStateOf("") }
     var selectedColor by remember { mutableStateOf("") }
@@ -197,12 +201,26 @@ fun ActionComponent(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Button(onClick = { navController.navigate(NavRoutes.HOME)}) {
-                Text(text = "Submit")
+            Button(onClick = {navController.popBackStack()}) {
+                Text(text = "Cancel")
             }
 
-            Button(onClick = {navController.navigate(NavRoutes.HOME)}) {
-                Text(text = "Cancel")
+            Button(
+                onClick = {
+                    viewModel.sendData(selectedPhone,selectedModel,selectedColor){ isSuccess ->
+                        if (isSuccess) {
+                        Toast.makeText(context,"item added!", Toast.LENGTH_LONG).show()
+                        navController.popBackStack()
+                        } else {
+                        Toast.makeText(context,"error!",Toast.LENGTH_LONG).show()
+                        }
+                    }
+                },
+                enabled = selectedPhone.isNotEmpty()
+                        && selectedModel.isNotEmpty()
+                        && selectedColor.isNotEmpty()
+            ) {
+                Text(text = "Submit")
             }
         }
     }
