@@ -3,6 +3,8 @@ package com.example.foundit.presentation.screens.settings.components.clickable.a
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,6 +30,7 @@ fun DeveloperInfoScreen(
             modifier = modifier
                 .fillMaxSize()
                 .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
         ) {
 
             //Musaib Shabir
@@ -44,7 +47,7 @@ fun DeveloperInfoScreen(
 
             //Qazi Huzaif
             DeveloperInfoCard(
-                profilePicture = painterResource(id = R.drawable.ic_launcher_background),
+                profilePicture = painterResource(id = R.drawable.qazi_huzaif_dp),
                 firstName = "Qazi Muhammad",
                 lastName = "Huzaif",
                 title = "Contributor",
@@ -56,7 +59,7 @@ fun DeveloperInfoScreen(
 
             //Adnan Afzal
             DeveloperInfoCard(
-                profilePicture = painterResource(id = R.drawable.ic_launcher_background),
+                profilePicture = painterResource(id = R.drawable.adnan_afzal_dp),
                 firstName = "Adnan",
                 lastName = "Afzal",
                 title = "Contributor",
