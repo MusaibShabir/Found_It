@@ -1,6 +1,7 @@
 package com.example.foundit.presentation.screens.notification.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -25,8 +26,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,77 +40,95 @@ import com.example.foundit.ui.theme.MainGreen
 
 
 @Composable
-fun NotificationItem(notification: NotificationItemData) {
+fun NotificationItem(
+    modifier: Modifier,
+    notification: NotificationItemData,
+    isExpanded: Boolean,
+    onClick:()-> Unit
+) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(intrinsicSize = IntrinsicSize.Max)
-            .padding(0.dp),
+            .padding(0.dp)
+            .clickable(onClick = onClick),//making the button clickable
         shape = RoundedCornerShape(35.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(containerColor = MainGreen),
     ) {
-        Row(modifier = Modifier.padding(16.dp)) {
+        Row(modifier = modifier.padding(16.dp)) {
             Icon(
                 imageVector = Icons.Default.Notifications,
                 contentDescription = "Notification Icon",
-                modifier = Modifier
+                modifier = modifier
                     .size(40.dp)
                     .background(Color.LightGray, shape = CircleShape)
                     .padding(8.dp)
             )
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = modifier.width(16.dp))
             Column {
                 Text(
                     text = notification.title,
                     style = MaterialTheme.typography.bodyMedium.copy(fontSize = 18.sp),
-                    color = Color.White // Change text color to white
+                    color = Color.White
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = modifier.height(4.dp))
                 Text(
                     text = notification.msg,
                     style = MaterialTheme.typography.bodySmall.copy(fontSize = 14.sp),
-                    color = Color.White, // Change text color to white
-                    maxLines = 1,
+                    color = Color.White,
+                    maxLines = if(isExpanded) Int.MAX_VALUE else 1,//if isExpanded is true this expands the card
+                    overflow =  TextOverflow.Ellipsis,//this adds ellipses at the end of a notification where multiline text is available
                 )
             }
         }
     }
 }
 
-///////////////////////////
+
 
 @Composable
-fun NotificationColumn(notifications: List<NotificationItemData>) {
+fun NotificationColumn(
+    modifier: Modifier,
+    notifications: List<NotificationItemData>
+) {
+    val expandedStates = remember { mutableStateMapOf<NotificationItemData, Boolean>()}// to track the expansion
     if (notifications.isEmpty()) {
         Text(
-            text = "No notifications available.",
-            color = Color.White, // Optional: Change this text color to white as well
-            modifier = Modifier.padding(16.dp)
+            text = "No notification Available", //stringResource(id = R.string.when_no_notification),
+            color = Color.White, //
+            modifier = modifier.padding(16.dp)
         )
     } else {
         LazyColumn(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
-                .padding(16.dp) // Added padding around the LazyColumn
+                .padding(16.dp)
         ) {
             items(notifications) { notification ->
-                NotificationItem(notification = notification)
-                Spacer(modifier = Modifier.height(16.dp)) // Add space between each card
+                val isExpanded = expandedStates[notification] ?: false
+                NotificationItem(
+                    modifier = modifier,
+                    notification = notification,
+                    isExpanded = isExpanded,
+                    onClick = {
+                        expandedStates[notification] = !isExpanded //changes between states i.e expanded or collapsed
+                    })
+                Spacer(modifier = modifier.height(16.dp)) // Add space between each card
             }
         }
     }
 }
 
-////////////////////////
 
+// View-Model Composable
 @Composable
 fun NotificationCard(
     modifier: Modifier,
     viewModel: NotificationBaseViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
     val notifications by viewModel.notifications.collectAsState()
-    NotificationColumn(notifications = notifications)
+    NotificationColumn(modifier = modifier, notifications = notifications)
 }
 
 @Preview(showBackground = true, showSystemUi = true)

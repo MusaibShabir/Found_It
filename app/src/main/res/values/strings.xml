@@ -31,4 +31,9 @@
 
 
 
+    <!-- Notification Screen (Main)-->
+    <string name="when_no_notification">No notification Available</string>
+
+
+
 </resources>
