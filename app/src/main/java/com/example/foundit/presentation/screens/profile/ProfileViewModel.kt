@@ -19,6 +19,10 @@ class ProfileViewModel @Inject constructor(
     private val _profileData = MutableStateFlow<ProfileData?>(null)
     val profileData: StateFlow<ProfileData?> = _profileData.asStateFlow()
 
+    val phone_FireStore = "Iphone"
+    val model_FireStore = "14"
+    val color_FireStore = "Red"
+
     init {
         viewModelScope.launch {
             profileRepository.getProfileData().collect { _profileData.value = it}

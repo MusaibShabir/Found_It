@@ -4,14 +4,19 @@ package com.example.foundit.presentation.screens.home
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -41,6 +46,11 @@ fun HomeScreenContent(
     navController: NavHostController,
     lostButtonClick: String,
     foundButtonClick: String,
+
+    //temp parameters
+    phone: String,
+    model: String,
+    color: String,
 ) {
     Scaffold {
         Column(
@@ -90,6 +100,54 @@ fun HomeScreenContent(
                     navController = navController,
                     forwardNavigation = foundButtonClick
                 )
+
+                Card(
+                    modifier = modifier
+                        .height(160.dp)
+                        .fillMaxWidth(),
+                ){
+                    Column(
+                        modifier = modifier
+                            .fillMaxSize()
+                            .padding(20.dp),
+                        horizontalAlignment = Alignment.Start,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Row(
+                            modifier = modifier,
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = phone,
+                            )
+                        }
+                        Spacer(modifier.height(10.dp))
+
+                        Row(
+                            modifier = modifier,
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = model,
+                            )
+                        }
+                        Spacer(modifier.height(10.dp))
+
+                        Row(
+                            modifier = modifier,
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = color,
+                            )
+                        }
+                        Spacer(modifier.height(10.dp))
+
+                    }
+                }
             }
         }
     }
@@ -109,13 +167,23 @@ fun HomeScreen(
     val profileName = profileData?.let { "${it.firstName} ${it.lastName}" }
     val greetingPrefix = stringResource(id = R.string.greeting_prefix)
 
+    //temp parameters
+    val phone_FireStore = viewModel.phone_FireStore
+    val model_FireStore = viewModel.model_FireStore
+    val color_FireStore = viewModel.color_FireStore
+
     HomeScreenContent(
         modifier = modifier,
         greetingPrefix = greetingPrefix,
         profileName = profileName,
         navController = navController,
         lostButtonClick = lostButtonClick,
-        foundButtonClick = foundButtonClick
+        foundButtonClick = foundButtonClick,
+
+        //temp parameters
+        phone = phone_FireStore,
+        model = model_FireStore,
+        color = color_FireStore
     )
 }
 
@@ -130,7 +198,12 @@ fun PreviewHomeScreen() {
         profileName = "Musaib Shabir",
         navController = NavHostController(LocalContext.current),
         lostButtonClick = "",
-        foundButtonClick = ""
+        foundButtonClick = "",
+
+        //temp parameters
+        phone = "iPhone 15",
+        model = "Black",
+        color = "Red"
     )
 }
 
