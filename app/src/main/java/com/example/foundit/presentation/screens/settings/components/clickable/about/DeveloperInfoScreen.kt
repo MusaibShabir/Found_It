@@ -37,7 +37,7 @@ fun DeveloperInfoScreen(
                 lastName = "Shabir",
                 title = "Team Lead & Senior Developer",
                 githubLink = "https://github.com/musaibshabir",
-                linkedInLink = "https://www.linkedin.com/in/musaib-shabir-dar/",
+                linkedInLink = "https://www.linkedin.com/in/musaib-shabir-49179b244/",
                 twitterLink = "https://twitter.com/musaib_shabir",
                 instagramLink = "https://www.instagram.com/musaib.shabir/"
             )
@@ -48,10 +48,10 @@ fun DeveloperInfoScreen(
                 firstName = "Qazi Muhammad",
                 lastName = "Huzaif",
                 title = "Contributor",
-                githubLink = "https://github.com/musaibshabir",
-                linkedInLink = "https://www.linkedin.com/in/musaib-shabir-dar/",
-                twitterLink = "https://twitter.com/musaib_shabir",
-                instagramLink = "https://www.instagram.com/musaib.shabir/"
+                githubLink = "https://github.com/qaziHuzaif",
+                linkedInLink = "https://www.linkedin.com/in/qazi-huzaif-4675211b4/",
+                twitterLink = "https://x.com/_QaziHuzaif?t=EG_z9ySDH8ibDyTSX6z3Uw&s=09",
+                instagramLink = "https://www.instagram.com/qazi_huzaif?igsh=OGQ5ZDc2ODk2ZA=="
             )
 
             //Adnan Afzal
@@ -60,10 +60,10 @@ fun DeveloperInfoScreen(
                 firstName = "Adnan",
                 lastName = "Afzal",
                 title = "Contributor",
-                githubLink = "https://github.com/musaibshabir",
-                linkedInLink = "https://www.linkedin.com/in/musaib-shabir-dar/",
-                twitterLink = "https://twitter.com/musaib_shabir",
-                instagramLink = "https://www.instagram.com/musaib.shabir/"
+                githubLink = "https://github.com/Adnan-Afzal",
+                linkedInLink = "https://www.linkedin.com/in/adnanafzal01/",
+                twitterLink = "https://x.com/Adnan___Afzal?t=AoFK8xT-m1WR8NcnkmJpdQ&s=09",
+                instagramLink = "https://www.instagram.com/adnan._.afzal?igsh=dXMwMjdnYjN1Mjhp"
             )
 
             //Sofi Burhan
@@ -72,10 +72,10 @@ fun DeveloperInfoScreen(
                 firstName = "Sofi",
                 lastName = "Burhan",
                 title = "Contributor",
-                githubLink = "https://github.com/musaibshabir",
-                linkedInLink = "https://www.linkedin.com/in/musaib-shabir-dar/",
-                twitterLink = "https://twitter.com/musaib_shabir",
-                instagramLink = "https://www.instagram.com/musaib.shabir/"
+                githubLink = "https://github.com/SofiBurhonAhmad",
+                linkedInLink = "https://www.linkedin.com/in/sofi-burhon-ahmad-b41426228/",
+                twitterLink = "https://x.com/SBurhan09",
+                instagramLink = "https://www.instagram.com/sofi__burhan_/?hl=en"
             )
         }
     }
@@ -84,7 +84,8 @@ fun DeveloperInfoScreen(
 @Preview (showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewDeveloperInfoScreen() {
-    DeveloperInfoScreen(navController = NavHostController(LocalContext.current))
+    DeveloperInfoScreen(
+        navController = NavHostController(LocalContext.current))
 }
 
 
