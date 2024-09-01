@@ -1,6 +1,6 @@
 package com.example.foundit.presentation.screens
 
-import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -92,7 +92,7 @@ fun currentRoute(navController: NavHostController): String {
     return navBackStackEntry?.destination?.route ?: ""
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+//@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen(modifier: Modifier) {
     val navController = rememberNavController()
@@ -112,11 +112,11 @@ fun MainScreen(modifier: Modifier) {
                 NavigationBar(modifier = modifier, navController = navController)
             }
         }
-    ) {
+    ) {innerPadding ->
         NavHost(
             navController = navController,
             startDestination = NavRoutes.SPLASH,
-            modifier = modifier
+            modifier = modifier.padding(innerPadding)
         ) {
 
             composable(NavRoutes.SPLASH) {
