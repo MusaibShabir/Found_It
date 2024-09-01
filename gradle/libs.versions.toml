@@ -1,20 +1,30 @@
 [versions]
 kotlin = "2.0.10"
 agp = "8.6.0"
-coilCompose = "2.7.0"
-
-credentials = "1.2.2"
 featureDelivery = "2.1.0"
-firebaseBom = "33.2.0"
-firebaseAuth = "23.0.0"
+ksp = "2.0.0-1.0.24"
+
+#Room
+roomRuntime = "2.6.1"
+
+#Compose
+coilCompose = "2.7.0"
+adnroidCompose = "1.6.8"
+androidComposeMaterial3 = "1.2.1"
+activityCompose = "1.9.1"
+composeBom = "2024.08.00"
+
+#Creditianls & Auth
+credentials = "1.2.2"
 googleid = "1.1.1"
 playServicesAuth = "21.2.0"
 googleGmsGoogleServices = "4.4.2"
 
 
+#Hilt
+hiltAndroidCompiler = "2.52"
 hiltNavigationCompose = "1.2.0"
 
-hiltAndroidCompiler = "2.52"
 
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -22,17 +32,17 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 kotlinxCoroutinesAndroid = "1.8.1"
 lifecycleRuntimeKtx = "2.8.4"
-activityCompose = "1.9.1"
-composeBom = "2024.08.00"
+
 navigationFragment = "2.7.7"
-roomRuntime = "2.6.1"
-ksp = "2.0.0-1.0.24"
-adnroidCompose = "1.6.8"
-androidComposeMaterial3 = "1.2.1"
+
+
+#FireBase
 firebaseAuthKtx = "23.0.0"
 firebaseConfigKtx = "22.0.0"
 foundationLayoutAndroid = "1.6.8"
-
+firebaseFirestoreKtx = "25.1.0"
+firebaseBom = "33.2.0"
+firebaseAuth = "23.0.0"
 
 
 
@@ -90,6 +100,7 @@ kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 firebase-config-ktx = { group = "com.google.firebase", name = "firebase-config-ktx", version.ref = "firebaseConfigKtx" }
 androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
+firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 
 
 [plugins]

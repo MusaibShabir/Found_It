@@ -76,6 +76,7 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.config.ktx)
     implementation(libs.androidx.foundation.layout.android)
+    implementation(libs.firebase.firestore.ktx)
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
 
@@ -111,14 +112,6 @@ dependencies {
     implementation(libs.play.services.auth)  // Android 13 or below
     implementation(libs.googleid)
     implementation(libs.play.services.auth)
-
-
-
-
-
-    //GSM
-    implementation ("com.google.android.gms:play-services-auth:21.2.0")
-
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
