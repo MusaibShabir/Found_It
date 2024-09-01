@@ -1,6 +1,7 @@
 package com.example.foundit.presentation.screens.registration.signup
 
 import android.util.Log
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -11,8 +12,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.TextSelectionColors
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.outlined.Email
@@ -74,15 +77,19 @@ fun SignUpScreen(
     var gender by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
 
     // For Validation
     var isEmailValid by remember { mutableStateOf(true) }
     var passwordVisible by remember { mutableStateOf(false) }
     var isPasswordValid by remember { mutableStateOf(true) }
+    var isConfirmPasswordValid by remember { mutableStateOf(true) }
+    var confirmPasswordError by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(horizontal = 32.dp),
     ) {
         Row(
@@ -91,7 +98,7 @@ fun SignUpScreen(
                 .padding(vertical = 10.dp),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.Top
-        ){
+        ) {
             Text(
                 text = "Create Account",
                 style = MaterialTheme.typography.headlineLarge
@@ -111,7 +118,7 @@ fun SignUpScreen(
                     .fillMaxWidth()
                     .padding(bottom = 18.dp),
                 value = firstName,
-                onValueChange = {firstName = it.filter { char -> char.isLetter() }},
+                onValueChange = { firstName = it.filter { char -> char.isLetter() } },
                 label = { Text("First Name") },
                 leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "Person icon") },
                 placeholder = { Text("Enter Your First Name", fontStyle = FontStyle.Italic) },
@@ -121,7 +128,7 @@ fun SignUpScreen(
                     focusedLabelColor = Color.Blue,
                     cursorColor = Color.Blue,
                     focusedBorderColor = Color.Blue,
-                    selectionColors =  TextSelectionColors(
+                    selectionColors = TextSelectionColors(
                         handleColor = Color.Blue,
                         backgroundColor = Color.Transparent,
                     ),
@@ -138,7 +145,7 @@ fun SignUpScreen(
                     .fillMaxWidth()
                     .padding(bottom = 18.dp),
                 value = lastName,
-                onValueChange = {lastName = it.filter { char -> char.isLetter() }},
+                onValueChange = { lastName = it.filter { char -> char.isLetter() } },
                 label = { Text("Last Name") },
                 placeholder = { Text("Enter Your Last Name", fontStyle = FontStyle.Italic) },
                 leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "Person icon") },
@@ -148,7 +155,7 @@ fun SignUpScreen(
                     focusedLabelColor = Color.Blue,
                     cursorColor = Color.Blue,
                     focusedBorderColor = Color.Blue,
-                    selectionColors =  TextSelectionColors(
+                    selectionColors = TextSelectionColors(
                         handleColor = Color.Blue,
                         backgroundColor = Color.Transparent,
                     ),
@@ -181,7 +188,7 @@ fun SignUpScreen(
                         focusedLabelColor = Color.Blue,
                         cursorColor = Color.Blue,
                         focusedBorderColor = Color.Blue,
-                        selectionColors =  TextSelectionColors(
+                        selectionColors = TextSelectionColors(
                             handleColor = Color.Blue,
                             backgroundColor = Color.Transparent,
                         ),
@@ -216,12 +223,20 @@ fun SignUpScreen(
                     .padding(bottom = if (!isEmailValid && email.isNotBlank()) 10.dp else 0.dp),
                 value = email,
                 onValueChange = {
-                    email = it//.filter { char -> char.isLetterOrDigit() || char == '@' || char == '.' }
-                    isEmailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches()},
+                    email =
+                        it//.filter { char -> char.isLetterOrDigit() || char == '@' || char == '.' }
+                    isEmailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches()
+                },
                 label = { Text("Email") },
                 leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = "Email icon") },
-                trailingIcon = { if (!isEmailValid && email.isNotBlank()) {
-                    Icon(Icons.Filled.Error, contentDescription = "Email icon", tint = MaterialTheme.colorScheme.error) }
+                trailingIcon = {
+                    if (!isEmailValid && email.isNotBlank()) {
+                        Icon(
+                            Icons.Filled.Error,
+                            contentDescription = "Email icon",
+                            tint = MaterialTheme.colorScheme.error
+                        )
+                    }
                 },
                 placeholder = { Text("Enter Your Email", fontStyle = FontStyle.Italic) },
                 shape = MaterialTheme.shapes.medium,
@@ -231,7 +246,7 @@ fun SignUpScreen(
                     focusedLabelColor = Color.Blue,
                     cursorColor = Color.Blue,
                     focusedBorderColor = Color.Blue,
-                    selectionColors =  TextSelectionColors(
+                    selectionColors = TextSelectionColors(
                         handleColor = Color.Blue,
                         backgroundColor = Color.Transparent,
                     ),
@@ -247,10 +262,11 @@ fun SignUpScreen(
                 },
 
 
-            )
-            
+                )
+
             //Password
-            val icon = if (!passwordVisible) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility
+            val icon =
+                if (!passwordVisible) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility
             OutlinedTextField(
                 modifier = modifier
                     .fillMaxWidth()
@@ -264,10 +280,13 @@ fun SignUpScreen(
                 leadingIcon = { Icon(Icons.Outlined.Lock, contentDescription = "Lock icon") },
                 trailingIcon = {
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Icon(icon, contentDescription = if (passwordVisible) "Hide password" else "Show password")
+                        Icon(
+                            icon,
+                            contentDescription = if (passwordVisible) "Hide password" else "Show password"
+                        )
                     }
                 },
-                placeholder ={ Text("Enter Your Password", fontStyle = FontStyle.Italic) },
+                placeholder = { Text("Enter Your Password", fontStyle = FontStyle.Italic) },
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 shape = MaterialTheme.shapes.medium,
                 singleLine = true,
@@ -276,7 +295,7 @@ fun SignUpScreen(
                     focusedLabelColor = Color.Blue,
                     cursorColor = Color.Blue,
                     focusedBorderColor = Color.Blue,
-                    selectionColors =  TextSelectionColors(
+                    selectionColors = TextSelectionColors(
                         handleColor = Color.Blue,
                         backgroundColor = Color.Transparent,
                     ),
@@ -284,7 +303,62 @@ fun SignUpScreen(
 
                 supportingText = {
                     if (!isPasswordValid && password.isNotBlank()) {
-                        Text("Password must be at least 8 characters", color = MaterialTheme.colorScheme.error)
+                        Text(
+                            "Password must be at least 8 characters",
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                }
+            )
+
+            //confirm password
+            OutlinedTextField(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(bottom = if (!isConfirmPasswordValid && confirmPassword.isNotBlank()) 10.dp else 0.dp),
+                value = confirmPassword,
+                onValueChange = {
+                    confirmPassword = it.filter { char -> !char.isWhitespace() }
+                    isConfirmPasswordValid = it.length >= 8
+                    confirmPasswordError = it != password
+                },
+                label = { Text("Confirm Password") },
+                leadingIcon = { Icon(Icons.Outlined.Lock, contentDescription = "Lock icon") },
+                trailingIcon = {
+                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        Icon(
+                            icon,
+                            contentDescription = if (passwordVisible) "Hide password" else "Show password"
+                        )
+                    }
+                },
+                placeholder = { Text("Re-Enter Password", fontStyle = FontStyle.Italic) },
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                shape = MaterialTheme.shapes.medium,
+                singleLine = true,
+                isError = !isConfirmPasswordValid,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedLabelColor = Color.Blue,
+                    cursorColor = Color.Blue,
+                    focusedBorderColor = Color.Blue,
+                    selectionColors = TextSelectionColors(
+                        handleColor = Color.Blue,
+                        backgroundColor = Color.Transparent,
+                    ),
+                ),
+
+                supportingText = {
+                    if (!isConfirmPasswordValid && confirmPassword.isNotBlank()) {
+                        Text(
+                            "Password must be at least 8 characters",
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    } else if (confirmPasswordError) {
+                        Text(
+                            text = "Passwords do not match",
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodySmall
+                        )
                     }
                 }
             )
@@ -303,7 +377,7 @@ fun SignUpScreen(
                     .width(200.dp)
                     .height(52.dp),
                 onClick = {
-                    signUpViewModel.signUpUser(email, password, firstName, lastName) {isSuccess ->
+                    signUpViewModel.signUpUser(email, password, firstName, lastName) { isSuccess ->
                         if (isSuccess) {
                             Log.d("SignUp", "User created successfully")
                             navController.navigate(NavRoutes.HOME)
@@ -324,8 +398,11 @@ fun SignUpScreen(
                         && gender.isNotEmpty()
                         && email.isNotEmpty()
                         && password.isNotEmpty()
+                        && confirmPassword.isNotEmpty()
                         && isEmailValid
                         && isPasswordValid
+                        && isConfirmPasswordValid
+                        && password == confirmPassword
 
             ) {
                 Text(
@@ -337,11 +414,11 @@ fun SignUpScreen(
             }
         }// Button Row
         Spacer(modifier = modifier.height(10.dp))
-        Row (
+        Row(
             modifier = modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Text(
                 text = "Already have an account ?",
                 fontWeight = FontWeight.Medium
@@ -372,6 +449,7 @@ fun SignUpScreen(
                         navController.navigate(NavRoutes.HOME)
 
                     }
+
                     is SignUpViewModel.SignInResult.Failure -> {
                         Log.d(
                             "SignUp",
@@ -382,9 +460,10 @@ fun SignUpScreen(
             }
         }
 
-        Column(modifier = modifier
-            .fillMaxSize()
-            .padding(bottom = 20.dp),
+        Column(
+            modifier = modifier
+                .fillMaxSize().padding(top = 10.dp)
+                .padding(bottom = 20.dp),
             verticalArrangement = Arrangement.Center
         ) {
             Row(
@@ -398,10 +477,10 @@ fun SignUpScreen(
 
             Spacer(modifier = modifier.height(10.dp))
             Row(
-                    modifier = modifier
-                        .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+                modifier = modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 ClickableTextToNavigationRoute(
                     text = "Terms of Service",
@@ -424,8 +503,6 @@ fun SignUpScreen(
 
     }
 }
-
-
 
 
 @Composable
