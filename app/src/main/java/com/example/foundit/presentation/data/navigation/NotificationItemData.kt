@@ -10,7 +10,7 @@ data class NotificationItemData(
 val sampleNotifications = listOf(
     NotificationItemData(1, "New Message", "You have a new message from John."),
     NotificationItemData(2, "OrderShipped", "Your order #1234 has been shipped."),
-    NotificationItemData(3, "Event Reminder", "Don't forget the meeting tomorrow at 10 AM."),
+    NotificationItemData(3, "Event Reminder", "Don't forget the meeting tomorrow at 10 AM. Testing new feature so that notification card expands."),
     NotificationItemData(4, "Account Update", "Your account password has been changed."),
     NotificationItemData(5, "Special Offer", "Get 20% off on your next purchase."),
     NotificationItemData(6, "Friend Request", "Jane Doe sent you a friend request."),

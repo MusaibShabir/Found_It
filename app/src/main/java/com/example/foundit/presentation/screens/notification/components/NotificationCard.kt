@@ -1,6 +1,7 @@
 package com.example.foundit.presentation.screens.notification.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -27,21 +28,26 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.foundit.presentation.data.navigation.NotificationItemData
 import com.example.foundit.presentation.screens.notification.NotificationBaseViewModel
 import com.example.foundit.ui.theme.MainGreen
+import androidx.compose.runtime.*
 
 
 @Composable
-fun NotificationItem(notification: NotificationItemData) {
+fun NotificationItem(notification: NotificationItemData,
+                     isExpanded: Boolean,
+                     onClick:()-> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(intrinsicSize = IntrinsicSize.Max)
-            .padding(0.dp),
+            .padding(0.dp)
+            .clickable(onClick = onClick),//making the button clickable
         shape = RoundedCornerShape(35.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(containerColor = MainGreen),
@@ -60,14 +66,15 @@ fun NotificationItem(notification: NotificationItemData) {
                 Text(
                     text = notification.title,
                     style = MaterialTheme.typography.bodyMedium.copy(fontSize = 18.sp),
-                    color = Color.White // Change text color to white
+                    color = Color.White
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = notification.msg,
                     style = MaterialTheme.typography.bodySmall.copy(fontSize = 14.sp),
-                    color = Color.White, // Change text color to white
-                    maxLines = 1,
+                    color = Color.White,
+                    maxLines = if(isExpanded) Int.MAX_VALUE else 1,//if isExpanded is true this expands the card
+                    overflow =  TextOverflow.Ellipsis,//this adds ellipses at the end of a notification where multiline text is available
                 )
             }
         }
@@ -78,20 +85,26 @@ fun NotificationItem(notification: NotificationItemData) {
 
 @Composable
 fun NotificationColumn(notifications: List<NotificationItemData>) {
+    val expandedStates = remember { mutableStateMapOf<NotificationItemData, Boolean>()}// to track the expansion
     if (notifications.isEmpty()) {
         Text(
             text = "No notifications available.",
-            color = Color.White, // Optional: Change this text color to white as well
+            color = Color.White, //
             modifier = Modifier.padding(16.dp)
         )
     } else {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp) // Added padding around the LazyColumn
+                .padding(16.dp)
         ) {
             items(notifications) { notification ->
-                NotificationItem(notification = notification)
+                val isExpanded = expandedStates[notification] ?: false
+                NotificationItem(notification = notification,
+                    isExpanded = isExpanded,
+                    onClick = {
+                        expandedStates[notification] = !isExpanded //changes between states i.e expanded or collapsed
+                    })
                 Spacer(modifier = Modifier.height(16.dp)) // Add space between each card
             }
         }
