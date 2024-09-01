@@ -31,7 +31,7 @@ fun DeveloperInfoScreen(
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp)
         ) {
-            DeveloperInfo(
+            DeveloperInfoCard(
                 profilePicture = painterResource(id = R.drawable.ic_launcher_background),
                 firstName = "Sofi",
                 lastName = "Burhon",
