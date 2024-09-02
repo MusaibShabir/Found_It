@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.foundit.R
-import com.example.foundit.presentation.screens.home.components.AppName
+import com.example.foundit.presentation.screens.home.components.AppIcon
 import com.example.foundit.presentation.screens.home.components.Greetings
 import com.example.foundit.presentation.screens.home.components.MainCard
 import com.example.foundit.presentation.screens.profile.ProfileViewModel
@@ -48,9 +48,9 @@ fun HomeScreenContent(
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .padding(start = 20.dp, end = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            //horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AppName(modifier = modifier)
+            AppIcon(modifier = modifier)
             Greetings(
                 modifier = modifier,
                 greetingPrefix = greetingPrefix,
