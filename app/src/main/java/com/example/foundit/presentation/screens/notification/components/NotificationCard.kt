@@ -52,7 +52,7 @@ fun NotificationItem(
             .height(intrinsicSize = IntrinsicSize.Max)
             .padding(0.dp)
             .clickable(onClick = onClick),//making the button clickable
-        shape = RoundedCornerShape(35.dp),
+        shape = RoundedCornerShape(15.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(containerColor = MainGreen),
     ) {
@@ -114,7 +114,7 @@ fun NotificationColumn(
                     onClick = {
                         expandedStates[notification] = !isExpanded //changes between states i.e expanded or collapsed
                     })
-                Spacer(modifier = modifier.height(16.dp)) // Add space between each card
+                Spacer(modifier = modifier.height(5.dp)) // Add space between each card
             }
         }
     }
