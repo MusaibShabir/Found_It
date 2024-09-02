@@ -86,7 +86,7 @@ fun ContinueWithGoogleCard(
                 Text(
                     text = "CONTINUE WITH GOOGLE",
                     fontSize = 18.sp,
-                    fontWeight = FontWeight.SemiBold,
+                    fontWeight = FontWeight.Bold,
                     color = textColor,
 
                 )

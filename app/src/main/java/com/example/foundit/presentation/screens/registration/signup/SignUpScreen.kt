@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -461,17 +462,22 @@ fun SignUpScreen(
 
         Column(
             modifier = modifier
-                .fillMaxSize().padding(top = 10.dp)
-                .padding(bottom = 20.dp),
-            verticalArrangement = Arrangement.Center
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .weight(1f)
+                .padding(bottom = 10.dp),
+            verticalArrangement = Arrangement.Bottom, //why this is now having any effect
+            horizontalAlignment = Alignment.End
         ) {
             Row(
                 modifier = modifier
                     .fillMaxWidth(),
-                verticalAlignment = Alignment.Top,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Text(text = "By continuing, I agree with the")
+                Text(
+                    text = "By proceeding, you agree with our",
+                )
+
             }
 
             Spacer(modifier = modifier.height(10.dp))
