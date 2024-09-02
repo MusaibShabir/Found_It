@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -89,12 +88,12 @@ fun GetStartedScreen(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .fillMaxHeight(0.55f),
-                    shape = RoundedCornerShape(16.dp),
+                        .fillMaxHeight(0.45f),
+                    shape = RoundedCornerShape(36.dp),
                     colors = CardDefaults.cardColors(
                         containerColor = Color.White
                     ),
-                    elevation = CardDefaults.cardElevation(4.dp)
+                    elevation = CardDefaults.cardElevation(30.dp)
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -109,9 +108,8 @@ fun GetStartedScreen(
                             enter = fadeIn(animationSpec = tween(durationMillis = 1500))
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.google), // Replace with your image resource
+                                painter = painterResource(id = R.drawable.app_icon_home),
                                 contentDescription = "Found it Logo",
-                                modifier = Modifier.size(100.dp)
                             )
                         }
 
@@ -193,5 +191,8 @@ fun TypingTextEffect(
 @Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
 @Composable
 fun PreviewGetStartedScreen() {
-    GetStartedScreen(navController = NavHostController(LocalContext.current), forwardNavigation = NavRoutes.HOME)
+    GetStartedScreen(
+        navController = NavHostController(LocalContext.current),
+        forwardNavigation = NavRoutes.HOME
+    )
 }
