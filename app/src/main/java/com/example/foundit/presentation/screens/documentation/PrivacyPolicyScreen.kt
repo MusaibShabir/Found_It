@@ -1,17 +1,19 @@
 package com.example.foundit.presentation.screens.documentation
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.foundit.R
 import com.example.foundit.presentation.common.TheTopAppBar
 
 @Composable
@@ -28,46 +30,255 @@ fun PrivacyPolicyScreen(
         Column(
             modifier = modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState()) // Enable vertical scrolling
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp)
         ) {
+            // Effective Date
             Text(
-                text = """
-                    Privacy Policy
-                    
-                    Effective Date: [Insert Date]
-                    
-                    Welcome to "Found it." Your privacy is critically important to us. This Privacy Policy explains how we collect, use, and protect your personal information when you use our app.
-                    
-                    Information We Collect
-                    •	Personal Information: When you sign up using Google, we collect your phone number, email address, and username.
-                    •	Location Data: We collect your GPS location to enhance the accuracy of our AI matching model.
-                    •	Media: We may collect images and videos that you upload to help identify lost items.
-                    
-                    How We Use Your Information
-                    •   Matching Lost and Found Items: Your data helps us to match lost items with found items using our AI model.
-                    •	Notifications: We use your contact details to notify you when a potential match is found.
-                    •	Improving Our Services: Your data helps us to enhance our app’s functionality and user experience.
-                    
-                    Data Sharing and Security
-                    •	No Sharing with Third Parties: We do not share your personal information with any other users or third parties.
-                    •	Data Security: We implement robust security measures to protect your data from unauthorized access.
-                    
-                    Your Rights
-                    •	Access and Correction: You can access and update your personal information within the app.
-                    •	Deletion: You can request the deletion of your personal data at any time.
-                    
-                    Contact Us
-                    If you have any questions or concerns about our Privacy Policy, please contact us at [support email].
-                """.trimIndent(),
-                style = MaterialTheme.typography.bodySmall
+                text = stringResource(id = R.string.privacy_policy_date),
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            // Welcome Message
+            Text(
+                text = stringResource(id = R.string.privacy_policy_welcome),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            // Information We Collect
+            Text(
+                text = stringResource(id = R.string.privacy_policy_info_collect),
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_info_provide),
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_account_info),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_user_content),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_auto_collect),
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_device_info),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_location_data),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_usage_data),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_third_party),
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_social_media),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            // How We Use Your Information
+            Text(
+                text = stringResource(id = R.string.privacy_policy_use_info),
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_provide_improve),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_communicate),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_personalize),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_security_fraud),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            // How We Share Your Information
+            Text(
+                text = stringResource(id = R.string.privacy_policy_share_info),
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_consent),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_service_providers),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_legal_compliance),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_business_transfers),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            // Your Choices
+            Text(
+                text = stringResource(id = R.string.privacy_policy_your_choices),
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_access_correction),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_location_tracking),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_opt_out),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            // Security
+            Text(
+                text = stringResource(id = R.string.privacy_policy_security),
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_security_text),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            // Children's Privacy
+            Text(
+                text = stringResource(id = R.string.privacy_policy_children_privacy),
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_children_privacy_text),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            // International Users
+            Text(
+                text = stringResource(id = R.string.privacy_policy_international_users),
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_international_users_text),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            // Changes to This Privacy Policy
+            Text(
+                text = stringResource(id = R.string.privacy_policy_changes),
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_changes_text),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            // Contact Us
+            Text(
+                text = stringResource(id = R.string.privacy_policy_contact),
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_contact_text),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.privacy_policy_contact_details),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+
+            // Thank You
+            Text(
+                text = stringResource(id = R.string.privacy_policy_thank_you),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
             )
         }
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun PrivacyPolicyScreenPreview() {
-    PrivacyPolicyScreen(navController = NavHostController(LocalContext.current))
+    PrivacyPolicyScreen(navController = rememberNavController())
 }
