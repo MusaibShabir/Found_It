@@ -29,6 +29,100 @@
     <!-- FireBase-->
     <string name="web_client_id">513829197730-vk4nd6ioipo4fvmaci6e0e5utflejga2.apps.googleusercontent.com</string>
 
+    <!-- Privacy Policy -->
+    <string name="privacy_policy_date">Effective Date: August 24, 2024</string>
+    <string name="privacy_policy_welcome">Welcome to Found It! We value your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, share, and protect your data when you use our app and services. By using Found It, you agree to the practices described in this policy.</string>
+
+    <string name="privacy_policy_info_collect">1. Information We Collect</string>
+    <string name="privacy_policy_info_provide">a. Information You Provide to Us:</string>
+    <string name="privacy_policy_account_info">Account Information: When you create an account, we collect your name, email address, phone number, and any other information you choose to provide.</string>
+    <string name="privacy_policy_user_content">User Content: Any content you upload, share, or create through the app, including photos, descriptions, or location tags etc.</string>
+    <string name="privacy_policy_auto_collect">b. Information We Automatically Collect:</string>
+    <string name="privacy_policy_device_info">Device Information: We collect information about your device, including the model, operating system, unique device identifiers, and mobile network information.</string>
+    <string name="privacy_policy_location_data">Location Data: With your permission, we collect precise location data to help you find lost items or places of interest.</string>
+    <string name="privacy_policy_usage_data">Usage Data: We collect information about how you use our app, such as the features you interact with, the time and duration of your usage, and any errors or issues you encounter.</string>
+    <string name="privacy_policy_third_party">c. Information from Third Parties:</string>
+    <string name="privacy_policy_social_media">Social Media: If you choose to link your social media accounts, we may collect information from those accounts, such as your profile information, friends list, and any content you share publicly.</string>
+
+    <string name="privacy_policy_use_info">2. How We Use Your Information</string>
+    <string name="privacy_policy_provide_improve">To Provide and Improve Our Services: We use your information to operate and maintain the app, improve user experience, and develop new features.</string>
+    <string name="privacy_policy_communicate">To Communicate with You: We may use your contact information to send you updates, notifications, and promotional messages. You can opt-out of promotional messages at any time.</string>
+    <string name="privacy_policy_personalize">To Personalize Your Experience: We use your information to provide personalized content, recommendations, and advertisements based on your interests and behavior.</string>
+    <string name="privacy_policy_security_fraud">For Security and Fraud Prevention: We use your data to protect against fraud, unauthorized access, and other illegal activities.</string>
+
+    <string name="privacy_policy_share_info">3. How We Share Your Information</string>
+    <string name="privacy_policy_consent">With Your Consent: We will share your information with third parties when you provide consent or direct us to do so.</string>
+    <string name="privacy_policy_service_providers">Service Providers: We may share your data with trusted third-party service providers who assist us in operating our app, conducting our business, or providing services to you, as long as those parties agree to keep this information confidential.</string>
+    <string name="privacy_policy_legal_compliance">Legal Compliance: We may disclose your information if required by law, legal process, or government request.</string>
+    <string name="privacy_policy_business_transfers">Business Transfers: If we are involved in a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction.</string>
+
+    <string name="privacy_policy_your_choices">4. Your Choices</string>
+    <string name="privacy_policy_access_correction">Access and Correction: You can access, update, or delete your account information by logging into the app and visiting your account settings.</string>
+    <string name="privacy_policy_location_tracking">Location Information: You can disable location tracking at any time in your device settings, though doing so may limit certain functionalities of the app.</string>
+    <string name="privacy_policy_opt_out">Opt-Out: You can opt-out of receiving promotional communications from us by following the instructions in those communications or by adjusting your account settings.</string>
+
+    <string name="privacy_policy_security">5. Security</string>
+    <string name="privacy_policy_security_text">We implement reasonable security measures to protect your personal information from unauthorized access, use, or disclosure. However, no method of transmission over the internet or method of electronic storage is 100% secure, and we cannot guarantee absolute security.</string>
+
+    <string name="privacy_policy_children_privacy">6. Children(s) Privacy</string>
+    <string name="privacy_policy_children_privacy_text">Found It is not intended for use by children under the age of 18. We do not knowingly collect personal information from children under 18. If we become aware that we have collected personal information from a child under 18, we will take steps to delete such information.</string>
+
+    <string name="privacy_policy_international_users">7. International Users</string>
+    <string name="privacy_policy_international_users_text">If you are accessing Found It from outside of India, your information may be transferred to, stored, and processed in the India or other countries where our servers are located. By using our app, you consent to the transfer of your information to these countries.</string>
+
+    <string name="privacy_policy_changes">8. Changes to This Privacy Policy</string>
+    <string name="privacy_policy_changes_text">We may update this Privacy Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will notify you of any material changes by posting the new Privacy Policy on our app and updating the effective date at the top of this document. Your continued use of the app after any changes indicates your acceptance of the new Privacy Policy.</string>
+
+    <string name="privacy_policy_contact">9. Contact Us</string>
+    <string name="privacy_policy_contact_text">If you have any questions or concerns about this Privacy Policy or our practices, please contact us at:</string>
+    <string name="privacy_policy_contact_details">Email: bnny633@gmail.com\nAddress: SSM College, Parihaspora, Pattan, Jammu and Kashmir</string>
+
+    <string name="privacy_policy_thank_you">This Privacy Policy is intended to help you understand how we handle your information and ensure transparency in our data practices. Thank you for trusting Found It with your personal information!</string>
+
+    <!-- Terms of service-->
+    <string name="terms_of_service_date">Effective Date: August 24, 2024</string>
+    <string name="terms_of_service_welcome">Welcome to Found It! These Terms of Service ("Terms") govern your use of the Found It mobile application ("App"), developed by four college students pursuing a Bachelor’s degree in Computer Science Engineering. By accessing or using the App, you agree to be bound by these Terms. Please read them carefully.</string>
+
+    <string name="terms_of_service_acceptance">1. Acceptance of Terms</string>
+    <string name="terms_of_service_acceptance_text">By downloading, installing, or using the Found It app, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you do not agree with any part of these Terms, you should not use the App.</string>
+
+    <string name="terms_of_service_eligibility">2. Eligibility</string>
+    <string name="terms_of_service_eligibility_text">The Found It app is available to anyone who wishes to use it. However, to ensure the integrity and security of the platform, users must verify their identity. By using the App, you confirm that you are at least 18 years old or have the consent of a parent or guardian to use the App.</string>
+
+    <string name="terms_of_service_how_it_works">3. How Found It Works</string>
+    <string name="terms_of_service_data_collection">Data Collection: The App collects certain information from users who have lost or found items. This information includes details about the item, contact information, and any other relevant data.</string>
+    <string name="terms_of_service_matching_system">Matching System: Found It uses an algorithm to match users based on the details provided. The algorithm calculates a score by comparing the information entered by both the person who lost the item and the one who found it.</string>
+    <string name="terms_of_service_notifications">Notifications: When a potential match is found, both users will be notified through the App. The App will facilitate communication between the two parties to arrange the return of the lost item.</string>
+
+    <string name="terms_of_service_user_responsibilities">4. User Responsibilities</string>
+    <string name="terms_of_service_accuracy">Accuracy of Information: You must provide accurate and truthful information when reporting a lost or found item. False or misleading information can lead to a violation of these Terms and may result in the termination of your account.</string>
+    <string name="terms_of_service_privacy">Privacy and Confidentiality: You are responsible for maintaining the confidentiality of any information shared through the App. Do not share personal details with others unless necessary to facilitate the return of an item.</string>
+    <string name="terms_of_service_compliance">Compliance with Laws: You must comply with all applicable laws and regulations when using the App, including laws related to privacy, data protection, and intellectual property.</string>
+
+    <string name="terms_of_service_data_privacy">5. Data Collection and Privacy</string>
+    <string name="terms_of_service_data_collected">Data Collected: The App collects information such as your name, your location, contact details, and information about the lost or found item. The App may also collect location data if necessary to improve the accuracy of matching.</string>
+    <string name="terms_of_service_data_usage">Data Usage: The information collected is used solely for the purpose of matching lost and found items. Found It will not sell or share your data with third parties without your consent.</string>
+    <string name="terms_of_service_data_security">Data Security: We take reasonable measures to protect your data from unauthorized access or disclosure. However, no data transmission over the internet can be guaranteed as completely secure.</string>
+
+    <string name="terms_of_service_intellectual_property">6. Intellectual Property</string>
+    <string name="terms_of_service_intellectual_property_text">All intellectual property rights in the App, including but not limited to trademarks, logos, software code, and content, are owned by the developers of Found It. You may not use, reproduce, or distribute any part of the App without prior written permission.</string>
+
+    <string name="terms_of_service_limitation_of_liability">7. Limitation of Liability</string>
+    <string name="terms_of_service_limitation_of_liability_text">Found It is provided on an "as-is" basis, and the developers make no warranties or representations regarding the App’s functionality, accuracy, or reliability. To the fullest extent permitted by law, the developers disclaim any liability for any loss or damage arising from the use of the App.</string>
+
+    <string name="terms_of_service_termination">8. Termination</string>
+    <string name="terms_of_service_termination_text">Found It reserves the right to suspend or terminate your access to the App at any time, with or without cause or notice. Upon termination, your rights to use the App will cease immediately.</string>
+
+    <string name="terms_of_service_changes">9. Changes to the Terms</string>
+    <string name="terms_of_service_changes_text">The developers of Found It may update these Terms from time to time. When changes are made, the updated Terms will be posted within the App, and the "Last Updated" date at the top will be revised. Your continued use of the App after any changes indicates your acceptance of the new Terms.</string>
+
+    <string name="terms_of_service_governing_law">10. Governing Law</string>
+    <string name="terms_of_service_governing_law_text">These Terms are governed by and construed in accordance with the laws of Indian Penal Code, without regard to its conflict of law principles. Any disputes arising under these Terms shall be subject to the exclusive jurisdiction of the courts located in India.</string>
+
+    <string name="terms_of_service_contact_information">11. Contact Information</string>
+    <string name="terms_of_service_contact_information_text">If you have any questions or concerns about these Terms, please contact us at bnny633@gmail.com or +91 7889816656.</string>
+
+    <string name="terms_of_service_thank_you">By using Found It, you agree to these Terms of Service. Thank you for trusting us to help you find your lost belongings!</string>
 
 
     <!-- Notification Screen (Main)-->
