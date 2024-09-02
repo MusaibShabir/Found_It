@@ -2,6 +2,7 @@ package com.example.foundit.presentation.screens.home
 
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,9 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.foundit.R
@@ -48,9 +47,11 @@ fun HomeScreenContent(
     foundButtonClick: String,
 
     //temp parameters
-    phone: String,
-    model: String,
-    color: String,
+//    phone: String,
+//    model: String,
+//    color: String,
+    firestoreItems: List<Map<String, Any>>,
+    viewModel: ProfileViewModel
 ) {
     Scaffold {
         Column(
@@ -60,7 +61,7 @@ fun HomeScreenContent(
                 .padding(start = 20.dp, end = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AppName(modifier = modifier)
+            AppName(modifier = modifier.clickable(onClick = {  }))
             Greetings(
                 modifier = modifier,
                 greetingPrefix = greetingPrefix,
@@ -101,52 +102,66 @@ fun HomeScreenContent(
                     forwardNavigation = foundButtonClick
                 )
 
-                Card(
-                    modifier = modifier
-                        .height(160.dp)
-                        .fillMaxWidth(),
-                ){
-                    Column(
+                firestoreItems.forEach { item ->
+                    Card(
                         modifier = modifier
-                            .fillMaxSize()
-                            .padding(20.dp),
-                        horizontalAlignment = Alignment.Start,
-                        verticalArrangement = Arrangement.Center
+                            .fillMaxWidth(),
                     ) {
-                        Row(
-                            modifier = modifier,
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
-                        ){
-                            Text(
-                                text = phone,
-                            )
+                        Column(
+                            modifier = modifier
+                                .fillMaxSize()
+                                .padding(20.dp),
+                            horizontalAlignment = Alignment.Start,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            /*
+                            item.forEach { (key, value) ->
+                                Row(
+                                    modifier = modifier,
+                                    horizontalArrangement = Arrangement.Center,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = "$key: $value",
+                                    )
+                                }
+                                Spacer(modifier.height(10.dp))
+                            }
+                             */
+                            ////// OR
+                            Row(
+                                modifier = modifier,
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = "Phone: ${item["phone"]}",
+                                )
+                            }
+                            Spacer(modifier.height(10.dp))
+                            Row(
+                                modifier = modifier,
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = "model: ${item["model"]}",
+                                )
+                            }
+                            Spacer(modifier.height(10.dp))
+                            Row(
+                                modifier = modifier,
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = "color: ${item["color"]}",
+                                )
+                            }
+                            Spacer(modifier.height(10.dp))
                         }
-                        Spacer(modifier.height(10.dp))
-
-                        Row(
-                            modifier = modifier,
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
-                        ){
-                            Text(
-                                text = model,
-                            )
-                        }
-                        Spacer(modifier.height(10.dp))
-
-                        Row(
-                            modifier = modifier,
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
-                        ){
-                            Text(
-                                text = color,
-                            )
-                        }
-                        Spacer(modifier.height(10.dp))
-
                     }
+                    Spacer(modifier.height(10.dp))
                 }
             }
         }
@@ -168,9 +183,10 @@ fun HomeScreen(
     val greetingPrefix = stringResource(id = R.string.greeting_prefix)
 
     //temp parameters
-    val phone_FireStore = viewModel.phone_FireStore
-    val model_FireStore = viewModel.model_FireStore
-    val color_FireStore = viewModel.color_FireStore
+    val firestoreItems by viewModel.firestoreItems.collectAsState()
+//    val phone_FireStore = viewModel.phone_FireStore
+//    val model_FireStore = viewModel.model_FireStore
+//    val color_FireStore = viewModel.color_FireStore
 
     HomeScreenContent(
         modifier = modifier,
@@ -181,14 +197,16 @@ fun HomeScreen(
         foundButtonClick = foundButtonClick,
 
         //temp parameters
-        phone = phone_FireStore,
-        model = model_FireStore,
-        color = color_FireStore
+//        phone = phone_FireStore,
+//        model = model_FireStore,
+//        color = color_FireStore,
+        firestoreItems = firestoreItems,
+        viewModel = viewModel
     )
 }
 
 
-
+/*
 @Composable
 @Preview(showBackground = true, showSystemUi = true, device = "id:pixel_2")
 fun PreviewHomeScreen() {
@@ -206,4 +224,6 @@ fun PreviewHomeScreen() {
         color = "Red"
     )
 }
+
+ */
 

@@ -2,6 +2,7 @@ package com.example.foundit.presentation.screens.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.foundit.presentation.data.firestore.FirestoreService
 import com.example.foundit.presentation.data.local.repo.ProfileDataRepository
 import com.example.foundit.presentation.data.local.tables.ProfileData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,21 +14,46 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val profileRepository: ProfileDataRepository
+    private val profileRepository: ProfileDataRepository,
+    private val firestoreService: FirestoreService
 ) : ViewModel() {
 
     private val _profileData = MutableStateFlow<ProfileData?>(null)
     val profileData: StateFlow<ProfileData?> = _profileData.asStateFlow()
 
-    val phone_FireStore = "Iphone"
-    val model_FireStore = "14"
-    val color_FireStore = "Red"
+//    val phone_FireStore = "Iphone"
+//    val model_FireStore = "14"
+//    val color_FireStore = "Red"
 
     init {
         viewModelScope.launch {
             profileRepository.getProfileData().collect { _profileData.value = it}
         }
     }
+
+    //////// Firestore
+    private val _firestoreItems = MutableStateFlow<List<Map<String, Any>>>(emptyList())
+    val firestoreItems: StateFlow<List<Map<String, Any>>> = _firestoreItems.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            profileRepository.getProfileData().collect { _profileData.value = it }
+        }
+
+        viewModelScope.launch {
+            firestoreService.getItemData().collect { items ->
+                val sortedItems = items.sortedBy { it["phone"]?.toString() }
+                _firestoreItems.value = sortedItems
+            }
+        }
+    }
+//
+//    fun a(){
+//        viewModelScope.launch {
+//            firestoreService.getItemData()
+//        }
+//    }
+    ///////////
 
     fun upsertProfile(profileData: ProfileData) {
         viewModelScope.launch {
