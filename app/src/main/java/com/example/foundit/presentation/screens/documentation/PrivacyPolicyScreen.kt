@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.foundit.R
+import com.example.foundit.presentation.common.TheTopAppBar
 
 @Composable
 fun PrivacyPolicyScreen(
@@ -23,7 +24,7 @@ fun PrivacyPolicyScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TheTopAppBar(title = stringResource(id = R.string.app_name), navController = navController)
+            TheTopAppBar(title = "Privacy Policy", navController = navController)
         }
     ) { innerPadding ->
         Column(
