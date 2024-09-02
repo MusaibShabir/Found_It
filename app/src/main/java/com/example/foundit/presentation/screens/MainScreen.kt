@@ -15,6 +15,7 @@ import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.navigation.NavigationBar
 import com.example.foundit.presentation.screens.actions.ActionScreen
 import com.example.foundit.presentation.screens.documentation.PrivacyPolicyScreen
+import com.example.foundit.presentation.screens.documentation.TermsOfServiceScreen
 import com.example.foundit.presentation.screens.home.HomeScreen
 import com.example.foundit.presentation.screens.notification.NotificationBaseViewModel
 import com.example.foundit.presentation.screens.notification.NotificationScreen
@@ -211,6 +212,13 @@ fun MainScreen(modifier: Modifier) {
 
             composable(NavRoutes.PRIVACY_POLICY) {
                 PrivacyPolicyScreen(modifier = modifier, navController = navController)
+            }
+
+            composable(NavRoutes.TERMS_OF_SERVICE) {
+                TermsOfServiceScreen(
+                    modifier = modifier,
+                    navController = navController
+                )
             }
 
             composable(NavRoutes.ACKNOWLEDGMENTS) {

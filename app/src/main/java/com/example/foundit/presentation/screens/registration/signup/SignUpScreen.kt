@@ -1,7 +1,6 @@
 package com.example.foundit.presentation.screens.registration.signup
 
 import android.util.Log
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -57,8 +56,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.registration.components.ClickableTextToNavigationRoute
-import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.OrDivider
+import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleViewModel
 
 
@@ -484,7 +483,7 @@ fun SignUpScreen(
             ) {
                 ClickableTextToNavigationRoute(
                     text = "Terms of Service",
-                    navRoute = "",
+                    navRoute = NavRoutes.TERMS_OF_SERVICE,
                     modifier = modifier.padding(end = 8.dp),
                     navController = navController
                 )

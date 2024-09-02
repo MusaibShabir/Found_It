@@ -25,7 +25,7 @@ fun TermsOfServiceScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TheTopAppBar(title = stringResource(id = R.string.app_name), navController = navController)
+            TheTopAppBar(title = "Terms of Service", navController = navController)
         }
     ) { innerPadding ->
         Column(
