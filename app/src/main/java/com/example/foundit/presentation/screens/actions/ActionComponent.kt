@@ -16,6 +16,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuAnchorType.Companion.PrimaryNotEditable
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
@@ -88,7 +89,7 @@ fun ActionComponent(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .menuAnchor()
+                    .menuAnchor(type = PrimaryNotEditable, enabled = true)
                     .padding(bottom = 18.dp)
             )
 
@@ -131,7 +132,7 @@ fun ActionComponent(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .menuAnchor()
+                    .menuAnchor(type = PrimaryNotEditable, enabled = true)
                     .padding(bottom = 18.dp)
             )
 
@@ -176,7 +177,7 @@ fun ActionComponent(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .menuAnchor()
+                    .menuAnchor(type = PrimaryNotEditable, enabled = true)
                     .padding(bottom = 18.dp)
             )
 
