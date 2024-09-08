@@ -27,7 +27,8 @@ class FirestoreServiceImpl @Inject constructor(
     }
 
     override suspend fun getItemData(): Flow<List<Map<String, Any>>> = callbackFlow {
-        val documentRef = firebaseFirestore.collection("User/${accountService.currentUserId}/Card")
+       // val documentRef = firebaseFirestore.collection("User/${accountService.currentUserId}/Card")
+        val documentRef = firebaseFirestore.collectionGroup("Card")
 
         val listener = documentRef.addSnapshotListener { snapshot, exception ->
             if (exception != null) {
