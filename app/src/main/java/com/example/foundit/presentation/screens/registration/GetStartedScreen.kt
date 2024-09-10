@@ -107,7 +107,7 @@ fun GetStartedScreen(
                             enter = fadeIn(animationSpec = tween(durationMillis = 1500))
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.app_icon_home),
+                                painter = painterResource(id = R.drawable.app_name_icon),
                                 contentDescription = "Found it Logo",
                             )
                         }
