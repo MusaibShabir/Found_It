@@ -237,6 +237,24 @@ fun FinishedProcessCardList(
 }
 
 @Composable
+fun HaltedProcessCardList(
+    modifier: Modifier,
+    ) {
+    Column(
+        modifier = modifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "Nothing to show here"
+
+        )
+    }
+
+}
+
+@Composable
 @Preview(showBackground = true, showSystemUi = false, device = "id:pixel_6_pro")
 fun PreviewInProcessCard() {
     ProcessCard(

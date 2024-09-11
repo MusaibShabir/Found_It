@@ -23,7 +23,8 @@
     <string name="edit_profile_button">Edit Profile</string>
 
     <!-- Process Screen (Main)-->
-    <string name="left_tab">In-Process</string>
+    <string name="left_tab">Halt</string>
+    <string name="center_tab">In-Process</string>
     <string name="right_tab">Finished</string>
 
     <!-- FireBase-->

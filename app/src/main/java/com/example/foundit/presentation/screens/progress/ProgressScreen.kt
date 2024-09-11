@@ -21,6 +21,7 @@ import com.example.foundit.presentation.data.FinishedProcessData
 import com.example.foundit.presentation.data.InProcessData
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.progress.components.FinishedProcessCardList
+import com.example.foundit.presentation.screens.progress.components.HaltedProcessCardList
 import com.example.foundit.presentation.screens.progress.components.InProcessCardList
 import com.example.foundit.presentation.screens.progress.components.ProcessCardItem
 import kotlinx.coroutines.launch
@@ -28,7 +29,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun ProcessScreen(modifier: Modifier, navController: NavHostController) {
     val pagerState = rememberPagerState(
-        pageCount = { 2 }
+        initialPage = 1,
+        pageCount = { 3 }
     )
 
     val coroutineScope = rememberCoroutineScope()
@@ -43,6 +45,7 @@ fun ProcessScreen(modifier: Modifier, navController: NavHostController) {
     ){paddingValues ->
         Column(modifier = modifier.padding(paddingValues)) {
             TabRow(selectedTabIndex = pagerState.currentPage) {
+
                 Tab(
                     selected = pagerState.currentPage == 0,
                     text = { Text(text = stringResource(id = R.string.left_tab)) },
@@ -50,17 +53,29 @@ fun ProcessScreen(modifier: Modifier, navController: NavHostController) {
                         coroutineScope.launch {
                             pagerState.animateScrollToPage(0)
                         }
-                    })
+                    }
+                )
 
                 Tab(
                     selected = pagerState.currentPage == 1,
-                    text = { Text(text = stringResource(id = R.string.right_tab)) },
+                    text = { Text(text = stringResource(id = R.string.center_tab)) },
                     onClick = {
                         coroutineScope.launch {
                             pagerState.animateScrollToPage(1)
                         }
                     }
                 )
+
+                Tab(
+                    selected = pagerState.currentPage == 2,
+                    text = { Text(text = stringResource(id = R.string.right_tab)) },
+                    onClick = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(2)
+                        }
+                    }
+                )
+
             }
 
 
@@ -70,9 +85,12 @@ fun ProcessScreen(modifier: Modifier, navController: NavHostController) {
             ) { page ->
                 when (page) {
                     0 -> {
-                        InProcessCardList(modifier = modifier, cardData = inProcessItems)
+                        HaltedProcessCardList(modifier = modifier)
                     }
                     1 -> {
+                        InProcessCardList(modifier = modifier, cardData = inProcessItems)
+                    }
+                    2 -> {
                         FinishedProcessCardList(modifier = modifier, cardData =finishedItems)
                     }
                 }
