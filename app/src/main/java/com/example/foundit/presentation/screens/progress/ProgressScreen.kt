@@ -1,6 +1,5 @@
 package com.example.foundit.presentation.screens.progress
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
@@ -17,16 +16,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.foundit.R
+import com.example.foundit.presentation.common.TheTopAppBar
+import com.example.foundit.presentation.data.FinishedProcessData
+import com.example.foundit.presentation.data.InProcessData
+import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.progress.components.FinishedProcessCardList
 import com.example.foundit.presentation.screens.progress.components.InProcessCardList
 import com.example.foundit.presentation.screens.progress.components.ProcessCardItem
-import com.example.foundit.presentation.data.FinishedProcessData
-import com.example.foundit.presentation.data.InProcessData
-import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.data.navigation.NavRoutes
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ProcessScreen(modifier: Modifier, navController: NavHostController) {
     val pagerState = rememberPagerState(
