@@ -141,7 +141,7 @@ fun ProcessCard(
                         )
                         Text(
                             text = itemLocation,
-                            textAlign = TextAlign.Center,
+                            //textAlign = TextAlign.Center,
                             fontSize = 12.sp,
                             fontStyle = FontStyle.Italic,
                             textDecoration = TextDecoration.Underline

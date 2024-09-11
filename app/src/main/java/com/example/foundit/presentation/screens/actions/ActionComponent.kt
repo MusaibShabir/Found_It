@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
+import com.example.foundit.presentation.data.addCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,6 +59,9 @@ fun ActionComponent(
     val phoneOptions = listOf("Phone 1", "Phone 2", "Phone 3")
     val modelOptions = listOf("Model A", "Model B", "Model C")
     val colorOptions = listOf("Red", "Green", "Blue")
+
+    var locationEntered by remember { mutableStateOf("") }
+    var discriptionEntered by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier
@@ -198,6 +202,32 @@ fun ActionComponent(
             }
         }
 
+        //Item Location
+        OutlinedTextField(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(bottom = 18.dp),
+            value = locationEntered,
+            onValueChange = { locationEntered = it },
+            label = { Text("Location") },
+            placeholder = { Text("Enter Location", fontStyle = FontStyle.Italic) },
+            shape = MaterialTheme.shapes.medium,
+            maxLines = 1,
+        )
+
+        //Item Description
+        OutlinedTextField(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(bottom = 18.dp),
+            value = discriptionEntered,
+            onValueChange = { discriptionEntered = it },
+            label = { Text("Description") },
+            placeholder = { Text("Enter Description", fontStyle = FontStyle.Italic) },
+            shape = MaterialTheme.shapes.medium,
+            maxLines = 3,
+        )
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
@@ -208,6 +238,13 @@ fun ActionComponent(
 
             Button(
                 onClick = {
+                    addCard(
+                        cardColorCode = 0,
+                        itemTitle = selectedPhone,
+                        itemDescription = discriptionEntered,
+                        itemLocation = locationEntered,
+                        progressIndicator = true
+                    )
                     viewModel.sendData(selectedPhone,selectedModel,selectedColor){ isSuccess ->
                         if (isSuccess) {
                         Toast.makeText(context,"item added!", Toast.LENGTH_LONG).show()

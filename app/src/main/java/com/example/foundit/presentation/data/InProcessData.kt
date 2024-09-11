@@ -8,7 +8,7 @@ data class InProcessDataItem (
     val progressIndicator: Boolean
 )
 
-val InProcessData = listOf(
+var InProcessData = listOf(
     InProcessDataItem(
         cardColorCode = 0,
         itemTitle = "Card 1",
@@ -65,3 +65,21 @@ val InProcessData = listOf(
         progressIndicator = true
     ),
 )
+
+// Function to be used for adding a new card to the list
+fun addCard(
+    cardColorCode: Int,
+    itemTitle: String,
+    itemDescription: String,
+    itemLocation: String,
+    progressIndicator: Boolean
+) {
+    val newCard = InProcessDataItem(
+        cardColorCode,
+        itemTitle,
+        itemDescription,
+        itemLocation,
+        progressIndicator
+    )
+    InProcessData = InProcessData + newCard
+}
