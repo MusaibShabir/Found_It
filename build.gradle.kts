@@ -5,9 +5,10 @@ buildscript {
         mavenCentral()
     }
 
-    dependencies {
-
-    }
+//    dependencies {
+//        classpath(libs.android_gradle_plugin)
+//        classpath(libs.google_services_plugin)
+//    }
 
 }
 
@@ -18,5 +19,6 @@ plugins {
     alias(libs.plugins.google.gms.google.services) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin) apply false
 }
 

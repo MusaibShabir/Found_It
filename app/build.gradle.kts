@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
 }
 
 android {
@@ -43,6 +44,7 @@ android {
 
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 
     packaging {
@@ -74,6 +76,9 @@ dependencies {
     implementation(libs.androidx.room.ktx)
 
     implementation(libs.androidx.foundation.layout.android)
+    implementation(libs.play.services.maps)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.constraintlayout)
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
 
@@ -126,6 +131,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    //Google Maps
+    implementation ("com.google.android.gms:play-services-maps:18.1.0") //Integrating maps
+    implementation ("com.google.android.gms:play-services-location:21.0.1") //current location
 
 }
 

@@ -128,7 +128,7 @@
 
     <!-- Notification Screen (Main)-->
     <string name="when_no_notification">No notification Available</string>
-
+    <string name="title_activity_maps">MapsActivity</string>
 
 
 </resources>
