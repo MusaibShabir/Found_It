@@ -1,9 +1,15 @@
 package com.example.foundit.presentation.data
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Celebration
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.LocalPolice
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.MilitaryTech
+import androidx.compose.material.icons.filled.School
+import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.filled.Token
 import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.filled.WorkspacePremium
@@ -45,5 +51,35 @@ val BadgesCardData = listOf(
         badgeCode = 7,
         badgeName = "Badge 7",
         badgeImageVector = Icons.Filled.LocalPolice
+    ),
+    BadgesCardDataClass(
+        badgeCode = 8,
+        badgeName = "Badge 8",
+        badgeImageVector = Icons.Filled.Favorite
+    ),
+    BadgesCardDataClass(
+        badgeCode = 9,
+        badgeName = "Badge 9",
+        badgeImageVector = Icons.Filled.Shield
+    ),
+    BadgesCardDataClass(
+        badgeCode = 10,
+        badgeName = "Badge 10",
+        badgeImageVector = Icons.Filled.ThumbUp
+    ),
+    BadgesCardDataClass(
+        badgeCode = 11,
+        badgeName = "Badge 11",
+        badgeImageVector = Icons.Filled.School
+    ),
+    BadgesCardDataClass(
+        badgeCode = 12,
+        badgeName = "Badge 12",
+        badgeImageVector = Icons.Filled.Lock
+    ),
+    BadgesCardDataClass(
+        badgeCode = 13,
+        badgeName = "Badge 13",
+        badgeImageVector = Icons.Filled.Celebration
     ),
 )
