@@ -1,7 +1,7 @@
 package com.example.foundit.presentation.screens.profile.components
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,38 +21,43 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.foundit.presentation.data.BadgesCardData
+import com.example.foundit.presentation.data.BadgesCardDataClass
 
 
-val userBadgeCodes = listOf(1,2,3,4,5,6,7)
+val userBadgeCodes = listOf(1,2,3,4,5,6,7,8,9,10,11,12,13)
 
 @Composable
-fun BadgeCard(userBadgeCodes: List<Int>) {
-    val badgesToDisplay = BadgesCardData.filter { it.badgeCode in userBadgeCodes }
+fun BadgeCard(
+    modifier: Modifier,
+    badgesData: List<BadgesCardDataClass>,
+) {
+    val badgesToDisplay = badgesData.filter { it.badgeCode in userBadgeCodes }
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(16.dp)
             .height(100.dp),
         shape = RoundedCornerShape(15.dp),
-        elevation = CardDefaults.cardElevation(8.dp),
+        elevation = CardDefaults.cardElevation(8.dp)
     ) {
-        Box(
-            modifier = Modifier
-                .padding(horizontal = 10.dp)
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
+        Column(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
             LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(14.dp),
-                verticalAlignment = Alignment.CenterVertically
             ) {
                 items(badgesToDisplay) { badgeData ->
                     BadgeItem(badgeImageVector = badgeData.badgeImageVector)
                 }
             }
         }
+
     }
 }
 
@@ -61,13 +66,17 @@ fun BadgeItem(badgeImageVector: ImageVector) {
     Icon(
         imageVector = badgeImageVector,
         contentDescription = "Badge",
-        modifier = Modifier.size(48.dp),
+        modifier = Modifier.size(58.dp),
         tint= Color.Black
     )
 }
+
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun PreviewBadgeCard() {
-        BadgeCard(userBadgeCodes = userBadgeCodes)
+    BadgeCard(
+        modifier = Modifier,
+        badgesData = BadgesCardData
+    )
 
 }

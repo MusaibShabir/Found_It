@@ -23,6 +23,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.example.foundit.R
+import com.example.foundit.presentation.data.BadgesCardData
+import com.example.foundit.presentation.data.BadgesCardDataClass
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.profile.components.BadgeCard
 import com.example.foundit.presentation.screens.profile.components.MemberSinceCardContent
@@ -39,7 +41,7 @@ fun ProfileScreenContent(
     profilePicture: Painter,
     profileCountryCode: Int,
     profileId: Long,
-    badgesCodes: List<Int>,
+    badgesToDisplay: List<BadgesCardDataClass>,
     foundScore: Int?,
     reportedScore: Int?,
     memberSince: String?,
@@ -69,7 +71,8 @@ fun ProfileScreenContent(
             )
 
             BadgeCard(
-                userBadgeCodes = badgesCodes
+                modifier = modifier,
+                badgesData = badgesToDisplay
             )
 
 
@@ -105,9 +108,6 @@ fun ProfileScreen(
     val profilePicture = painterResource(id = R.drawable.ic_launcher_background)
     val profileId by remember { mutableLongStateOf(profileData?.id ?: 0) }
 
-    //Badges Card
-    val badgesCodes = listOf(1,2,3,4,5,6,7)
-
     //Score Card
     val foundScore by remember { mutableIntStateOf(profileData?.totalFound ?: 0) }
     val reportedScore by remember { mutableIntStateOf(profileData?.totalReported ?: 0) }
@@ -122,7 +122,7 @@ fun ProfileScreen(
         profileId = profileId,
         profilePicture = profilePicture,
         profileCountryCode = profileCountryCode,
-        badgesCodes = badgesCodes,
+        badgesToDisplay = BadgesCardData,
         foundScore = foundScore,
         reportedScore = reportedScore,
         memberSince = memberSince,
@@ -143,7 +143,7 @@ fun PreviewProfileScreen() {
         profileFirstName = "Musaib",
         profileLastName = "Shabir",
         profileCountryCode = 91,
-        badgesCodes = listOf(1,2,3,4,5,6,7),
+        badgesToDisplay = BadgesCardData,
         profileId = 234567890,
         foundScore = 10,
         reportedScore = 5,
