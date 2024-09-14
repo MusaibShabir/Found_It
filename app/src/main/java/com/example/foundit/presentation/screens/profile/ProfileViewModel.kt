@@ -6,6 +6,7 @@ import com.example.foundit.presentation.data.firestore.FirestoreService
 import com.example.foundit.presentation.data.local.repo.ProfileDataRepository
 import com.example.foundit.presentation.data.local.tables.ProfileData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,6 +21,9 @@ class ProfileViewModel @Inject constructor(
 
     private val _profileData = MutableStateFlow<ProfileData?>(null)
     val profileData: StateFlow<ProfileData?> = _profileData.asStateFlow()
+
+    val name: String
+        get() = firestoreService.currentUserId
 
 //    val phone_FireStore = "Iphone"
 //    val model_FireStore = "14"
@@ -41,18 +45,27 @@ class ProfileViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
+            while (name.isEmpty()) {
+                delay(100)
+            }
             firestoreService.getItemData().collect { items ->
                 val sortedItems = items.sortedBy { it["phone"]?.toString() }
                 _firestoreItems.value = sortedItems
             }
         }
     }
-//
-//    fun a(){
-//        viewModelScope.launch {
-//            firestoreService.getItemData()
-//        }
-//    }
+
+    fun a(){
+        viewModelScope.launch {
+            while (name.isEmpty()) {
+                delay(100)
+            }
+            firestoreService.getItemData().collect { items ->
+                val sortedItems = items.sortedBy { it["phone"]?.toString() }
+                _firestoreItems.value = sortedItems
+            }
+        }
+    }
     ///////////
 
     fun upsertProfile(profileData: ProfileData) {

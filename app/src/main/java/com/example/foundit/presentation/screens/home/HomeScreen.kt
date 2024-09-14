@@ -61,11 +61,11 @@ fun HomeScreenContent(
                 .padding(start = 20.dp, end = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AppName(modifier = modifier.clickable(onClick = {  }))
+            AppName(modifier = modifier.clickable(onClick = { viewModel.a() }))
             Greetings(
                 modifier = modifier,
                 greetingPrefix = greetingPrefix,
-                profileName = profileName
+                profileName = viewModel.name
             )
             HorizontalDivider(
                 thickness = 1.dp,

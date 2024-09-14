@@ -15,8 +15,10 @@ class SplashScreenViewModel @Inject constructor(
 
     fun onAppStart(onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
+            accountService.refreshCurrentUser()
             try {
                 val user = accountService.hasUser()
+                Log.d("Session", "Session error: ${accountService.currentUserId} $user")
                 onResult(user)
             } catch (e: Exception) {
                 onResult(false)
