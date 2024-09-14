@@ -48,7 +48,6 @@ class FirestoreServiceImpl @Inject constructor(
 
         val documentRef = firebaseFirestore.collection("User/${userId}/Card")
 
-        listener?.remove()
         listener = documentRef.addSnapshotListener { snapshot, exception ->
             if (exception != null) {
                 close(exception) // Close the flow with the exception
