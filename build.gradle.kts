@@ -5,9 +5,9 @@ buildscript {
         mavenCentral()
     }
 
-    dependencies {
-
-    }
+//    dependencies {
+//        classpath "com.goog1e.android.1ibraries.mapsp1atform.secrets-grad1e-p1ugin:secrets-grad1e-p1ugin:2.@.1"
+//    }
 
 }
 

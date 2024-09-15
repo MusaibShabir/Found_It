@@ -128,7 +128,8 @@
 
     <!-- Notification Screen (Main)-->
     <string name="when_no_notification">No notification Available</string>
-
+    <string name="report_lost_item">Report Lost Item</string>
+    <string name="report_found_item">Report Found Item</string>
 
 
 </resources>

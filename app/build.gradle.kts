@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -33,10 +35,12 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
@@ -50,12 +54,12 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
     buildToolsVersion = "35.0.0"
-
-
 }
 
 dependencies {
+    // Core Libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -66,38 +70,30 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material.icons.extended)
 
-    //Play Feature Delivery
+    // Play Feature Delivery
     implementation(libs.feature.delivery)
 
-    //Room
+    // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    annotationProcessor(libs.androidx.room.compiler) // Room's annotation processor
+    ksp(libs.androidx.room.compiler) // KSP for Room
 
-    implementation(libs.androidx.foundation.layout.android)
-    annotationProcessor(libs.androidx.room.compiler)
-    ksp(libs.androidx.room.compiler)
-
-    //Hilt
+    // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
-    implementation (libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
 
-
-    //Coil
+    // Coil
     implementation(libs.coil.compose)
 
-    //navigation
+    // Navigation
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.navigation.compose)
-
-    // Feature module Support
     implementation(libs.androidx.navigation.dynamic.features.fragment)
 
-    // Jetpack Compose Integration
-    implementation(libs.androidx.navigation.compose)
-
-    //Coroutines
+    // Coroutines
     implementation(libs.kotlinx.coroutines.android)
 
     // Firebase
@@ -107,25 +103,28 @@ dependencies {
     implementation(libs.firebase.config.ktx)
     implementation(libs.firebase.firestore.ktx)
 
-
-    //Authentication with Credential Manager
+    // Authentication with Credential Manager
     implementation(libs.androidx.credentials.play.services.auth)
-    implementation(libs.play.services.auth)  // Android 13 or below
+    implementation(libs.play.services.auth) // Play Services Auth
     implementation(libs.googleid)
-    implementation(libs.play.services.auth)
 
+    // Google Maps
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("com.google.maps.android:maps-compose:2.13.1")
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
-
-    //Testing Navigation
     androidTestImplementation(libs.androidx.navigation.testing)
 
+    // Debug
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-
+    // Hilt for annotation processing
+    kapt("com.google.dagger:hilt-android-compiler:2.48.1")
 }
-
