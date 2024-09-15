@@ -21,8 +21,6 @@ import androidx.navigation.NavHostController
 import com.example.foundit.R
 import com.example.foundit.presentation.common.TheTopAppBar
 import com.example.foundit.presentation.data.navigation.NavRoutes
-import com.example.foundit.presentation.screens.progress.components.FinishedProcessCardList
-import com.example.foundit.presentation.screens.progress.components.HaltedProcessCardList
 import com.example.foundit.presentation.screens.progress.components.ProcessCardList
 import kotlinx.coroutines.launch
 
@@ -102,6 +100,8 @@ fun ProcessScreen(modifier: Modifier, navController: NavHostController) {
             }
         }
     }
+
+
 }
 
 @Composable

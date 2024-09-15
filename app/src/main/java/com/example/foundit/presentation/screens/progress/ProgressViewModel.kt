@@ -28,6 +28,7 @@ class ProgressViewModel @Inject constructor(
 
     init {
         fetchData()
+        Log.d("progress", "init called")
     }
 
     private fun fetchData() {
@@ -68,5 +69,12 @@ class ProgressViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    override fun onCleared() {
+        _haltedItems.value = emptyList()
+        _inProcessItems.value = emptyList()
+        _finishedItems.value = emptyList()
+        super.onCleared()
     }
 }
