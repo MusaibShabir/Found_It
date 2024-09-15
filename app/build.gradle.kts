@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+
 }
 
 android {
@@ -74,6 +76,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
 
     implementation(libs.androidx.foundation.layout.android)
+    implementation(libs.androidx.appcompat)
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
 
@@ -126,6 +129,13 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    //Google Maps
+    implementation("com.google.android.gms:play-services-maps:19.0.0")
 
+    implementation("com.google.maps.android:maps-compose:4.4.1")
+    implementation("com.google.maps.android:maps-compose-utils:4.4.1")
+    implementation("com.google.maps.android:maps-compose-widgets:4.4.1")
+    implementation("com.google.maps.android:maps-ktx:5.0.0")
+    implementation("com.google.maps.android:maps-utils-ktx:5.0.0")
 }
 
