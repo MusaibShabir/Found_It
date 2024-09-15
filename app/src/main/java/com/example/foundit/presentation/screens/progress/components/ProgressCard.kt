@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.Card
@@ -35,27 +33,24 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.foundit.presentation.data.FinishedProcessDataItem
-import com.example.foundit.presentation.data.InProcessDataItem
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-sealed class ProcessCardItem {
-    data class InProcess(val data: InProcessDataItem) : ProcessCardItem()
-    data class Finished(val data: FinishedProcessDataItem) : ProcessCardItem()
-}
+//sealed class ProcessCardItem {
+//    data class InProcess(val data: Map<String, Any>) : ProcessCardItem()
+//    data class Finished(val data: Map<String, Any>) : ProcessCardItem()
+//}
 
 
 @Composable
 fun ProcessCard(
     modifier: Modifier,
-    cardItem: ProcessCardItem
+    cardItem: Map<String, Any>
 ) {
 
     val colorCode: Int
@@ -64,27 +59,45 @@ fun ProcessCard(
     val itemLocation: String
     val progressIndicator: Boolean
 
-    when (cardItem) {
-        is ProcessCardItem.InProcess -> {
-            colorCode = cardItem.data.cardColorCode
-            itemTitle = cardItem.data.itemTitle
-            itemDescription = cardItem.data.itemDescription
-            itemLocation = cardItem.data.itemLocation
-            progressIndicator = cardItem.data.progressIndicator
-        }
-        is ProcessCardItem.Finished -> {
-            colorCode = cardItem.data.cardColorCode
-            itemTitle = cardItem.data.itemTitle
-            itemDescription = cardItem.data.itemDescription
-            itemLocation = cardItem.data.itemLocation
-            progressIndicator = cardItem.data.progressIndicator
-        }
-    }
+//    when (cardItem) {
+//        is ProcessCardItem.InProcess -> {
+//            colorCode = cardItem.data.cardColorCode
+//            itemTitle = cardItem.data.itemTitle
+//            itemDescription = cardItem.data.itemDescription
+//            itemLocation = cardItem.data.itemLocation
+//            progressIndicator = cardItem.data.progressIndicator
+//        }
+//        is ProcessCardItem.Finished -> {
+//            colorCode = cardItem.data.cardColorCode
+//            itemTitle = cardItem.data.itemTitle
+//            itemDescription = cardItem.data.itemDescription
+//            itemLocation = cardItem.data.itemLocation
+//            progressIndicator = cardItem.data.progressIndicator
+//        }
+//    }
 
+//    when (cardItem) {
+//        is ProcessCardItem.InProcess -> {
+//            colorCode = cardItem.data["status"] as Int
+//            itemTitle = cardItem.data["phone"] as String
+//            itemDescription = cardItem.data["model"] as String
+//            //itemLocation = cardItem.data["itemLocation"] as String
+//            itemLocation = "sdfsdf"
+//            progressIndicator = true
+//        }
+//        is ProcessCardItem.Finished -> {
+//            colorCode = cardItem.data["status"] as Int
+//            itemTitle = cardItem.data["phone"] as String
+//            itemDescription = cardItem.data["model"] as String
+//            //itemLocation = cardItem.data["itemLocation"] as String
+//            itemLocation = "sdfsdf"
+//            progressIndicator = false
+//        }
+//    }
 
-    val cardColor = when (colorCode) {
-        0 -> MainRed.copy(alpha = 0.4f)
-        1 -> MainGreen.copy(alpha = 0.4f)
+    val cardColor = when (cardItem["status"].toString()) {
+        "0" -> MainRed.copy(alpha = 0.4f)
+        "1" -> MainGreen.copy(alpha = 0.4f)
         else -> Color.Gray.copy(alpha = 0.4f)
     }
 
@@ -110,11 +123,11 @@ fun ProcessCard(
 
             ){
                 Text(
-                    text = itemTitle,
+                    text = "${cardItem["phone"]}",
                     fontWeight = FontWeight.Bold
                 )
 
-                if (progressIndicator){
+                if (cardItem["status"].toString() == "0"){
                     CardLinearProgressIndicator()
                 }
 
@@ -140,7 +153,7 @@ fun ProcessCard(
                             modifier = modifier.size(12.dp)
                         )
                         Text(
-                            text = itemLocation,
+                            text = "Location",
                             //textAlign = TextAlign.Center,
                             fontSize = 12.sp,
                             fontStyle = FontStyle.Italic,
@@ -151,7 +164,7 @@ fun ProcessCard(
 
                 Spacer(modifier = modifier.height(10.dp))
                 Text(
-                    text = itemDescription,
+                    text = "${cardItem["model"]}",
                     fontSize = 12.sp,
                     textAlign = TextAlign.Start,
                 )
@@ -204,36 +217,44 @@ fun CardLinearProgressIndicator() {
 
 
 @Composable
-fun InProcessCardList(
+fun ProcessCardList(
     modifier: Modifier,
-    cardData: List<ProcessCardItem.InProcess>
+    cardData: List<Map<String, Any>>
 ) {
-    val rememberedCardData = remember(cardData) { cardData }
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        items(rememberedCardData) { cardItem ->
-            ProcessCard(modifier = modifier, cardItem = cardItem)
+//    val rememberedCardData = remember(cardData) { cardData }
+//    LazyColumn(
+//        modifier = modifier.fillMaxSize(),
+//        verticalArrangement = Arrangement.spacedBy(16.dp)
+//    ) {
+//        items(rememberedCardData) {
+//            cardData.forEach {
+//                ProcessCard(modifier = modifier, cardItem = it)
+//            }
+//        }
+//    }
+    Column {
+        cardData.forEach {item ->
+            ProcessCard(modifier = modifier, cardItem = item)
         }
     }
+
 }
 
 
 @Composable
 fun FinishedProcessCardList(
     modifier: Modifier,
-    cardData: List<ProcessCardItem.Finished>
+    cardData: List<Map<String, Any>>
 ) {
-    val rememberedCardData = remember(cardData) { cardData }
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        items(rememberedCardData) { cardItem ->
-            ProcessCard(modifier = modifier, cardItem = cardItem)
-        }
-    }
+//    val rememberedCardData = remember(cardData) { cardData }
+//    LazyColumn(
+//        modifier = modifier.fillMaxSize(),
+//        verticalArrangement = Arrangement.spacedBy(16.dp)
+//    ) {
+//        items(rememberedCardData) { cardItem ->
+//            ProcessCard(modifier = modifier, cardItem = cardItem)
+//        }
+//    }
 }
 
 @Composable
@@ -254,6 +275,7 @@ fun HaltedProcessCardList(
 
 }
 
+/*
 @Composable
 @Preview(showBackground = true, showSystemUi = false, device = "id:pixel_6_pro")
 fun PreviewInProcessCard() {
@@ -290,3 +312,4 @@ fun PreviewFinishedProcessCard() {
 
 
 
+*/
