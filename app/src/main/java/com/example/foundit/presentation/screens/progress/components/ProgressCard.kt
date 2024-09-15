@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.Card
@@ -53,11 +55,11 @@ fun ProcessCard(
     cardItem: Map<String, Any>
 ) {
 
-    val colorCode: Int
-    val itemTitle: String
-    val itemDescription: String
-    val itemLocation: String
-    val progressIndicator: Boolean
+//    val colorCode: Int
+//    val itemTitle: String
+//    val itemDescription: String
+//    val itemLocation: String
+//    val progressIndicator: Boolean
 
 //    when (cardItem) {
 //        is ProcessCardItem.InProcess -> {
@@ -95,7 +97,7 @@ fun ProcessCard(
 //        }
 //    }
 
-    val cardColor = when (cardItem["status"].toString()) {
+    val cardColor = when (cardItem["cardType"].toString()) {
         "0" -> MainRed.copy(alpha = 0.4f)
         "1" -> MainGreen.copy(alpha = 0.4f)
         else -> Color.Gray.copy(alpha = 0.4f)
@@ -221,59 +223,77 @@ fun ProcessCardList(
     modifier: Modifier,
     cardData: List<Map<String, Any>>
 ) {
-//    val rememberedCardData = remember(cardData) { cardData }
-//    LazyColumn(
-//        modifier = modifier.fillMaxSize(),
-//        verticalArrangement = Arrangement.spacedBy(16.dp)
-//    ) {
-//        items(rememberedCardData) {
-//            cardData.forEach {
-//                ProcessCard(modifier = modifier, cardItem = it)
-//            }
-//        }
-//    }
-    Column {
-        cardData.forEach {item ->
+    if (cardData.isEmpty()) {
+        Column(
+            modifier = modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Nothing to show here"
+
+            )
+        }
+    }
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        //verticalArrangement = Arrangement.spacedBy(16.dp) // Add space between items if needed
+    ) {
+        items(cardData) { item ->
             ProcessCard(modifier = modifier, cardItem = item)
         }
     }
-
 }
 
-
-@Composable
-fun FinishedProcessCardList(
-    modifier: Modifier,
-    cardData: List<Map<String, Any>>
-) {
-//    val rememberedCardData = remember(cardData) { cardData }
-//    LazyColumn(
-//        modifier = modifier.fillMaxSize(),
-//        verticalArrangement = Arrangement.spacedBy(16.dp)
+//
+//@Composable
+//fun FinishedProcessCardList(
+//    modifier: Modifier,
+//    cardData: List<Map<String, Any>>
+//) {
+////    val rememberedCardData = remember(cardData) { cardData }
+////    LazyColumn(
+////        modifier = modifier.fillMaxSize(),
+////        verticalArrangement = Arrangement.spacedBy(16.dp)
+////    ) {
+////        items(rememberedCardData) { cardItem ->
+////            ProcessCard(modifier = modifier, cardItem = cardItem)
+////        }
+////    }
+//    Column(
+//        modifier = modifier.fillMaxSize()
 //    ) {
-//        items(rememberedCardData) { cardItem ->
-//            ProcessCard(modifier = modifier, cardItem = cardItem)
+//        cardData.forEach {item ->
+//            ProcessCard(modifier = modifier, cardItem = item)
 //        }
 //    }
-}
-
-@Composable
-fun HaltedProcessCardList(
-    modifier: Modifier,
-    ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "Nothing to show here"
-
-        )
-    }
-
-}
+//}
+//
+//@Composable
+//fun HaltedProcessCardList(
+//    modifier: Modifier,
+//    cardData: List<Map<String, Any>>
+//    ) {
+////    Column(
+////        modifier = modifier
+////            .fillMaxSize(),
+////        horizontalAlignment = Alignment.CenterHorizontally,
+////        verticalArrangement = Arrangement.Center
+////    ) {
+////        Text(
+////            text = "Nothing to show here"
+////
+////        )
+////    }
+//    Column (
+//        modifier = modifier.fillMaxSize()
+//    ){
+//        cardData.forEach {item ->
+//            ProcessCard(modifier = modifier, cardItem = item)
+//        }
+//    }
+//}
 
 /*
 @Composable

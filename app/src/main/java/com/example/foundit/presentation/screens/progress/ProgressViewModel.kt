@@ -45,7 +45,7 @@ class ProgressViewModel @Inject constructor(
                 // Check if items are non-empty and sorted correctly
                 if (items.isNotEmpty()) {
                     // Sort by phone (replace "phone" with the actual field name if necessary)
-                    val sortedItems = items.sortedBy { it["phone"]?.toString() }
+                    val sortedItems = items//.sortedBy { it["date"]?.toString() }
 
                     // Log the sorted items
                     Log.d("progress", "Sorted items: $sortedItems")
@@ -72,9 +72,7 @@ class ProgressViewModel @Inject constructor(
     }
 
     override fun onCleared() {
-        _haltedItems.value = emptyList()
-        _inProcessItems.value = emptyList()
-        _finishedItems.value = emptyList()
         super.onCleared()
+        Log.d("Progress", "ViewModel destroyed")
     }
 }

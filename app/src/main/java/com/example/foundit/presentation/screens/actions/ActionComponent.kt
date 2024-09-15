@@ -238,6 +238,7 @@ fun ActionComponent(
 
             Button(
                 onClick = {
+                    // TODO("to be reviewed")
                     addCard(
                         cardColorCode = 0,
                         itemTitle = selectedPhone,
@@ -245,12 +246,14 @@ fun ActionComponent(
                         itemLocation = locationEntered,
                         progressIndicator = true
                     )
-                    viewModel.sendData(selectedPhone,selectedModel,selectedColor){ isSuccess ->
+                    viewModel.sendData(
+                        selectedPhone, selectedModel, selectedColor
+                    ) { isSuccess ->
                         if (isSuccess) {
-                        Toast.makeText(context,"item added!", Toast.LENGTH_LONG).show()
-                        navController.popBackStack()
+                            Toast.makeText(context, "item added!", Toast.LENGTH_LONG).show()
+                            navController.popBackStack()
                         } else {
-                        Toast.makeText(context,"error!",Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, "error!", Toast.LENGTH_LONG).show()
                         }
                     }
                 },

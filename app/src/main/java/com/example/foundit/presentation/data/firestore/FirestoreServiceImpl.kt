@@ -23,6 +23,7 @@ class FirestoreServiceImpl @Inject constructor(
 
     override suspend fun addItemData(phone: String, model: String, color: String) {
         val data = mapOf(
+            "cardType" to 0,
             "phone" to phone,
             "model" to model,
             "color" to color,
@@ -86,8 +87,10 @@ class FirestoreServiceImpl @Inject constructor(
                 return@addSnapshotListener
             }
 
-            snapshot?.let {
-                val documents = it.documents.map { document -> document.data ?: emptyMap() }
+            snapshot?.let { it ->
+                val documents = it.documents
+                    .map { document -> document.data ?: emptyMap() }
+                    .sortedByDescending { it["date"].toString() } // Sort by the 'date' field (ensure it's properly formatted)
                 Log.d("Firestore", "getItemData: $documents")
                 trySend(documents) // Send the documents to the flow
             }
