@@ -114,7 +114,7 @@ fun ProcessCard(
                 .fillMaxWidth()
                 .padding(24.dp),
             verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.Start
         ){
             Row (
                 modifier = Modifier.fillMaxWidth() ,
