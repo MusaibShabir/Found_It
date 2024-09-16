@@ -71,8 +71,11 @@ class ProgressViewModel @Inject constructor(
         }
     }
 
+    /*
     override fun onCleared() {
         super.onCleared()
         Log.d("Progress", "ViewModel destroyed")
     }
+    
+     */
 }
