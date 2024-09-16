@@ -1,7 +1,9 @@
 package com.example.foundit.presentation.screens.input.common
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -14,11 +16,14 @@ import com.example.foundit.presentation.screens.input.data.parentCategories
 @Composable
 fun ParentCategoryScreen(modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier
-    ) {
+        modifier = modifier.fillMaxSize(),
+    ){
         LazyVerticalGrid(
-            modifier = modifier.fillMaxSize(),
-            columns = GridCells.Adaptive(90.dp)
+            modifier = modifier
+                .fillMaxSize()
+                .padding(bottom = 24.dp),
+            verticalArrangement = Arrangement.Bottom,
+            columns = GridCells.Adaptive(minSize = 110.dp)
         ) {
             items(parentCategories) { parentCategory ->
                 CategoryCard(

@@ -25,14 +25,14 @@ data class ParentCategory(
 val parentCategories = listOf(
     ParentCategory(1, "Wallet", ParentCategory.Category.WALLET),
     ParentCategory(2, "Key", ParentCategory.Category.KEY),
-    ParentCategory(1, "Wallet", ParentCategory.Category.PHONE),
-    ParentCategory(1, "Wallet", ParentCategory.Category.GLASSES),
-    ParentCategory(1, "Wallet", ParentCategory.Category.JEWELERY),
-    ParentCategory(1, "Wallet", ParentCategory.Category.LAPTOP),
-    ParentCategory(1, "Wallet", ParentCategory.Category.HEADPHONES),
-    ParentCategory(1, "Wallet", ParentCategory.Category.BACKPACKS),
-    ParentCategory(1, "Wallet", ParentCategory.Category.UMBRELLAS),
-    ParentCategory(1, "Wallet", ParentCategory.Category.LUGGAGE)
+    ParentCategory(3, "Phone", ParentCategory.Category.PHONE),
+    ParentCategory(4, "Glasses", ParentCategory.Category.GLASSES),
+    ParentCategory(5, "Jawelery", ParentCategory.Category.JEWELERY),
+    ParentCategory(6, "Laptop", ParentCategory.Category.LAPTOP),
+    ParentCategory(7, "Headphones", ParentCategory.Category.HEADPHONES),
+    ParentCategory(8, "Backpack", ParentCategory.Category.BACKPACKS),
+    ParentCategory(9, "Umbrella", ParentCategory.Category.UMBRELLAS),
+    ParentCategory(10, "Luggage", ParentCategory.Category.LUGGAGE)
 
 
 
