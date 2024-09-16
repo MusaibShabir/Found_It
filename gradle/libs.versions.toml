@@ -52,6 +52,10 @@ mapsUtilsKtx = "5.0.0"
 maps-compose = "4.4.1"
 
 
+# Goolge Maps
+mapsUtilsKtx = "5.0.0"
+maps-compose = "4.4.1"
+
 
 
 [libraries]
@@ -63,6 +67,8 @@ feature-delivery = { module = "com.google.android.play:feature-delivery", versio
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
+maps-ktx = { module = "com.google.maps.android:maps-ktx", version.ref = "mapsUtilsKtx" }
+maps-utils-ktx = { module = "com.google.maps.android:maps-utils-ktx", version.ref = "mapsUtilsKtx" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 
 
