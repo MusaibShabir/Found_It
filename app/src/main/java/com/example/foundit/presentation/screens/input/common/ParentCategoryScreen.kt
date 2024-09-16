@@ -1,12 +1,17 @@
-package com.example.foundit.presentation.screens.input.lost
+package com.example.foundit.presentation.screens.input.common
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.foundit.presentation.screens.input.common.CategoryCard
 
 @Composable
-fun ParentCategoryScreen() {
+fun ParentCategoryScreen(modifier : Modifier = Modifier) {
+    Column(
+        modifier = modifier
+    ) {
+
+    }
     CategoryCard(
         modifier = Modifier,
         categoryText = "Laptop"
