@@ -47,10 +47,11 @@ fun CategoryCard(
             isSelected = !isSelected
             onCategoryClick()
                   },
-        border = BorderStroke(width = 1.dp ,color = Color.Blue),
-        colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) Color.Yellow else Color.White
-        )
+        border = BorderStroke(
+            width = 1.dp ,
+            color = if(isSelected) Color.Blue else Color.Black
+        ),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Row(
             modifier = modifier
