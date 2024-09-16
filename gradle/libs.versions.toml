@@ -3,7 +3,6 @@ kotlin = "2.0.20"
 agp = "8.6.0"
 featureDelivery = "2.1.0"
 ksp = "2.0.20-1.0.25"
-maps-compose = "4.4.1"
 
 #Room
 roomRuntime = "2.6.1"
@@ -48,6 +47,10 @@ googleAndroidLibrariesMapsplatformSecretsGradlePlugin = "2.0.1"
 playServicesMaps = "19.0.0"
 appcompat = "1.7.0"
 
+# Goolge Maps
+mapsUtilsKtx = "5.0.0"
+maps-compose = "4.4.1"
+
 
 
 [libraries]
@@ -59,6 +62,8 @@ feature-delivery = { module = "com.google.android.play:feature-delivery", versio
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
+maps-ktx = { module = "com.google.maps.android:maps-ktx", version.ref = "mapsUtilsKtx" }
+maps-utils-ktx = { module = "com.google.maps.android:maps-utils-ktx", version.ref = "mapsUtilsKtx" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 
 
