@@ -13,6 +13,10 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,17 +33,24 @@ fun CategoryCard(
     categoryText: String,
     onCategoryClick: () -> Unit
 ) {
+
+    // State to track the selected category
+    var isSelected by remember { mutableStateOf(false) }
+
     OutlinedCard(
         modifier = modifier
             .padding(8.dp)
             .width(IntrinsicSize.Max)
             .height(35.dp),
         shape = RoundedCornerShape(24.dp),
-        onClick = { onCategoryClick() },
+        onClick = {
+            isSelected = !isSelected
+            onCategoryClick()
+                  },
         border = BorderStroke(width = 1.dp ,color = Color.Blue),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
-
-
+        colors = CardDefaults.cardColors(
+            containerColor = if (isSelected) Color.Yellow else Color.White
+        )
     ) {
         Row(
             modifier = modifier
@@ -55,6 +66,7 @@ fun CategoryCard(
                 fontWeight = FontWeight.Medium,
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center,
+                maxLines = 1
 
                 )
         }
