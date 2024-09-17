@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.input.common
+package com.example.foundit.presentation.screens.input.common.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun UserInputBottomNavigationBar(
     modifier: Modifier = Modifier,
+    onCancelOrBackButtonText: String,
     onCancelOrBackClick:  () ->  Unit,
     onNextClick: () -> Unit
 ) {
@@ -52,7 +53,7 @@ fun UserInputBottomNavigationBar(
                     .width(128.dp)
             ) {
                 Text(
-                    text = "Cancel",
+                    text = onCancelOrBackButtonText,
                     fontSize = 18.sp
                 )
             }
@@ -80,6 +81,7 @@ fun PreviewInputBottomNavigationBar() {
     UserInputBottomNavigationBar(
         modifier = Modifier,
         onCancelOrBackClick = {},
+        onCancelOrBackButtonText = "Cancel",
         onNextClick = {}
     )
 

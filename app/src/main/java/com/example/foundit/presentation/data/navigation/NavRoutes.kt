@@ -33,5 +33,8 @@ object NavRoutes {
     const val SPLASH = "Splash"
     const val ACTION_SCREEN = "Action Screen"
     const val USER_ITEM_INPUT_SCREEN = "User Item Input Screen"
+    const val CHILD_CATEGORY_SCREEN = "Child Category Screen"
+    const val CHILD_CATEGORY_SCREEN2 = "Child Category Screen2"
+    const val PARENT_CATEGORY_SCREEN = "Parent Category Screen"
 
 }
