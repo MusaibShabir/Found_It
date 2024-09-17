@@ -50,9 +50,6 @@ fun MainCard(
     forwardNavigation: String,
 ) {
     Card(
-        onClick = {
-
-        },
         modifier = modifier
             .fillMaxWidth()
             .height(intrinsicSize = IntrinsicSize.Max)
