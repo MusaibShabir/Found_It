@@ -17,7 +17,7 @@ import com.example.foundit.presentation.common.TheTopAppBar
 import com.example.foundit.presentation.screens.input.data.parentCategories
 
 @Composable
-fun ParentCategoryScreen(
+fun UserItemInputScreen(
     modifier: Modifier,
     navController: NavController
 ) {
@@ -50,7 +50,7 @@ fun ParentCategoryScreen(
 @Preview(showBackground = true, showSystemUi = true, device = "id:pixel_2")
 @Composable
 fun PreviewParentCategoryScreen() {
-    ParentCategoryScreen(
+    UserItemInputScreen(
         modifier = Modifier,
         navController = NavController(LocalContext.current)
     )
