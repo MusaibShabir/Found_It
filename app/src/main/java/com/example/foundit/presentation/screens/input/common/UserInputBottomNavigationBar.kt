@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun InputBottomNavigationBar(
+fun UserInputBottomNavigationBar(
     modifier: Modifier = Modifier,
     onCancelOrBackClick:  () ->  Unit,
     onNextClick: () -> Unit
@@ -77,7 +77,7 @@ fun InputBottomNavigationBar(
 @Preview(showBackground = true, showSystemUi = false, device = "id:pixel_2")
 @Composable
 fun PreviewInputBottomNavigationBar() {
-    InputBottomNavigationBar(
+    UserInputBottomNavigationBar(
         modifier = Modifier,
         onCancelOrBackClick = {},
         onNextClick = {}

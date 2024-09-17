@@ -32,7 +32,7 @@ fun UserItemInputScreen(
         modifier = modifier.fillMaxSize(),
         topBar = { TheTopAppBar(title = "Report Lost Item", navController = navController) },
         bottomBar = {
-            InputBottomNavigationBar(
+            UserInputBottomNavigationBar(
                 modifier = modifier,
                 onCancelOrBackClick = { showAlertDialogBox = true },
                 onNextClick = { /*TODO*/ })
