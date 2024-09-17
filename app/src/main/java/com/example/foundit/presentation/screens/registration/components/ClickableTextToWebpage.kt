@@ -17,14 +17,13 @@ fun ClickableTextToNavigationRoute(
     text: String,
     navRoute: String,
     navController: NavController,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     Text(
         text = text,
         textDecoration = TextDecoration.Underline,
         modifier = modifier
             .clickable { navController.navigate(navRoute) },
-            //.clickable { navController.navigate("https://www.google.com") },
         color = Color.Blue,
     )
 }
