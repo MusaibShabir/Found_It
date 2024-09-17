@@ -17,6 +17,7 @@ import com.example.foundit.presentation.screens.actions.ActionScreen
 import com.example.foundit.presentation.screens.documentation.PrivacyPolicyScreen
 import com.example.foundit.presentation.screens.documentation.TermsOfServiceScreen
 import com.example.foundit.presentation.screens.home.HomeScreen
+import com.example.foundit.presentation.screens.input.common.UserItemInputScreen
 import com.example.foundit.presentation.screens.notification.NotificationBaseViewModel
 import com.example.foundit.presentation.screens.notification.NotificationScreen
 import com.example.foundit.presentation.screens.profile.ProfileScreen
@@ -132,7 +133,7 @@ fun MainScreen(modifier: Modifier) {
                     modifier = modifier,
                     viewModel = profileViewModel,
                     navController = navController,
-                    lostButtonClick = NavRoutes.ACTION_SCREEN,
+                    lostButtonClick = NavRoutes.USER_ITEM_INPUT_SCREEN,
                     foundButtonClick = NavRoutes.ACTION_SCREEN
                 )
             }
@@ -143,6 +144,16 @@ fun MainScreen(modifier: Modifier) {
                     navController = navController
                 )
             }
+
+
+            composable(NavRoutes.USER_ITEM_INPUT_SCREEN) {
+                UserItemInputScreen(
+                    modifier = modifier,
+                    navController = navController
+                )
+            }
+
+
 
             composable(NavRoutes.PROGRESS) {
                 ProcessScreen(modifier, navController)

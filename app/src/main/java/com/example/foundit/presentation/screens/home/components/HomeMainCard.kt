@@ -3,7 +3,6 @@ package com.example.foundit.presentation.screens.home.components
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -50,12 +49,9 @@ fun MainCard(
     forwardNavigation: String,
 ) {
     Card(
-        onClick = {
-
-        },
         modifier = modifier
             .fillMaxWidth()
-            .height(intrinsicSize = IntrinsicSize.Max)
+            .height(232.dp)
             .padding(vertical = 10.dp),
         shape = RoundedCornerShape(size = 42.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp, hoveredElevation = 5.dp),
