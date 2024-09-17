@@ -145,12 +145,15 @@ fun MainScreen(modifier: Modifier) {
                 )
             }
 
+
             composable(NavRoutes.USER_ITEM_INPUT_SCREEN) {
                 UserItemInputScreen(
                     modifier = modifier,
                     navController = navController
                 )
             }
+
+
 
             composable(NavRoutes.PROGRESS) {
                 ProcessScreen(modifier, navController)

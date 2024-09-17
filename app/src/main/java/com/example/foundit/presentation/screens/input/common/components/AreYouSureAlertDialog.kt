@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.input.common
+package com.example.foundit.presentation.screens.input.common.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
