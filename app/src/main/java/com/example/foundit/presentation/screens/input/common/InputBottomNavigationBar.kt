@@ -23,13 +23,13 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun InputBottomNavigationBar(
     modifier: Modifier = Modifier,
-    onCancelClick: () -> Unit,
+    onCancelOrBackClick:  () ->  Unit,
     onNextClick: () -> Unit
 ) {
     ElevatedCard(
         modifier = modifier
             .fillMaxWidth()
-            .height(124.dp), // Use IntrinsicSize.Min for better height adjustment
+            .height(124.dp),
         shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.elevatedCardColors(
@@ -44,8 +44,9 @@ fun InputBottomNavigationBar(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
+            // Cancel or Back Button
             Button(
-                onClick = onCancelClick,
+                onClick = onCancelOrBackClick,
                 modifier = modifier
                     .fillMaxHeight()
                     .width(128.dp)
@@ -56,6 +57,7 @@ fun InputBottomNavigationBar(
                 )
             }
 
+            // Next Button
             Button(
                 onClick = onNextClick,
                 modifier = modifier
@@ -77,7 +79,7 @@ fun InputBottomNavigationBar(
 fun PreviewInputBottomNavigationBar() {
     InputBottomNavigationBar(
         modifier = Modifier,
-        onCancelClick = {},
+        onCancelOrBackClick = {},
         onNextClick = {}
     )
 
