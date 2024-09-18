@@ -115,6 +115,16 @@ dependencies {
     implementation(libs.googleid)
     implementation(libs.play.services.auth)
 
+    //Google Maps
+    implementation(libs.play.services.maps)
+    implementation(libs.maps.compose)
+    implementation(libs.maps.compose.utils)
+    implementation(libs.maps.compose.widgets)
+    implementation(libs.maps.ktx)
+    implementation(libs.maps.utils.ktx)
+    implementation(libs.play.services.location)
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -127,13 +137,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    //Google Maps
-    implementation(libs.play.services.maps)
-    implementation(libs.maps.compose)
-    implementation(libs.maps.compose.utils)
-    implementation(libs.maps.compose.widgets)
-    implementation(libs.maps.ktx)
-    implementation(libs.maps.utils.ktx)
-    implementation(libs.play.services.location)
+
 
 }

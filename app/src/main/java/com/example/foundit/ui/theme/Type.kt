@@ -2,11 +2,11 @@ package com.example.foundit.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontStyle
 import com.example.foundit.R
 
 // Set of Material typography styles to start with
@@ -66,4 +66,8 @@ val RobotFamily = FontFamily(
     Font(R.font.roboto_thin_italic, FontWeight.Thin,FontStyle.Italic),
     Font(R.font.roboto_thin_italic, FontWeight.Thin),
 
+)
+
+val Righteous = FontFamily(
+    Font(R.font.righteous_regular)
 )

@@ -48,6 +48,7 @@ import com.example.foundit.presentation.screens.registration.components.Clickabl
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.OrDivider
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleViewModel
+import com.example.foundit.ui.theme.Righteous
 
 @Composable
 fun LoginScreen(
@@ -73,12 +74,14 @@ fun LoginScreen(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(top = 120.dp, bottom = 30.dp),
-            horizontalArrangement = Arrangement.Center,
+            horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         ){
             Text(
-                text = "LOGIN",
-                fontSize = 34.sp
+                text = "Login",
+                fontSize = 36.sp,
+                fontFamily = Righteous,
+                fontWeight = FontWeight.Normal
             )
 
         }// Text Row Scope
