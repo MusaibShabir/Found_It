@@ -73,7 +73,7 @@ fun LoginScreen(
         Row (
             modifier = modifier
                 .fillMaxWidth()
-                .padding(top = 120.dp, bottom = 30.dp),
+                .padding(top = 120.dp, bottom = 10.dp),
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         ){
