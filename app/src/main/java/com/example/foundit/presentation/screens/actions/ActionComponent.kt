@@ -13,18 +13,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.foundit.presentation.common.TheTopAppBar
 import com.example.foundit.presentation.data.addCard
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,9 +52,9 @@ fun ActionComponent(
     LaunchedEffect(mapView) {
         mapView.onCreate(Bundle())
         mapView.getMapAsync { googleMap ->
-            val defaultLocation = LatLng(-34.0, 151.0)
-            googleMap.addMarker(MarkerOptions().position(defaultLocation).title("Marker in Sydney"))
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 10f))
+            val defaultLocation = LatLng(34.0712959, 74.8105467)
+            googleMap.addMarker(MarkerOptions().position(defaultLocation).title("Ghanta Ghar"))
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 13.5f))
         }
     }
 
@@ -147,9 +143,9 @@ fun ActionComponent(
                 mapView.apply {
                     onCreate(Bundle())
                     getMapAsync { googleMap ->
-                        val defaultLocation = LatLng(-34.0, 151.0)
-                        googleMap.addMarker(MarkerOptions().position(defaultLocation).title("Marker in Sydney"))
-                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 10f))
+                        val defaultLocation = LatLng(34.0712959, 74.8105467)
+                        googleMap.addMarker(MarkerOptions().position(defaultLocation).title("Ghanta Ghar"))
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 11.5f))
                     }
                 }
             }
