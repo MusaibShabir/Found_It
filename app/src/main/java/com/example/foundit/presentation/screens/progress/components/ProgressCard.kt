@@ -35,13 +35,16 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import com.google.firebase.Timestamp
 
 
 //sealed class ProcessCardItem {
@@ -156,7 +159,7 @@ fun ProcessCard(
                             modifier = modifier.size(12.dp)
                         )
                         Text(
-                            text = "Location",
+                            text = formatDate(cardItem["date"] as? Timestamp),
                             //textAlign = TextAlign.Center,
                             fontSize = 12.sp,
                             fontStyle = FontStyle.Italic,
@@ -244,6 +247,23 @@ fun ProcessCardList(
         items(cardData) { item ->
             ProcessCard(modifier = modifier, cardItem = item)
         }
+    }
+}
+
+// date Formater code
+fun formatDate(timestamp: Timestamp?): String {
+    return if (timestamp != null) {
+        // Convert Firestore Timestamp to Date
+        val date = timestamp.toDate()
+
+        // Format using DateTimeFormatter
+        val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy 'at' HH:mm:ss z")
+            .withZone(ZoneId.systemDefault()) // Set the time zone (e.g., system default or specific zone)
+
+        val instant = Instant.ofEpochMilli(date.time) // Convert date to Instant
+        formatter.format(instant) // Format the instant to a string
+    } else {
+        "No date available" // Fallback in case of a null timestamp
     }
 }
 

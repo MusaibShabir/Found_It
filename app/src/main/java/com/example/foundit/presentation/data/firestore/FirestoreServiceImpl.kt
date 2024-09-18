@@ -2,6 +2,7 @@ package com.example.foundit.presentation.data.firestore
 
 import android.util.Log
 import com.example.foundit.presentation.data.account.AccountService
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.SetOptions
@@ -23,27 +24,27 @@ class FirestoreServiceImpl @Inject constructor(
     private var listener: ListenerRegistration? = null
 
     // Variable to hold the profile data
-    private var profileData: Map<String, Any>? = null
+//    private var profileData: Map<String, Any>? = null
 
     // Method to add a listener to the "Profile" document
-    private suspend fun addProfileDataListener() {
-        val userId = currentUserId // Get the current user ID
-        if (userId.isNotEmpty()) {
-            firebaseFirestore.collection("User/$userId/Profile").document("profileData")
-                .get()
-                .addOnSuccessListener {
-                    profileData = it.data
-                }
-                .await()
-        } else {
-            Log.e("Firestore", "User ID is empty, cannot listen to profile data")
-        }
-    }
+//    private suspend fun addProfileDataListener() {
+//        val userId = currentUserId // Get the current user ID
+//        if (userId.isNotEmpty()) {
+//            firebaseFirestore.collection("User/$userId/Profile").document("profileData")
+//                .get()
+//                .addOnSuccessListener {
+//                    profileData = it.data
+//                }
+//                .await()
+//        } else {
+//            Log.e("Firestore", "User ID is empty, cannot listen to profile data")
+//        }
+//    }
 
-    // Optional: Method to get the latest profile data
-    private fun getProfileData(): Map<String, Any>? {
-        return profileData
-    }
+//    // Optional: Method to get the latest profile data
+//    private fun getProfileData(): Map<String, Any>? {
+//        return profileData
+//    }
 
     // static data TODO to be reviewed
     private suspend fun ensureProfileDataExists() {
@@ -80,32 +81,62 @@ class FirestoreServiceImpl @Inject constructor(
         }
     }
 
-    val a: Long
-        get() = getProfileData()?.get("cardCount") as Long
+//    val a: Long
+//        get() = getProfileData()?.get("cardCount") as Long
+
     override suspend fun addItemData(phone: String, model: String, color: String) {
-
-        // static data TODO to be reviewed
-        ensureProfileDataExists()
-
-        addProfileDataListener()
-        val data = mapOf(
-            "cardId" to "$currentUserId@${getProfileData()?.get("cardCount")}",
-            "cardType" to 0,
-            "phone" to phone,
-            "model" to model,
-            "color" to color,
-            "status" to 0,
-            "date" to Date()
-        )
-
         val userId = currentUserId
+
+        // Ensure the user ID is not empty
         if (userId.isNotEmpty()) {
-            firebaseFirestore.collection("User/$userId/Card")
-                .document("$userId@${(a+1)}")
-                .set(data, SetOptions.merge())
-            firebaseFirestore.collection("User/$userId/Profile").document("profileData").update("cardCount",
-                (a+1)).await()
-            Log.d("uuid", "addItemData: $currentUserId@${getProfileData()?.get("cardCount")}")
+            // static data TODO to be reviewed or change update() to set() for profile count
+            ensureProfileDataExists()
+            try {
+                // Start a Firestore transaction
+                firebaseFirestore.runTransaction { transaction ->
+
+                    // Reference to the Profile document
+                    val profileDocRef = firebaseFirestore.collection("User/$userId/Profile")
+                        .document("profileData")
+
+                    // Fetch the profile document to get the current card count
+                    val profileSnapshot = transaction.get(profileDocRef)
+                    val currentCardCount = profileSnapshot.getLong("cardCount") ?: 0L
+
+                    // Increment the card count
+                    val newCardCount = currentCardCount + 1
+
+                    // Update the Profile document with the new card count
+                    transaction.update(profileDocRef, "cardCount", newCardCount)
+
+                    // Prepare the data for the new card
+                    val cardData = mapOf(
+                        "cardId" to "$userId@$newCardCount",
+                        "cardType" to 0,
+                        "phone" to phone,
+                        "model" to model,
+                        "color" to color,
+                        "status" to 0,
+                        "date" to Timestamp(Date())
+                    )
+
+                    // Reference to the new Card document
+                    val cardDocRef = firebaseFirestore.collection("User/$userId/Card")
+                        .document("$userId@$newCardCount")
+
+                    // Set the new card data in the Card collection
+                    transaction.set(cardDocRef, cardData, SetOptions.merge())
+
+                }.await() // Await the transaction to ensure it completes successfully
+
+//                Log.d("Firestore", "addItemData: Card added with id $userId@$newCardCount")
+
+            } catch (e: Exception) {
+                // Handle any exception during the transaction
+                Log.e("Firestore", "Error adding item data: ${e.message}", e)
+                throw e // Rethrow the exception to handle it appropriately
+            }
+
         } else {
             throw IllegalStateException("User ID is empty, cannot add data")
         }
