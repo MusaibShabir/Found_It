@@ -2,11 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
-    id("org.jetbrains.kotlin.plugin.compose") version libs.versions.kotlin.get()
-
 }
 
 android {
@@ -130,14 +128,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     //Google Maps
-    implementation("com.google.android.gms:play-services-maps:19.0.0")
-
-    implementation("com.google.maps.android:maps-compose:4.4.1")
-    implementation("com.google.maps.android:maps-compose-utils:4.4.1")
-    implementation("com.google.maps.android:maps-compose-widgets:4.4.1")
-    implementation("com.google.maps.android:maps-ktx:5.0.0")
-    implementation("com.google.maps.android:maps-utils-ktx:5.0.0")
-    implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation(libs.play.services.maps)
+    implementation(libs.maps.compose)
+    implementation(libs.maps.compose.utils)
+    implementation(libs.maps.compose.widgets)
+    implementation(libs.maps.ktx)
+    implementation(libs.maps.utils.ktx)
+    implementation(libs.play.services.location)
 
 }
-
