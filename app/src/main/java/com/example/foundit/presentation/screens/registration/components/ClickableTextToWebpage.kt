@@ -19,14 +19,16 @@ fun ClickableTextToNavigationRoute(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    Text(
-        text = text,
-        textDecoration = TextDecoration.Underline,
-        modifier = modifier
-            .clickable { navController.navigate(navRoute) },
-        color = Color.Blue,
-    )
+        Text(
+            text = text,
+            textDecoration = TextDecoration.Underline,
+            modifier = modifier
+                .clickable { navController.navigate(navRoute) },
+            color = Color.Blue,
+        )
 }
+
+
 
 @Composable
 @Preview(showBackground = true, showSystemUi = false)

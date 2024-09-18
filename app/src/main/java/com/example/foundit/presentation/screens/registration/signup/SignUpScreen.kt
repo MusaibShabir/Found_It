@@ -7,7 +7,17 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.TextSelectionColors
@@ -20,20 +30,40 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Man
 import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuAnchorType
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.input.*
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.registration.components.ClickableTextToNavigationRoute
 import com.example.foundit.presentation.screens.registration.components.OrDivider
@@ -121,10 +151,10 @@ fun SignUpScreen(
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             modifier = modifier
                 .fillMaxWidth()
-                .height(IntrinsicSize.Min),
+                .height(IntrinsicSize.Max),
         ) {
             // First Name
             OutlinedTextField(
@@ -209,7 +239,7 @@ fun SignUpScreen(
                     ),
                     modifier = modifier
                         .fillMaxWidth()
-                        .menuAnchor()
+                        .menuAnchor(type = MenuAnchorType.PrimaryNotEditable, enabled = true)
                         .padding(bottom = 18.dp)
                 )
 
@@ -357,43 +387,160 @@ fun SignUpScreen(
                 }
             )
 
-            Spacer(modifier = modifier.height(20.dp))
 
-            ContinueWithGoogleCard(
-                modifier = modifier,
-                colorScheme = 1,
-                continueWithGoogleViewModel = continueWithGoogleViewModel,
-            ) { credential ->
-                signUpViewModel.onSignUpWithGoogle(credential) { result ->
-                    when (result) {
-                        SignUpViewModel.SignInResult.Success -> {
+        } // End of Input Field Column
+
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.Bottom
+        ) {
+            ElevatedButton(
+                modifier = modifier
+                    .width(200.dp)
+                    .height(52.dp),
+                onClick = {
+                    signUpViewModel.signUpUser(email, password, firstName, lastName) { isSuccess ->
+                        if (isSuccess) {
                             Log.d("SignUp", "User created successfully")
-                            requestLocationPermission()
                             navController.navigate(NavRoutes.HOME)
+                        } else {
+                            Log.d("SignUp", "Authentication failed")
                         }
-                        is SignUpViewModel.SignInResult.Failure -> {
-                            Log.d(
-                                "SignUp",
-                                "Authentication failed: Code ${result.errorCode}, Message: ${result.errorMessage}"
-                            )
-                        }
+                    }
+                },
+                colors = ButtonColors(
+                    containerColor = Color.Blue,
+                    contentColor = MaterialTheme.colorScheme.surface,
+                    disabledContainerColor = Color.Gray,
+                    disabledContentColor = MaterialTheme.colorScheme.onSurface
+                ),
+                elevation = ButtonDefaults.elevatedButtonElevation(10.dp),
+                enabled = firstName.isNotEmpty()
+                        && lastName.isNotEmpty()
+                        && gender.isNotEmpty()
+                        && email.isNotEmpty()
+                        && password.isNotEmpty()
+                        && confirmPassword.isNotEmpty()
+                        && isEmailValid
+                        && isPasswordValid
+                        && isConfirmPasswordValid
+                        && password == confirmPassword
+
+            ) {
+                Text(
+                    text = "SIGN UP",
+                    color = MaterialTheme.colorScheme.surface,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Normal,
+                )
+            }
+        } // Button Row=
+
+        Spacer(modifier = modifier.height(10.dp))
+
+        ContinueWithGoogleCard(
+            modifier = modifier,
+            colorScheme = 1,
+            continueWithGoogleViewModel = continueWithGoogleViewModel,
+        ) { credential ->
+            signUpViewModel.onSignUpWithGoogle(credential) { result ->
+                when (result) {
+                    SignUpViewModel.SignInResult.Success -> {
+                        Log.d("SignUp", "User created successfully")
+                        requestLocationPermission()
+                        navController.navigate(NavRoutes.HOME)
+                    }
+                    is SignUpViewModel.SignInResult.Failure -> {
+                        Log.d(
+                            "SignUp",
+                            "Authentication failed: Code ${result.errorCode}, Message: ${result.errorMessage}"
+                        )
                     }
                 }
             }
-
-            Spacer(modifier = modifier.height(20.dp))
-
-            OrDivider()
-
-            Spacer(modifier = modifier.height(20.dp))
-
-            ClickableTextToNavigationRoute(
-                text = "Already have an account? Sign in",
-                navRoute = NavRoutes.LOGIN,
-                navController = navController,
-                modifier = Modifier
-            )
         }
+
+        OrDivider()
+
+        // Already have an Account
+        Column(
+            modifier = modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+
+        ){
+
+            Row(
+                modifier = modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ){
+                Text(text = "Already have an account?")
+
+                Spacer(modifier = modifier.width(10.dp))
+
+                ClickableTextToNavigationRoute(
+                    text = "Log in",
+                    navRoute = NavRoutes.LOGIN,
+                    navController = navController,
+                    modifier = modifier
+                )
+            }
+
+
+        }
+
+        // Terms & Conditions Block
+        Column (
+            modifier = modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .weight(1f)
+                .padding(vertical = 10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Bottom
+        ){
+            Row(
+                modifier = modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "By proceeding, you agree with our",
+                )
+
+            }
+
+            Spacer(modifier = modifier.height(10.dp))
+            Row(
+                modifier = modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                ClickableTextToNavigationRoute(
+                    text = "Terms of Service",
+                    navRoute = NavRoutes.TERMS_OF_SERVICE,
+                    modifier = modifier.padding(end = 8.dp),
+                    navController = navController
+                )
+
+                Text(text = "&")
+
+                ClickableTextToNavigationRoute(
+                    text = "Privacy Policy",
+                    navRoute = NavRoutes.PRIVACY_POLICY,
+                    modifier = modifier.padding(start = 8.dp),
+                    navController = navController
+                )
+
+            }
+        }
+
+
+
     }
 }
 

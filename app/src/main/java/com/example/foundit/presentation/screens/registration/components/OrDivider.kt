@@ -19,7 +19,7 @@ fun OrDivider(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 20.dp),
+            .padding(vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
@@ -27,19 +27,19 @@ fun OrDivider(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .weight(1f)
                 .padding(start = 60.dp),
-            thickness = 0.5.dp,
+            thickness = 0.4.dp,
             color = Color.Black
         )
         Text(
             text = "OR",
-            fontSize = 18.sp,
+            fontSize = 14.sp,
             modifier = Modifier.padding(horizontal = 8.dp),
         )
         HorizontalDivider(
             modifier = Modifier
                 .weight(1f)
                 .padding(end = 60.dp),
-            thickness = 0.5.dp,
+            thickness = 0.4.dp,
             color = Color.Black
         )
     }
