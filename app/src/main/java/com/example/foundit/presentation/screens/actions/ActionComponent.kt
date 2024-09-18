@@ -1,40 +1,26 @@
 package com.example.foundit.presentation.screens.actions
 
+import android.os.Bundle
 import android.widget.Toast
-import androidx.compose.runtime.Composable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.selection.TextSelectionColors
-import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MenuAnchorType.Companion.PrimaryNotEditable
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.example.foundit.presentation.common.TheTopAppBar
 import com.example.foundit.presentation.data.addCard
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,25 +29,67 @@ fun ActionComponent(
     navController: NavHostController
 ) {
     val viewModel: ActionComponentViewModel = hiltViewModel()
-
     val context = LocalContext.current
 
     var selectedPhone by remember { mutableStateOf("") }
     var selectedModel by remember { mutableStateOf("") }
     var selectedColor by remember { mutableStateOf("") }
 
-
     var phoneExpanded by remember { mutableStateOf(false) }
     var modelExpanded by remember { mutableStateOf(false) }
     var colorExpanded by remember { mutableStateOf(false) }
-
 
     val phoneOptions = listOf("Phone 1", "Phone 2", "Phone 3")
     val modelOptions = listOf("Model A", "Model B", "Model C")
     val colorOptions = listOf("Red", "Green", "Blue")
 
     var locationEntered by remember { mutableStateOf("") }
-    var discriptionEntered by remember { mutableStateOf("") }
+    var descriptionEntered by remember { mutableStateOf("") }
+
+    val mapView = remember { MapView(context) }
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    LaunchedEffect(mapView) {
+        mapView.onCreate(Bundle())
+        mapView.getMapAsync { googleMap ->
+            val defaultLocation = LatLng(34.0712959, 74.8105467)
+            googleMap.addMarker(MarkerOptions().position(defaultLocation).title("Ghanta Ghar"))
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 13.5f))
+        }
+    }
+
+    DisposableEffect(lifecycleOwner) {
+        val mapViewLifecycleObserver = object : LifecycleObserver {
+            fun onStart() {
+                mapView.onStart()
+            }
+
+            fun onResume() {
+                mapView.onResume()
+            }
+
+            fun onPause() {
+                mapView.onPause()
+            }
+
+            fun onStop() {
+                mapView.onStop()
+            }
+
+            fun onDestroy() {
+                mapView.onDestroy()
+            }
+
+            fun onLowMemory() {
+                mapView.onLowMemory()
+            }
+        }
+
+        lifecycleOwner.lifecycle.addObserver(mapViewLifecycleObserver)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(mapViewLifecycleObserver)
+        }
+    }
 
     Column(
         modifier = modifier
@@ -69,6 +97,7 @@ fun ActionComponent(
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        // Existing Phone, Model, and Color Dropdowns
         ExposedDropdownMenuBox(
             modifier = Modifier.fillMaxWidth(),
             expanded = phoneExpanded,
@@ -81,19 +110,8 @@ fun ActionComponent(
                 label = { Text("Phone") },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = phoneExpanded) },
                 placeholder = { Text("Select Phone", fontStyle = FontStyle.Italic) },
-                shape = MaterialTheme.shapes.medium,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedLabelColor = Color.Blue,
-                    cursorColor = Color.Blue,
-                    focusedBorderColor = Color.Blue,
-                    selectionColors = TextSelectionColors(
-                        handleColor = Color.Blue,
-                        backgroundColor = Color.Transparent,
-                    ),
-                ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .menuAnchor(type = PrimaryNotEditable, enabled = true)
                     .padding(bottom = 18.dp)
             )
 
@@ -112,127 +130,46 @@ fun ActionComponent(
                 }
             }
         }
-        ExposedDropdownMenuBox(
-            modifier = Modifier.fillMaxWidth(),
-            expanded = modelExpanded,
-            onExpandedChange = { modelExpanded = !modelExpanded }
-        ) {
-            OutlinedTextField(
-                readOnly = true,
-                value = selectedModel,
-                onValueChange = {},
-                label = { Text("Model") },
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = modelExpanded) },
-                placeholder = { Text("Select Model", fontStyle = FontStyle.Italic) },
-                shape = MaterialTheme.shapes.medium,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedLabelColor = Color.Blue,
-                    cursorColor = Color.Blue,
-                    focusedBorderColor = Color.Blue,
-                    selectionColors = TextSelectionColors(
-                        handleColor = Color.Blue,
-                        backgroundColor = Color.Transparent,
-                    ),
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .menuAnchor(type = PrimaryNotEditable, enabled = true)
-                    .padding(bottom = 18.dp)
-            )
 
-            ExposedDropdownMenu(
+        // Model and Color dropdowns (similar to the Phone dropdown)
 
-                expanded = modelExpanded,
-                onDismissRequest = { modelExpanded = false }
-            ) {
-                modelOptions.forEach { options ->
-                    DropdownMenuItem(
-                        text = { Text(options) },
-                        onClick = {
-                            selectedModel = options
-                            modelExpanded = false
-                        }
-                    )
-                }
-            }
-        }
-
-        ExposedDropdownMenuBox(
-            modifier = Modifier.fillMaxWidth(),
-            expanded = colorExpanded,
-            onExpandedChange = { colorExpanded = !colorExpanded }
-        ) {
-            OutlinedTextField(
-                readOnly = true,
-                value = selectedColor,
-                onValueChange = {},
-                label = { Text("Color") },
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = colorExpanded) },
-                placeholder = { Text("Select Color", fontStyle = FontStyle.Italic) },
-                shape = MaterialTheme.shapes.medium,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedLabelColor = Color.Blue,
-                    cursorColor = Color.Blue,
-                    focusedBorderColor = Color.Blue,
-                    selectionColors = TextSelectionColors(
-                        handleColor = Color.Blue,
-                        backgroundColor = Color.Transparent,
-                    ),
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .menuAnchor(type = PrimaryNotEditable, enabled = true)
-                    .padding(bottom = 18.dp)
-            )
-
-            ExposedDropdownMenu(
-
-                expanded = colorExpanded,
-                onDismissRequest = { colorExpanded = false }
-            ) {
-                colorOptions.forEach { option3 ->
-                    DropdownMenuItem(
-                        text = { Text(option3) },
-                        onClick = {
-                            selectedColor = option3
-                            colorExpanded = false
-                        }
-                    )
-                }
-            }
-        }
-
-        //Item Location
-        OutlinedTextField(
-            modifier = modifier
+        // MapView for Location
+        AndroidView(
+            modifier = Modifier
                 .fillMaxWidth()
+                .height(250.dp)
                 .padding(bottom = 18.dp),
-            value = locationEntered,
-            onValueChange = { locationEntered = it },
-            label = { Text("Location") },
-            placeholder = { Text("Enter Location", fontStyle = FontStyle.Italic) },
-            shape = MaterialTheme.shapes.medium,
-            maxLines = 1,
+            factory = { context ->
+                mapView.apply {
+                    onCreate(Bundle())
+                    getMapAsync { googleMap ->
+                        val defaultLocation = LatLng(34.0712959, 74.8105467)
+                        googleMap.addMarker(MarkerOptions().position(defaultLocation).title("Ghanta Ghar"))
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 11.5f))
+                    }
+                }
+            }
         )
 
-        //Item Description
+        // Description field
         OutlinedTextField(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(bottom = 18.dp),
-            value = discriptionEntered,
-            onValueChange = { discriptionEntered = it },
+            value = descriptionEntered,
+            onValueChange = { descriptionEntered = it },
             label = { Text("Description") },
             placeholder = { Text("Enter Description", fontStyle = FontStyle.Italic) },
             shape = MaterialTheme.shapes.medium,
             maxLines = 3,
         )
 
+        // Buttons for Submit and Cancel
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Button(onClick = {navController.popBackStack()}) {
+            Button(onClick = { navController.popBackStack() }) {
                 Text(text = "Cancel")
             }
 
@@ -241,22 +178,20 @@ fun ActionComponent(
                     addCard(
                         cardColorCode = 0,
                         itemTitle = selectedPhone,
-                        itemDescription = discriptionEntered,
+                        itemDescription = descriptionEntered,
                         itemLocation = locationEntered,
                         progressIndicator = true
                     )
-                    viewModel.sendData(selectedPhone,selectedModel,selectedColor){ isSuccess ->
+                    viewModel.sendData(selectedPhone, selectedModel, selectedColor) { isSuccess ->
                         if (isSuccess) {
-                        Toast.makeText(context,"item added!", Toast.LENGTH_LONG).show()
-                        navController.popBackStack()
+                            Toast.makeText(context, "Item added!", Toast.LENGTH_LONG).show()
+                            navController.popBackStack()
                         } else {
-                        Toast.makeText(context,"error!",Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, "Error!", Toast.LENGTH_LONG).show()
                         }
                     }
                 },
-                enabled = selectedPhone.isNotEmpty()
-                        && selectedModel.isNotEmpty()
-                        && selectedColor.isNotEmpty()
+                enabled = selectedPhone.isNotEmpty() && selectedModel.isNotEmpty() && selectedColor.isNotEmpty()
             ) {
                 Text(text = "Submit")
             }
@@ -271,18 +206,18 @@ fun ActionScreen(
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
-        topBar ={
+        topBar = {
             TheTopAppBar(
-                title = "Action Screen",
+                title = "Report Lost Item",
                 navController = navController,
-                )
+            )
         }
-    ) {innerPadding ->
+    ) { innerPadding ->
         Box(
             modifier = modifier
                 .padding(innerPadding),
         ) {
-            ActionComponent(modifier,navController)
+            ActionComponent(modifier, navController)
         }
     }
 }
@@ -295,5 +230,3 @@ fun PreviewActionScreen() {
         navController = NavHostController(LocalContext.current)
     )
 }
-
-

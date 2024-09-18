@@ -74,6 +74,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
 
     implementation(libs.androidx.foundation.layout.android)
+    implementation(libs.androidx.appcompat)
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
 
@@ -126,6 +127,13 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    //Google Maps
+    implementation(libs.play.services.maps)
+    implementation(libs.maps.compose)
+    implementation(libs.maps.compose.utils)
+    implementation(libs.maps.compose.widgets)
+    implementation(libs.maps.ktx)
+    implementation(libs.maps.utils.ktx)
+    implementation(libs.play.services.location)
 
 }
-

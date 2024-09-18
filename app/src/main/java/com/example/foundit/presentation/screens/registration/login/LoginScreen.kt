@@ -122,7 +122,7 @@ fun LoginScreen(
                         Text("Invalid email address", color = MaterialTheme.colorScheme.error)
                     }
                 },
-                )
+            )
 
             //Password
             var passwordVisible by remember { mutableStateOf(false) }
@@ -164,7 +164,7 @@ fun LoginScreen(
                 }
             )
 
-            
+
         }// TextFields Column Scope
 
         Row(
