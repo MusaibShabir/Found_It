@@ -446,7 +446,7 @@ fun SignUpScreen(
 
         ContinueWithGoogleCard(
             modifier = modifier,
-            colorScheme = 1,
+            //colorScheme = 1,
             continueWithGoogleViewModel = continueWithGoogleViewModel,
         ) { credential ->
             signUpViewModel.onSignUpWithGoogle(credential) { result ->

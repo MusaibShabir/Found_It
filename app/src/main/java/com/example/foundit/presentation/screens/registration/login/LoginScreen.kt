@@ -236,7 +236,7 @@ fun LoginScreen(
 
         ContinueWithGoogleCard(
             modifier = modifier,
-            colorScheme = 2,
+            //colorScheme = 2,
             continueWithGoogleViewModel = continueWithGoogleViewModel
         ){ credential ->
             loginViewModel.onSignInWithGoogle(credential) { isSuccess ->
