@@ -120,7 +120,7 @@ fun MainScreen(modifier: Modifier) {
             navController = navController,
             startDestination = NavRoutes.SPLASH,
             modifier = modifier.padding(innerPadding)
-        ) {
+        )       {
 
             composable(NavRoutes.SPLASH) {
                 SplashScreen(navController = navController, forwardNavigation = NavRoutes.GET_STARTED)

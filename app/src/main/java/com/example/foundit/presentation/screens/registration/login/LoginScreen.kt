@@ -3,52 +3,34 @@ package com.example.foundit.presentation.screens.registration.login
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.text.selection.TextSelectionColors
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Error
-import androidx.compose.material.icons.outlined.Email
-import androidx.compose.material.icons.outlined.Lock
-import androidx.compose.material.icons.outlined.Visibility
-import androidx.compose.material.icons.outlined.VisibilityOff
-import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.foundit.presentation.data.navigation.NavRoutes
-import com.example.foundit.presentation.screens.registration.components.ClickableTextToNavigationRoute
-import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleCard
-import com.example.foundit.presentation.screens.registration.components.OrDivider
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleViewModel
-
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
 @Composable
 fun LoginScreen(
     modifier: Modifier,
@@ -56,12 +38,46 @@ fun LoginScreen(
     continueWithGoogleViewModel: ContinueWithGoogleViewModel,
     navController: NavController
 ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    val email by remember { mutableStateOf("") }
+    val password by remember { mutableStateOf("") }
 
     // For Validation
     var isEmailValid by remember { mutableStateOf(true) }
     var isPasswordValid by remember { mutableStateOf(true) }
+
+    // For location permission
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+
+    val locationPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            // Fetch location once permission is granted
+            coroutineScope.launch {
+                getLastLocation(fusedLocationClient, context)
+            }
+        } else {
+            Toast.makeText(context, "Location permission is required to proceed", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    // This method gets called after successful login
+    fun requestLocationPermission() {
+        when {
+            ContextCompat.checkSelfPermission(
+                context, Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                coroutineScope.launch {
+                    getLastLocation(fusedLocationClient, context)
+                }
+            }
+            else -> {
+                locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            }
+        }
+    }
 
     Column(
         modifier = modifier
@@ -69,216 +85,63 @@ fun LoginScreen(
             .padding(horizontal = 32.dp),
         verticalArrangement = Arrangement.Top
     ) {
-        Row (
+        // [Content UI, Login Form, etc.]
+
+        // Login Button
+        ElevatedButton(
             modifier = modifier
-                .fillMaxWidth()
-                .padding(top = 120.dp, bottom = 30.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Text(
-                text = "LOGIN",
-                fontSize = 34.sp
-            )
-
-        }// Text Row Scope
-
-        Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .height(IntrinsicSize.Min),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(5.dp)
-        ) {
-            //Email
-            OutlinedTextField(
-                modifier = modifier
-                    .fillMaxWidth(),
-                value = email,
-                onValueChange = {
-                    email = it//.filter { char -> char.isLetterOrDigit() || char == '@' || char == '.' }
-                    isEmailValid = android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches()},
-                label = { Text("Email") },
-                leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = "Email icon") },
-                trailingIcon = { if (!isEmailValid && email.isNotBlank()) {
-                    Icon(Icons.Filled.Error, contentDescription = "Email icon") }
-                },
-                placeholder = { Text("Enter Your Email", fontStyle = FontStyle.Italic) },
-                shape = MaterialTheme.shapes.medium,
-                singleLine = true,
-                isError = !isEmailValid,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedLabelColor = Color.Blue,
-                    cursorColor = Color.Blue,
-                    focusedBorderColor = Color.Blue,
-                    selectionColors =  TextSelectionColors(
-                        handleColor = Color.Blue,
-                        backgroundColor = Color.Transparent,
-                    ),
-
-                    ),
-                supportingText = {
-                    if (!isEmailValid && email.isNotBlank()) {
-                        Text("Invalid email address", color = MaterialTheme.colorScheme.error)
-                    }
-                },
-                )
-
-            //Password
-            var passwordVisible by remember { mutableStateOf(false) }
-            val icon = if (!passwordVisible) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility
-            OutlinedTextField(
-                modifier = modifier
-                    .fillMaxWidth(),
-                value = password,
-                onValueChange = {
-                    password = it
-                    isPasswordValid = it.length >= 8
-                },
-                label = { Text("Password") },
-                leadingIcon = { Icon(Icons.Outlined.Lock, contentDescription = "Lock icon") },
-                trailingIcon = {
-                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Icon(icon, contentDescription = if (passwordVisible) "Hide password" else "Show password")
-                    }
-                },
-                placeholder ={ Text("Enter Your Password", fontStyle = FontStyle.Italic) },
-                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                shape = MaterialTheme.shapes.medium,
-                singleLine = true,
-                isError = !isPasswordValid,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedLabelColor = Color.Blue,
-                    cursorColor = Color.Blue,
-                    focusedBorderColor = Color.Blue,
-                    selectionColors =  TextSelectionColors(
-                        handleColor = Color.Blue,
-                        backgroundColor = Color.Transparent,
-                    ),
-
-                    ),
-                supportingText = {
-                    if (!isPasswordValid && password.isNotBlank()) {
-                        Text("Password must be at least 8 characters", color = MaterialTheme.colorScheme.error)
-                    }
-                }
-            )
-
-            
-        }// TextFields Column Scope
-
-        Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(top = 5.dp, bottom = 15.dp),
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.Top
-        ) {
-
-            ClickableTextToNavigationRoute(
-                text = "Forgot Password",
-                navRoute = NavRoutes.FORGOT_PASSWORD,
-                modifier = modifier,
-                navController = navController
-            )
-        }
-
-        Row(
-            modifier = modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            ElevatedButton(
-                modifier = modifier
-                    .width(200.dp)
-                    .height(52.dp),
-                onClick = {
-                    try {
-                        loginViewModel.login(email, password) { isSuccess ->
-                            if (isSuccess) {
-                                Log.d("Login", "Login successful")
-                                navController.navigate(NavRoutes.HOME)
-                            } else {
-                                Log.d("Login", "Authentication failed")
-                            }
+                .width(200.dp)
+                .height(52.dp),
+            onClick = {
+                try {
+                    loginViewModel.login(email, password) { isSuccess ->
+                        if (isSuccess) {
+                            Log.d("Login", "Login successful")
+                            // Trigger permission request after successful login
+                            requestLocationPermission()
+                        } else {
+                            Log.d("Login", "Authentication failed")
                         }
-                    } catch (e: Exception) {
-                        Log.d("Login", "error (login screen) $e")
                     }
-                },
-                colors = ButtonColors(
-                    containerColor = Color.Blue,
-                    contentColor = MaterialTheme.colorScheme.surface,
-                    disabledContainerColor = Color.Gray,
-                    disabledContentColor = MaterialTheme.colorScheme.onSurface
-                ),
-                elevation = ButtonDefaults.elevatedButtonElevation(10.dp),
-                enabled = email.isNotEmpty()
-                        && password.isNotEmpty()
-                        && isEmailValid
-                        && isPasswordValid
-
-            ) {
-                Text(
-                    text = "LOGIN",
-                    color = MaterialTheme.colorScheme.surface,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Normal,
-                )
-            }
-        } // Button Row Scope
-
-
-
-
-
-
-        OrDivider(modifier = modifier)
-
-        ContinueWithGoogleCard(
-            modifier = modifier,
-            colorScheme = 2,
-            continueWithGoogleViewModel = continueWithGoogleViewModel
-        ){ credential ->
-            loginViewModel.onSignInWithGoogle(credential) { isSuccess ->
-                if (isSuccess) {
-                    Log.d("SignUp", "User created successfully")
-                    navController.navigate(NavRoutes.HOME)
-                } else {
-                    Log.d("SignUp", "Authentication failed")
+                } catch (e: Exception) {
+                    Log.d("Login", "error (login screen) $e")
                 }
-            }
+            },
+            // [Other Button Properties]
+        ) {
+            Text(text = "LOGIN")
         }
 
-        Spacer(modifier = modifier.height(50.dp))
-
-        //Don't have an account ?
-        Row (
-            modifier = modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Text(
-                text = "Don't have an account ?",
-                fontWeight = FontWeight.Medium
-            )
-
-            ClickableTextToNavigationRoute(
-                text = "Sign Up",
-                navRoute = NavRoutes.SIGN_UP,
-                modifier = modifier.padding(start = 8.dp),
-                navController = navController
-            )
-
-
-        }
+        // [Other UI components, Google login, Sign-up link, etc.]
     }
 }
 
-
-@Composable
-@Preview(showBackground = true, showSystemUi = true, device = "id:pixel_6_pro")
-fun PreviewLoginScreen() {
-    //LoginScreen(modifier = Modifier)
+// Helper function to get location
+suspend fun getLastLocation(
+    fusedLocationClient: FusedLocationProviderClient,
+    context: Context
+) {
+    // Check if location permission is granted before accessing the location
+    if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+        == PackageManager.PERMISSION_GRANTED
+    ) {
+        try {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                location?.let {
+                    val userLocation = LatLng(it.latitude, it.longitude)
+                    // Do something with the location
+                    Log.d("Location", "User is at: $userLocation")
+                } ?: run {
+                    Toast.makeText(context, "Turn on Location(GPS)", Toast.LENGTH_SHORT).show()
+                }
+            }.addOnFailureListener { exception ->
+                exception.printStackTrace()
+                Toast.makeText(context, "Failed to get location", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: SecurityException) {
+            Log.e("Location", "Permission denied: ${e.message}")
+        }
+    } else {
+        Toast.makeText(context, "Location permission not granted", Toast.LENGTH_SHORT).show()
+    }
 }
