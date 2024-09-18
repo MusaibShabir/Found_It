@@ -232,11 +232,6 @@ fun LoginScreen(
             }
         } // Button Row Scope
 
-
-
-
-
-
         OrDivider(modifier = modifier)
 
         ContinueWithGoogleCard(
