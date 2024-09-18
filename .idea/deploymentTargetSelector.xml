@@ -19,6 +19,12 @@
       <SelectionState runConfigName="PreviewItemDescriptionScreen">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+      <SelectionState runConfigName="PreviewCategoryCard">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="PreviewParentCategoryScreen">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>
