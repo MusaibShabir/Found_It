@@ -16,6 +16,9 @@
       <SelectionState runConfigName="TermsAndConditionsBlockPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+      <SelectionState runConfigName="PreviewItemDescriptionScreen">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>
