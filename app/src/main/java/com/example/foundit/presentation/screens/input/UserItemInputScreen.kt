@@ -42,9 +42,14 @@ fun UserItemInputScreen(
             UserInputBottomNavigationBar(
                 modifier = modifier,
 
-                onCancelOrBackButtonText = when(currentRoute) {
+                cancelOrBackButtonText = when(currentRoute) {
                     NavRoutes.PARENT_CATEGORY_SCREEN -> { "Cancel" }
                     else -> { "Back" }
+                },
+
+                nextorSubmitButtonText = when(currentRoute) {
+                    NavRoutes.ITEM_DESCRIPTION_SCREEN -> { "Submit" }
+                    else -> { "Next" }
                 },
 
                 onCancelOrBackClick = {
