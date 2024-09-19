@@ -54,7 +54,7 @@ fun ActionComponent(
         mapView.getMapAsync { googleMap ->
             val defaultLocation = LatLng(34.0712959, 74.8105467)
             googleMap.addMarker(MarkerOptions().position(defaultLocation).title("Ghanta Ghar"))
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 13.5f))
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 12.5f))
         }
     }
 
@@ -143,9 +143,9 @@ fun ActionComponent(
                 mapView.apply {
                     onCreate(Bundle())
                     getMapAsync { googleMap ->
-                        val defaultLocation = LatLng(34.0712959, 74.8105467)
-                        googleMap.addMarker(MarkerOptions().position(defaultLocation).title("Ghanta Ghar"))
-                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 11.5f))
+                        val defaultLocation = LatLng(0.0, 0.0)
+                        googleMap.addMarker(MarkerOptions().position(defaultLocation).title("Location"))
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 12.5f))
                     }
                 }
             }
