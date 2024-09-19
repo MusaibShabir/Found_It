@@ -1,6 +1,7 @@
 package com.example.foundit.presentation.screens.registration.signup
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -67,6 +68,10 @@ import com.example.foundit.presentation.screens.registration.components.google.C
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleViewModel
 import com.example.foundit.ui.theme.Righteous
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -432,17 +437,19 @@ fun SignUpScreen(
                         .width(182.dp)
                         .height(IntrinsicSize.Max),
                     onClick = {
-                        signUpViewModel.signUpUser(
-                            email,
-                            password,
-                            firstName,
-                            lastName
-                        ) { isSuccess ->
+                        signUpViewModel.signUpUser(email, password, firstName, lastName) { isSuccess, e ->
                             if (isSuccess) {
-                                Log.d("SignUp", "User created successfully")
+                                Toast.makeText(context, "User created successfully. Please verify your email.", Toast.LENGTH_LONG).show()
                                 navController.navigate(NavRoutes.HOME)
                             } else {
-                                Log.d("SignUp", "Authentication failed")
+                                val errorMessage = when (e) {
+                                    is FirebaseAuthWeakPasswordException -> "Weak password: Password should be at least 6 characters."
+                                    is FirebaseAuthInvalidCredentialsException ->"Invalid email: Please enter a valid email address."
+                                    is FirebaseAuthUserCollisionException -> "Email already in use. Please use a different email."
+                                    is FirebaseNetworkException -> "Network issue: Please check your connection and try again."
+                                    else -> "An unexpected error occurred."
+                                }
+                                Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
                             }
                         }
                     },
