@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.input.common
+package com.example.foundit.presentation.screens.input
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,8 +19,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.foundit.presentation.common.TheTopAppBar
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.currentRoute
+import com.example.foundit.presentation.screens.input.common.ChildCategoryScreen
+import com.example.foundit.presentation.screens.input.common.ParentCategoryScreen
 import com.example.foundit.presentation.screens.input.common.components.AreYouSureToCancelAlertBox
 import com.example.foundit.presentation.screens.input.common.components.ChildCategoryScreen2
+import com.example.foundit.presentation.screens.input.common.components.ItemDescriptionScreen
 import com.example.foundit.presentation.screens.input.common.components.UserInputBottomNavigationBar
 
 
@@ -39,9 +42,14 @@ fun UserItemInputScreen(
             UserInputBottomNavigationBar(
                 modifier = modifier,
 
-                onCancelOrBackButtonText = when(currentRoute) {
+                cancelOrBackButtonText = when(currentRoute) {
                     NavRoutes.PARENT_CATEGORY_SCREEN -> { "Cancel" }
                     else -> { "Back" }
+                },
+
+                nextorSubmitButtonText = when(currentRoute) {
+                    NavRoutes.ITEM_DESCRIPTION_SCREEN -> { "Submit" }
+                    else -> { "Next" }
                 },
 
                 onCancelOrBackClick = {
@@ -61,8 +69,11 @@ fun UserItemInputScreen(
                     NavRoutes.CHILD_CATEGORY_SCREEN -> {
                         navControllerForUserInputScreen.navigate(NavRoutes.CHILD_CATEGORY_SCREEN2)
                     }
+                    NavRoutes.CHILD_CATEGORY_SCREEN2 -> {
+                        navControllerForUserInputScreen.navigate(NavRoutes.ITEM_DESCRIPTION_SCREEN)
+                    }
                     else -> {
-                        // Handle other cases or navigate back
+
                     }
                 }})
         }
@@ -87,6 +98,10 @@ fun UserItemInputScreen(
 
             composable(NavRoutes.CHILD_CATEGORY_SCREEN2) {
                 ChildCategoryScreen2(modifier = modifier)
+            }
+
+            composable(NavRoutes.ITEM_DESCRIPTION_SCREEN) {
+                ItemDescriptionScreen(modifier = modifier)
             }
         }
     }

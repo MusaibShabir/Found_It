@@ -17,7 +17,7 @@ import com.example.foundit.presentation.screens.actions.ActionScreen
 import com.example.foundit.presentation.screens.documentation.PrivacyPolicyScreen
 import com.example.foundit.presentation.screens.documentation.TermsOfServiceScreen
 import com.example.foundit.presentation.screens.home.HomeScreen
-import com.example.foundit.presentation.screens.input.common.UserItemInputScreen
+import com.example.foundit.presentation.screens.input.UserItemInputScreen
 import com.example.foundit.presentation.screens.notification.NotificationBaseViewModel
 import com.example.foundit.presentation.screens.notification.NotificationScreen
 import com.example.foundit.presentation.screens.profile.ProfileScreen
@@ -205,7 +205,7 @@ fun MainScreen(modifier: Modifier) {
 
 
             composable(NavRoutes.DELETE_ACCOUNT) {
-                DeleteAccountScreen(modifier = modifier, navController = navController, onDeleteAccount = { })
+                DeleteAccountScreen(navController = navController, modifier = modifier)
             }
 
             composable(NavRoutes.LOG_OUT) {

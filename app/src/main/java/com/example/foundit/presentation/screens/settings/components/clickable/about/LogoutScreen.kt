@@ -61,7 +61,7 @@ fun LogoutScreen(
                                 launchSingleTop = true
                             }
                         } else {
-                            Toast.makeText(context, "Logged failed" , Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Logout failed. Please try again." , Toast.LENGTH_SHORT).show()
                         }
                     }
                 },

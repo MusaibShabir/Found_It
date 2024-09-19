@@ -1,8 +1,10 @@
 package com.example.foundit.presentation.screens.input.common.components
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,23 +25,25 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun UserInputBottomNavigationBar(
     modifier: Modifier = Modifier,
-    onCancelOrBackButtonText: String,
+    cancelOrBackButtonText: String,
+    nextorSubmitButtonText: String,
     onCancelOrBackClick:  () ->  Unit,
     onNextClick: () -> Unit
 ) {
+
     ElevatedCard(
         modifier = modifier
             .fillMaxWidth()
-            .height(124.dp),
+            .height(IntrinsicSize.Max),
         shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        elevation = CardDefaults.elevatedCardElevation(2.dp),
         colors = CardDefaults.elevatedCardColors(
             containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.2f)
         )
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(36.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -53,12 +57,12 @@ fun UserInputBottomNavigationBar(
                     .width(128.dp)
             ) {
                 Text(
-                    text = onCancelOrBackButtonText,
+                    text = cancelOrBackButtonText,
                     fontSize = 18.sp
                 )
             }
 
-            // Next Button
+            // Next or Submit Button
             Button(
                 onClick = onNextClick,
                 modifier = modifier
@@ -66,7 +70,7 @@ fun UserInputBottomNavigationBar(
                     .width(128.dp)
             ) {
                 Text(
-                    text = "Next",
+                    text = nextorSubmitButtonText,
                     fontSize = 18.sp
                 )
             }
@@ -81,7 +85,8 @@ fun PreviewInputBottomNavigationBar() {
     UserInputBottomNavigationBar(
         modifier = Modifier,
         onCancelOrBackClick = {},
-        onCancelOrBackButtonText = "Cancel",
+        cancelOrBackButtonText = "Cancel",
+        nextorSubmitButtonText = "Next",
         onNextClick = {}
     )
 

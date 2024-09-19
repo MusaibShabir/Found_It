@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -39,9 +40,9 @@ fun CategoryCard(
 
     OutlinedCard(
         modifier = modifier
-            .padding(8.dp)
-            .width(IntrinsicSize.Max)
-            .height(35.dp),
+            .width(IntrinsicSize.Min)
+            .height(48.dp)
+            .padding(8.dp),
         shape = RoundedCornerShape(24.dp),
         onClick = {
             isSelected = !isSelected
@@ -56,7 +57,7 @@ fun CategoryCard(
         Row(
             modifier = modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 10.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ){
@@ -68,9 +69,18 @@ fun CategoryCard(
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center,
                 maxLines = 1
-
-                )
+            )
         }
 
     }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PreviewCategoryCard() {
+    CategoryCard(
+        modifier = Modifier,
+        categoryText = "Category",
+        onCategoryClick = {}
+    )
 }

@@ -36,5 +36,6 @@ object NavRoutes {
     const val CHILD_CATEGORY_SCREEN = "Child Category Screen"
     const val CHILD_CATEGORY_SCREEN2 = "Child Category Screen2"
     const val PARENT_CATEGORY_SCREEN = "Parent Category Screen"
+    const val ITEM_DESCRIPTION_SCREEN = "Item Description Screen"
 
 }

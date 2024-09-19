@@ -94,18 +94,18 @@ fun MainCard(
                     .fillMaxWidth()
                     .padding(start = 200.dp),
                 horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.Top
+                verticalArrangement = Arrangement.Center
             ){
 
                 Text(
                     text = stringResource(id = cardTitle),
                     style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.Medium,
                     color = Color.White,
                     fontSize = 13.sp,
                     fontStyle = FontStyle.Italic,
                     lineHeight = 15.sp,
-                    textAlign = TextAlign.Left
+                    textAlign = TextAlign.Center
                 )
             } // Sub-Column Ends
 
