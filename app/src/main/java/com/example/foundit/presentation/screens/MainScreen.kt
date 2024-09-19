@@ -205,7 +205,7 @@ fun MainScreen(modifier: Modifier) {
 
 
             composable(NavRoutes.DELETE_ACCOUNT) {
-                DeleteAccountScreen(modifier = modifier, navController = navController, onDeleteAccount = { })
+                DeleteAccountScreen(navController = navController, modifier = modifier)
             }
 
             composable(NavRoutes.LOG_OUT) {
