@@ -24,6 +24,7 @@ import com.example.foundit.presentation.screens.profile.ProfileScreen
 import com.example.foundit.presentation.screens.profile.ProfileViewModel
 import com.example.foundit.presentation.screens.profile.components.EditProfileScreen
 import com.example.foundit.presentation.screens.progress.ProcessScreen
+import com.example.foundit.presentation.screens.progress.components.ProgressCardFullScreen
 import com.example.foundit.presentation.screens.registration.ForgotPasswordScreen
 import com.example.foundit.presentation.screens.registration.GetStartedScreen
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleViewModel
@@ -157,6 +158,10 @@ fun MainScreen(modifier: Modifier) {
 
             composable(NavRoutes.PROGRESS) {
                 ProcessScreen(modifier, navController)
+            }
+
+            composable(NavRoutes.PROGRESS_CARD_FULL_SCREEN) {
+                ProgressCardFullScreen(modifier = modifier, cardItem = mapOf(), navController = navController)
             }
 
             composable(NavRoutes.NOTIFICATIONS) {
