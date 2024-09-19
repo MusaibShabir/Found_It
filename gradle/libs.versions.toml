@@ -50,6 +50,7 @@ appcompat = "1.7.0"
 # Goolge Maps
 mapsUtilsKtx = "5.0.0"
 maps-compose = "4.4.1"
+secretsGradlePlugin = "2.0.1"
 
 
 
@@ -115,6 +116,7 @@ maps-compose-widgets = { module = "com.google.maps.android:maps-compose-widgets"
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 maps-ktx = { module = "com.google.maps.android:maps-ktx", version.ref = "mapsUtilsKtx" }
 maps-utils-ktx = { module = "com.google.maps.android:maps-utils-ktx", version.ref = "mapsUtilsKtx" }
+secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
 
 
 [plugins]

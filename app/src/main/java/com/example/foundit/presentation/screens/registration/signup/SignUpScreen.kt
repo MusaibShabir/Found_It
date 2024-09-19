@@ -1,7 +1,6 @@
 package com.example.foundit.presentation.screens.registration.signup
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.util.Log
 import android.widget.Toast
@@ -73,11 +72,8 @@ import com.example.foundit.presentation.screens.registration.components.OrDivide
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleViewModel
 import com.example.foundit.ui.theme.Righteous
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -104,6 +100,7 @@ fun SignUpScreen(
     val coroutineScope = rememberCoroutineScope()
     val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
+    /*
     val locationPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -133,6 +130,8 @@ fun SignUpScreen(
             }
         }
     }
+
+     */
 
     Scaffold(
         modifier = modifier
@@ -493,7 +492,7 @@ fun SignUpScreen(
                     when (result) {
                         SignUpViewModel.SignInResult.Success -> {
                             Log.d("SignUp", "User created successfully")
-                            requestLocationPermission()
+                            //requestLocationPermission()
                             navController.navigate(NavRoutes.HOME)
                         }
 
@@ -590,6 +589,7 @@ fun SignUpScreen(
 
 }
 
+/*
 suspend fun getLastLocation(
     fusedLocationClient: FusedLocationProviderClient,
     context: Context
@@ -617,6 +617,8 @@ suspend fun getLastLocation(
         Toast.makeText(context, "Location permission is not granted", Toast.LENGTH_SHORT).show()
     }
 }
+
+ */
 
 
 

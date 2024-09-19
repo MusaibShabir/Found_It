@@ -11,6 +11,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.foundit.maps.MapViewModel
+import com.example.foundit.maps.compose.MapScreen
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.navigation.NavigationBar
 import com.example.foundit.presentation.screens.actions.ActionScreen
@@ -107,6 +109,7 @@ fun MainScreen(modifier: Modifier) {
     val profileViewModel: ProfileViewModel = hiltViewModel()
     val continueWithGoogleViewModel: ContinueWithGoogleViewModel = hiltViewModel()
     val notificationBaseViewModel: NotificationBaseViewModel = hiltViewModel()
+    val mapViewModel: MapViewModel = hiltViewModel()
 
     Scaffold(
         bottomBar = {
@@ -134,7 +137,7 @@ fun MainScreen(modifier: Modifier) {
                     viewModel = profileViewModel,
                     navController = navController,
                     lostButtonClick = NavRoutes.USER_ITEM_INPUT_SCREEN,
-                    foundButtonClick = NavRoutes.ACTION_SCREEN
+                    foundButtonClick = NavRoutes.MAP_SCREEN
                 )
             }
 
@@ -142,6 +145,14 @@ fun MainScreen(modifier: Modifier) {
                 ActionScreen(
                     modifier = modifier,
                     navController = navController
+                )
+            }
+
+            composable(NavRoutes.MAP_SCREEN) {
+                MapScreen(
+                    state = mapViewModel.state.value,
+                    setupClusterManager = mapViewModel::setupClusterManager,
+                    calculateZoneViewCenter = mapViewModel::calculateZoneLatLngBounds,
                 )
             }
 

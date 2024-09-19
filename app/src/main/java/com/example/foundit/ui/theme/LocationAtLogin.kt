@@ -17,6 +17,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
+/*
 class MapActivity : ComponentActivity(), OnMapReadyCallback {
     private lateinit var mapView: MapView
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -99,3 +100,5 @@ class MapActivity : ComponentActivity(), OnMapReadyCallback {
         mapView.onLowMemory()
     }
 }
+
+ */
