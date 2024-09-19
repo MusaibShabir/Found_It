@@ -4,6 +4,8 @@
     <option name="groupByAttributes">
       <list>
         <option value="Status" />
+        <option value="Status" />
+        <option value="Status" />
       </list>
     </option>
   </component>
