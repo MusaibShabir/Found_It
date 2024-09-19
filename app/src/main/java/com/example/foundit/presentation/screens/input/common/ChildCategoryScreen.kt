@@ -7,17 +7,23 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.foundit.presentation.screens.input.common.components.CategoryCard
 import com.example.foundit.presentation.screens.input.data.childCategories
+import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
 
 
 @Composable
 fun ChildCategoryScreen(
-    modifier: Modifier
+    modifier: Modifier,
+    viewModel: LostInputViewModel
 ) {
+
+    val selectedCategoryIds by viewModel.selectedChildCategoryIds.collectAsState()
+
     LazyVerticalGrid(
         modifier = modifier
             .fillMaxSize()
@@ -25,19 +31,24 @@ fun ChildCategoryScreen(
         verticalArrangement = Arrangement.Bottom,
         columns = GridCells.Adaptive(minSize = 110.dp)
     ) {
-        items(childCategories) { parentCategory ->
+
+        items(childCategories) { childCategory ->
             CategoryCard(
                 modifier = Modifier,
-                categoryText = parentCategory.name,
-                onCategoryClick = { }
+                categoryText = childCategory.name,
+                isSelected = childCategory.id in selectedCategoryIds,
+                onCategoryClick = { viewModel.toggleChildCategorySelection(childCategory.id) },
+                multipleSelection = true
             )
         }
+
+
     }
 }
 
 
 
-
+/*
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewChildCategoryScreen() {
@@ -45,4 +56,6 @@ fun PreviewChildCategoryScreen() {
         modifier = Modifier,
     )
 }
+
+ */
 
