@@ -61,7 +61,6 @@ fun ForgotPasswordScreen(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        containerColor = Color.White
     ) { innerPadding ->
         Box(
             contentAlignment = Alignment.Center,
