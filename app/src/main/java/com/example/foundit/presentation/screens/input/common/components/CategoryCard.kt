@@ -32,11 +32,12 @@ import androidx.compose.ui.unit.sp
 fun CategoryCard(
     modifier: Modifier,
     categoryText: String,
-    onCategoryClick: () -> Unit
+    onCategoryClick: () -> Unit,
+    isSelected: Boolean,
+    multipleSelection: Boolean = false
 ) {
 
-    // State to track the selected category
-    var isSelected by remember { mutableStateOf(false) }
+    var isSelectedForMultipleSelection by remember { mutableStateOf(false) }
 
     OutlinedCard(
         modifier = modifier
@@ -45,14 +46,22 @@ fun CategoryCard(
             .padding(8.dp),
         shape = RoundedCornerShape(24.dp),
         onClick = {
-            isSelected = !isSelected
+            if (multipleSelection) {
+                isSelectedForMultipleSelection = !isSelectedForMultipleSelection
+            }
             onCategoryClick()
                   },
         border = BorderStroke(
             width = 1.dp ,
-            color = if(isSelected) Color.Blue else Color.Black
+            color = Color.Black
         ),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(
+            containerColor = if ((multipleSelection && isSelectedForMultipleSelection) || (!multipleSelection && isSelected)) {
+                Color.Blue.copy(alpha = .4f)
+            } else {
+                Color.White
+            }
+        )
     ) {
         Row(
             modifier = modifier
@@ -75,12 +84,15 @@ fun CategoryCard(
     }
 }
 
+
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewCategoryCard() {
     CategoryCard(
         modifier = Modifier,
         categoryText = "Category",
-        onCategoryClick = {}
+        onCategoryClick = {},
+        isSelected = false
     )
 }
