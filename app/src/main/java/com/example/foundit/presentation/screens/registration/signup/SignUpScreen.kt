@@ -73,6 +73,10 @@ import com.example.foundit.ui.theme.Righteous
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
@@ -405,12 +409,23 @@ fun SignUpScreen(
                     .width(200.dp)
                     .height(52.dp),
                 onClick = {
-                    signUpViewModel.signUpUser(email, password, firstName, lastName) { isSuccess ->
+                    signUpViewModel.signUpUser(email, password, firstName, lastName) { isSuccess, e ->
                         if (isSuccess) {
-                            Log.d("SignUp", "User created successfully")
+                            Toast.makeText(
+                                context,
+                                "User created successfully. Please verify your email.",
+                                Toast.LENGTH_LONG
+                            ).show()
                             navController.navigate(NavRoutes.HOME)
                         } else {
-                            Log.d("SignUp", "Authentication failed")
+                            val errorMessage = when (e) {
+                                is FirebaseAuthWeakPasswordException -> "Weak password: Password should be at least 6 characters."
+                                is FirebaseAuthInvalidCredentialsException ->"Invalid email: Please enter a valid email address."
+                                is FirebaseAuthUserCollisionException -> "Email already in use. Please use a different email."
+                                is FirebaseNetworkException -> "Network issue: Please check your connection and try again."
+                                else -> "An unexpected error occurred."
+                            }
+                            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
                         }
                     }
                 },

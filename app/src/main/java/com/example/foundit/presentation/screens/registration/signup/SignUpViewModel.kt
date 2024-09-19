@@ -56,16 +56,16 @@ class SignUpViewModel @Inject constructor(
         password: String,
         firstName: String,
         lastName: String,
-        onResult: (Boolean) -> Unit
+        onResult: (Boolean, Exception?) -> Unit
     ) {
         viewModelScope.launch {
                 try {
                     accountService.createAccount(email,password)
                     accountService.sendEmailVerification()
                     update(firstName,lastName)
-                    onResult(true)
+                    onResult(true,null)
                 } catch (e: Exception) {
-                    onResult(false)
+                    onResult(false,e)
                     Log.d("SignUp", "login error: ${e.message}")
                 }
 
