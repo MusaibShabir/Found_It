@@ -1,8 +1,10 @@
 package com.example.foundit.presentation.screens.input.common.components
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -27,19 +29,20 @@ fun UserInputBottomNavigationBar(
     onCancelOrBackClick:  () ->  Unit,
     onNextClick: () -> Unit
 ) {
+
     ElevatedCard(
         modifier = modifier
             .fillMaxWidth()
-            .height(124.dp),
+            .height(IntrinsicSize.Max),
         shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        elevation = CardDefaults.elevatedCardElevation(2.dp),
         colors = CardDefaults.elevatedCardColors(
             containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.2f)
         )
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(36.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween

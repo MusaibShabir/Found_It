@@ -8,12 +8,12 @@
 
     <!-- Lost Card String's (Main) -->
     <string name="lost_card_heading">Lost an item?</string>
-    <string name="lost_card_sub_title">Provide a detailed description of the item. Provide details to help others identify and return it.</string>
+    <string name="lost_card_sub_title">Provide a detailed description of the item. And we will help you to find it.</string>
     <string name="lost_card_button">Report Here</string>
 
     <!-- Found Card String's (Main)-->
     <string name="found_card_heading">Found an item?</string>
-    <string name="found_card_sub_title">Report a found item here. Provide details to help the owner identify and reclaim it.</string>
+    <string name="found_card_sub_title">Provide a detailed description of the item. And we will help you to find its owner.</string>
     <string name="found_card_button">List Here</string>
 
     <!-- Profile Screen (Main)-->
@@ -128,7 +128,8 @@
 
     <!-- Notification Screen (Main)-->
     <string name="when_no_notification">No notification Available</string>
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

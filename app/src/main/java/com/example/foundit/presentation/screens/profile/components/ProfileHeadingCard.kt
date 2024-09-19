@@ -133,7 +133,7 @@ fun ProfileHeadingCard(
 
                     Button(
                         onClick = { onEditProfileClick() },
-                        shape = RoundedCornerShape(15.dp),
+                        shape = RoundedCornerShape(22.dp),
                         elevation = buttonElevation(defaultElevation = 20.dp, pressedElevation = 25.dp),
                         colors = buttonColors(containerColor = Color.Gray),
                         modifier = modifier

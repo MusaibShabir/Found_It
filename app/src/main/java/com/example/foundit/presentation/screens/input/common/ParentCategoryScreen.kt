@@ -22,7 +22,8 @@ fun ParentCategoryScreen(
             .fillMaxSize()
             .padding(),
         verticalArrangement = Arrangement.Bottom,
-        columns = GridCells.Adaptive(minSize = 110.dp)
+        horizontalArrangement = Arrangement.Start,
+        columns = GridCells.Adaptive(minSize = 138.dp)
     ) {
         items(parentCategories) { parentCategory ->
             CategoryCard(
