@@ -13,6 +13,7 @@ interface AccountService {
         suspend fun createAccount(email:String, password:String)
         suspend fun login(email: String, password: String)
         suspend fun sendEmailVerification()
+        suspend fun update(firstName: String, lastName: String)
         suspend fun logout()
         suspend fun signInWithGoogle(idToken: String)
         suspend fun deleteAccount()

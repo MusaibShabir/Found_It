@@ -3,15 +3,12 @@ package com.example.foundit.presentation.screens.registration.signup
 import android.util.Log
 import androidx.credentials.Credential
 import androidx.lifecycle.viewModelScope
-import com.example.foundit.di.FireBaseModule
 import com.example.foundit.presentation.data.account.AccountService
 import com.example.foundit.presentation.screens.registration.RegistrationBaseViewModel
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.FirebaseNetworkException
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.userProfileChangeRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -62,59 +59,14 @@ class SignUpViewModel @Inject constructor(
                 try {
                     accountService.createAccount(email,password)
                     accountService.sendEmailVerification()
-                    update(firstName,lastName)
+                    accountService.update(firstName,lastName)
                     onResult(true,null)
                 } catch (e: Exception) {
                     onResult(false,e)
                     Log.d("SignUp", "login error: ${e.message}")
                 }
-
-//            auth.createUserWithEmailAndPassword(email, password)
-//                .addOnCompleteListener { task ->
-//                    if (task.isSuccessful) {
-//                        sendEmailVerification()
-//                        update(
-//                            firstName,lastName
-//                        )
-//                        onResult(true)
-//                    } else {
-//                        onResult(false)
-//                    }
-//                }
             }
         }
-
-    private val firebaseAuth: FirebaseAuth = FireBaseModule.provideFirebaseAuth()
-
-    private fun update(
-        firstName: String,
-        lastName: String,
-    ) {
-        val profileUpdates = userProfileChangeRequest {
-            displayName = "$firstName  $lastName"
-        }
-
-        firebaseAuth.currentUser!!.updateProfile(profileUpdates)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d("SignUp", "User profile updated.")
-                }
-            }
-    }
-
-//    private fun sendEmailVerification() {
-//        val user = auth.currentUser
-//        user?.sendEmailVerification()
-//            ?.addOnCompleteListener { task ->
-//                if (task.isSuccessful) {
-//                    Log.d("SignUp", "email sent")
-//                    // Email Verification sent
-//                } else {
-//                    Log.d("SignUp", "email error")
-//                    // Handle failure
-//                }
-//            }
-//    }
 
     sealed class SignInResult {
         data object Success : SignInResult()

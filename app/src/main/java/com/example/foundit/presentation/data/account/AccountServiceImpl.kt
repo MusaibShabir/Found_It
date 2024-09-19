@@ -3,6 +3,7 @@ package com.example.foundit.presentation.data.account
 import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.userProfileChangeRequest
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -59,6 +60,14 @@ class AccountServiceImpl @Inject constructor(
     // it is used to send verification email
     override suspend fun sendEmailVerification() {
         firebaseAuth.currentUser?.sendEmailVerification()?.await()
+    }
+
+    // it is used to update user name
+    override suspend fun update(firstName: String, lastName: String) {
+        val profileUpdates = userProfileChangeRequest {
+            displayName = "$firstName  $lastName"
+        }
+        firebaseAuth.currentUser?.updateProfile(profileUpdates)?.await()
     }
 
     // it is used to logout current user
