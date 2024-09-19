@@ -1,6 +1,5 @@
 package com.example.foundit.presentation.screens.registration.signup
 
-import android.util.Log
 import androidx.credentials.Credential
 import androidx.lifecycle.viewModelScope
 import com.example.foundit.presentation.data.account.AccountService
@@ -63,7 +62,6 @@ class SignUpViewModel @Inject constructor(
                     onResult(true,null)
                 } catch (e: Exception) {
                     onResult(false,e)
-                    Log.d("SignUp", "login error: ${e.message}")
                 }
             }
         }

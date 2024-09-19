@@ -56,7 +56,7 @@ fun DeleteAccountScreen(
                         } else {
                             val errorMessage = when (e) {
                                 is FirebaseNetworkException -> "Network issue. Please check your connection and try again."
-                                is FirebaseAuthRecentLoginRequiredException -> "Please logout and re-authenticate before deleting your account."
+                                is FirebaseAuthRecentLoginRequiredException -> "Please logout and re-authenticate to delete your account."
                                 else -> "An unexpected error occurred."
                             }
                             Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
