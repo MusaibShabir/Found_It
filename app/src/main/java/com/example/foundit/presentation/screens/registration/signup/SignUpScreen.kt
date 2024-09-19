@@ -437,8 +437,8 @@ fun SignUpScreen(
             ) {
                 ElevatedButton(
                     modifier = modifier
-                        .width(200.dp)
-                        .height(52.dp),
+                        .width(182.dp)
+                        .height(IntrinsicSize.Max),
                     onClick = {
                         signUpViewModel.signUpUser(
                             email,
@@ -507,7 +507,7 @@ fun SignUpScreen(
                 }
             }
 
-            Spacer(modifier = modifier.weight(.2f))
+            Spacer(modifier = modifier.weight(.3f))
 
             // Already have an Account
             Column(
@@ -544,7 +544,7 @@ fun SignUpScreen(
                     .weight(1f)
                     .padding(bottom = 8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Bottom
+                verticalArrangement = Arrangement.Center
             ) {
                 Row(
                     modifier = modifier
