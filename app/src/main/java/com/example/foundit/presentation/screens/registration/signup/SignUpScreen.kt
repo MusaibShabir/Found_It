@@ -315,7 +315,7 @@ fun SignUpScreen(
                 value = password,
                 onValueChange = {
                     password = it
-                    isPasswordValid = it.length >= 8
+                    isPasswordValid = it.length >= 8 && it.any { char -> !char.isLetterOrDigit() }
                 },
                 label = { Text("Password") },
                 leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password icon") },
@@ -333,6 +333,7 @@ fun SignUpScreen(
                     focusedLabelColor = Color.Blue,
                     cursorColor = Color.Blue,
                     focusedBorderColor = Color.Blue,
+                    errorBorderColor = Color.Red,
                     selectionColors = TextSelectionColors(
                         handleColor = Color.Blue,
                         backgroundColor = Color.Transparent,
@@ -343,7 +344,7 @@ fun SignUpScreen(
                 ),
                 supportingText = {
                     if (!isPasswordValid && password.isNotBlank()) {
-                        Text("Password must be at least 8 characters", color = MaterialTheme.colorScheme.error)
+                        Text("Password must be at least 8 characters and include a special character.", color = MaterialTheme.colorScheme.error)
                     }
                 }
             )
