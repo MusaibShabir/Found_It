@@ -47,7 +47,7 @@ fun UserItemInputScreen(
                     else -> { "Back" }
                 },
 
-                nextorSubmitButtonText = when(currentRoute) {
+                nextOrSubmitButtonText = when(currentRoute) {
                     NavRoutes.ITEM_DESCRIPTION_SCREEN -> { "Submit" }
                     else -> { "Next" }
                 },
@@ -120,9 +120,6 @@ fun UserItemInputScreen(
         enabled = currentRoute == NavRoutes.PARENT_CATEGORY_SCREEN,
         onBack = { showAlertDialogBox = true }
     )
-
-
-
 }
 
 
