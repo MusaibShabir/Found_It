@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.registration
+package com.example.foundit.presentation.screens.registration.signup
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
@@ -15,7 +15,9 @@ import androidx.compose.ui.unit.sp
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun PhoneNumberScreen() {
+fun PhoneNumberScreen(
+    modifier: Modifier
+) {
     var expanded by remember { mutableStateOf(false) }
     var selectedCountryCode by remember { mutableStateOf("+91") }
     var phoneNumber by remember { mutableStateOf("") }
@@ -230,20 +232,28 @@ fun PhoneNumberScreen() {
 
     Scaffold {
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .padding(start = 20.dp, end = 20.dp, top = 250.dp)
                 .fillMaxWidth()
                 .fillMaxHeight(),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Row(
+                modifier = modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically,
+
+            ){
+
+            }
             Text(
                 text = "Enter your phone number",
                 fontSize = 20.sp,
             )
 
             Row(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -259,13 +269,12 @@ fun PhoneNumberScreen() {
                         value = selectedCountryCode,
                         onValueChange = {},
                         readOnly = true,
-                        label = { Text("Country Code") },
                         trailingIcon = {
                             ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
                         },
                         singleLine = true,
-                        modifier = Modifier.width(110.dp)
-                            .menuAnchor(MenuAnchorType.PrimaryNotEditable)
+                        modifier = modifier.width(110.dp)
+                            .menuAnchor(MenuAnchorType.PrimaryNotEditable , enabled = true)
                     )
                     ExposedDropdownMenu(
                         expanded = expanded,
@@ -295,7 +304,7 @@ fun PhoneNumberScreen() {
                     },
                     label = { Text("Phone Number") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    modifier = Modifier
+                    modifier = modifier
                         .weight(1f)
                         .padding(start = 16.dp)
                 )
@@ -306,7 +315,7 @@ fun PhoneNumberScreen() {
                 onClick = {
                     // Handle phone number verification logic
                 },
-                modifier = Modifier
+                modifier = modifier
                     .padding(top = 24.dp)
                     .fillMaxWidth()
             ) {
@@ -319,5 +328,5 @@ fun PhoneNumberScreen() {
 @Composable
 @Preview(showBackground = true)
 fun PhoneNumberScreenPreview() {
-    PhoneNumberScreen()
+    PhoneNumberScreen(modifier = Modifier)
 }
