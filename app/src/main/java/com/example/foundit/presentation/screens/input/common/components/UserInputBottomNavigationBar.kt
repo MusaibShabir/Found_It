@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 fun UserInputBottomNavigationBar(
     modifier: Modifier = Modifier,
     cancelOrBackButtonText: String,
-    nextorSubmitButtonText: String,
+    nextOrSubmitButtonText: String,
     onCancelOrBackClick:  () ->  Unit,
     onNextClick: () -> Unit
 ) {
@@ -70,7 +70,7 @@ fun UserInputBottomNavigationBar(
                     .width(128.dp)
             ) {
                 Text(
-                    text = nextorSubmitButtonText,
+                    text = nextOrSubmitButtonText,
                     fontSize = 18.sp
                 )
             }
@@ -86,7 +86,7 @@ fun PreviewInputBottomNavigationBar() {
         modifier = Modifier,
         onCancelOrBackClick = {},
         cancelOrBackButtonText = "Cancel",
-        nextorSubmitButtonText = "Next",
+        nextOrSubmitButtonText = "Next",
         onNextClick = {}
     )
 
