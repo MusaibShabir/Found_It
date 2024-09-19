@@ -1,6 +1,7 @@
 package com.example.foundit.presentation.screens.registration.login
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -35,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -49,6 +51,9 @@ import com.example.foundit.presentation.screens.registration.components.google.C
 import com.example.foundit.presentation.screens.registration.components.OrDivider
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleViewModel
 import com.example.foundit.ui.theme.Righteous
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 
 @Composable
 fun LoginScreen(
@@ -57,6 +62,8 @@ fun LoginScreen(
     continueWithGoogleViewModel: ContinueWithGoogleViewModel,
     navController: NavController
 ) {
+    val context = LocalContext.current
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -197,17 +204,19 @@ fun LoginScreen(
                     .width(200.dp)
                     .height(52.dp),
                 onClick = {
-                    try {
-                        loginViewModel.login(email, password) { isSuccess ->
-                            if (isSuccess) {
-                                Log.d("Login", "Login successful")
-                                navController.navigate(NavRoutes.HOME)
-                            } else {
-                                Log.d("Login", "Authentication failed")
+                    loginViewModel.login(email, password) { isSuccess, e ->
+                        if (isSuccess) {
+                            Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT).show()
+                            navController.navigate(NavRoutes.HOME)
+                        } else {
+                            val errorMessage = when (e) {
+                                is FirebaseAuthInvalidCredentialsException -> "Invalid email or password. Please try again."
+                                is FirebaseAuthInvalidUserException -> "Your account has been disabled."
+                                is FirebaseNetworkException -> "Network issue: Please check your connection and try again."
+                                else -> "An error occurred. Please try again."
                             }
+                            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
                         }
-                    } catch (e: Exception) {
-                        Log.d("Login", "error (login screen) $e")
                     }
                 },
                 colors = ButtonColors(

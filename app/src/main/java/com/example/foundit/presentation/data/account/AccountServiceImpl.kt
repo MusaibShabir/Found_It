@@ -3,6 +3,8 @@ package com.example.foundit.presentation.data.account
 import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.UserInfo
+import com.google.firebase.auth.userProfileChangeRequest
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -29,6 +31,9 @@ class AccountServiceImpl @Inject constructor(
     // checks whether the current user email is verified or not : returns Boolean value
     override val currentUserEmailVerified: Boolean
         get() = firebaseAuth.currentUser?.isEmailVerified ?: false
+
+    override val currentUserProviderData: MutableList<out UserInfo>?
+        get() = firebaseAuth.currentUser?.providerData
 
     // checks whether current user object is empty or not for handling session : returns Boolean value
     override fun hasUser(): Boolean {
@@ -59,6 +64,24 @@ class AccountServiceImpl @Inject constructor(
     // it is used to send verification email
     override suspend fun sendEmailVerification() {
         firebaseAuth.currentUser?.sendEmailVerification()?.await()
+    }
+
+    // it is used to update user name
+    override suspend fun update(firstName: String, lastName: String) {
+        val profileUpdates = userProfileChangeRequest {
+            displayName = "$firstName  $lastName"
+        }
+        firebaseAuth.currentUser?.updateProfile(profileUpdates)?.await()
+    }
+
+    // it is used to update email
+    override suspend fun updateEmail(email: String) {
+        firebaseAuth.currentUser?.verifyBeforeUpdateEmail(email)?.await()
+    }
+
+    // it is used to update password
+    override suspend fun updatePassword(password: String) {
+        firebaseAuth.currentUser?.updatePassword(password)
     }
 
     // it is used to logout current user
