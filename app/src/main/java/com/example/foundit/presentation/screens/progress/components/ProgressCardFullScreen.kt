@@ -31,14 +31,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 
 // For LazyVerticalGrid
 @Composable
-fun ProgressCardFullScreen() {
+fun ProgressCardFullScreen(
+    modifier: Modifier,
+    cardItem: Map<String, Any>,
+    navController: NavHostController
+) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(top = 16.dp)
     ) {
@@ -51,7 +57,7 @@ fun ProgressCardFullScreen() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
-                onClick = { /* Handle close button click */ },
+                onClick = { navController.popBackStack() },
             ) {
                 Icon(
                     imageVector = Icons.Default.Close,
@@ -207,5 +213,13 @@ fun ProgressCardFullScreen() {
 @Composable
 @Preview(showBackground = true, showSystemUi = false)
 fun PreviewProgressCardFullScreen() {
-    ProgressCardFullScreen()
+    val cardItem: Map<String, Any> = mapOf(
+        "cardId" to 1,
+        "cardType" to 0,
+        "date" to "13-May-2024",
+        "category" to "Phone",
+        "location" to "Srinagar, Jammu & Kashmir",
+        "status" to 0
+    )
+    ProgressCardFullScreen(modifier = Modifier, cardItem = cardItem, navController = NavHostController(LocalContext.current))
 }
