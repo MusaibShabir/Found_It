@@ -88,7 +88,8 @@ class FirestoreServiceImpl @Inject constructor(
         cardType: Int,
         parentCategory: String,
         cardDescription: String,
-        childCategory: Map<String, Any>
+        color: String,
+        childCategory: String
     ) {
         val userId = currentUserId
 
@@ -120,6 +121,7 @@ class FirestoreServiceImpl @Inject constructor(
                         "cardType" to cardType,
                         "parentCategory" to parentCategory,
                         "childCategory" to childCategory,
+                        "color" to color,
                         "cardDescription" to cardDescription,
                         "date" to Timestamp(Date()),
                         "status" to 0
