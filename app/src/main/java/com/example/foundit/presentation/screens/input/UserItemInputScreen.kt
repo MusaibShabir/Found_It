@@ -41,8 +41,12 @@ fun UserItemInputScreen(
     val foundInputViewModel: FoundInputViewModel= hiltViewModel()
 
     val isParentSelectedCategoryEmpty by lostInputViewModel.parentSelectedCategoryId.collectAsState()
-    val isColorSelectedCategoryEmpty by lostInputViewModel.parentSelectedCategoryId.collectAsState()
+    val isColorSelectedCategoryEmpty by lostInputViewModel.colorSelectedId.collectAsState()
     val isChildSelectedCategoryEmpty by lostInputViewModel.selectedChildCategoryIds.collectAsState()
+    val isDescriptionEmpty by lostInputViewModel.itemDescription.collectAsState()
+
+    // Minimum Character Length For Description
+    val minCharLength = 25
 
     var showAlertDialogBox by remember { mutableStateOf(false) }
     val navControllerForUserInputScreen = rememberNavController()
@@ -73,6 +77,15 @@ fun UserItemInputScreen(
                         else -> { navControllerForUserInputScreen.popBackStack() }
                     }
                                       },
+                nextButtonEnabled = { when (currentRoute) {
+                    NavRoutes.PARENT_CATEGORY_SCREEN -> isParentSelectedCategoryEmpty != null
+                    NavRoutes.COLOR_CATEGORY_SCREEN -> isColorSelectedCategoryEmpty != null
+                    NavRoutes.CHILD_CATEGORY_SCREEN -> isChildSelectedCategoryEmpty.isNotEmpty()
+                    NavRoutes.ITEM_DESCRIPTION_SCREEN -> isDescriptionEmpty.length >= minCharLength
+                    else -> true
+                }
+                },
+                        // here
                 onNextClick = {
                     when (currentRoute) {
                     NavRoutes.PARENT_CATEGORY_SCREEN -> {
@@ -82,11 +95,8 @@ fun UserItemInputScreen(
                         navControllerForUserInputScreen.navigate(NavRoutes.CHILD_CATEGORY_SCREEN)
                     }
                     NavRoutes.CHILD_CATEGORY_SCREEN -> {
-                        navControllerForUserInputScreen.navigate(NavRoutes.CHILD_CATEGORY_SCREEN2)
+                        navControllerForUserInputScreen.navigate(NavRoutes.ITEM_DESCRIPTION_SCREEN)
                     }
-                        NavRoutes.CHILD_CATEGORY_SCREEN2 -> {
-                            navControllerForUserInputScreen.navigate(NavRoutes.ITEM_DESCRIPTION_SCREEN)
-                        }
                     else -> {
 
                     }
@@ -131,7 +141,10 @@ fun UserItemInputScreen(
             }
 
             composable(NavRoutes.ITEM_DESCRIPTION_SCREEN) {
-                ItemDescriptionScreen(modifier = modifier)
+                ItemDescriptionScreen(
+                    modifier = modifier,
+                    viewModel = lostInputViewModel
+                )
             }
         }
     }
@@ -151,6 +164,7 @@ fun UserItemInputScreen(
         onBack = { showAlertDialogBox = true }
     )
 }
+
 
 
 
