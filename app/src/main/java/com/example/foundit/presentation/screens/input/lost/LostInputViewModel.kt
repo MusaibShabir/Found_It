@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.example.foundit.presentation.data.firestore.FirestoreService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -11,7 +12,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class LostInputViewModel @Inject constructor() : ViewModel() {
+class LostInputViewModel @Inject constructor(
+    private val firestoreService: FirestoreService
+) : ViewModel() {
 
     private val collectedData = mutableStateOf<InputLostData?>(null)
 
