@@ -36,7 +36,7 @@ fun ParentCategoryScreen(
                 modifier = Modifier,
                 categoryText = parentCategory.name,
                 isSelected =  parentCategory.id == selectedCategoryId,
-                onCategoryClick = { viewModel.setParentSelectedCategoryId( parentCategory.id ) }
+                onCategoryClick = { viewModel.setParentSelectedCategoryId( parentCategory.id) }
             )
         }
     }
