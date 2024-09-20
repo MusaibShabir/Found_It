@@ -129,7 +129,7 @@ fun ProcessCard(
 
             ){
                 Text(
-                    text = "${cardItem["phone"]}",
+                    text = "${cardItem["parentCategory"]}",
                     fontWeight = FontWeight.Bold
                 )
 
@@ -170,7 +170,7 @@ fun ProcessCard(
 
                 Spacer(modifier = modifier.height(10.dp))
                 Text(
-                    text = "${cardItem["model"]}",
+                    text = "${cardItem["cardDescription"]}",
                     fontSize = 12.sp,
                     textAlign = TextAlign.Start,
                 )
