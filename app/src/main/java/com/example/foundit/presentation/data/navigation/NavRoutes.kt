@@ -3,6 +3,7 @@ package com.example.foundit.presentation.data.navigation
 object NavRoutes {
     const val HOME = "Home"
     const val PROGRESS = "Progress"
+    const val PROGRESS_CARD_FULL_SCREEN = "Progress Card Full Screen"
     const val NOTIFICATIONS = "Notifications"
     const val PROFILE = "Profile"
     const val SETTINGS = "Settings"
@@ -36,5 +37,6 @@ object NavRoutes {
     const val CHILD_CATEGORY_SCREEN = "Child Category Screen"
     const val CHILD_CATEGORY_SCREEN2 = "Child Category Screen2"
     const val PARENT_CATEGORY_SCREEN = "Parent Category Screen"
+    const val ITEM_DESCRIPTION_SCREEN = "Item Description Screen"
 
 }

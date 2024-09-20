@@ -1,5 +1,6 @@
 package com.example.foundit.presentation.screens.settings.components.clickable.account_center
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
@@ -11,14 +12,27 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.common.TheTopAppBar
+import com.example.foundit.presentation.data.navigation.NavRoutes
+import com.example.foundit.presentation.screens.settings.components.clickable.ChangeEmailViewModel
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 
 @Composable
 fun ChangeEmailScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController
 ) {
+    val viewModel: ChangeEmailViewModel = hiltViewModel()
+    val context = LocalContext.current
+
+    val isGoogleProvide = viewModel.isGoogleProvider
+
     var currentEmail by remember { mutableStateOf("") }
     var newEmail by remember { mutableStateOf("") }
     var currentEmailError by remember { mutableStateOf(false) }
@@ -62,6 +76,12 @@ fun ChangeEmailScreen(
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall
                 )
+            }else if(currentEmail != viewModel.email && currentEmail.isNotEmpty() ){
+                Text(
+                    text = "Incorrect current email",
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall
+                )
             }
 
             TextField(
@@ -86,7 +106,13 @@ fun ChangeEmailScreen(
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall
                 )
-            }
+            }else if (newEmail == currentEmail && currentEmail.isNotEmpty()) {
+            Text(
+                text = "New email cannot be the same as the current email",
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
 
             Column(
                 modifier = Modifier.padding(horizontal = 16.dp),
@@ -94,7 +120,22 @@ fun ChangeEmailScreen(
             ){
                 Button(
                     onClick = {
-                        // Handle email change logic
+                        viewModel.updateEmail(newEmail) { isSuccess, e ->
+                            if (isSuccess) {
+                                Toast.makeText(context, "Verification mail sent. Please verify your email.", Toast.LENGTH_SHORT).show()
+                                navController.navigate(NavRoutes.SPLASH)
+                            } else {
+                                val errorMessage = when (e) {
+                                    is FirebaseNetworkException -> "Network issue. Please check your connection and try again."
+                                    is FirebaseAuthInvalidCredentialsException -> "Invalid email. Please enter a valid email address."
+                                    is FirebaseAuthUserCollisionException -> "Email already in use. Please use a different email."
+                                    is FirebaseAuthRecentLoginRequiredException -> "Please log out and re-authenticate before changing your email."
+                                    is FirebaseAuthInvalidUserException -> "User account no longer exists or has been disabled."
+                                    else -> "An unexpected error occurred: ${e?.message ?: "Unknown error"}"
+                                }
+                                Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     },
                     modifier = Modifier.fillMaxWidth(),
                     enabled = currentEmail.isNotEmpty()
@@ -102,12 +143,13 @@ fun ChangeEmailScreen(
                             && currentEmail != newEmail
                             && !currentEmailError
                             && !newEmailError
+                            && !isGoogleProvide
                 ) {
                     Text("Change Email")
                 }
-                if (newEmail == currentEmail && currentEmail.isNotEmpty()) {
+                if (isGoogleProvide) {
                     Text(
-                        text = "New email cannot be the same as the current email",
+                        text = "You are logged in with Google",
                         color = MaterialTheme.colorScheme.error,
                         style = MaterialTheme.typography.bodySmall
                     )

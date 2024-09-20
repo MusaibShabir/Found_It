@@ -7,12 +7,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.foundit.presentation.screens.input.data.childCategories
 
 @Composable
 fun ChildCategoryScreen2(
@@ -25,13 +23,17 @@ fun ChildCategoryScreen2(
         verticalArrangement = Arrangement.Bottom,
         columns = GridCells.Adaptive(minSize = 110.dp)
     ) {
+        /*
         items(childCategories) { parentCategory ->
             CategoryCard(
                 modifier = Modifier,
                 categoryText = parentCategory.name,
+
                 onCategoryClick = { }
             )
         }
+
+         */
     }
 
     Spacer(modifier = Modifier.height(30.dp))

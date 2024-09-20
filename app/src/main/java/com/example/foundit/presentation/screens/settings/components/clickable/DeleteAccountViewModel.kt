@@ -1,27 +1,23 @@
 package com.example.foundit.presentation.screens.settings.components.clickable
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foundit.presentation.data.account.AccountService
-import com.example.foundit.presentation.data.firestore.FirestoreService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LogoutViewModel @Inject constructor(
-    private val accountService: AccountService,
-    private val firestoreService: FirestoreService
+class DeleteAccountViewModel @Inject constructor(
+    private val accountService: AccountService
 ) : ViewModel() {
 
-    fun logout(onResult: (Boolean) -> Unit) {
+    fun deleteAccount(onResult: (Boolean, Exception?) -> Unit) {
         viewModelScope.launch {
             try {
-                accountService.logout()
-                firestoreService.clearFirestoreListener()
-                onResult(true)
+                accountService.deleteAccount() // Attempt to delete the user account
+                onResult(true, null) // If successful, pass success
             } catch (e: Exception) {
-                onResult(false)
+                onResult(false, e) // If there's an error, pass the exception
             }
         }
     }
