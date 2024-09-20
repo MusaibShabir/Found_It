@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +25,7 @@ import com.example.foundit.presentation.screens.input.common.ChildCategoryScreen
 import com.example.foundit.presentation.screens.input.common.ParentCategoryScreen
 import com.example.foundit.presentation.screens.input.common.components.AreYouSureToCancelAlertBox
 import com.example.foundit.presentation.screens.input.common.components.ChildCategoryScreen2
+import com.example.foundit.presentation.screens.input.common.components.ColorCategoryScreen
 import com.example.foundit.presentation.screens.input.common.components.ItemDescriptionScreen
 import com.example.foundit.presentation.screens.input.common.components.UserInputBottomNavigationBar
 import com.example.foundit.presentation.screens.input.found.FoundInputViewModel
@@ -38,6 +40,13 @@ fun UserItemInputScreen(
     val lostInputViewModel: LostInputViewModel = hiltViewModel()
     val foundInputViewModel: FoundInputViewModel= hiltViewModel()
 
+    val isParentSelectedCategoryEmpty by lostInputViewModel.parentSelectedCategoryId.collectAsState()
+    val isColorSelectedCategoryEmpty by lostInputViewModel.colorSelectedId.collectAsState()
+    val isChildSelectedCategoryEmpty by lostInputViewModel.selectedChildCategoryIds.collectAsState()
+    val isDescriptionEmpty by lostInputViewModel.itemDescription.collectAsState()
+
+    // Minimum Character Length For Description
+    val minCharLength = 25
 
     var showAlertDialogBox by remember { mutableStateOf(false) }
     val navControllerForUserInputScreen = rememberNavController()
@@ -67,23 +76,33 @@ fun UserItemInputScreen(
                         }
                         else -> { navControllerForUserInputScreen.popBackStack() }
                     }
-
                                       },
+                nextButtonEnabled = { when (currentRoute) {
+                    NavRoutes.PARENT_CATEGORY_SCREEN -> isParentSelectedCategoryEmpty != null
+                    NavRoutes.COLOR_CATEGORY_SCREEN -> isColorSelectedCategoryEmpty != null
+                    NavRoutes.CHILD_CATEGORY_SCREEN -> isChildSelectedCategoryEmpty.isNotEmpty()
+                    NavRoutes.ITEM_DESCRIPTION_SCREEN -> isDescriptionEmpty.length >= minCharLength
+                    else -> true
+                }
+                },
+                        // here
                 onNextClick = {
                     when (currentRoute) {
                     NavRoutes.PARENT_CATEGORY_SCREEN -> {
+                        navControllerForUserInputScreen.navigate(NavRoutes.COLOR_CATEGORY_SCREEN)
+                    }
+                    NavRoutes.COLOR_CATEGORY_SCREEN -> {
                         navControllerForUserInputScreen.navigate(NavRoutes.CHILD_CATEGORY_SCREEN)
                     }
                     NavRoutes.CHILD_CATEGORY_SCREEN -> {
-                        navControllerForUserInputScreen.navigate(NavRoutes.CHILD_CATEGORY_SCREEN2)
-                    }
-                    NavRoutes.CHILD_CATEGORY_SCREEN2 -> {
                         navControllerForUserInputScreen.navigate(NavRoutes.ITEM_DESCRIPTION_SCREEN)
                     }
                     else -> {
 
                     }
-                }})
+                }
+                }
+            )
         }
 
     ){ paddingValues ->
@@ -101,6 +120,15 @@ fun UserItemInputScreen(
                 )
             }
 
+            composable(
+                NavRoutes.COLOR_CATEGORY_SCREEN,
+            ) {
+                ColorCategoryScreen(
+                    modifier = modifier,
+                    viewModel = lostInputViewModel
+                )
+            }
+
             composable(NavRoutes.CHILD_CATEGORY_SCREEN) {
                 ChildCategoryScreen(
                     modifier = modifier,
@@ -113,7 +141,10 @@ fun UserItemInputScreen(
             }
 
             composable(NavRoutes.ITEM_DESCRIPTION_SCREEN) {
-                ItemDescriptionScreen(modifier = modifier)
+                ItemDescriptionScreen(
+                    modifier = modifier,
+                    viewModel = lostInputViewModel
+                )
             }
         }
     }
@@ -133,6 +164,7 @@ fun UserItemInputScreen(
         onBack = { showAlertDialogBox = true }
     )
 }
+
 
 
 

@@ -37,8 +37,7 @@ fun ChildCategoryScreen(
                 modifier = Modifier,
                 categoryText = childCategory.name,
                 isSelected = childCategory.id in selectedCategoryIds,
-                onCategoryClick = { viewModel.toggleChildCategorySelection(childCategory.id) },
-                multipleSelection = true
+                onCategoryClick = { viewModel.toggleChildCategorySelection( childCategory.id) },
             )
         }
 

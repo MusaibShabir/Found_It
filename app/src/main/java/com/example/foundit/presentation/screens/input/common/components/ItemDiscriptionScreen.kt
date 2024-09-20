@@ -20,6 +20,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,11 +33,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
 
 @Composable
 fun ItemDescriptionScreen(
-    modifier: Modifier
+    modifier: Modifier,
+    viewModel: LostInputViewModel
 ) {
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -63,7 +67,8 @@ fun ItemDescriptionScreen(
 
                 Spacer(modifier = modifier.height(24.dp))
 
-                var itemDescription by remember { mutableStateOf("") }
+                val itemDescription by viewModel.itemDescription.collectAsState()
+
                 val maxChar = 250
 
                 OutlinedTextField(
@@ -71,7 +76,7 @@ fun ItemDescriptionScreen(
                     value = itemDescription,
                     onValueChange = {
                         if (it.length <= maxChar) {
-                            itemDescription = it
+                            viewModel.updateItemDescription(it)
                         }
                                     },
                     supportingText = {
@@ -105,7 +110,7 @@ fun ItemDescriptionScreen(
                                     contentDescription = "Clear Button"
                                 )
                             },
-                            onClick = { itemDescription = "" },
+                            onClick = { viewModel.updateItemDescription( "") },
                             enabled = itemDescription.isNotEmpty()
                         )
                     },
@@ -121,6 +126,9 @@ fun ItemDescriptionScreen(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewItemDescriptionScreen() {
-    ItemDescriptionScreen(modifier = Modifier)
+    ItemDescriptionScreen(
+        modifier = Modifier,
+        viewModel = LostInputViewModel()
+    )
 
 }
