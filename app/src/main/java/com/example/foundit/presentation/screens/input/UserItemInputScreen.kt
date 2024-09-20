@@ -40,8 +40,7 @@ fun UserItemInputScreen(
     val lostInputViewModel: LostInputViewModel = hiltViewModel()
     val foundInputViewModel: FoundInputViewModel= hiltViewModel()
 
-    val isParentSelectedCategoryEmpty by lostInputViewModel.parentSelectedCategoryId.collectAsState()
-    val isColorSelectedCategoryEmpty by lostInputViewModel.colorSelectedId.collectAsState()
+
     val isChildSelectedCategoryEmpty by lostInputViewModel.selectedChildCategoryIds.collectAsState()
     val isDescriptionEmpty by lostInputViewModel.itemDescription.collectAsState()
 
@@ -78,8 +77,8 @@ fun UserItemInputScreen(
                     }
                                       },
                 nextButtonEnabled = { when (currentRoute) {
-                    NavRoutes.PARENT_CATEGORY_SCREEN -> isParentSelectedCategoryEmpty != null
-                    NavRoutes.COLOR_CATEGORY_SCREEN -> isColorSelectedCategoryEmpty != null
+                    NavRoutes.PARENT_CATEGORY_SCREEN -> true
+                    NavRoutes.COLOR_CATEGORY_SCREEN -> true
                     NavRoutes.CHILD_CATEGORY_SCREEN -> isChildSelectedCategoryEmpty.isNotEmpty()
                     NavRoutes.ITEM_DESCRIPTION_SCREEN -> isDescriptionEmpty.length >= minCharLength
                     else -> true
@@ -97,14 +96,12 @@ fun UserItemInputScreen(
                     NavRoutes.CHILD_CATEGORY_SCREEN -> {
                         navControllerForUserInputScreen.navigate(NavRoutes.ITEM_DESCRIPTION_SCREEN)
                     }
-                        NavRoutes.ITEM_DESCRIPTION_SCREEN -> {
-                        lostInputViewModel.getAllUserDataByCategoryIds()
+                        NavRoutes.ITEM_DESCRIPTION_SCREEN -> { lostInputViewModel.onSubmitClick()
+                    }else -> {
+
+                        }
                     }
 
-                    else -> {
-
-                    }
-                }
                 }
             )
         }
