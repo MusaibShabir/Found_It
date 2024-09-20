@@ -162,7 +162,10 @@ fun MainScreen(modifier: Modifier) {
                 ProcessScreen(modifier, navController)
             }
 
-            composable(NavRoutes.PROGRESS_CARD_FULL_SCREEN + "/{cardId}", arguments = listOf(navArgument(""){type= NavType.StringType})) {
+            composable(
+                NavRoutes.PROGRESS_CARD_FULL_SCREEN + "/{cardId}",
+                arguments = listOf(navArgument("cardId") { type = NavType.StringType })
+            ) {
                 val cardId = it.arguments?.getString("cardId")
                 ProgressCardFullScreen(modifier = modifier, cardId = cardId.toString(), navController = navController)
             }

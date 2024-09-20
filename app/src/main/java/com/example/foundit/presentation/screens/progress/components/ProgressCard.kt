@@ -1,5 +1,6 @@
 package com.example.foundit.presentation.screens.progress.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -112,7 +113,11 @@ fun ProcessCard(
 
     Card(
         onClick = {
-            navController.navigate(NavRoutes.PROGRESS_CARD_FULL_SCREEN + "/${cardItem["cardId"]}")
+            try {
+                navController.navigate(NavRoutes.PROGRESS_CARD_FULL_SCREEN + "/${cardItem["cardId"]}")
+            } catch (e: Exception) {
+                Log.d("nav", "ProcessCard: ${e.message}")
+            }
         },
         colors = CardDefaults.cardColors(containerColor = cardColor),
         modifier = modifier
