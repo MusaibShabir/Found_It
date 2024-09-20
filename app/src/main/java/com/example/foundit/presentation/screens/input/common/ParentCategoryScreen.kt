@@ -8,15 +8,18 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.foundit.presentation.screens.input.common.components.CategoryCard
 import com.example.foundit.presentation.screens.input.data.parentCategories
+import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
 
 @Composable
 fun ParentCategoryScreen(
-    modifier: Modifier
+    modifier: Modifier,
+    viewModel: LostInputViewModel
 ) {
+
+
     LazyVerticalGrid(
         modifier = modifier
             .fillMaxSize()
@@ -29,13 +32,15 @@ fun ParentCategoryScreen(
             CategoryCard(
                 modifier = Modifier,
                 categoryText = parentCategory.name,
-                onCategoryClick = { }
+                isSelected = viewModel.selectedCategoryId == parentCategory.id,
+                onCategoryClick = { viewModel.setSelectedCategoryId(parentCategory.id)}
             )
         }
     }
 }
 
 
+/*
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewParentCategoryScreen() {
@@ -43,5 +48,7 @@ fun PreviewParentCategoryScreen() {
         modifier = Modifier,
     )
 }
+
+ */
 
 
