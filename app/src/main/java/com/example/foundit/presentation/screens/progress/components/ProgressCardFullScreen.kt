@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -141,14 +142,23 @@ fun ProgressCardFullScreen(
                         .height(150.dp),
                     contentPadding = PaddingValues(8.dp)
                 ) {
-                    items(8) {
+                    val mapData = data["a"] as? Map<String, Any> ?: emptyMap()
+
+                    // Iterate through the map's entries and display the values
+                    items(mapData.entries.toList()) { entry ->
                         Card(
                             modifier = Modifier
                                 .size(50.dp)
                                 .padding(4.dp),
                             elevation = CardDefaults.cardElevation(4.dp),
                             colors = CardDefaults.cardColors(Color.Green)
-                        ) {}
+                        ) {
+                            // Display the value of each entry in the grid
+                            Text(
+                                text = entry.value.toString(),
+                                modifier = Modifier.padding(8.dp)
+                            )
+                        }
                     }
                 }
 
