@@ -28,7 +28,8 @@ fun UserInputBottomNavigationBar(
     cancelOrBackButtonText: String,
     nextOrSubmitButtonText: String,
     onCancelOrBackClick:  () ->  Unit,
-    onNextClick: () -> Unit
+    onNextClick: () -> Unit,
+    nextButtonEnabled: () -> Boolean
 ) {
 
     ElevatedCard(
@@ -65,6 +66,7 @@ fun UserInputBottomNavigationBar(
             // Next or Submit Button
             Button(
                 onClick = onNextClick,
+                enabled = nextButtonEnabled(),
                 modifier = modifier
                     .fillMaxHeight()
                     .width(128.dp)
@@ -87,7 +89,8 @@ fun PreviewInputBottomNavigationBar() {
         onCancelOrBackClick = {},
         cancelOrBackButtonText = "Cancel",
         nextOrSubmitButtonText = "Next",
-        onNextClick = {}
+        onNextClick = {},
+        nextButtonEnabled = {true}
     )
 
 }

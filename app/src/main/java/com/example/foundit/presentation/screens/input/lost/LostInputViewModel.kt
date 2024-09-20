@@ -42,7 +42,11 @@ class LostInputViewModel @Inject constructor() : ViewModel() {
     val parentSelectedCategoryId: StateFlow<Int?> = _parentSelectedCategoryId.asStateFlow()
 
     fun setParentSelectedCategoryId(categoryId: Int) {
-        _parentSelectedCategoryId.value = categoryId
+        if (_parentSelectedCategoryId.value == categoryId) {
+            _parentSelectedCategoryId.value = null
+        } else {
+            _parentSelectedCategoryId.value = categoryId
+        }
     }
 
 
@@ -50,8 +54,12 @@ class LostInputViewModel @Inject constructor() : ViewModel() {
     private val _colorSelectedId = MutableStateFlow<Int?>(null)
     val colorSelectedId: StateFlow<Int?> = _colorSelectedId.asStateFlow()
 
-    fun setColorSelectedIdId(colorId: Int) {
-        _colorSelectedId.value = colorId
+    fun setColorSelectedIdId(colorId: Int)  {
+        if (_colorSelectedId.value == colorId) {
+            _colorSelectedId.value = null
+        } else {
+            _colorSelectedId.value = colorId
+        }
     }
 
 
@@ -65,6 +73,14 @@ class LostInputViewModel @Inject constructor() : ViewModel() {
         } else {
             _selectedChildCategoryIds.value + categoryId
         }
+    }
+
+    // Logic For Storing Item Description
+    private val _itemDescription = MutableStateFlow("")
+    val itemDescription: StateFlow<String> = _itemDescription.asStateFlow()
+
+    fun updateItemDescription(newDescription: String) {
+        _itemDescription.value = newDescription
     }
 }
 
