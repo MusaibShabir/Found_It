@@ -24,6 +24,7 @@ import com.example.foundit.presentation.screens.input.common.ChildCategoryScreen
 import com.example.foundit.presentation.screens.input.common.ParentCategoryScreen
 import com.example.foundit.presentation.screens.input.common.components.AreYouSureToCancelAlertBox
 import com.example.foundit.presentation.screens.input.common.components.ChildCategoryScreen2
+import com.example.foundit.presentation.screens.input.common.components.ColorCategoryScreen
 import com.example.foundit.presentation.screens.input.common.components.ItemDescriptionScreen
 import com.example.foundit.presentation.screens.input.common.components.UserInputBottomNavigationBar
 import com.example.foundit.presentation.screens.input.found.FoundInputViewModel
@@ -67,23 +68,27 @@ fun UserItemInputScreen(
                         }
                         else -> { navControllerForUserInputScreen.popBackStack() }
                     }
-
                                       },
                 onNextClick = {
                     when (currentRoute) {
                     NavRoutes.PARENT_CATEGORY_SCREEN -> {
+                        navControllerForUserInputScreen.navigate(NavRoutes.COLOR_CATEGORY_SCREEN)
+                    }
+                    NavRoutes.COLOR_CATEGORY_SCREEN -> {
                         navControllerForUserInputScreen.navigate(NavRoutes.CHILD_CATEGORY_SCREEN)
                     }
                     NavRoutes.CHILD_CATEGORY_SCREEN -> {
                         navControllerForUserInputScreen.navigate(NavRoutes.CHILD_CATEGORY_SCREEN2)
                     }
-                    NavRoutes.CHILD_CATEGORY_SCREEN2 -> {
-                        navControllerForUserInputScreen.navigate(NavRoutes.ITEM_DESCRIPTION_SCREEN)
-                    }
+                        NavRoutes.CHILD_CATEGORY_SCREEN2 -> {
+                            navControllerForUserInputScreen.navigate(NavRoutes.ITEM_DESCRIPTION_SCREEN)
+                        }
                     else -> {
 
                     }
-                }})
+                }
+                }
+            )
         }
 
     ){ paddingValues ->
@@ -96,6 +101,15 @@ fun UserItemInputScreen(
             composable(NavRoutes.PARENT_CATEGORY_SCREEN,
             ) {
                 ParentCategoryScreen(
+                    modifier = modifier,
+                    viewModel = lostInputViewModel
+                )
+            }
+
+            composable(
+                NavRoutes.COLOR_CATEGORY_SCREEN,
+            ) {
+                ColorCategoryScreen(
                     modifier = modifier,
                     viewModel = lostInputViewModel
                 )
