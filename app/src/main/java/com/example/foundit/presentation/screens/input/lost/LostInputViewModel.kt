@@ -4,11 +4,13 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.foundit.presentation.data.firestore.FirestoreService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -94,6 +96,19 @@ class LostInputViewModel @Inject constructor(
             "selectedChildCategoryIds" to selectedChildCategoryIds.value
         )
     }
+
+    fun onSubmitClick() {
+        viewModelScope.launch {
+            val getChildCategoryIdsAsString = selectedChildCategoryIds.value.joinToString(", ")
+        }
+
+    }
+
+
+
+
+
+
 }
 
 
