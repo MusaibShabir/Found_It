@@ -54,7 +54,6 @@ class LostInputViewModel @Inject constructor() : ViewModel() {
     // Logic For Parent Category Selection
     private val _colorSelectedId = MutableStateFlow<Int?>(null)
     val colorSelectedId: StateFlow<Int?> = _colorSelectedId.asStateFlow()
-
     fun setColorSelectedIdId(colorId: Int)  {
         if (_colorSelectedId.value == colorId) {
             _colorSelectedId.value = null
@@ -82,6 +81,15 @@ class LostInputViewModel @Inject constructor() : ViewModel() {
 
     fun updateItemDescription(newDescription: String) {
         _itemDescription.value = newDescription
+    }
+
+    //Logic To get All the Data from the User by ID
+    fun getAllUserDataByCategoryIds(): Map<String, Any?> {
+        return mapOf(
+            "parentSelectedCategoryId" to parentSelectedCategoryId.value,
+            "colorSelectedId" to colorSelectedId.value,
+            "selectedChildCategoryIds" to selectedChildCategoryIds.value
+        )
     }
 }
 
