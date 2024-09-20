@@ -24,6 +24,7 @@ import com.example.foundit.presentation.screens.profile.ProfileScreen
 import com.example.foundit.presentation.screens.profile.ProfileViewModel
 import com.example.foundit.presentation.screens.profile.components.EditProfileScreen
 import com.example.foundit.presentation.screens.progress.ProcessScreen
+import com.example.foundit.presentation.screens.progress.components.ProgressCardFullScreen
 import com.example.foundit.presentation.screens.registration.ForgotPasswordScreen
 import com.example.foundit.presentation.screens.registration.GetStartedScreen
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleViewModel
@@ -159,6 +160,10 @@ fun MainScreen(modifier: Modifier) {
                 ProcessScreen(modifier, navController)
             }
 
+            composable(NavRoutes.PROGRESS_CARD_FULL_SCREEN) {
+                ProgressCardFullScreen(modifier = modifier, cardItem = mapOf(), navController = navController)
+            }
+
             composable(NavRoutes.NOTIFICATIONS) {
                 NotificationScreen(
                     modifier = modifier,
@@ -205,7 +210,7 @@ fun MainScreen(modifier: Modifier) {
 
 
             composable(NavRoutes.DELETE_ACCOUNT) {
-                DeleteAccountScreen(modifier = modifier, navController = navController, onDeleteAccount = { })
+                DeleteAccountScreen(navController = navController, modifier = modifier)
             }
 
             composable(NavRoutes.LOG_OUT) {

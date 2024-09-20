@@ -12,6 +12,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,6 +26,8 @@ import com.example.foundit.presentation.screens.input.common.components.AreYouSu
 import com.example.foundit.presentation.screens.input.common.components.ChildCategoryScreen2
 import com.example.foundit.presentation.screens.input.common.components.ItemDescriptionScreen
 import com.example.foundit.presentation.screens.input.common.components.UserInputBottomNavigationBar
+import com.example.foundit.presentation.screens.input.found.FoundInputViewModel
+import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
 
 
 @Composable
@@ -32,9 +35,14 @@ fun UserItemInputScreen(
     modifier: Modifier,
     navController: NavController
 ) {
+    val lostInputViewModel: LostInputViewModel = hiltViewModel()
+    val foundInputViewModel: FoundInputViewModel= hiltViewModel()
+
+
     var showAlertDialogBox by remember { mutableStateOf(false) }
     val navControllerForUserInputScreen = rememberNavController()
     val currentRoute = currentRoute(navControllerForUserInputScreen)
+
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = { TheTopAppBar(title = "Report Lost Item", navController = navController) },
@@ -42,9 +50,14 @@ fun UserItemInputScreen(
             UserInputBottomNavigationBar(
                 modifier = modifier,
 
-                onCancelOrBackButtonText = when(currentRoute) {
+                cancelOrBackButtonText = when(currentRoute) {
                     NavRoutes.PARENT_CATEGORY_SCREEN -> { "Cancel" }
                     else -> { "Back" }
+                },
+
+                nextOrSubmitButtonText = when(currentRoute) {
+                    NavRoutes.ITEM_DESCRIPTION_SCREEN -> { "Submit" }
+                    else -> { "Next" }
                 },
 
                 onCancelOrBackClick = {
@@ -74,21 +87,25 @@ fun UserItemInputScreen(
         }
 
     ){ paddingValues ->
-
         NavHost(
             navController = navControllerForUserInputScreen,
             startDestination = NavRoutes.PARENT_CATEGORY_SCREEN,
             modifier = modifier.padding(paddingValues)
         ) {
 
-            composable(NavRoutes.PARENT_CATEGORY_SCREEN) {
+            composable(NavRoutes.PARENT_CATEGORY_SCREEN,
+            ) {
                 ParentCategoryScreen(
-                    modifier = modifier
+                    modifier = modifier,
+                    viewModel = lostInputViewModel
                 )
             }
 
             composable(NavRoutes.CHILD_CATEGORY_SCREEN) {
-                ChildCategoryScreen(modifier = modifier)
+                ChildCategoryScreen(
+                    modifier = modifier,
+                    viewModel = lostInputViewModel
+                )
             }
 
             composable(NavRoutes.CHILD_CATEGORY_SCREEN2) {
@@ -115,9 +132,6 @@ fun UserItemInputScreen(
         enabled = currentRoute == NavRoutes.PARENT_CATEGORY_SCREEN,
         onBack = { showAlertDialogBox = true }
     )
-
-
-
 }
 
 

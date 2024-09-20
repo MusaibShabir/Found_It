@@ -20,15 +20,14 @@ class LoginViewModel @Inject constructor(
     fun login(
         email: String,
         password: String,
-        onResult: (Boolean) -> Unit)
+        onResult: (Boolean,Exception?) -> Unit)
     {
         viewModelScope.launch {
             try {
                 accountService.login(email,password)
-                onResult(true)
+                onResult(true,null)
             } catch (e: Exception) {
-                onResult(false)
-                Log.d("Login", "login error (viewmodel): ${e.message}")
+                onResult(false,e)
             }
         }
     }

@@ -1,12 +1,7 @@
 package com.example.foundit.presentation.screens.registration.signup
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -65,7 +60,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.registration.components.ClickableTextToNavigationRoute
@@ -73,11 +67,11 @@ import com.example.foundit.presentation.screens.registration.components.OrDivide
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleViewModel
 import com.example.foundit.ui.theme.Righteous
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.LatLng
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -104,6 +98,7 @@ fun SignUpScreen(
     val coroutineScope = rememberCoroutineScope()
     val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
+    /*
     val locationPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -133,6 +128,8 @@ fun SignUpScreen(
             }
         }
     }
+
+     */
 
     Scaffold(
         modifier = modifier
@@ -440,17 +437,19 @@ fun SignUpScreen(
                         .width(182.dp)
                         .height(IntrinsicSize.Max),
                     onClick = {
-                        signUpViewModel.signUpUser(
-                            email,
-                            password,
-                            firstName,
-                            lastName
-                        ) { isSuccess ->
+                        signUpViewModel.signUpUser(email, password, firstName, lastName) { isSuccess, e ->
                             if (isSuccess) {
-                                Log.d("SignUp", "User created successfully")
+                                Toast.makeText(context, "User created successfully. Please verify your email.", Toast.LENGTH_LONG).show()
                                 navController.navigate(NavRoutes.HOME)
                             } else {
-                                Log.d("SignUp", "Authentication failed")
+                                val errorMessage = when (e) {
+                                    is FirebaseAuthWeakPasswordException -> "Weak password: Password should be at least 6 characters."
+                                    is FirebaseAuthInvalidCredentialsException ->"Invalid email: Please enter a valid email address."
+                                    is FirebaseAuthUserCollisionException -> "Email already in use. Please use a different email."
+                                    is FirebaseNetworkException -> "Network issue: Please check your connection and try again."
+                                    else -> "An unexpected error occurred."
+                                }
+                                Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
                             }
                         }
                     },
@@ -493,7 +492,7 @@ fun SignUpScreen(
                     when (result) {
                         SignUpViewModel.SignInResult.Success -> {
                             Log.d("SignUp", "User created successfully")
-                            requestLocationPermission()
+                            //requestLocationPermission()
                             navController.navigate(NavRoutes.HOME)
                         }
 
@@ -590,6 +589,7 @@ fun SignUpScreen(
 
 }
 
+/*
 suspend fun getLastLocation(
     fusedLocationClient: FusedLocationProviderClient,
     context: Context
@@ -618,6 +618,8 @@ suspend fun getLastLocation(
     }
 }
 
+ */
+
 
 
 //@Composable
@@ -630,3 +632,4 @@ suspend fun getLastLocation(
 //        navController = rememberNavController()
 //    )
 //}
+
