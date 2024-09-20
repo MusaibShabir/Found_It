@@ -38,14 +38,14 @@ class LostInputViewModel @Inject constructor() : ViewModel() {
         println(integerArray)
     }
 
-    // Logic for Parent Category Selection
+    // Logic For Parent Category Selection
     var parentSelectedCategoryId by mutableStateOf<Int?>(null)
 
     fun setParentSelectedCategoryId(categoryId: Int) {
         parentSelectedCategoryId = categoryId
     }
 
-    // Logic for Color  Selection
+    // Logic For Color  Selection
     var colorSelectedId by mutableStateOf<Int?>(null)
 
     fun setColorSelectedIdId(colorId: Int) {
@@ -54,12 +54,10 @@ class LostInputViewModel @Inject constructor() : ViewModel() {
 
 
 
-
+    // Logic For Child Category Selection
     private val _selectedChildCategoryIds = MutableStateFlow<Set<Int>>(emptySet())
     val selectedChildCategoryIds: StateFlow<Set<Int>> = _selectedChildCategoryIds
 
-
-    // Function to toggle child category selection
     fun toggleChildCategorySelection(categoryId: Int) {
         _selectedChildCategoryIds.value = if (categoryId in _selectedChildCategoryIds.value) {
             _selectedChildCategoryIds.value - categoryId
