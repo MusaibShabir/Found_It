@@ -84,7 +84,12 @@ class FirestoreServiceImpl @Inject constructor(
 //    val a: Long
 //        get() = getProfileData()?.get("cardCount") as Long
 
-    override suspend fun addItemData(phone: String, model: String, color: String) {
+    override suspend fun addItemData(
+        cardType: Int,
+        parentCategory: String,
+        cardDescription: String,
+        childCategory: Map<String, Any>
+    ) {
         val userId = currentUserId
 
         // Ensure the user ID is not empty
@@ -112,12 +117,12 @@ class FirestoreServiceImpl @Inject constructor(
                     // Prepare the data for the new card
                     val cardData = mapOf(
                         "cardId" to "$userId@$newCardCount",
-                        "cardType" to 0,
-                        "phone" to phone,
-                        "model" to model,
-                        "color" to color,
-                        "status" to 0,
-                        "date" to Timestamp(Date())
+                        "cardType" to cardType,
+                        "parentCategory" to parentCategory,
+                        "childCategory" to childCategory,
+                        "cardDescription" to cardDescription,
+                        "date" to Timestamp(Date()),
+                        "status" to 0
                     )
 
                     // Reference to the new Card document
