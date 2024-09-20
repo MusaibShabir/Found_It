@@ -7,6 +7,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.foundit.presentation.screens.input.data.colorCategories
@@ -17,6 +19,8 @@ fun ColorCategoryScreen(
     modifier: Modifier,
     viewModel: LostInputViewModel
 ) {
+
+    val selectedCategoryId by viewModel.colorSelectedId.collectAsState()
 
     LazyVerticalGrid(
         modifier = modifier
@@ -30,7 +34,7 @@ fun ColorCategoryScreen(
             CategoryCard(
                 modifier = Modifier,
                 categoryText = colorCategory.name,
-                isSelected = viewModel.colorSelectedId == colorCategory.id,
+                isSelected = colorCategory.id == selectedCategoryId,
                 onCategoryClick = { viewModel.setColorSelectedIdId( colorCategory.id ) }
             )
         }

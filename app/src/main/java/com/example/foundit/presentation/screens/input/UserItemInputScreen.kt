@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,6 +40,9 @@ fun UserItemInputScreen(
     val lostInputViewModel: LostInputViewModel = hiltViewModel()
     val foundInputViewModel: FoundInputViewModel= hiltViewModel()
 
+    val isParentSelectedCategoryEmpty by lostInputViewModel.parentSelectedCategoryId.collectAsState()
+    val isColorSelectedCategoryEmpty by lostInputViewModel.parentSelectedCategoryId.collectAsState()
+    val isChildSelectedCategoryEmpty by lostInputViewModel.selectedChildCategoryIds.collectAsState()
 
     var showAlertDialogBox by remember { mutableStateOf(false) }
     val navControllerForUserInputScreen = rememberNavController()

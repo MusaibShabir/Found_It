@@ -7,6 +7,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.foundit.presentation.screens.input.common.components.CategoryCard
@@ -19,6 +21,7 @@ fun ParentCategoryScreen(
     viewModel: LostInputViewModel
 ) {
 
+    val selectedCategoryId by viewModel.parentSelectedCategoryId.collectAsState()
 
     LazyVerticalGrid(
         modifier = modifier
@@ -32,7 +35,7 @@ fun ParentCategoryScreen(
             CategoryCard(
                 modifier = Modifier,
                 categoryText = parentCategory.name,
-                isSelected = viewModel.parentSelectedCategoryId == parentCategory.id,
+                isSelected =  parentCategory.id == selectedCategoryId,
                 onCategoryClick = { viewModel.setParentSelectedCategoryId( parentCategory.id ) }
             )
         }

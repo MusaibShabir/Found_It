@@ -1,14 +1,13 @@
 package com.example.foundit.presentation.screens.input.lost
 
 import android.util.Log
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,19 +38,21 @@ class LostInputViewModel @Inject constructor() : ViewModel() {
     }
 
     // Logic For Parent Category Selection
-    var parentSelectedCategoryId by mutableStateOf<Int?>(null)
+    private val _parentSelectedCategoryId = MutableStateFlow<Int?>(null)
+    val parentSelectedCategoryId: StateFlow<Int?> = _parentSelectedCategoryId.asStateFlow()
 
     fun setParentSelectedCategoryId(categoryId: Int) {
-        parentSelectedCategoryId = categoryId
+        _parentSelectedCategoryId.value = categoryId
     }
 
-    // Logic For Color  Selection
-    var colorSelectedId by mutableStateOf<Int?>(null)
+
+    // Logic For Parent Category Selection
+    private val _colorSelectedId = MutableStateFlow<Int?>(null)
+    val colorSelectedId: StateFlow<Int?> = _colorSelectedId.asStateFlow()
 
     fun setColorSelectedIdId(colorId: Int) {
-        colorSelectedId = colorId
+        _colorSelectedId.value = colorId
     }
-
 
 
     // Logic For Child Category Selection
