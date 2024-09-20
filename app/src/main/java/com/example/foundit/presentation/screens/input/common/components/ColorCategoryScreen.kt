@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.input.common
+package com.example.foundit.presentation.screens.input.common.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,50 +11,32 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.foundit.presentation.screens.input.common.components.CategoryCard
-import com.example.foundit.presentation.screens.input.data.childCategories
+import com.example.foundit.presentation.screens.input.data.colorCategories
 import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
 
-
 @Composable
-fun ChildCategoryScreen(
+fun ColorCategoryScreen(
     modifier: Modifier,
     viewModel: LostInputViewModel
 ) {
 
-    val selectedCategoryIds by viewModel.selectedChildCategoryIds.collectAsState()
+    val selectedCategoryId by viewModel.colorSelectedId.collectAsState()
 
     LazyVerticalGrid(
         modifier = modifier
             .fillMaxSize()
             .padding(),
         verticalArrangement = Arrangement.Bottom,
-        columns = GridCells.Adaptive(minSize = 110.dp)
+        horizontalArrangement = Arrangement.Start,
+        columns = GridCells.Adaptive(minSize = 138.dp)
     ) {
-
-        items(childCategories) { childCategory ->
+        items(colorCategories) { colorCategory ->
             CategoryCard(
                 modifier = Modifier,
-                categoryText = childCategory.name,
-                isSelected = childCategory.id in selectedCategoryIds,
-                onCategoryClick = { viewModel.toggleChildCategorySelection( childCategory.id) },
+                categoryText = colorCategory.name,
+                isSelected = colorCategory.id == selectedCategoryId,
+                onCategoryClick = { viewModel.setColorSelectedIdId( colorCategory.id ) }
             )
         }
-
-
     }
 }
-
-
-
-/*
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewChildCategoryScreen() {
-    ChildCategoryScreen(
-        modifier = Modifier,
-    )
-}
-
- */
-
