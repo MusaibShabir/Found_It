@@ -44,12 +44,12 @@ class LostInputViewModel @Inject constructor(
 
 
     // Logic For Parent Category Selection
-    private val _parentSelectedCategoryId = MutableStateFlow<Int?>(null)
-    val parentSelectedCategoryId: StateFlow<Int?> = _parentSelectedCategoryId.asStateFlow()
+    private val _parentSelectedCategoryId = MutableStateFlow("")
+    val parentSelectedCategoryId: StateFlow<String> = _parentSelectedCategoryId.asStateFlow()
 
-    fun setParentSelectedCategoryId(categoryId: Int) {
+    fun setParentSelectedCategoryId(categoryId: String) {
         if (_parentSelectedCategoryId.value == categoryId) {
-            _parentSelectedCategoryId.value = null
+            _parentSelectedCategoryId.value = ""
         } else {
             _parentSelectedCategoryId.value = categoryId
         }
@@ -57,11 +57,11 @@ class LostInputViewModel @Inject constructor(
 
 
     // Logic For Parent Category Selection
-    private val _colorSelectedId = MutableStateFlow<Int?>(null)
-    val colorSelectedId: StateFlow<Int?> = _colorSelectedId.asStateFlow()
-    fun setColorSelectedIdId(colorId: Int)  {
+    private val _colorSelectedId = MutableStateFlow("")
+    val colorSelectedId: StateFlow<String> = _colorSelectedId.asStateFlow()
+    fun setColorSelectedIdId(colorId: String)  {
         if (_colorSelectedId.value == colorId) {
-            _colorSelectedId.value = null
+            _colorSelectedId.value = ""
         } else {
             _colorSelectedId.value = colorId
         }
@@ -100,6 +100,17 @@ class LostInputViewModel @Inject constructor(
     fun onSubmitClick() {
         viewModelScope.launch {
             val getChildCategoryIdsAsString = selectedChildCategoryIds.value.joinToString(", ")
+            val getParentCategory = parentSelectedCategoryId.value
+            val getColorCategory = colorSelectedId.value
+            val getItemDescription = itemDescription.value
+
+            firestoreService.addItemData(
+                cardType = 0,
+                childCategory = getChildCategoryIdsAsString,
+                parentCategory = getParentCategory,
+                color = getColorCategory,
+                cardDescription = getItemDescription
+            )
         }
 
     }
