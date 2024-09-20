@@ -90,6 +90,7 @@ class LostInputViewModel @Inject constructor() : ViewModel() {
             "colorSelectedId" to colorSelectedId.value,
             "selectedChildCategoryIds" to selectedChildCategoryIds.value
         )
+
     }
 }
 
