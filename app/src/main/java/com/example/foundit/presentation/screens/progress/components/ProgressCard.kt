@@ -304,7 +304,6 @@ fun formatDate(timestamp: Timestamp?): String {
 ////    ) {
 ////        Text(
 ////            text = "Nothing to show here"
-////
 ////        )
 ////    }
 //    Column (
