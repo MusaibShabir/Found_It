@@ -46,8 +46,9 @@ import com.example.foundit.presentation.screens.progress.ProgressFullCardViewMod
 fun ProgressCardFullScreen(
     modifier: Modifier,
     cardId: String,
-    navController: NavHostController
+    navController: NavHostController// Use Hilt to inject ViewModel
 ) {
+    // Collect the card data from the ViewModel
     val viewModel: ProgressFullCardViewModel = hiltViewModel()
     val cardData by viewModel.cardData.collectAsState()
 
@@ -63,15 +64,11 @@ fun ProgressCardFullScreen(
     ) {
         // Top bar with close icon and Lost Item button
         Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            //.padding(end = 16.dp),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(
-                onClick = { navController.popBackStack() },
-            ) {
+            IconButton(onClick = { navController.popBackStack() }) {
                 Icon(
                     imageVector = Icons.Default.Close,
                     contentDescription = "Close",
@@ -79,134 +76,106 @@ fun ProgressCardFullScreen(
                 )
             }
 
-//                Row(
-//                    modifier = Modifier
-//                        .background(Color.Red, RoundedCornerShape(16.dp))
-//                        .padding(horizontal = 14.dp, vertical = 8.dp),
-//                    horizontalArrangement = Arrangement.SpaceBetween,
-//                    verticalAlignment = Alignment.CenterVertically
-//                ) {
-//                    Text(
-//                        text = "Lost Item",
-//                        color = Color.White,
-//                        style = MaterialTheme.typography.titleMedium
-//                    )
-//                    Spacer(modifier = Modifier.size(14.dp))
-//                    CircularProgressIndicator(trackColor = Color.White, strokeCap = StrokeCap.Round, modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
-//                }
             Card(
                 colors = CardDefaults.cardColors(Color.Red),
                 shape = RoundedCornerShape(16.dp),
-                modifier = Modifier
-                    .padding(end = 8.dp),
+                modifier = Modifier.padding(end = 8.dp),
                 elevation = CardDefaults.cardElevation(4.dp)
             ) {
-                Row (
+                Row(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .background(Color.Red, RoundedCornerShape(16.dp))
-                        .padding(horizontal = 14.dp, vertical = 8.dp),
-
-                    ){
+                        .padding(horizontal = 14.dp, vertical = 8.dp)
+                ) {
                     Text(
                         text = "Found Item",
                         color = Color.White,
                         style = MaterialTheme.typography.titleMedium
                     )
                     Spacer(modifier = Modifier.size(14.dp))
-                    CircularProgressIndicator(trackColor = Color.White, strokeCap = StrokeCap.Round, modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
+                    CircularProgressIndicator(
+                        trackColor = Color.White,
+                        strokeCap = StrokeCap.Round,
+                        modifier = Modifier.size(20.dp),
+                        strokeWidth = 2.dp
+                    )
                 }
-
             }
         }
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Column (
-            modifier = Modifier.padding(horizontal = 16.dp)
-        ){
-            // Title and location row
-            Column(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(text = "${cardData?.get("phone")}", style = MaterialTheme.typography.headlineLarge)
+        // Display card data
+        cardData?.let { data ->
+            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                // Title and location row
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text(text = data["phone"]?.toString() ?: "Unknown", style = MaterialTheme.typography.headlineLarge)
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = "📍 Srinagar, Jammu & Kashmir",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.Gray
-                    )
-                    Text(
-                        text = "13-May-2024",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.Gray
-                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "📍 ${data["location"]?.toString() ?: "Unknown location"}",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.Gray
+                        )
+                        Text(
+                            text = data["date"]?.toString() ?: "Unknown date",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.Gray
+                        )
+                    }
                 }
-            }
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            // Lazy grid for white boxes
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(4), // 4 columns
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(150.dp),
-                contentPadding = PaddingValues(8.dp)
-            ) {
-                items(8) { // Number of items in the grid
-                    Card(
-                        modifier = Modifier
-                            .size(50.dp)
-                            .padding(4.dp),
-                        elevation = CardDefaults.cardElevation(4.dp),
-                        colors = CardDefaults.cardColors(Color.Green)
-                    ){}
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Item description card
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(120.dp),
-                shape = RoundedCornerShape(8.dp),
-                elevation = CardDefaults.cardElevation(4.dp)
-            ) {
-                Box(
+                // Lazy grid for white boxes
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(4),
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(8.dp)
+                        .fillMaxWidth()
+                        .height(150.dp),
+                    contentPadding = PaddingValues(8.dp)
                 ) {
-                    Text(text = "Item Description", style = MaterialTheme.typography.bodySmall)
+                    items(8) {
+                        Card(
+                            modifier = Modifier
+                                .size(50.dp)
+                                .padding(4.dp),
+                            elevation = CardDefaults.cardElevation(4.dp),
+                            colors = CardDefaults.cardColors(Color.Green)
+                        ) {}
+                    }
                 }
-            }
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            // Area for matched cards
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .background(Color.LightGray, shape = RoundedCornerShape(8.dp)),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "Area for Matched Cards", color = Color.DarkGray)
+                // Item description card
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(120.dp),
+                    shape = RoundedCornerShape(8.dp),
+                    elevation = CardDefaults.cardElevation(4.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(8.dp)
+                    ) {
+                        Text(text = data["description"]?.toString() ?: "No description available", style = MaterialTheme.typography.bodySmall)
+                    }
+                }
             }
         }
     }
 
+    // Floating action button for delete
     Box(modifier = Modifier.fillMaxSize()) {
-
-        // Floating action button for delete
         FloatingActionButton(
             onClick = { /* Handle delete action */ },
             modifier = Modifier
@@ -234,5 +203,5 @@ fun PreviewProgressCardFullScreen() {
         "location" to "Srinagar, Jammu & Kashmir",
         "status" to 0
     )
-    ProgressCardFullScreen(modifier = Modifier, cardId = "", navController = NavHostController(LocalContext.current))
+    ProgressCardFullScreen(modifier = Modifier, cardId = cardItem["cardId"].toString(), navController = NavHostController(LocalContext.current))
 }

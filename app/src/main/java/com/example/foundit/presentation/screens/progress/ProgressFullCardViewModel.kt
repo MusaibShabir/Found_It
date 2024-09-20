@@ -1,5 +1,6 @@
 package com.example.foundit.presentation.screens.progress
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foundit.presentation.data.firestore.FirestoreService
@@ -16,7 +17,7 @@ class ProgressFullCardViewModel @Inject constructor(
 ) : ViewModel() {
 
     // Holds the card data
-    private val _cardData = MutableStateFlow<Map<String, Any>?>(null)
+    private val _cardData = MutableStateFlow<Map<String, Any>?>(emptyMap())
     val cardData: StateFlow<Map<String, Any>?> = _cardData
 
     // Fetch data for the given cardId
@@ -26,10 +27,16 @@ class ProgressFullCardViewModel @Inject constructor(
                 .catch {
                     // Handle any errors
                     _cardData.value = emptyMap()
+                    Log.d("dataCard", "Error fetching data: ${it.message}")
                 }
                 .collect { data ->
                     _cardData.value = data
+                    // Log inside the collect block to ensure data has been fetched
+                    Log.d("dataCard", "fetchCardData: ${_cardData.value}")
                 }
+
+            // This log will still show the old data (emptyMap) as it executes before collect completes
+            Log.d("dataCard", "fetchCardData after collect: ${_cardData.value}")
         }
     }
 }

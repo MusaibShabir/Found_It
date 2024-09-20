@@ -209,7 +209,7 @@ class FirestoreServiceImpl @Inject constructor(
         }
 
         val documentRef = firebaseFirestore
-            .collectionGroup("Card")
+            .collection("User/${userId}/Card")
             .whereEqualTo("cardId", cardId) // Query for specific cardId
 
         val listenerRegistration = documentRef.addSnapshotListener { snapshot, exception ->
