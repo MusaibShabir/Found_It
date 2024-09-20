@@ -37,6 +37,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
 import kotlinx.coroutines.delay
@@ -56,7 +58,8 @@ import com.google.firebase.Timestamp
 @Composable
 fun ProcessCard(
     modifier: Modifier,
-    cardItem: Map<String, Any>
+    cardItem: Map<String, Any>,
+    navController: NavHostController
 ) {
 
 //    val colorCode: Int
@@ -108,7 +111,9 @@ fun ProcessCard(
     }
 
     Card(
-        onClick = { /*TODO*/ },
+        onClick = {
+            navController.navigate(NavRoutes.PROGRESS_CARD_FULL_SCREEN + "/${cardItem["cardId"]}")
+        },
         colors = CardDefaults.cardColors(containerColor = cardColor),
         modifier = modifier
             .fillMaxWidth()
@@ -225,7 +230,8 @@ fun CardLinearProgressIndicator() {
 @Composable
 fun ProcessCardList(
     modifier: Modifier,
-    cardData: List<Map<String, Any>>
+    cardData: List<Map<String, Any>>,
+    navController: NavHostController
 ) {
     if (cardData.isEmpty()) {
         Column(
@@ -245,7 +251,7 @@ fun ProcessCardList(
         //verticalArrangement = Arrangement.spacedBy(16.dp) // Add space between items if needed
     ) {
         items(cardData) { item ->
-            ProcessCard(modifier = modifier, cardItem = item)
+            ProcessCard(modifier = modifier, cardItem = item, navController = navController)
         }
     }
 }

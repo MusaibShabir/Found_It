@@ -27,6 +27,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,15 +37,24 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 
 // For LazyVerticalGrid
 @Composable
 fun ProgressCardFullScreen(
     modifier: Modifier,
-    cardItem: Map<String, Any>,
+    cardId: String,
     navController: NavHostController
 ) {
+    val viewModel: ProgressFullCardViewModel = hiltViewModel()
+    val cardData by viewModel.cardData.collectAsState()
+
+    // Fetch the data when the composable is first launched
+    LaunchedEffect(cardId) {
+        viewModel.fetchCardData(cardId) // Fetch the card data
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -117,7 +129,7 @@ fun ProgressCardFullScreen(
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(text = "Wallet", style = MaterialTheme.typography.headlineLarge)
+                Text(text = "${cardData?.get("phone")}", style = MaterialTheme.typography.headlineLarge)
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -221,5 +233,5 @@ fun PreviewProgressCardFullScreen() {
         "location" to "Srinagar, Jammu & Kashmir",
         "status" to 0
     )
-    ProgressCardFullScreen(modifier = Modifier, cardItem = cardItem, navController = NavHostController(LocalContext.current))
+    ProgressCardFullScreen(modifier = Modifier, cardId = "", navController = NavHostController(LocalContext.current))
 }
