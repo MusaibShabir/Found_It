@@ -97,6 +97,10 @@ fun UserItemInputScreen(
                     NavRoutes.CHILD_CATEGORY_SCREEN -> {
                         navControllerForUserInputScreen.navigate(NavRoutes.ITEM_DESCRIPTION_SCREEN)
                     }
+                        NavRoutes.ITEM_DESCRIPTION_SCREEN -> {
+                        lostInputViewModel.getAllUserDataByCategoryIds()
+                    }
+
                     else -> {
 
                     }
