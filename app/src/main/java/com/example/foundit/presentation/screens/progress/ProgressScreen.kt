@@ -9,21 +9,19 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.foundit.R
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.data.FinishedProcessData
-import com.example.foundit.presentation.data.InProcessData
 import com.example.foundit.presentation.data.navigation.NavRoutes
-import com.example.foundit.presentation.screens.progress.components.FinishedProcessCardList
-import com.example.foundit.presentation.screens.progress.components.HaltedProcessCardList
-import com.example.foundit.presentation.screens.progress.components.InProcessCardList
-import com.example.foundit.presentation.screens.progress.components.ProcessCardItem
+import com.example.foundit.presentation.screens.progress.components.ProcessCardList
 import kotlinx.coroutines.launch
 
 @Composable
@@ -35,9 +33,14 @@ fun ProcessScreen(modifier: Modifier, navController: NavHostController) {
 
     val coroutineScope = rememberCoroutineScope()
 
-    val inProcessItems = InProcessData.map { ProcessCardItem.InProcess(it) }
+    val viewModel: ProgressViewModel = hiltViewModel()
+    val haltedItems by viewModel.haltedItems.collectAsState()
+    val inProcessItems by viewModel.inProcessItems.collectAsState()
+    val finishedItems by viewModel.finishedItems.collectAsState()
 
-    val finishedItems = FinishedProcessData.map { ProcessCardItem.Finished(it)}
+//    val inProcessItems = InProcessData.map { ProcessCardItem.InProcess(it) }
+//
+//    val finishedItems = FinishedProcessData.map { ProcessCardItem.Finished(it)}
 
     Scaffold(
         modifier = modifier,
@@ -85,18 +88,20 @@ fun ProcessScreen(modifier: Modifier, navController: NavHostController) {
             ) { page ->
                 when (page) {
                     0 -> {
-                        HaltedProcessCardList(modifier = modifier)
+                        ProcessCardList(modifier = modifier, cardData = haltedItems)
                     }
                     1 -> {
-                        InProcessCardList(modifier = modifier, cardData = inProcessItems)
+                        ProcessCardList(modifier = modifier, cardData = inProcessItems)
                     }
                     2 -> {
-                        FinishedProcessCardList(modifier = modifier, cardData =finishedItems)
+                        ProcessCardList(modifier = modifier, cardData =finishedItems)
                     }
                 }
             }
         }
     }
+
+
 }
 
 @Composable

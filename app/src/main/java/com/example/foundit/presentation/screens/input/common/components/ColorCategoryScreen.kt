@@ -34,8 +34,8 @@ fun ColorCategoryScreen(
             CategoryCard(
                 modifier = Modifier,
                 categoryText = colorCategory.name,
-                isSelected = colorCategory.id == selectedCategoryId,
-                onCategoryClick = { viewModel.setColorSelectedIdId( colorCategory.id ) }
+                isSelected = colorCategory.name == selectedCategoryId,
+                onCategoryClick = { viewModel.setColorSelectedIdId( colorCategory.name ) }
             )
         }
     }

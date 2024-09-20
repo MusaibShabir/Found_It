@@ -35,8 +35,8 @@ fun ParentCategoryScreen(
             CategoryCard(
                 modifier = Modifier,
                 categoryText = parentCategory.name,
-                isSelected = parentCategory.id == selectedCategoryId,
-                onCategoryClick = { viewModel.setParentSelectedCategoryId(parentCategory.id) }
+                isSelected = parentCategory.name == selectedCategoryId,
+                onCategoryClick = { viewModel.setParentSelectedCategoryId( parentCategory.name) }
             )
         }
     }

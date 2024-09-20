@@ -4,14 +4,19 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.foundit.presentation.data.firestore.FirestoreService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LostInputViewModel @Inject constructor() : ViewModel() {
+class LostInputViewModel @Inject constructor(
+    private val firestoreService: FirestoreService
+) : ViewModel() {
 
     private val collectedData = mutableStateOf<InputLostData?>(null)
 
@@ -39,12 +44,12 @@ class LostInputViewModel @Inject constructor() : ViewModel() {
 
 
     // Logic For Parent Category Selection
-    private val _parentSelectedCategoryId = MutableStateFlow<Int?>(null)
-    val parentSelectedCategoryId: StateFlow<Int?> = _parentSelectedCategoryId.asStateFlow()
+    private val _parentSelectedCategoryId = MutableStateFlow("")
+    val parentSelectedCategoryId: StateFlow<String> = _parentSelectedCategoryId.asStateFlow()
 
-    fun setParentSelectedCategoryId(categoryId: Int) {
+    fun setParentSelectedCategoryId(categoryId: String) {
         if (_parentSelectedCategoryId.value == categoryId) {
-            _parentSelectedCategoryId.value = null
+            _parentSelectedCategoryId.value = ""
         } else {
             _parentSelectedCategoryId.value = categoryId
         }
@@ -52,11 +57,11 @@ class LostInputViewModel @Inject constructor() : ViewModel() {
 
 
     // Logic For Parent Category Selection
-    private val _colorSelectedId = MutableStateFlow<Int?>(null)
-    val colorSelectedId: StateFlow<Int?> = _colorSelectedId.asStateFlow()
-    fun setColorSelectedIdId(colorId: Int)  {
+    private val _colorSelectedId = MutableStateFlow("")
+    val colorSelectedId: StateFlow<String> = _colorSelectedId.asStateFlow()
+    fun setColorSelectedIdId(colorId: String)  {
         if (_colorSelectedId.value == colorId) {
-            _colorSelectedId.value = null
+            _colorSelectedId.value = ""
         } else {
             _colorSelectedId.value = colorId
         }
@@ -92,6 +97,30 @@ class LostInputViewModel @Inject constructor() : ViewModel() {
         )
 
     }
+
+    fun onSubmitClick() {
+        viewModelScope.launch {
+            val getChildCategoryIdsAsString = selectedChildCategoryIds.value.joinToString(", ")
+            val getParentCategory = parentSelectedCategoryId.value
+            val getColorCategory = colorSelectedId.value
+            val getItemDescription = itemDescription.value
+
+            firestoreService.addItemData(
+                cardType = 0,
+                childCategory = getChildCategoryIdsAsString,
+                parentCategory = getParentCategory,
+                color = getColorCategory,
+                cardDescription = getItemDescription
+            )
+        }
+
+    }
+
+
+
+
+
+
 }
 
 
