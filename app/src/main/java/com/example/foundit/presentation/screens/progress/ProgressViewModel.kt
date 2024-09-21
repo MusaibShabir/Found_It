@@ -42,31 +42,26 @@ class ProgressViewModel @Inject constructor(
                 // Log the raw items fetched from Firestore
                 Log.d("progress", "Raw items: $items")
 
-                // Check if items are non-empty and sorted correctly
-                if (items.isNotEmpty()) {
-                    // Sort by phone (replace "phone" with the actual field name if necessary)
-                    val sortedItems = items//.sortedBy { it["date"]?.toString() }
+                // Sort by phone (replace "phone" with the actual field name if necessary)
+                val sortedItems = items//.sortedBy { it["date"]?.toString() }
 
-                    // Log the sorted items
-                    Log.d("progress", "Sorted items: $sortedItems")
+                // Log the sorted items
+                Log.d("progress", "Sorted items: $sortedItems")
 
-                    // Filter based on status (-1 = halted, 0 = in-process, 1 = finished)
-                    val halted = sortedItems.filter { (it["status"] as? Long) == -1L }
-                    val inProcess = sortedItems.filter { (it["status"] as? Long) == 0L }
-                    val finished = sortedItems.filter { (it["status"] as? Long) == 1L }
+                // Filter based on status (-1 = halted, 0 = in-process, 1 = finished)
+                val halted = sortedItems.filter { (it["status"] as? Long) == -1L }
+                val inProcess = sortedItems.filter { (it["status"] as? Long) == 0L }
+                val finished = sortedItems.filter { (it["status"] as? Long) == 1L }
 
-                    // Update StateFlow values
-                    _haltedItems.value = halted
-                    _inProcessItems.value = inProcess
-                    _finishedItems.value = finished
+                // Update StateFlow values
+                _haltedItems.value = halted
+                _inProcessItems.value = inProcess
+                _finishedItems.value = finished
 
-                    // Log the final lists
-                    Log.d("progress", "Halted items: $halted")
-                    Log.d("progress", "In-process items: $inProcess")
-                    Log.d("progress", "Finished items: $finished")
-                } else {
-                    Log.d("progress", "No items found!")
-                }
+                // Log the final lists
+                Log.d("progress", "Halted items: $halted")
+                Log.d("progress", "In-process items: $inProcess")
+                Log.d("progress", "Finished items: $finished")
             }
         }
     }
