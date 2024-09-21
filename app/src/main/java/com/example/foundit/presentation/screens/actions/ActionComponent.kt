@@ -32,11 +32,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.example.foundit.utils.LocationUtils
-import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.Priority
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,6 +47,8 @@ fun ActionComponent(
     var userLocation by remember { mutableStateOf<LatLng?>(null) }
     var showPermissionRationale by remember { mutableStateOf(false) }
     var locationPermissionGranted by remember { mutableStateOf(false) }
+    var showMap by remember { mutableStateOf(false) }
+    var showLocationDeniedMessage by remember { mutableStateOf(false) }
 
 
     var selectedPhone by remember { mutableStateOf("") }
@@ -69,26 +67,6 @@ fun ActionComponent(
     //Map and location variables
     val mapView = remember { MapView(context) }
     var googleMap by remember { mutableStateOf<GoogleMap?>(null) }
-
-// Location request and callback
-    val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000).apply {
-        setMinUpdateIntervalMillis(5000)
-    }.build()
-
-    val locationCallback = remember {
-        object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult) {
-                locationResult.locations.forEach { location ->
-                    val latLng = LatLng(location.latitude, location.longitude)
-                    userLocation = latLng
-                    googleMap?.apply {
-                        moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-                        addMarker(MarkerOptions().position(latLng).title("Updated Location"))
-                    }
-                }
-            }
-        }
-    }
 
     // Request location permissions
     val launcher = rememberLauncherForActivityResult(
@@ -113,44 +91,24 @@ fun ActionComponent(
 
 
     LaunchedEffect(Unit) {
-        // Check permission status and show rationale if needed
-        when (PackageManager.PERMISSION_GRANTED) {
-            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) -> {
-                locationPermissionGranted = true
-            }
-            else -> {
-                showPermissionRationale = ActivityCompat.shouldShowRequestPermissionRationale(
-                    activity,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
-                launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-            }
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        } else {
+            locationPermissionGranted = true
         }
     }
 
-    // Trigger location updates when permission is granted
+    // Get location only once when permission is granted
     LaunchedEffect(locationPermissionGranted) {
         if (locationPermissionGranted) {
-            googleMap?.let { map ->
-                LocationUtils.getUserLocation(context, map)
+            showLocationDeniedMessage = false // Reset the flag when permission is granted
+            val location = LocationUtils.getUserLocation(context)
+            if (location != null) {
+                userLocation = location
+                showMap = true
             }
-        }
-    }
-
-    LaunchedEffect(googleMap) {
-        googleMap?.let { map ->
-            LocationUtils.getUserLocation(context, map)
-            LocationUtils.startLocationUpdates(context, map, locationRequest, locationCallback)
-        }
-    }
-
-    DisposableEffect(Unit) {
-        // Start location updates when the map is available
-        googleMap?.let {
-            LocationUtils.startLocationUpdates(context, it, locationRequest, locationCallback)
-        }
-        onDispose {
-            // Stop location updates if necessary
         }
     }
 
@@ -230,28 +188,47 @@ fun ActionComponent(
         }
 
         // MapView for Location
-        AndroidView(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(250.dp)
-                .padding(bottom = 18.dp),
-            factory = { context ->
-                mapView.apply {
-                    onCreate(Bundle())
-                    getMapAsync { gMap ->
-                        googleMap = gMap // Store the reference
-                        userLocation?.let { location ->
-                            gMap.addMarker(MarkerOptions().position(location).title("You are here"))
-                            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12.5f))
-                        } ?: run {
-                            // Default location if userLocation is null
-                            val defaultLocation = LatLng(34.0712981, 74.8105518)
-                            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 12.5f))
+        if(showMap) {
+            AndroidView(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(250.dp)
+                    .padding(bottom = 18.dp),
+                factory = { context ->
+                    mapView.apply {
+                        onCreate(Bundle())
+                        getMapAsync { gMap ->
+                            googleMap = gMap // Store the reference
+                            userLocation?.let { location ->
+                                gMap.addMarker(
+                                    MarkerOptions().position(location).title("You are here")
+                                )
+                                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12.5f))
+                            } ?: run {
+                                // Default location if userLocation is null
+                                val defaultLocation = LatLng(34.0712981, 74.8105518)
+                                gMap.moveCamera(
+                                    CameraUpdateFactory.newLatLngZoom(
+                                        defaultLocation,
+                                        12.5f
+                                    )
+                                )
+                            }
                         }
                     }
                 }
-            }
-        )
+            )
+        } else {
+            // Show message if location access is denied
+            Text(
+                text = "Please provide location access so that you may select the desired location on the map.",
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(250.dp)
+                    .padding(16.dp)
+            )
+        }
 
         // Description field
         OutlinedTextField(

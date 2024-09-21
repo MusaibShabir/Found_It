@@ -53,7 +53,7 @@ object LocationUtils {
     }
 
     // Function to get user's location and update the Google Map
-    suspend fun getUserLocation(context: Context, googleMap: GoogleMap?) {
+    suspend fun getUserLocation(context: Context): LatLng? {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
         // Ensure location permission is granted
@@ -62,24 +62,19 @@ object LocationUtils {
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            return
+            return null
         }
 
         try {
             val location = fusedLocationClient.lastLocation.await()
             location?.let {
-                val userLocation = LatLng(it.latitude, it.longitude)
-                googleMap?.apply {
-                    addMarker(MarkerOptions().position(userLocation).title("You are here"))
-                    moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15f))
-                }
-            } ?: run {
-                Toast.makeText(context, "Unable to fetch location. Turn on GPS.", Toast.LENGTH_SHORT).show()
+                return LatLng(it.latitude, it.longitude)
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Toast.makeText(context, "Failed to retrieve location", Toast.LENGTH_SHORT).show()
         }
+        return null
     }
 
     fun startLocationUpdates(
