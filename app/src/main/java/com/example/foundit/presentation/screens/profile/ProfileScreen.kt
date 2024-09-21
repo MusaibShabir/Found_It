@@ -31,6 +31,9 @@ import com.example.foundit.presentation.screens.profile.components.MemberSinceCa
 import com.example.foundit.presentation.screens.profile.components.ProfileHeadingCard
 import com.example.foundit.presentation.screens.profile.components.ProfileTopAppBar
 import com.example.foundit.presentation.screens.profile.components.ScoreCard
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -98,8 +101,9 @@ fun ProfileScreen(
     navController: NavController,
     viewModel: ProfileViewModel
 ) {
-
     val profileData by viewModel.profileData.collectAsState()
+    val memberSince = viewModel.memberSince
+
 
     //Profile Heading Card
     val profileFirstName by remember { mutableStateOf(profileData?.firstName ?: "") }
@@ -113,7 +117,7 @@ fun ProfileScreen(
     val reportedScore by remember { mutableIntStateOf(profileData?.totalReported ?: 0) }
 
     //Member Since Card
-    val memberSince by remember { mutableStateOf(profileData?.memberSince ?: "unknown") }
+    val memberSinceDate by remember { mutableStateOf(memberSince ?: "unknown") }
 
     ProfileScreenContent(
         modifier = modifier,
@@ -125,12 +129,28 @@ fun ProfileScreen(
         badgesToDisplay = BadgesCardData,
         foundScore = foundScore,
         reportedScore = reportedScore,
-        memberSince = memberSince,
+        memberSince = formatTimestampToDate(memberSince),
         onEditProfileClick = { navController.navigate(NavRoutes.EDIT_PROFILE)},
         navController = navController
     )
 
 
+}
+
+fun formatTimestampToDate(timestamp: Long?, format: String = "yyyy-MM-dd"): String {
+    return if (timestamp != null) {
+        // Convert the timestamp to Instant
+        val instant = Instant.ofEpochMilli(timestamp)
+
+        // Create a DateTimeFormatter with the desired format
+        val formatter = DateTimeFormatter.ofPattern(format)
+            .withZone(ZoneId.systemDefault()) // Use system default time zone
+
+        // Format the Instant into a date string
+        formatter.format(instant)
+    } else {
+        "unknown" // Fallback value if timestamp is null
+    }
 }
 
 

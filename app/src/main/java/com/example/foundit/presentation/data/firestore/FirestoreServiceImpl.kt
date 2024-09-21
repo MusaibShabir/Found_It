@@ -54,9 +54,7 @@ class FirestoreServiceImpl @Inject constructor(
         }
 
         // Reference to the document "User/{userId}/Profile/profileData"
-        val documentRef = firebaseFirestore.collection("User")
-            .document(userId)
-            .collection("Profile")
+        val documentRef = firebaseFirestore.collection("User/$userId/Profile")
             .document("profileData")
 
         try {
@@ -66,8 +64,7 @@ class FirestoreServiceImpl @Inject constructor(
             if (!documentSnapshot.exists()) {
                 // Document does not exist, set the initial data
                 val data = mapOf(
-                    "cardCount" to 0,
-                    "memberSince" to Timestamp(Date())
+                    "cardCount" to 0
                 )
 
                 // Set the data with SetOptions.merge() to ensure it merges with existing data if any

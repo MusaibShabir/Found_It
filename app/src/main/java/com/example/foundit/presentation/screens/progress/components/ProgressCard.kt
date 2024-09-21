@@ -275,6 +275,8 @@ fun formatDate(timestamp: Timestamp?): String {
         val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy 'at' HH:mm:ss z")
             .withZone(ZoneId.systemDefault()) // Set the time zone (e.g., system default or specific zone)
 
+        //val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+
         val instant = Instant.ofEpochMilli(date.time) // Convert date to Instant
         formatter.format(instant) // Format the instant to a string
     } else {
