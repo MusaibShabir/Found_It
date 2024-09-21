@@ -3,24 +3,37 @@ package com.example.foundit.presentation.screens.input.common
 import android.Manifest
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.foundit.ui.theme.MainGreen
+import com.example.foundit.ui.theme.MainRed
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -40,7 +53,10 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun MapScreen(modifier: Modifier) {
+fun MapScreen(
+    modifier: Modifier,
+    cardType: Int?
+) {
 
     val defaultLocation = LatLng(34.083658, 74.797373)
 
@@ -58,17 +74,68 @@ fun MapScreen(modifier: Modifier) {
 
     )
 
+    var mapTopHeading by remember { mutableStateOf("") }
+    when(cardType) {
+        0 -> mapTopHeading = "Pin Point the map location where you think you lost your item."
+        1 -> mapTopHeading = "Pin Point the map location where you have found the item."
+    }
+
+    var mapRadius by remember { mutableDoubleStateOf(0.0)}
+    when (cardType) {
+        0 -> mapRadius = 2000.0
+        1 -> mapRadius = 500.0
+    }
+
+    var mapRadiusColor by remember { mutableStateOf(Color.White) }
+    when(cardType) {
+        0 -> mapRadiusColor = MainRed
+        1 -> mapRadiusColor = MainGreen
+    }
 
     Column(
         modifier = modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .padding(32.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
+        Row(
+            modifier = modifier.fillMaxWidth()
+        ) {
+            Card(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .height(IntrinsicSize.Max),
+                shape = RoundedCornerShape(14.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.Green.copy(alpha = .16f))
+            ){
+                Row(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ){
+                    Text(
+                        text = mapTopHeading,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Justify,
+                    )  }
+                }
+
+
+        }
+
+        Spacer(modifier = modifier.height(8.dp))
+
+        HorizontalDivider()
+
+        Spacer(modifier = modifier.height(16.dp))
+
         ElevatedCard(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(32.dp)
                 .height(430.dp)
         ) {
 
@@ -85,7 +152,7 @@ fun MapScreen(modifier: Modifier) {
                     cameraPositionState = cameraPositionState,
                     onMapClick = { latLng ->
                         markerPosition.value = latLng
-                        CoroutineScope(Dispatchers.Main).launch {
+                        CoroutineScope(Dispatchers.Main ).launch {
                             cameraPositionState.animate(
                                 update = CameraUpdateFactory.newLatLngZoom(latLng, 13f),
                                 durationMs = 900
@@ -101,9 +168,9 @@ fun MapScreen(modifier: Modifier) {
                             )
                         Circle(
                             center = position,
-                            radius = 2000.0, // Radius in meters
-                            fillColor = Color.Red.copy(alpha = 0.3f),
-                            strokeColor = Color.Red,
+                            radius = mapRadius, // Radius in meters
+                            fillColor = mapRadiusColor.copy(alpha = 0.3f),
+                            strokeColor = mapRadiusColor,
                             strokeWidth = 3f
                         )
                     }

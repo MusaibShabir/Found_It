@@ -15,7 +15,8 @@ import androidx.navigation.NavController
 fun TheTopAppBar(
     title: String,
     navController: NavController,
-    backRoute: String? =null
+    backRoute: String? =null,
+    isNavigationIconVisible: Boolean = true
 ) {
     TopAppBar(
         title = {
@@ -24,15 +25,19 @@ fun TheTopAppBar(
             )
         },
         navigationIcon = {
-            IconButton(onClick = { if (backRoute != null) {
-                navController.navigate(backRoute)
-            } else {
-                navController.popBackStack()
-            }}) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                    contentDescription = null
-                )
+            if (isNavigationIconVisible) {
+                IconButton(onClick = {
+                    if (backRoute != null) {
+                        navController.navigate(backRoute)
+                    } else {
+                        navController.popBackStack()
+                    }
+                }) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                        contentDescription = null
+                    )
+                }
             }
         },
     )

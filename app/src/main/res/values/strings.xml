@@ -6,18 +6,22 @@
     <!-- User Greetings (Main)-->
     <string name="greeting_prefix">Hi</string>
 
+    <!-- Home Screen Card (Main)-->
+    <string name="button_text">Report Here</string>">
+
     <!-- Lost Card String's (Main) -->
     <string name="lost_card_heading">Lost an item?</string>
     <string name="lost_card_sub_title">Provide a detailed description of the item. And we will help you to find it.</string>
-    <string name="lost_card_button">Report Here</string>
+
 
     <!-- Found Card String's (Main)-->
     <string name="found_card_heading">Found an item?</string>
     <string name="found_card_sub_title">Provide a detailed description of the item. And we will help you to find its owner.</string>
-    <string name="found_card_button">List Here</string>
 
     <!-- Profile Screen (Main)-->
     <string name="member_card_heading">Found-It Member Since</string>
+
+
     <string name="score_card_section_heading_left">Found</string>
     <string name="score_card_section_heading_right">Reported</string>
     <string name="edit_profile_button">Edit Profile</string>
