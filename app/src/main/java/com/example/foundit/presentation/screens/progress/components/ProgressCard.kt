@@ -112,7 +112,7 @@ fun ProcessCard(
         colors = CardDefaults.cardColors(containerColor = cardColor),
         modifier = modifier
             .fillMaxWidth()
-            .height(160.dp)
+            //.height(160.dp)
             .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 0.dp),
     ) {
         Column (
@@ -173,6 +173,7 @@ fun ProcessCard(
                     text = "${cardItem["cardDescription"]}",
                     fontSize = 12.sp,
                     textAlign = TextAlign.Start,
+                    maxLines = 2
                 )
             }
         }
