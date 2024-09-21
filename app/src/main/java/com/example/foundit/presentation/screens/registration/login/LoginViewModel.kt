@@ -6,6 +6,7 @@ import androidx.credentials.CustomCredential
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foundit.presentation.data.account.AccountService
+import com.example.foundit.presentation.data.firestore.FirestoreService
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.Companion.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val accountService: AccountService,
+    private val firestoreService: FirestoreService
 ) : ViewModel()
 {
     fun login(
@@ -64,6 +66,7 @@ class LoginViewModel @Inject constructor(
 
                     accountService.signInWithGoogle(googleIdTokenCredential.idToken)
                     Log.d("LoginViewModel", "Google sign-in successful")
+                    firestoreService.addProfileData()
                     onResult(true)
                 } else {
                     Log.d("LoginViewModel", "Invalid credential type: ${credential.type}")

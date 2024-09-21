@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.credentials.Credential
 import androidx.lifecycle.viewModelScope
 import com.example.foundit.presentation.data.account.AccountService
+import com.example.foundit.presentation.data.firestore.FirestoreService
 import com.example.foundit.presentation.screens.registration.RegistrationBaseViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.maps.model.LatLng
@@ -24,7 +25,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val accountService: AccountService
+    private val accountService: AccountService,
+    private val firestoreService: FirestoreService
 ) : RegistrationBaseViewModel() {
 
     //First Name
@@ -67,6 +69,7 @@ class SignUpViewModel @Inject constructor(
                     accountService.createAccount(email,password)
                     accountService.sendEmailVerification()
                     accountService.update(firstName,lastName)
+                    firestoreService.addProfileData()
                     onResult(true,null)
                 } catch (e: Exception) {
                     onResult(false,e)
@@ -87,6 +90,7 @@ class SignUpViewModel @Inject constructor(
             try {
                 val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
                 accountService.signInWithGoogle(googleIdTokenCredential.idToken)
+                firestoreService.addProfileData()
                 onResult(SignInResult.Success)
             } catch (e: Exception) {
                 val (errorCode, errorMessage) = when (e) {
