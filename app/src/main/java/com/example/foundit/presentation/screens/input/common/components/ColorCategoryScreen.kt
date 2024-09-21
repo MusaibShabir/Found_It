@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.input.common
+package com.example.foundit.presentation.screens.input.common.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,17 +11,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.foundit.presentation.screens.input.common.components.CategoryCard
-import com.example.foundit.presentation.screens.input.data.parentCategories
+import com.example.foundit.presentation.screens.input.data.colorCategories
 import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
 
 @Composable
-fun ParentCategoryScreen(
+fun ColorCategoryScreen(
     modifier: Modifier,
     viewModel: LostInputViewModel
 ) {
 
-    val selectedCategoryId by viewModel.parentSelectedCategoryId.collectAsState()
+    val selectedCategoryId by viewModel.colorSelectedId.collectAsState()
 
     LazyVerticalGrid(
         modifier = modifier
@@ -31,29 +30,13 @@ fun ParentCategoryScreen(
         horizontalArrangement = Arrangement.Start,
         columns = GridCells.Adaptive(minSize = 138.dp)
     ) {
-        items(parentCategories) { parentCategory ->
+        items(colorCategories) { colorCategory ->
             CategoryCard(
                 modifier = Modifier,
-                categoryText = parentCategory.name,
-                isSelected = parentCategory.name == selectedCategoryId,
-                onCategoryClick = { viewModel.setParentSelectedCategoryId( parentCategory.name) }
+                categoryText = colorCategory.name,
+                isSelected = colorCategory.name == selectedCategoryId,
+                onCategoryClick = { viewModel.setColorSelectedIdId( colorCategory.name ) }
             )
         }
     }
 }
-
-
-
-
-/*
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewParentCategoryScreen() {
-    ParentCategoryScreen(
-        modifier = Modifier,
-    )
-}
-
- */
-
-

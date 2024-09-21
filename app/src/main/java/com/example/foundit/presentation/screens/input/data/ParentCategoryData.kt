@@ -11,6 +11,7 @@ data class ParentCategoryData(
     enum class Category {
         WALLET,
         KEY,
+        CASH,
         PHONE,
         GLASSES,
         JEWELERY,
@@ -32,6 +33,8 @@ val parentCategories = listOf(
     ParentCategoryData(7, "Headphones", ParentCategoryData.Category.HEADPHONES),
     ParentCategoryData(8, "Backpack", ParentCategoryData.Category.BACKPACKS),
     ParentCategoryData(9, "Umbrella", ParentCategoryData.Category.UMBRELLAS),
-    ParentCategoryData(10, "Luggage", ParentCategoryData.Category.LUGGAGE)
+    ParentCategoryData(10, "Luggage", ParentCategoryData.Category.LUGGAGE),
+    ParentCategoryData(11, "Cash", ParentCategoryData.Category.CASH),
+
 )
 

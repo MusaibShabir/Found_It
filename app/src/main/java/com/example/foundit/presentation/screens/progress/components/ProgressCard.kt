@@ -35,56 +35,75 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.foundit.presentation.data.FinishedProcessDataItem
-import com.example.foundit.presentation.data.InProcessDataItem
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import com.google.firebase.Timestamp
 
 
-sealed class ProcessCardItem {
-    data class InProcess(val data: InProcessDataItem) : ProcessCardItem()
-    data class Finished(val data: FinishedProcessDataItem) : ProcessCardItem()
-}
+//sealed class ProcessCardItem {
+//    data class InProcess(val data: Map<String, Any>) : ProcessCardItem()
+//    data class Finished(val data: Map<String, Any>) : ProcessCardItem()
+//}
 
 
 @Composable
 fun ProcessCard(
     modifier: Modifier,
-    cardItem: ProcessCardItem
+    cardItem: Map<String, Any>
 ) {
 
-    val colorCode: Int
-    val itemTitle: String
-    val itemDescription: String
-    val itemLocation: String
-    val progressIndicator: Boolean
+//    val colorCode: Int
+//    val itemTitle: String
+//    val itemDescription: String
+//    val itemLocation: String
+//    val progressIndicator: Boolean
 
-    when (cardItem) {
-        is ProcessCardItem.InProcess -> {
-            colorCode = cardItem.data.cardColorCode
-            itemTitle = cardItem.data.itemTitle
-            itemDescription = cardItem.data.itemDescription
-            itemLocation = cardItem.data.itemLocation
-            progressIndicator = cardItem.data.progressIndicator
-        }
-        is ProcessCardItem.Finished -> {
-            colorCode = cardItem.data.cardColorCode
-            itemTitle = cardItem.data.itemTitle
-            itemDescription = cardItem.data.itemDescription
-            itemLocation = cardItem.data.itemLocation
-            progressIndicator = cardItem.data.progressIndicator
-        }
-    }
+//    when (cardItem) {
+//        is ProcessCardItem.InProcess -> {
+//            colorCode = cardItem.data.cardColorCode
+//            itemTitle = cardItem.data.itemTitle
+//            itemDescription = cardItem.data.itemDescription
+//            itemLocation = cardItem.data.itemLocation
+//            progressIndicator = cardItem.data.progressIndicator
+//        }
+//        is ProcessCardItem.Finished -> {
+//            colorCode = cardItem.data.cardColorCode
+//            itemTitle = cardItem.data.itemTitle
+//            itemDescription = cardItem.data.itemDescription
+//            itemLocation = cardItem.data.itemLocation
+//            progressIndicator = cardItem.data.progressIndicator
+//        }
+//    }
 
+//    when (cardItem) {
+//        is ProcessCardItem.InProcess -> {
+//            colorCode = cardItem.data["status"] as Int
+//            itemTitle = cardItem.data["phone"] as String
+//            itemDescription = cardItem.data["model"] as String
+//            //itemLocation = cardItem.data["itemLocation"] as String
+//            itemLocation = "sdfsdf"
+//            progressIndicator = true
+//        }
+//        is ProcessCardItem.Finished -> {
+//            colorCode = cardItem.data["status"] as Int
+//            itemTitle = cardItem.data["phone"] as String
+//            itemDescription = cardItem.data["model"] as String
+//            //itemLocation = cardItem.data["itemLocation"] as String
+//            itemLocation = "sdfsdf"
+//            progressIndicator = false
+//        }
+//    }
 
-    val cardColor = when (colorCode) {
-        0 -> MainRed.copy(alpha = 0.4f)
-        1 -> MainGreen.copy(alpha = 0.4f)
+    val cardColor = when (cardItem["cardType"].toString()) {
+        "0" -> MainRed.copy(alpha = 0.4f)
+        "1" -> MainGreen.copy(alpha = 0.4f)
         else -> Color.Gray.copy(alpha = 0.4f)
     }
 
@@ -101,7 +120,7 @@ fun ProcessCard(
                 .fillMaxWidth()
                 .padding(24.dp),
             verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.Start
         ){
             Row (
                 modifier = Modifier.fillMaxWidth() ,
@@ -110,11 +129,11 @@ fun ProcessCard(
 
             ){
                 Text(
-                    text = itemTitle,
+                    text = "${cardItem["parentCategory"]}",
                     fontWeight = FontWeight.Bold
                 )
 
-                if (progressIndicator){
+                if (cardItem["status"].toString() == "0"){
                     CardLinearProgressIndicator()
                 }
 
@@ -126,11 +145,11 @@ fun ProcessCard(
             ){
                 Box(
                     modifier = modifier,
-                    contentAlignment = Alignment.Center
+                    //contentAlignment = Alignment.Center
                 ) {
                     Row(
                         modifier = modifier,
-                        horizontalArrangement = Arrangement.Center,
+                        horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
 
@@ -140,7 +159,7 @@ fun ProcessCard(
                             modifier = modifier.size(12.dp)
                         )
                         Text(
-                            text = itemLocation,
+                            text = formatDate(cardItem["date"] as? Timestamp),
                             //textAlign = TextAlign.Center,
                             fontSize = 12.sp,
                             fontStyle = FontStyle.Italic,
@@ -151,7 +170,7 @@ fun ProcessCard(
 
                 Spacer(modifier = modifier.height(10.dp))
                 Text(
-                    text = itemDescription,
+                    text = "${cardItem["cardDescription"]}",
                     fontSize = 12.sp,
                     textAlign = TextAlign.Start,
                 )
@@ -204,56 +223,99 @@ fun CardLinearProgressIndicator() {
 
 
 @Composable
-fun InProcessCardList(
+fun ProcessCardList(
     modifier: Modifier,
-    cardData: List<ProcessCardItem.InProcess>
+    cardData: List<Map<String, Any>>
 ) {
-    val rememberedCardData = remember(cardData) { cardData }
+    if (cardData.isEmpty()) {
+        Column(
+            modifier = modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Nothing to show here"
+
+            )
+        }
+    }
     LazyColumn(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        //verticalArrangement = Arrangement.spacedBy(16.dp) // Add space between items if needed
     ) {
-        items(rememberedCardData) { cardItem ->
-            ProcessCard(modifier = modifier, cardItem = cardItem)
+        items(cardData) { item ->
+            ProcessCard(modifier = modifier, cardItem = item)
         }
     }
 }
 
+// date Formater code
+fun formatDate(timestamp: Timestamp?): String {
+    return if (timestamp != null) {
+        // Convert Firestore Timestamp to Date
+        val date = timestamp.toDate()
 
-@Composable
-fun FinishedProcessCardList(
-    modifier: Modifier,
-    cardData: List<ProcessCardItem.Finished>
-) {
-    val rememberedCardData = remember(cardData) { cardData }
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        items(rememberedCardData) { cardItem ->
-            ProcessCard(modifier = modifier, cardItem = cardItem)
-        }
+        // Format using DateTimeFormatter
+        val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy 'at' HH:mm:ss z")
+            .withZone(ZoneId.systemDefault()) // Set the time zone (e.g., system default or specific zone)
+
+        val instant = Instant.ofEpochMilli(date.time) // Convert date to Instant
+        formatter.format(instant) // Format the instant to a string
+    } else {
+        "No date available" // Fallback in case of a null timestamp
     }
 }
 
-@Composable
-fun HaltedProcessCardList(
-    modifier: Modifier,
-    ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "Nothing to show here"
+//
+//@Composable
+//fun FinishedProcessCardList(
+//    modifier: Modifier,
+//    cardData: List<Map<String, Any>>
+//) {
+////    val rememberedCardData = remember(cardData) { cardData }
+////    LazyColumn(
+////        modifier = modifier.fillMaxSize(),
+////        verticalArrangement = Arrangement.spacedBy(16.dp)
+////    ) {
+////        items(rememberedCardData) { cardItem ->
+////            ProcessCard(modifier = modifier, cardItem = cardItem)
+////        }
+////    }
+//    Column(
+//        modifier = modifier.fillMaxSize()
+//    ) {
+//        cardData.forEach {item ->
+//            ProcessCard(modifier = modifier, cardItem = item)
+//        }
+//    }
+//}
+//
+//@Composable
+//fun HaltedProcessCardList(
+//    modifier: Modifier,
+//    cardData: List<Map<String, Any>>
+//    ) {
+////    Column(
+////        modifier = modifier
+////            .fillMaxSize(),
+////        horizontalAlignment = Alignment.CenterHorizontally,
+////        verticalArrangement = Arrangement.Center
+////    ) {
+////        Text(
+////            text = "Nothing to show here"
+////        )
+////    }
+//    Column (
+//        modifier = modifier.fillMaxSize()
+//    ){
+//        cardData.forEach {item ->
+//            ProcessCard(modifier = modifier, cardItem = item)
+//        }
+//    }
+//}
 
-        )
-    }
-
-}
-
+/*
 @Composable
 @Preview(showBackground = true, showSystemUi = false, device = "id:pixel_6_pro")
 fun PreviewInProcessCard() {
@@ -289,4 +351,6 @@ fun PreviewFinishedProcessCard() {
 }
 
 
+
+*/
 

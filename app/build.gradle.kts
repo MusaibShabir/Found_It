@@ -124,6 +124,10 @@ dependencies {
     implementation(libs.maps.utils.ktx)
     implementation(libs.play.services.location)
 
+    //Firebase Functions
+    //implementation("com.google.firebase:firebase-functions-ktx:21.4.0")
+
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

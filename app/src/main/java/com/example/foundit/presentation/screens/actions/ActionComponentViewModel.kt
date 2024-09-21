@@ -16,7 +16,7 @@ class ActionComponentViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 try {
-                    firestoreService.addItemData(phone, model, color)
+                    //firestoreService.addItemData(0, phone, model, emptyMap())
                 } catch (e: Exception) {
                     Log.d("addItem", "sendData: e")
                 }
