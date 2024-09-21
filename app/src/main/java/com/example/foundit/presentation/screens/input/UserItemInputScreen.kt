@@ -24,9 +24,9 @@ import com.example.foundit.presentation.screens.currentRoute
 import com.example.foundit.presentation.screens.input.common.ChildCategoryScreen
 import com.example.foundit.presentation.screens.input.common.ParentCategoryScreen
 import com.example.foundit.presentation.screens.input.common.components.AreYouSureToCancelAlertBox
-import com.example.foundit.presentation.screens.input.common.components.ChildCategoryScreen2
 import com.example.foundit.presentation.screens.input.common.components.ColorCategoryScreen
 import com.example.foundit.presentation.screens.input.common.components.ItemDescriptionScreen
+import com.example.foundit.presentation.screens.input.common.components.MapScreen
 import com.example.foundit.presentation.screens.input.common.components.UserInputBottomNavigationBar
 import com.example.foundit.presentation.screens.input.found.FoundInputViewModel
 import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
@@ -84,10 +84,12 @@ fun UserItemInputScreen(
                     else -> true
                 }
                 },
-                        // here
                 onNextClick = {
                     when (currentRoute) {
-                    NavRoutes.PARENT_CATEGORY_SCREEN -> {
+                    NavRoutes.MAP_SCREEN -> {
+                        navControllerForUserInputScreen.navigate(NavRoutes.PARENT_CATEGORY_SCREEN)
+                    }
+                        NavRoutes.PARENT_CATEGORY_SCREEN -> {
                         navControllerForUserInputScreen.navigate(NavRoutes.COLOR_CATEGORY_SCREEN)
                     }
                     NavRoutes.COLOR_CATEGORY_SCREEN -> {
@@ -109,12 +111,18 @@ fun UserItemInputScreen(
     ){ paddingValues ->
         NavHost(
             navController = navControllerForUserInputScreen,
-            startDestination = NavRoutes.PARENT_CATEGORY_SCREEN,
+            startDestination = NavRoutes.MAP_SCREEN,
             modifier = modifier.padding(paddingValues)
         ) {
 
-            composable(NavRoutes.PARENT_CATEGORY_SCREEN,
-            ) {
+            composable(NavRoutes.MAP_SCREEN) {
+                MapScreen(
+                    modifier = modifier,
+                    //viewModel = lostInputViewModel
+                )
+            }
+
+            composable(NavRoutes.PARENT_CATEGORY_SCREEN) {
                 ParentCategoryScreen(
                     modifier = modifier,
                     viewModel = lostInputViewModel
@@ -135,10 +143,6 @@ fun UserItemInputScreen(
                     modifier = modifier,
                     viewModel = lostInputViewModel
                 )
-            }
-
-            composable(NavRoutes.CHILD_CATEGORY_SCREEN2) {
-                ChildCategoryScreen2(modifier = modifier)
             }
 
             composable(NavRoutes.ITEM_DESCRIPTION_SCREEN) {

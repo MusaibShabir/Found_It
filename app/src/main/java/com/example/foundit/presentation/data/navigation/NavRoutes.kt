@@ -34,10 +34,10 @@ object NavRoutes {
     const val SPLASH = "Splash"
     const val ACTION_SCREEN = "Action Screen"
     const val USER_ITEM_INPUT_SCREEN = "User Item Input Screen"
-    const val CHILD_CATEGORY_SCREEN = "Child Category Screen"
-    const val CHILD_CATEGORY_SCREEN2 = "Child Category Screen2"
+    const val MAP_SCREEN = "Map Screen"
     const val PARENT_CATEGORY_SCREEN = "Parent Category Screen"
     const val COLOR_CATEGORY_SCREEN = "Color Category Screen"
+    const val CHILD_CATEGORY_SCREEN = "Child Category Screen"
     const val ITEM_DESCRIPTION_SCREEN = "Item Description Screen"
 
 }
