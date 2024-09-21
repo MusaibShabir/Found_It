@@ -242,9 +242,7 @@ class FirestoreServiceImpl @Inject constructor(
 
     override suspend fun deleteCardData(cardId: String) {
         val userId = currentUserId
-        firebaseFirestore.collection("User/${userId}/Card").document(cardId).delete()
-            .addOnSuccessListener { Log.d("deleteCard", "DocumentSnapshot successfully deleted!") }
-            .addOnFailureListener { e -> Log.w("deleteCard", "Error deleting document", e) }
+        firebaseFirestore.collection("User/${userId}/Card").document(cardId).delete().await()
     }
 
     override suspend fun clearFirestoreListener() {
