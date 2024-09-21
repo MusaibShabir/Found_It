@@ -20,12 +20,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 
+
 @Composable
 fun SettingsOptionCard(
     modifier: Modifier,
     settingsOptionName: String,
     forwardNavigation: String? = null,
-    //trailingIcon: Boolean,
     navController: NavController
 ){
     Row(
@@ -57,6 +57,7 @@ fun SettingsOptionCard(
 
 
     }
+
 }
 
 

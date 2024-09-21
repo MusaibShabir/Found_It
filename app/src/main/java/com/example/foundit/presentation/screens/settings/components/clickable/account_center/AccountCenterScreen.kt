@@ -31,7 +31,6 @@ fun AccountCenterScreen(
         ) {
             SettingsOptionCard(modifier = modifier, settingsOptionName = "Edit Profile", forwardNavigation = NavRoutes.EDIT_PROFILE, navController = navController)
             SettingsOptionCard(modifier = modifier, settingsOptionName = "Delete Account", forwardNavigation = NavRoutes.DELETE_ACCOUNT, navController = navController)
-            SettingsOptionCard(modifier = modifier, settingsOptionName = "Log out", forwardNavigation = NavRoutes.LOG_OUT, navController = navController)
         }
     }
 }
