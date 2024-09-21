@@ -1,9 +1,16 @@
 package com.example.foundit.presentation.screens.registration.signup
 
+import android.content.Context
+import android.content.pm.PackageManager
+import android.util.Log
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.credentials.Credential
 import androidx.lifecycle.viewModelScope
 import com.example.foundit.presentation.data.account.AccountService
 import com.example.foundit.presentation.screens.registration.RegistrationBaseViewModel
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -12,6 +19,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 @HiltViewModel
@@ -99,6 +107,37 @@ class SignUpViewModel @Inject constructor(
             }
         }
     }
+
+
+
+    suspend fun getLastLocation(
+        fusedLocationClient: FusedLocationProviderClient,
+        context: Context
+    ) {
+        if (ContextCompat.checkSelfPermission(
+                context, android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            try {
+                val location = fusedLocationClient.lastLocation.await() // Use await() to make it suspendable
+                location?.let {
+                    val userLocation = LatLng(it.latitude, it.longitude)
+                    Log.d("Location", "User is at: $userLocation")
+                } ?: run {
+                    Toast.makeText(context, "Location not available, make sure GPS is enabled", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: SecurityException) {
+                e.printStackTrace()
+                Toast.makeText(context, "Location permission is required to access location", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(context, "Failed to get location", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(context, "Location permission is not granted", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
 
 
