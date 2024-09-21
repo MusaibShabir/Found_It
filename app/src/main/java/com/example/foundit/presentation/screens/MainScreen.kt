@@ -7,10 +7,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.navigation.NavigationBar
 import com.example.foundit.presentation.screens.actions.ActionScreen
@@ -160,8 +162,12 @@ fun MainScreen(modifier: Modifier) {
                 ProcessScreen(modifier, navController)
             }
 
-            composable(NavRoutes.PROGRESS_CARD_FULL_SCREEN) {
-                ProgressCardFullScreen(modifier = modifier, cardItem = mapOf(), navController = navController)
+            composable(
+                NavRoutes.PROGRESS_CARD_FULL_SCREEN + "/{cardId}",
+                arguments = listOf(navArgument("cardId") { type = NavType.StringType })
+            ) {
+                val cardId = it.arguments?.getString("cardId")
+                ProgressCardFullScreen(modifier = modifier, cardId = cardId.toString(), navController = navController)
             }
 
             composable(NavRoutes.NOTIFICATIONS) {

@@ -1,5 +1,6 @@
 package com.example.foundit.presentation.screens.progress.components
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,12 +32,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
 import kotlinx.coroutines.delay
@@ -56,8 +60,11 @@ import com.google.firebase.Timestamp
 @Composable
 fun ProcessCard(
     modifier: Modifier,
-    cardItem: Map<String, Any>
+    cardItem: Map<String, Any>,
+    navController: NavHostController
 ) {
+
+    val context = LocalContext.current
 
 //    val colorCode: Int
 //    val itemTitle: String
@@ -108,11 +115,17 @@ fun ProcessCard(
     }
 
     Card(
-        onClick = { /*TODO*/ },
+        onClick = {
+            try {
+                navController.navigate(NavRoutes.PROGRESS_CARD_FULL_SCREEN + "/${cardItem["cardId"]}")
+            } catch (e: Exception) {
+                Toast.makeText(context,"error",Toast.LENGTH_SHORT).show()
+            }
+        },
         colors = CardDefaults.cardColors(containerColor = cardColor),
         modifier = modifier
             .fillMaxWidth()
-            .height(160.dp)
+            //.height(160.dp)
             .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 0.dp),
     ) {
         Column (
@@ -173,6 +186,7 @@ fun ProcessCard(
                     text = "${cardItem["cardDescription"]}",
                     fontSize = 12.sp,
                     textAlign = TextAlign.Start,
+                    maxLines = 2
                 )
             }
         }
@@ -225,7 +239,8 @@ fun CardLinearProgressIndicator() {
 @Composable
 fun ProcessCardList(
     modifier: Modifier,
-    cardData: List<Map<String, Any>>
+    cardData: List<Map<String, Any>>,
+    navController: NavHostController
 ) {
     if (cardData.isEmpty()) {
         Column(
@@ -245,7 +260,7 @@ fun ProcessCardList(
         //verticalArrangement = Arrangement.spacedBy(16.dp) // Add space between items if needed
     ) {
         items(cardData) { item ->
-            ProcessCard(modifier = modifier, cardItem = item)
+            ProcessCard(modifier = modifier, cardItem = item, navController = navController)
         }
     }
 }

@@ -105,7 +105,7 @@ class LostInputViewModel @Inject constructor(
             val getColorCategory = colorSelectedId.value
             val getItemDescription = itemDescription.value
 
-            firestoreService.addItemData(
+            firestoreService.addCardData(
                 cardType = 0,
                 childCategory = getChildCategoryIdsAsString,
                 parentCategory = getParentCategory,
