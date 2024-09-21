@@ -4,6 +4,10 @@ agp = "8.6.1"
 featureDelivery = "2.1.0"
 ksp = "2.0.20-1.0.25"
 
+# Accompanist Permission
+accompanistPermissions = "0.36.0"
+
+
 #Room
 playServicesLocation = "21.3.0"
 roomRuntime = "2.6.1"
@@ -56,6 +60,10 @@ maps-compose = "4.4.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+
+# Accompanist Permission
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
+
 
 #FireBase & Google
 androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }

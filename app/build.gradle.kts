@@ -127,6 +127,9 @@ dependencies {
     //Firebase Functions
     //implementation("com.google.firebase:firebase-functions-ktx:21.4.0")
 
+    //Permissions Accompanist
+    implementation(libs.accompanist.permissions)
+
 
 
     testImplementation(libs.junit)

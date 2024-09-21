@@ -59,7 +59,7 @@ fun UserItemInputScreen(
                 modifier = modifier,
 
                 cancelOrBackButtonText = when(currentRoute) {
-                    NavRoutes.PARENT_CATEGORY_SCREEN -> { "Cancel" }
+                    NavRoutes.MAP_SCREEN -> { "Cancel" }
                     else -> { "Back" }
                 },
 
@@ -70,7 +70,7 @@ fun UserItemInputScreen(
 
                 onCancelOrBackClick = {
                     when(currentRoute) {
-                        NavRoutes.PARENT_CATEGORY_SCREEN -> {
+                        NavRoutes.MAP_SCREEN -> {
                             showAlertDialogBox = true
                         }
                         else -> { navControllerForUserInputScreen.popBackStack() }
