@@ -43,7 +43,6 @@ fun MainCard(
     @StringRes
     cardHeading: Int,
     cardTitle: Int,
-    buttonName: Int,
     cardColor: Color,
     navController: NavHostController,
     forwardNavigation: String,
@@ -128,7 +127,7 @@ fun MainCard(
 
                 ) {
                     Text(
-                        text = stringResource(id = buttonName),
+                        text = stringResource(id = R.string.button_text),
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.ExtraBold,
                         color = cardColor,
@@ -148,7 +147,6 @@ fun PreviewMainCard() {
         modifier = Modifier,
         cardHeading = R.string.lost_card_heading,
         cardTitle = R.string.lost_card_sub_title,
-        buttonName = R.string.lost_card_button,
         cardColor = Color.Red,
         navController = NavHostController(LocalContext.current),
         forwardNavigation = NavRoutes.ACTION_SCREEN

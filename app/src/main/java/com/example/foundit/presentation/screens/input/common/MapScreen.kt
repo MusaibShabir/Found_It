@@ -21,6 +21,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -31,6 +32,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.foundit.ui.theme.MainGreen
+import com.example.foundit.ui.theme.MainRed
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -72,10 +75,21 @@ fun MapScreen(
     )
 
     var mapTopHeading by remember { mutableStateOf("") }
-
     when(cardType) {
         0 -> mapTopHeading = "Pin Point the map location where you think you lost your item."
         1 -> mapTopHeading = "Pin Point the map location where you have found the item."
+    }
+
+    var mapRadius by remember { mutableDoubleStateOf(0.0)}
+    when (cardType) {
+        0 -> mapRadius = 2000.0
+        1 -> mapRadius = 500.0
+    }
+
+    var mapRadiusColor by remember { mutableStateOf(Color.White) }
+    when(cardType) {
+        0 -> mapRadiusColor = MainRed
+        1 -> mapRadiusColor = MainGreen
     }
 
     Column(
@@ -154,9 +168,9 @@ fun MapScreen(
                             )
                         Circle(
                             center = position,
-                            radius = 2000.0, // Radius in meters
-                            fillColor = Color.Red.copy(alpha = 0.3f),
-                            strokeColor = Color.Red,
+                            radius = mapRadius, // Radius in meters
+                            fillColor = mapRadiusColor.copy(alpha = 0.3f),
+                            strokeColor = mapRadiusColor,
                             strokeWidth = 3f
                         )
                     }

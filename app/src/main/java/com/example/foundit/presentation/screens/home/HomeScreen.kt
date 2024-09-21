@@ -74,7 +74,6 @@ fun HomeScreenContent(
                     modifier = Modifier,
                     cardHeading = R.string.lost_card_heading,
                     cardTitle = R.string.lost_card_sub_title,
-                    buttonName = R.string.lost_card_button,
                     cardColor = MainRed,
                     navController = navController,
                     forwardNavigation = lostButtonClick,
@@ -85,7 +84,6 @@ fun HomeScreenContent(
                     modifier = Modifier,
                     cardHeading = R.string.found_card_heading,
                     cardTitle = R.string.found_card_sub_title,
-                    buttonName = R.string.found_card_button,
                     cardColor = MainGreen,
                     navController = navController,
                     forwardNavigation = foundButtonClick
