@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.input.common.components
+package com.example.foundit.presentation.screens.input.common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
