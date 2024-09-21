@@ -39,4 +39,15 @@ class ProgressCardFullScreenViewModel @Inject constructor(
             Log.d("dataCard", "fetchCardData after collect: ${_cardData.value}")
         }
     }
+
+    fun deleteCardData(cardId: String, onResult: (Boolean, Exception?) -> Unit){
+        viewModelScope.launch {
+            try {
+                firestoreService.deleteCardData(cardId)
+                onResult(true,null)
+            } catch (e: Exception) {
+                onResult(false,e)
+            }
+        }
+    }
 }

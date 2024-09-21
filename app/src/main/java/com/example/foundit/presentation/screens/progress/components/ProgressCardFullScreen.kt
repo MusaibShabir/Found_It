@@ -1,5 +1,9 @@
 package com.example.foundit.presentation.screens.progress.components
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -49,6 +53,18 @@ import com.example.foundit.presentation.screens.progress.ProgressCardFullScreenV
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FirebaseFirestoreException
+
+
+// to check network connection for deleting the card
+fun isNetworkAvailable(context: Context): Boolean {
+    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val network = connectivityManager.activeNetwork
+    val networkCapabilities = connectivityManager.getNetworkCapabilities(network)
+    return networkCapabilities != null &&
+            (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                    networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR))
+}
 
 // For LazyVerticalGrid
 @Composable
@@ -60,6 +76,8 @@ fun ProgressCardFullScreen(
     // Collect the card data from the ViewModel
     val viewModel: ProgressCardFullScreenViewModel = hiltViewModel()
     val cardData by viewModel.cardData.collectAsState()
+
+    val context = LocalContext.current
 
     // Fetch the data when the composable is first launched
     LaunchedEffect(cardId) {
@@ -74,7 +92,7 @@ fun ProgressCardFullScreen(
             else -> Color.Gray.copy(alpha = 0.4f)
         }
 
-        val cardLabel = when (data["cardType"].toString().drop(1)) {
+        val cardLabel = when (data["cardType"].toString().drop(0)) {
             "0" -> "Lost"
             "1" -> "Found"
             else -> "Halted"
@@ -83,7 +101,7 @@ fun ProgressCardFullScreen(
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(top = 16.dp)
+                .padding(top = 16.dp, start = 2.dp, end = 4.dp)
         ) {
             // Top bar with close icon and Lost Item button
             Row(
@@ -91,7 +109,9 @@ fun ProgressCardFullScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { navController.popBackStack() }) {
+                IconButton(onClick = {
+                    navController.popBackStack()
+                }) {
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = "Close",
@@ -116,8 +136,9 @@ fun ProgressCardFullScreen(
                             color = Color.White, // Text color remains white
                             style = MaterialTheme.typography.titleMedium
                         )
-                        Spacer(modifier = Modifier.size(14.dp))
                         if (data["status"].toString() == "0") {
+                            Spacer(modifier = Modifier.size(14.dp))
+
                             CircularProgressIndicator(
                                 color = Color.White, // Use color for progress indicator
                                 strokeCap = StrokeCap.Round,
@@ -253,7 +274,35 @@ fun ProgressCardFullScreen(
     // Floating action button for delete
     Box(modifier = Modifier.fillMaxSize()) {
         FloatingActionButton(
-            onClick = { /* Handle delete action */ },
+            onClick = {
+                if (isNetworkAvailable(context)) {
+                    viewModel.deleteCardData(cardId) { isSuccess, e ->
+                        if (isSuccess) {
+                            Toast.makeText(context, "Card deleted successfully", Toast.LENGTH_SHORT).show()
+                            navController.popBackStack()
+                        } else {
+                            val errorMessage = when (e) {
+                                is FirebaseFirestoreException -> {
+                                    when (e.code) {
+                                        FirebaseFirestoreException.Code.PERMISSION_DENIED -> "You don't have permission to delete this card."
+                                        FirebaseFirestoreException.Code.NOT_FOUND -> "Card not found, unable to delete."
+                                        FirebaseFirestoreException.Code.UNAVAILABLE -> "Firestore service is currently unavailable. Please try again later."
+                                        FirebaseFirestoreException.Code.CANCELLED -> "Deletion was cancelled."
+                                        FirebaseFirestoreException.Code.ABORTED -> "Operation aborted. Please try again."
+                                        else -> "An unexpected error occurred while deleting the card."
+                                    }
+                                }
+                                is IllegalArgumentException -> "Invalid input provided."
+                                is NullPointerException -> "An unexpected error occurred."
+                                else -> "An unknown error occurred: ${e?.message}"
+                            }
+                            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    Toast.makeText(context, "No internet connection. Please try again when connected.", Toast.LENGTH_SHORT).show()
+                }
+            },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(end = 30.dp, bottom = 70.dp),
