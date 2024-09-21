@@ -30,6 +30,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -39,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -133,10 +135,25 @@ fun ProgressCardFullScreen(
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                 // Title and location row
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    Text(
-                        text = data["parentCategory"]?.toString() ?: "Unknown",
-                        style = MaterialTheme.typography.headlineLarge
-                    )
+                    Row (
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+                        Text(
+                            text = data["parentCategory"]?.toString() ?: "Unknown",
+                            style = MaterialTheme.typography.headlineLarge
+                        )
+                        VerticalDivider(
+                            thickness = 2.dp,
+                            modifier = Modifier
+                                .height(30.dp)
+                                .padding(horizontal = 12.dp),
+                            color = Color.Black
+                        )
+                        Text(
+                            text = data["color"]?.toString() ?: "Unknown Colour",
+                            style = MaterialTheme.typography.headlineMedium
+                        )
+                    }
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -161,25 +178,31 @@ fun ProgressCardFullScreen(
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(4),
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(150.dp),
+                        //.height(150.dp),
+                        .fillMaxWidth(),
                     contentPadding = PaddingValues(8.dp)
                 ) {
-                    val mapData = data["a"] as? Map<String, Any> ?: emptyMap()
+                    //val mapData = data["a"] as? Map<String, Any> ?: emptyMap()
+
+                    val input = data["childCategory"].toString()
+                    val charList = input.split(",").map { it.trim() }
 
                     // Iterate through the map's entries and display the values
-                    items(mapData.entries.toList()) { entry ->
+                    items(charList) { entry ->
                         Card(
                             modifier = Modifier
                                 .size(50.dp)
                                 .padding(4.dp),
                             elevation = CardDefaults.cardElevation(4.dp),
-                            colors = CardDefaults.cardColors(Color.Green)
+                            //colors = CardDefaults.cardColors(Color.Green)
                         ) {
                             // Display the value of each entry in the grid
                             Text(
-                                text = entry.value.toString(),
-                                modifier = Modifier.padding(8.dp)
+                                text = entry,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .fillMaxWidth()
                             )
                         }
                     }
