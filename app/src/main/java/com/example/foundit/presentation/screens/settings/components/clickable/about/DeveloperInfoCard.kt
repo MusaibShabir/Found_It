@@ -65,15 +65,15 @@ fun DeveloperInfoCard(
     ) {
         Row(
             modifier = modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+            ,
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
                 modifier = modifier
                     .fillMaxSize()
-                    .weight(.4f)
-                    .padding(1.dp),
+                    .weight(.4f),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -83,7 +83,7 @@ fun DeveloperInfoCard(
                     alignment = Alignment.Center,
                     modifier = Modifier
                         .clip(shape = CircleShape)
-                        .size(130.dp),
+                        .size(128.dp),
 
                 )
             }
@@ -161,47 +161,18 @@ fun DeveloperInfoCard(
                         horizontalArrangement = Arrangement.Absolute.SpaceEvenly,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        ElevatedButton(
-                            modifier = modifier.width(100.dp),
-                            onClick = {urlHandler.openUri(githubLink)},
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = githubColor,
-                                contentColor = Color.White,
-                            ),
-                            elevation = ButtonDefaults.buttonElevation(
-                                defaultElevation = 24.dp
-                            )
-
-                        ) {
-                            Text(
-                                text = "GitHub",
-                                color = Color.White,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Medium,
-                                textAlign = TextAlign.Center
-                            )
-                        }
-
-                        ElevatedButton(
-                            modifier = modifier.width(100.dp),
-                            onClick = {urlHandler.openUri(linkedInLink)},
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = linkedInColor,
-                                contentColor = Color.White,
-                            ),
-                            elevation = ButtonDefaults.buttonElevation(
-                                defaultElevation = 24.dp
-                            )
-
-                        ) {
-                            Text(
-                                text = "LinkedIn",
-                                color = Color.White,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Medium,
-                                textAlign = TextAlign.Center
-                            )
-                        }
+                        ButtonForDevloperCard(
+                            modifier = modifier,
+                            buttonContainerColor = githubColor,
+                            buttonText = "GitHub",
+                            onClick = {urlHandler.openUri(githubLink)}
+                        )
+                        ButtonForDevloperCard(
+                            modifier = modifier,
+                            buttonContainerColor = linkedInColor,
+                            buttonText = "LinkedIn",
+                            onClick = {urlHandler.openUri(linkedInLink)}
+                        )
                     }
 
 
@@ -212,47 +183,20 @@ fun DeveloperInfoCard(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
 
-                        ElevatedButton(
-                            modifier = modifier.width(100.dp),
-                            onClick = {urlHandler.openUri(twitterLink)},
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = twitterColor,
-                                contentColor = Color.White,
-                            ),
-                            elevation = ButtonDefaults.buttonElevation(
-                                defaultElevation = 24.dp
-                            )
+                        ButtonForDevloperCard(
+                            modifier = modifier,
+                            buttonContainerColor = twitterColor,
+                            buttonText = "Twitter",
+                            onClick = {urlHandler.openUri(twitterLink)}
+                        )
 
-                        ) {
-                            Text(
-                                text = "Twitter",
-                                color = Color.White,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Medium,
-                                textAlign = TextAlign.Center
-                            )
-                        }
+                        ButtonForDevloperCard(
+                            modifier = modifier,
+                            buttonContainerColor = instagramColor,
+                            buttonText = "Instagram",
+                            onClick = {urlHandler.openUri(instagramLink)}
+                        )
 
-                        ElevatedButton(
-                            modifier = modifier.width(100.dp),
-                            onClick = {urlHandler.openUri(instagramLink)},
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = instagramColor,
-                                contentColor = Color.White,
-                            ),
-                            elevation = ButtonDefaults.buttonElevation(
-                                defaultElevation = 24.dp
-                            )
-
-                        ) {
-                            Text(
-                                text = "Instagram",
-                                color = Color.White,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Medium,
-                                textAlign = TextAlign.Center
-                            )
-                        }
                     }
                 }
 
@@ -263,6 +207,36 @@ fun DeveloperInfoCard(
 
     }
 
+}
+
+// Component Function for Elevated Button
+@Composable
+fun ButtonForDevloperCard(
+    modifier: Modifier,
+    buttonContainerColor: Color,
+    buttonText: String,
+    onClick: () -> Unit
+) {
+    ElevatedButton(
+        modifier = modifier.width(112.dp),
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = buttonContainerColor,
+            contentColor = Color.White,
+        ),
+        elevation = ButtonDefaults.buttonElevation(
+            defaultElevation = 24.dp
+        )
+
+    ) {
+        Text(
+            text = buttonText,
+            color = Color.White,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Medium,
+            textAlign = TextAlign.Center
+        )
+    }
 }
 
 
