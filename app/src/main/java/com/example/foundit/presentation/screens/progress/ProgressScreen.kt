@@ -88,13 +88,25 @@ fun ProcessScreen(modifier: Modifier, navController: NavHostController) {
             ) { page ->
                 when (page) {
                     0 -> {
-                        ProcessCardList(modifier = modifier, cardData = haltedItems)
+                        ProcessCardList(
+                            modifier = modifier,
+                            cardData = haltedItems,
+                            navController = navController
+                        )
                     }
                     1 -> {
-                        ProcessCardList(modifier = modifier, cardData = inProcessItems)
+                        ProcessCardList(
+                            modifier = modifier,
+                            cardData = inProcessItems,
+                            navController = navController
+                        )
                     }
                     2 -> {
-                        ProcessCardList(modifier = modifier, cardData =finishedItems)
+                        ProcessCardList(
+                            modifier = modifier,
+                            cardData =finishedItems,
+                            navController = navController
+                        )
                     }
                 }
             }
