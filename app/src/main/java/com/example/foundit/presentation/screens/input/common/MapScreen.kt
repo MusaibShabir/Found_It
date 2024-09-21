@@ -76,7 +76,7 @@ fun MapScreen(
 
     var mapTopHeading by remember { mutableStateOf("") }
     when(cardType) {
-        0 -> mapTopHeading = "Pin Point the map location where you think you lost your item."
+        0 -> mapTopHeading = "Pin the map area where you think you lost your item."
         1 -> mapTopHeading = "Pin Point the map location where you have found the item."
     }
 
