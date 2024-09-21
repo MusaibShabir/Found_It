@@ -28,10 +28,9 @@ import androidx.compose.ui.unit.sp
 fun CategoryCard(
     modifier: Modifier,
     categoryText: String,
-    onCategoryClick: () -> Unit,
-    isSelected: Boolean,
-
-) {
+    onCategoryClick: (() -> Unit?)? = null,
+    isSelected: Boolean? = null,
+    ) {
 
     OutlinedCard(
         modifier = modifier
@@ -39,13 +38,17 @@ fun CategoryCard(
             .height(48.dp)
             .padding(8.dp),
         shape = RoundedCornerShape(24.dp),
-        onClick = { onCategoryClick() },
+        onClick = {
+            if (onCategoryClick != null) {
+                onCategoryClick()
+            }
+        },
         border = BorderStroke(
             width = 1.dp ,
             color = Color.Black
         ),
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) {
+            containerColor = if (isSelected == true) {
                 Color.Blue.copy(alpha = .4f)
             } else {
                 Color.White
