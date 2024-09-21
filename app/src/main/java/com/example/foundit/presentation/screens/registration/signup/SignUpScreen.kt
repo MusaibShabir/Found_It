@@ -1,7 +1,11 @@
 package com.example.foundit.presentation.screens.registration.signup
 
+import android.content.Context
+import android.content.pm.PackageManager
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -60,6 +64,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.registration.components.ClickableTextToNavigationRoute
@@ -67,11 +72,15 @@ import com.example.foundit.presentation.screens.registration.components.OrDivide
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleViewModel
 import com.example.foundit.ui.theme.Righteous
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -98,7 +107,7 @@ fun SignUpScreen(
     val coroutineScope = rememberCoroutineScope()
     val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
-    /*
+
     val locationPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -115,7 +124,7 @@ fun SignUpScreen(
     fun requestLocationPermission() {
         when {
             ContextCompat.checkSelfPermission(
-                context, Manifest.permission.ACCESS_FINE_LOCATION
+                context, android.Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED -> {
                 Log.d("Location", "Permission already granted")
                 coroutineScope.launch {
@@ -124,12 +133,12 @@ fun SignUpScreen(
             }
             else -> {
                 Log.d("Location", "Requesting permission")
-                locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                locationPermissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
             }
         }
     }
 
-     */
+
 
     Scaffold(
         modifier = modifier
@@ -589,13 +598,13 @@ fun SignUpScreen(
 
 }
 
-/*
+
 suspend fun getLastLocation(
     fusedLocationClient: FusedLocationProviderClient,
     context: Context
 ) {
     if (ContextCompat.checkSelfPermission(
-            context, Manifest.permission.ACCESS_FINE_LOCATION
+            context, android.Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
     ) {
         try {
@@ -618,7 +627,7 @@ suspend fun getLastLocation(
     }
 }
 
- */
+
 
 
 
