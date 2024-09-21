@@ -38,7 +38,7 @@ class ProgressViewModel @Inject constructor(
                 delay(100)
             }
 
-            firestoreService.getItemData().collect { items ->
+            firestoreService.getCardData().collect { items ->
                 // Log the raw items fetched from Firestore
                 Log.d("progress", "Raw items: $items")
 

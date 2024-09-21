@@ -20,7 +20,7 @@ class ActionComponentViewModel @Inject constructor(
                 } catch (e: Exception) {
                     Log.d("addItem", "sendData: e")
                 }
-                firestoreService.getItemData()
+                firestoreService.getCardData()
                 onResult(true)
             } catch (e: Exception) {
                 onResult(false)
