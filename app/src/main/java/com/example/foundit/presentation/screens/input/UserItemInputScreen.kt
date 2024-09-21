@@ -35,6 +35,7 @@ import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
 @Composable
 fun UserItemInputScreen(
     modifier: Modifier,
+    cardType: Int?,
     navController: NavController
 ) {
     val lostInputViewModel: LostInputViewModel = hiltViewModel()
@@ -53,9 +54,16 @@ fun UserItemInputScreen(
     val navControllerForUserInputScreen = rememberNavController()
     val currentRoute = currentRoute(navControllerForUserInputScreen)
 
+    var topBarTitle by remember { mutableStateOf("") }
+
+    when(cardType){
+        0 -> topBarTitle = "Report Lost Item"
+        1 -> topBarTitle = "Report Found Item"
+    }
+
     Scaffold(
         modifier = modifier.fillMaxSize(),
-        topBar = { TheTopAppBar(title = "Report Lost Item", navController = navController) },
+        topBar = { TheTopAppBar(title = topBarTitle, isNavigationIconVisible = false, navController = navController) },
         bottomBar = {
             UserInputBottomNavigationBar(
                 modifier = modifier,
@@ -120,7 +128,7 @@ fun UserItemInputScreen(
             composable(NavRoutes.MAP_SCREEN) {
                 MapScreen(
                     modifier = modifier,
-                    //viewModel = lostInputViewModel
+                   cardType = cardType
                 )
             }
 
@@ -167,7 +175,7 @@ fun UserItemInputScreen(
 
     // Back Handler for Swipe on the Edge of the Screen
     BackHandler(
-        enabled = currentRoute == NavRoutes.PARENT_CATEGORY_SCREEN,
+        enabled = currentRoute == NavRoutes.MAP_SCREEN,
         onBack = { showAlertDialogBox = true }
     )
 }
@@ -192,6 +200,7 @@ fun PreviewAreYouSureToCancelAlertBox() {
 fun PreviewUserItemInputScreen() {
     UserItemInputScreen(
         modifier = Modifier,
+        cardType = 0,
         navController = NavController(LocalContext.current)
     )
 }

@@ -15,7 +15,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.navigation.NavigationBar
-import com.example.foundit.presentation.screens.actions.ActionScreen
 import com.example.foundit.presentation.screens.documentation.PrivacyPolicyScreen
 import com.example.foundit.presentation.screens.documentation.TermsOfServiceScreen
 import com.example.foundit.presentation.screens.home.HomeScreen
@@ -36,20 +35,20 @@ import com.example.foundit.presentation.screens.registration.signup.SignUpScreen
 import com.example.foundit.presentation.screens.registration.signup.SignUpViewModel
 import com.example.foundit.presentation.screens.settings.SettingsScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.about.AboutScreen
-import com.example.foundit.presentation.screens.settings.components.clickable.account_center.AccountCenterScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.about.AcknowledgementScreen
-import com.example.foundit.presentation.screens.settings.components.clickable.appearance.AppearanceScreen
+import com.example.foundit.presentation.screens.settings.components.clickable.about.DeveloperInfoScreen
+import com.example.foundit.presentation.screens.settings.components.clickable.about.FollowUsScreen
+import com.example.foundit.presentation.screens.settings.components.clickable.account_center.AccountCenterScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.account_center.ChangeEmailScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.account_center.ChangePasswordScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.account_center.ChangePhoneNumberScreen
-import com.example.foundit.presentation.screens.settings.components.clickable.help_and_Support.ContactSupportScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.account_center.DeleteAccountScreen
-import com.example.foundit.presentation.screens.settings.components.clickable.about.DeveloperInfoScreen
+import com.example.foundit.presentation.screens.settings.components.clickable.appearance.AppearanceScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.feedback.FeedbackScreen
-import com.example.foundit.presentation.screens.settings.components.clickable.about.FollowUsScreen
+import com.example.foundit.presentation.screens.settings.components.clickable.help_and_Support.ContactSupportScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.help_and_Support.HelpAndSupportScreen
-import com.example.foundit.presentation.screens.settings.components.clickable.language.LanguageScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.help_and_Support.ReportBugScreen
+import com.example.foundit.presentation.screens.settings.components.clickable.language.LanguageScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.security.SecurityScreen
 import com.example.foundit.presentation.splash.SplashScreen
 
@@ -135,27 +134,23 @@ fun MainScreen(modifier: Modifier) {
                     modifier = modifier,
                     viewModel = profileViewModel,
                     navController = navController,
-                    lostButtonClick = NavRoutes.USER_ITEM_INPUT_SCREEN,
-                    foundButtonClick = NavRoutes.ACTION_SCREEN
-                )
-            }
-
-            composable(NavRoutes.ACTION_SCREEN) {
-                ActionScreen(
-                    modifier = modifier,
-                    navController = navController
+                    lostButtonClick = "${NavRoutes.USER_ITEM_INPUT_SCREEN}/0",
+                    foundButtonClick = "${NavRoutes.USER_ITEM_INPUT_SCREEN}/1",
                 )
             }
 
 
-            composable(NavRoutes.USER_ITEM_INPUT_SCREEN) {
+            composable(
+                route = NavRoutes.USER_ITEM_INPUT_SCREEN + "/{cardType}",
+                arguments = listOf(navArgument("cardType") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val cardType = backStackEntry.arguments?.getInt("cardType")
                 UserItemInputScreen(
                     modifier = modifier,
+                    cardType = cardType,
                     navController = navController
                 )
             }
-
-
 
             composable(NavRoutes.PROGRESS) {
                 ProcessScreen(modifier, navController)
@@ -285,6 +280,8 @@ fun MainScreen(modifier: Modifier) {
         }
     }
 }
+
+
 
 // Helper function to determine if the navigation bar should be shown
 @Composable
