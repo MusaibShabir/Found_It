@@ -1,10 +1,18 @@
+
 package com.example.foundit.presentation.screens.actions
 
+import android.Manifest
+import android.app.Activity
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
@@ -19,8 +27,17 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.example.foundit.presentation.common.TheTopAppBar
 import com.example.foundit.presentation.data.addCard
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.example.foundit.utils.LocationUtils
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.Priority
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,6 +47,11 @@ fun ActionComponent(
 ) {
     val viewModel: ActionComponentViewModel = hiltViewModel()
     val context = LocalContext.current
+    val activity = LocalContext.current as Activity //Map permission
+    var userLocation by remember { mutableStateOf<LatLng?>(null) }
+    var showPermissionRationale by remember { mutableStateOf(false) }
+    var locationPermissionGranted by remember { mutableStateOf(false) }
+
 
     var selectedPhone by remember { mutableStateOf("") }
     var selectedModel by remember { mutableStateOf("") }
@@ -42,22 +64,97 @@ fun ActionComponent(
     val phoneOptions = listOf("Phone 1", "Phone 2", "Phone 3")
     val modelOptions = listOf("Model A", "Model B", "Model C")
     val colorOptions = listOf("Red", "Green", "Blue")
-
-    var locationEntered by remember { mutableStateOf("") }
     var descriptionEntered by remember { mutableStateOf("") }
 
+    //Map and location variables
     val mapView = remember { MapView(context) }
-    val lifecycleOwner = LocalLifecycleOwner.current
+    var googleMap by remember { mutableStateOf<GoogleMap?>(null) }
 
-    LaunchedEffect(mapView) {
-        mapView.onCreate(Bundle())
-        mapView.getMapAsync { googleMap ->
-            val defaultLocation = LatLng(34.0712959, 74.8105467)
-            googleMap.addMarker(MarkerOptions().position(defaultLocation).title("Ghanta Ghar"))
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 12.5f))
+// Location request and callback
+    val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000).apply {
+        setMinUpdateIntervalMillis(5000)
+    }.build()
+
+    val locationCallback = remember {
+        object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                locationResult.locations.forEach { location ->
+                    val latLng = LatLng(location.latitude, location.longitude)
+                    userLocation = latLng
+                    googleMap?.apply {
+                        moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+                        addMarker(MarkerOptions().position(latLng).title("Updated Location"))
+                    }
+                }
+            }
         }
     }
 
+    // Request location permissions
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            Toast.makeText(context, "Locating...", Toast.LENGTH_SHORT).show()
+            locationPermissionGranted = true
+        } else {
+            showPermissionRationale = ActivityCompat.shouldShowRequestPermissionRationale(
+                activity,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            if (!showPermissionRationale) {
+                // User has permanently denied the permission
+                Toast.makeText(context, "Location permission permanently denied", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Location permission denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
+    LaunchedEffect(Unit) {
+        // Check permission status and show rationale if needed
+        when (PackageManager.PERMISSION_GRANTED) {
+            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) -> {
+                locationPermissionGranted = true
+            }
+            else -> {
+                showPermissionRationale = ActivityCompat.shouldShowRequestPermissionRationale(
+                    activity,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+                launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            }
+        }
+    }
+
+    // Trigger location updates when permission is granted
+    LaunchedEffect(locationPermissionGranted) {
+        if (locationPermissionGranted) {
+            googleMap?.let { map ->
+                LocationUtils.getUserLocation(context, map)
+            }
+        }
+    }
+
+    LaunchedEffect(googleMap) {
+        googleMap?.let { map ->
+            LocationUtils.getUserLocation(context, map)
+            LocationUtils.startLocationUpdates(context, map, locationRequest, locationCallback)
+        }
+    }
+
+    DisposableEffect(Unit) {
+        // Start location updates when the map is available
+        googleMap?.let {
+            LocationUtils.startLocationUpdates(context, it, locationRequest, locationCallback)
+        }
+        onDispose {
+            // Stop location updates if necessary
+        }
+    }
+
+    val lifecycleOwner = LocalLifecycleOwner.current
     DisposableEffect(lifecycleOwner) {
         val mapViewLifecycleObserver = object : LifecycleObserver {
             fun onStart() {
@@ -90,6 +187,7 @@ fun ActionComponent(
             lifecycleOwner.lifecycle.removeObserver(mapViewLifecycleObserver)
         }
     }
+
 
     Column(
         modifier = modifier
@@ -131,8 +229,6 @@ fun ActionComponent(
             }
         }
 
-        // Model and Color dropdowns (similar to the Phone dropdown)
-
         // MapView for Location
         AndroidView(
             modifier = Modifier
@@ -142,10 +238,16 @@ fun ActionComponent(
             factory = { context ->
                 mapView.apply {
                     onCreate(Bundle())
-                    getMapAsync { googleMap ->
-                        val defaultLocation = LatLng(0.0, 0.0)
-                        googleMap.addMarker(MarkerOptions().position(defaultLocation).title("Location"))
-                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 12.5f))
+                    getMapAsync { gMap ->
+                        googleMap = gMap // Store the reference
+                        userLocation?.let { location ->
+                            gMap.addMarker(MarkerOptions().position(location).title("You are here"))
+                            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12.5f))
+                        } ?: run {
+                            // Default location if userLocation is null
+                            val defaultLocation = LatLng(34.0712981, 74.8105518)
+                            gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 12.5f))
+                        }
                     }
                 }
             }
@@ -179,7 +281,7 @@ fun ActionComponent(
                         cardColorCode = 0,
                         itemTitle = selectedPhone,
                         itemDescription = descriptionEntered,
-                        itemLocation = locationEntered,
+                        itemLocation = userLocation.toString(),
                         progressIndicator = true
                     )
                     viewModel.sendData(selectedPhone, selectedModel, selectedColor) { isSuccess ->
@@ -208,7 +310,7 @@ fun ActionScreen(
         modifier = modifier.fillMaxSize(),
         topBar = {
             TheTopAppBar(
-                title = "Report Lost Item",
+                title = "Report Item",
                 navController = navController,
             )
         }
