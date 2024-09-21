@@ -49,7 +49,7 @@ import com.example.foundit.presentation.screens.settings.components.clickable.fe
 import com.example.foundit.presentation.screens.settings.components.clickable.about.FollowUsScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.help_and_Support.HelpAndSupportScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.language.LanguageScreen
-import com.example.foundit.presentation.screens.settings.components.clickable.about.LogoutScreen
+import com.example.foundit.presentation.screens.settings.components.clickable.account_center.LogoutScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.help_and_Support.ReportBugScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.security.SecurityScreen
 import com.example.foundit.presentation.splash.SplashScreen

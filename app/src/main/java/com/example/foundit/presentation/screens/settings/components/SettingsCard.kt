@@ -24,7 +24,8 @@ import androidx.navigation.NavHostController
 fun SettingsOptionCard(
     modifier: Modifier,
     settingsOptionName: String,
-    forwardNavigation: String,
+    forwardNavigation: String? = null,
+    //trailingIcon: Boolean,
     navController: NavController
 ){
     Row(
@@ -33,13 +34,21 @@ fun SettingsOptionCard(
         modifier = modifier
             .padding(8.dp)
             .fillMaxWidth()
-            .clickable {navController.navigate(forwardNavigation)},
+            .clickable {
+                if (forwardNavigation != null) {
+                    navController.navigate(forwardNavigation)
+                }
+            },
     ) {
         Text(
             text = settingsOptionName,
             fontSize = MaterialTheme.typography.bodyLarge.fontSize
         )
-        IconButton(onClick = { navController.navigate(forwardNavigation)}) {
+        IconButton(onClick = {
+            if (forwardNavigation != null) {
+                navController.navigate(forwardNavigation)
+            }
+        }) {
             Icon(
                 imageVector = Icons.AutoMirrored.Rounded.ArrowForwardIos,
                 contentDescription = null
