@@ -2,6 +2,7 @@ package com.example.foundit.presentation.screens.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.foundit.presentation.data.account.AccountService
 import com.example.foundit.presentation.data.local.repo.ProfileDataRepository
 import com.example.foundit.presentation.data.local.tables.ProfileData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,11 +14,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val profileRepository: ProfileDataRepository
+    private val profileRepository: ProfileDataRepository,
+    private val accountService: AccountService
 ) : ViewModel() {
 
     private val _profileData = MutableStateFlow<ProfileData?>(null)
     val profileData: StateFlow<ProfileData?> = _profileData.asStateFlow()
+
+    val memberSince: Long?
+        get() = accountService.a
 
     init {
         viewModelScope.launch {

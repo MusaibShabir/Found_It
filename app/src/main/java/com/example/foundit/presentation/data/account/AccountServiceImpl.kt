@@ -16,6 +16,9 @@ class AccountServiceImpl @Inject constructor(
     override val currentUserId: String
         get() = firebaseAuth.currentUser?.uid.orEmpty()
 
+    override val a: Long?
+        get() = firebaseAuth.currentUser?.metadata?.creationTimestamp
+
     // provides Name of current firebase user
     override val currentUserName: String
         get() = firebaseAuth.currentUser?.displayName ?: "User"

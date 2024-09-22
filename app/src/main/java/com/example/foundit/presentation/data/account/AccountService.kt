@@ -5,6 +5,7 @@ import com.google.firebase.auth.UserInfo
 
 interface AccountService {
         val currentUserId: String
+        val a: Long?
         val currentUserName: String
         val currentUserEmail: String
         val currentUserProviderData: MutableList<out UserInfo>?

@@ -47,16 +47,14 @@ class FirestoreServiceImpl @Inject constructor(
 //    }
 
     // static data TODO to be reviewed
-    private suspend fun ensureProfileDataExists() {
+    override suspend fun addProfileData() {
         val userId = accountService.currentUserId
         if (userId.isEmpty()) {
             throw IllegalStateException("User ID is empty.")
         }
 
         // Reference to the document "User/{userId}/Profile/profileData"
-        val documentRef = firebaseFirestore.collection("User")
-            .document(userId)
-            .collection("Profile")
+        val documentRef = firebaseFirestore.collection("User/$userId/Profile")
             .document("profileData")
 
         try {
@@ -96,7 +94,7 @@ class FirestoreServiceImpl @Inject constructor(
         // Ensure the user ID is not empty
         if (userId.isNotEmpty()) {
             // static data TODO to be reviewed or change update() to set() for profile count
-            ensureProfileDataExists()
+            //addProfileData()
             try {
                 // Start a Firestore transaction
                 firebaseFirestore.runTransaction { transaction ->

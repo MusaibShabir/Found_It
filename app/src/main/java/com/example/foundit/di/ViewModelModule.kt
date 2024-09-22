@@ -1,5 +1,6 @@
 package com.example.foundit.di
 
+import com.example.foundit.presentation.data.account.AccountService
 import com.example.foundit.presentation.data.local.repo.ProfileDataRepository
 import com.example.foundit.presentation.screens.profile.ProfileViewModel
 import dagger.Module
@@ -12,8 +13,8 @@ import dagger.hilt.android.components.ViewModelComponent
 object ViewModelModule {
 
     @Provides
-    fun provideViewModel(repository: ProfileDataRepository): ProfileViewModel {
-        return ProfileViewModel(repository)
+    fun provideViewModel(repository: ProfileDataRepository, accountService: AccountService): ProfileViewModel {
+        return ProfileViewModel(repository, accountService)
     }
 
 }
