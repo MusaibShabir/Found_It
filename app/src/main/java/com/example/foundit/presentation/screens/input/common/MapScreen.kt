@@ -235,7 +235,7 @@ fun MapScreen(
                 GoogleMap(
                     modifier = modifier.fillMaxSize(),
                     properties = MapProperties(
-                        isMyLocationEnabled = true,
+                        isMyLocationEnabled = false,
                         isBuildingEnabled = true,
                         isIndoorEnabled = true,
                         isTrafficEnabled = true,
@@ -283,7 +283,9 @@ fun MapScreen(
                             center = position,
                             radius = mapRadius,
                             fillColor = mapRadiusColor.copy(alpha = 0.3f),
-                            strokeWidth = 3f
+                            strokeColor = mapRadiusColor.copy(alpha = .6f),
+                            strokeWidth = 5f,
+                            clickable = false
                         )
                     }
                 }

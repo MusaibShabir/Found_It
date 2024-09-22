@@ -1,6 +1,8 @@
 package com.example.foundit.presentation.screens.input
 
+import android.os.Build
 import androidx.activity.compose.BackHandler
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -32,6 +34,7 @@ import com.example.foundit.presentation.screens.input.found.FoundInputViewModel
 import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
 
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun UserItemInputScreen(
     modifier: Modifier,
@@ -198,6 +201,7 @@ fun PreviewAreYouSureToCancelAlertBox() {
 
 
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Preview(showBackground = true, showSystemUi = true, device = "id:pixel_2")
 @Composable
 fun PreviewUserItemInputScreen() {
