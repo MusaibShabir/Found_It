@@ -42,6 +42,7 @@ fun UserItemInputScreen(
     val foundInputViewModel: FoundInputViewModel= hiltViewModel()
 
 
+    val isMapMarkerLocationEmpty by lostInputViewModel.markerPosition.collectAsState()
     val isParentSelectedCategoryEmpty by lostInputViewModel.parentSelectedCategoryId.collectAsState()
     val isColorSelectedCategoryEmpty by lostInputViewModel.colorSelectedId.collectAsState()
     val isChildSelectedCategoryEmpty by lostInputViewModel.selectedChildCategoryIds.collectAsState()
@@ -87,6 +88,7 @@ fun UserItemInputScreen(
                     }
                                       },
                 nextButtonEnabled = { when (currentRoute) {
+                    NavRoutes.MAP_SCREEN -> isMapMarkerLocationEmpty !== null
                     NavRoutes.PARENT_CATEGORY_SCREEN -> isParentSelectedCategoryEmpty.isNotEmpty()
                     NavRoutes.COLOR_CATEGORY_SCREEN -> isColorSelectedCategoryEmpty.isNotEmpty()
                     NavRoutes.CHILD_CATEGORY_SCREEN -> isChildSelectedCategoryEmpty.isNotEmpty()
@@ -128,7 +130,8 @@ fun UserItemInputScreen(
             composable(NavRoutes.MAP_SCREEN) {
                 MapScreen(
                     modifier = modifier,
-                   cardType = cardType
+                   cardType = cardType,
+                    viewModel = lostInputViewModel
                 )
             }
 

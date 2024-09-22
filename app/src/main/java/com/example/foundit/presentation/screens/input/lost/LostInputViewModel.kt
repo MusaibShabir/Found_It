@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foundit.presentation.data.firestore.FirestoreService
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -115,6 +116,23 @@ class LostInputViewModel @Inject constructor(
         }
 
     }
+
+    // Map Screen Logic
+    private val _markerPosition = MutableStateFlow<LatLng?>(null)
+    var markerPosition: StateFlow<LatLng?> = _markerPosition.asStateFlow()
+
+    fun updateMarkerPosition(latLng: LatLng) {
+        _markerPosition.value = latLng
+    }
+
+    fun clearMarkerPosition() {
+        _markerPosition.value = null
+    }
+
+
+
+
+
 
 
 

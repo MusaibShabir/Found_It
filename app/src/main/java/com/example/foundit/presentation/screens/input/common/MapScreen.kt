@@ -1,6 +1,8 @@
 package com.example.foundit.presentation.screens.input.common
 
 import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Looper
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -14,12 +16,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -28,21 +32,28 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
-import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
@@ -55,12 +66,13 @@ import kotlinx.coroutines.launch
 @Composable
 fun MapScreen(
     modifier: Modifier,
-    cardType: Int?
+    cardType: Int?,
+    viewModel: LostInputViewModel
 ) {
 
     val defaultLocation = LatLng(34.083658, 74.797373)
 
-    val markerPosition = remember { mutableStateOf<LatLng?>(null) }
+    val markerPosition by viewModel.markerPosition.collectAsState()
 
     val cameraPositionState = rememberCameraPositionState{
         position = CameraPosition.fromLatLngZoom(defaultLocation, 5.5f)
@@ -92,17 +104,33 @@ fun MapScreen(
         1 -> mapRadiusColor = MainGreen
     }
 
+    val context = LocalContext.current
+    val locationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
+    var currentLocation by remember { mutableStateOf<LatLng?>(null) }
+
+    // Location Callback for live location updates
+    val locationCallback = remember {
+        object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                for (location in locationResult.locations) {
+                    currentLocation = LatLng(location.latitude, location.longitude)
+                    viewModel.updateMarkerPosition(currentLocation!!)
+                }
+            }
+        } // Return the LocationCallback object
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(32.dp),
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
         Row(
             modifier = modifier.fillMaxWidth()
         ) {
-            Card(
+            OutlinedCard(
                 modifier = modifier
                     .fillMaxWidth()
                     .height(IntrinsicSize.Max),
@@ -131,15 +159,32 @@ fun MapScreen(
 
         HorizontalDivider()
 
-        Spacer(modifier = modifier.height(16.dp))
-
         ElevatedCard(
             modifier = modifier
-                .fillMaxWidth()
-                .height(430.dp)
+                .fillMaxSize()
+                .padding(vertical = 18.dp)
         ) {
 
             if (locationPermissionsState.allPermissionsGranted) {
+                LaunchedEffect(key1 = locationPermissionsState.allPermissionsGranted) {
+                    val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000).apply {
+                        setWaitForAccurateLocation(false)
+                        setMinUpdateIntervalMillis(5000)
+                        setMaxUpdateDelayMillis(10000)
+                    }.build()
+
+                    if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                        ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        locationClient.requestLocationUpdates(
+                            locationRequest,
+                            locationCallback,
+                            Looper.getMainLooper()
+                        )
+                    } else {
+                        // Handle the case where permissions are not granted (e.g., show a message)
+                    }
+                }
+
                 GoogleMap(
                     modifier = modifier.fillMaxSize(),
                     properties = MapProperties(
@@ -148,19 +193,34 @@ fun MapScreen(
                         isIndoorEnabled = true,
                         isTrafficEnabled = true,
                     ),
-                    uiSettings = MapUiSettings(zoomControlsEnabled = true),
                     cameraPositionState = cameraPositionState,
                     onMapClick = { latLng ->
-                        markerPosition.value = latLng
+                        viewModel.updateMarkerPosition(latLng)
                         CoroutineScope(Dispatchers.Main ).launch {
                             cameraPositionState.animate(
                                 update = CameraUpdateFactory.newLatLngZoom(latLng, 13f),
                                 durationMs = 900
                             )
                         }
+                    },
+                    onMapLongClick = {
+                        viewModel.clearMarkerPosition()
+
+                    },
+                    onMyLocationButtonClick = {
+                        currentLocation?.let {
+                            CoroutineScope(Dispatchers.Main).launch {
+                                cameraPositionState.animate(
+                                    update = CameraUpdateFactory.newLatLngZoom(it, 13f),
+                                    durationMs = 900
+                                )
+                            }
+                        }
+                        true
+
                     }
                 ) {
-                    markerPosition.value?.let { position ->
+                    markerPosition?.let { position ->
                         Marker(
                             state = MarkerState(position = position),
                             title = "Marker",
@@ -168,12 +228,13 @@ fun MapScreen(
                             )
                         Circle(
                             center = position,
-                            radius = mapRadius, // Radius in meters
+                            radius = mapRadius,
                             fillColor = mapRadiusColor.copy(alpha = 0.3f),
                             strokeColor = mapRadiusColor,
                             strokeWidth = 3f
                         )
                     }
+
 
                 }
             } else {
