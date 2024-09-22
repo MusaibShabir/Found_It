@@ -83,9 +83,6 @@ fun MapScreen(
 
     val markerPosition by viewModel.markerPosition.collectAsState()
 
-    val markerAddressDetail by viewModel.markerAddressDetail.collectAsState()
-
-
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(defaultLocation, 5.5f)
     }

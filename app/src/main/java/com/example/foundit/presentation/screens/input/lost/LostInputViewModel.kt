@@ -136,6 +136,8 @@ class LostInputViewModel @Inject constructor(
 
     fun clearMarkerPosition() {
         _markerPosition.value = null
+        _markerAddressDetail.value = ResponseState.Idle
+
     }
 
     sealed class ResponseState<out T> {
@@ -147,17 +149,18 @@ class LostInputViewModel @Inject constructor(
 
 
     private val _markerAddressDetail = MutableStateFlow<ResponseState<Address>>(ResponseState.Idle)
-    val markerAddressDetail = _markerAddressDetail.asStateFlow()
+    private val markerAddressDetail = _markerAddressDetail.asStateFlow()
 
     // Create formattedAddress only once
-    val formattedAddress: StateFlow<String> = markerAddressDetail.map { responseState ->
-        when (responseState) {
-            is ResponseState.Idle -> "Unknown"
-            is ResponseState.Loading -> "Loading address..."
-            is ResponseState.Success -> responseState.data.getAddressLine(0)
-            is ResponseState.Error -> "Error fetching address: ${responseState.exception.message}"
-        }
-    }.stateIn(viewModelScope, SharingStarted.Lazily, "")
+    val formattedAddress: StateFlow<String>
+        get() = markerAddressDetail.map { responseState ->
+            when (responseState) {
+                is ResponseState.Idle -> "Unknown"
+                is ResponseState.Loading -> "Loading address..."
+                is ResponseState.Success -> responseState.data.getAddressLine(0)
+                is ResponseState.Error -> "Error fetching address: ${responseState.exception.message}"
+            }
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun getMarkerAddressDetails(lat: Double, long: Double, context: Context) {
