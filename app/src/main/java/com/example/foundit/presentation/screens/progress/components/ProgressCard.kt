@@ -272,7 +272,7 @@ fun formatDate(timestamp: Timestamp?): String {
         val date = timestamp.toDate()
 
         // Format using DateTimeFormatter
-        val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy 'at' HH:mm:ss z")
+        val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
             .withZone(ZoneId.systemDefault()) // Set the time zone (e.g., system default or specific zone)
 
         val instant = Instant.ofEpochMilli(date.time) // Convert date to Instant
