@@ -18,8 +18,8 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults.buttonColors
 import androidx.compose.material3.ButtonDefaults.buttonElevation
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.foundit.R
+import com.example.foundit.ui.theme.MainGreen
 
 
 // UI-Only Composable
@@ -53,25 +54,28 @@ fun ProfileHeadingCard(
     profileId: Long,
     onEditProfileClick: () -> Unit,
 ) {
-    Card(
+    ElevatedCard(
         shape = RoundedCornerShape(15.dp),
         modifier = modifier
             .fillMaxWidth()
             .height(180.dp)
             .padding(16.dp),
-        elevation = CardDefaults.cardElevation(8.dp)
+        elevation = CardDefaults.elevatedCardElevation(8.dp),
+        colors = CardDefaults.elevatedCardColors(containerColor = MainGreen)
     ) {
         Row (modifier = modifier.fillMaxSize()){
             Column(
                 modifier = modifier
                     .fillMaxSize()
                     .weight(.4f)
-                    .padding(16.dp)
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
                 Image(
                     painter = profilePicture,
-                    contentDescription = "",
+                    contentDescription = "Profile Picture",
                     alignment = Alignment.Center,
                     modifier = Modifier
                         .clip(shape = CircleShape))
@@ -90,6 +94,7 @@ fun ProfileHeadingCard(
                         text = "$firstName $lastName",
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight(600),
+                        color = Color.White,
                         maxLines = 1,
                     )
                     Row (
@@ -112,6 +117,7 @@ fun ProfileHeadingCard(
                                 text = "INDIA",
                                 maxLines = 1,
                                 fontSize = 13.sp,
+                                color = Color.White,
                                 modifier = modifier.padding(start = 5.dp)
                             )
                         }
@@ -127,6 +133,7 @@ fun ProfileHeadingCard(
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight(300),
                         fontStyle = FontStyle.Italic,
+                        color = Color.White,
                         fontSize = 12.sp,
                         modifier = modifier.padding(top = 1.dp, bottom = 1.dp)
                     )

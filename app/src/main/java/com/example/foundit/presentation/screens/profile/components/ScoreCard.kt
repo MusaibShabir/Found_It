@@ -12,9 +12,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.foundit.R
+import com.example.foundit.ui.theme.MainGreen
 
 // UI-Only Composable
 @Composable
@@ -35,9 +36,10 @@ fun ScoreCard(
     foundScore: Int?,
     reportedScore: Int?
 ) {
-    Card(
+    ElevatedCard(
         shape = RoundedCornerShape(15.dp),
-        elevation = CardDefaults.cardElevation(8.dp),
+        elevation = CardDefaults.elevatedCardElevation(8.dp),
+        colors = CardDefaults.elevatedCardColors(containerColor = MainGreen),
         modifier = modifier
             .fillMaxWidth()
             .padding(16.dp)
@@ -48,7 +50,7 @@ fun ScoreCard(
                 .fillMaxSize()
         ) {
             VerticalDivider(
-                color = Color.Black,
+                color = Color.White,
                 modifier = modifier
                     .width(2.dp)
                     .height(70.dp)
@@ -109,6 +111,7 @@ fun ScoreSection(
         Text(
             text = stringResource(id = sectionHeading),
             fontSize = 18.sp,
+            color = Color.White,
             fontWeight = FontWeight.Light,
         )
         Spacer(modifier = modifier.height(5.dp))
@@ -116,6 +119,7 @@ fun ScoreSection(
         Text(
             text = sectionScore.toString(),
             fontSize = 24.sp,
+            color = Color.White,
             fontWeight = FontWeight.Bold
         )
     }
