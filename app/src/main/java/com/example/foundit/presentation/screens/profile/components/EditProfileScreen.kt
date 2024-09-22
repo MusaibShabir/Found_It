@@ -191,8 +191,18 @@ fun EditProfileScreen(
     viewModel: ProfileViewModel
 ) {
     val profileData by viewModel.profileData.collectAsState()
-    var profileFirstName by remember { mutableStateOf(profileData?.firstName ?: "") }
-    var profileLastName by remember { mutableStateOf(profileData?.lastName ?: "") }
+
+    val userName = viewModel.userName
+
+    // dividing user name into firstName and lastName
+    val splitUserName = userName.split(" ", limit = 2)
+    val userNameList = if (splitUserName.size == 2) listOf(splitUserName[0], splitUserName[1]) else listOf(splitUserName[0], "")
+
+    //Profile Heading Card
+    val profileFirstName by remember { mutableStateOf(userNameList[0]) }
+    val profileLastName by remember { mutableStateOf(userNameList[1]) }
+    var profileFirstNameX by remember { mutableStateOf(profileData?.firstName ?: "") }
+    var profileLastNameX by remember { mutableStateOf(profileData?.lastName ?: "") }
     val profileId by remember { mutableLongStateOf(profileData?.id ?: 0) }
 
 
@@ -200,8 +210,8 @@ fun EditProfileScreen(
         modifier = modifier,
         firstName = profileFirstName,
         lastName = profileLastName,
-        onFirstNameChange = { profileFirstName = it },
-        onLastNameChange = { profileLastName = it },
+        onFirstNameChange = { profileFirstNameX = it },
+        onLastNameChange = { profileLastNameX = it },
         onCancelClick = { navController.popBackStack() },
         onSaveClick = {
             viewModel.updateProfileData(profileId, profileFirstName, profileLastName)

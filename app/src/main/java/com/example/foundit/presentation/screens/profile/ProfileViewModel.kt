@@ -1,5 +1,6 @@
 package com.example.foundit.presentation.screens.profile
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foundit.presentation.data.account.AccountService
@@ -21,8 +22,14 @@ class ProfileViewModel @Inject constructor(
     private val _profileData = MutableStateFlow<ProfileData?>(null)
     val profileData: StateFlow<ProfileData?> = _profileData.asStateFlow()
 
+    val userName: String
+        get() = accountService.currentUserName
+
     val memberSince: Long?
         get() = accountService.a
+
+    val profilePicture: Uri?
+        get() = accountService.currentUserPhotoUrl
 
     init {
         viewModelScope.launch {

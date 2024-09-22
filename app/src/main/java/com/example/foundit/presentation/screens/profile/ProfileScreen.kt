@@ -103,11 +103,20 @@ fun ProfileScreen(
 ) {
     val profileData by viewModel.profileData.collectAsState()
     val memberSince = viewModel.memberSince
+    val userName = viewModel.userName
+
+    // dividing user name into firstName and lastName
+    val splitUserName = userName.split(" ", limit = 2)
+    val userNameList = if (splitUserName.size == 2) listOf(splitUserName[0], splitUserName[1]) else listOf(splitUserName[0], "")
+
+    val profilePictures = viewModel.profilePicture ?: painterResource(id = R.drawable.ic_launcher_background)
 
 
     //Profile Heading Card
-    val profileFirstName by remember { mutableStateOf(profileData?.firstName ?: "") }
-    val profileLastName by remember { mutableStateOf(profileData?.lastName ?: "") }
+    val profileFirstName by remember { mutableStateOf(userNameList[0]) }
+    val profileLastName by remember { mutableStateOf(userNameList[1]) }
+//    val profileFirstName by remember { mutableStateOf(profileData?.firstName ?: "") }
+//    val profileLastName by remember { mutableStateOf(profileData?.lastName ?: "") }
     val profileCountryCode by remember { mutableIntStateOf(profileData?.countryCode ?: 0) }
     val profilePicture = painterResource(id = R.drawable.ic_launcher_background)
     val profileId by remember { mutableLongStateOf(profileData?.id ?: 0) }
@@ -117,7 +126,7 @@ fun ProfileScreen(
     val reportedScore by remember { mutableIntStateOf(profileData?.totalReported ?: 0) }
 
     //Member Since Card
-    val memberSinceDate by remember { mutableStateOf(memberSince ?: "unknown") }
+    //val memberSinceDate by remember { mutableStateOf(memberSince ?: "unknown") }
 
     ProfileScreenContent(
         modifier = modifier,
