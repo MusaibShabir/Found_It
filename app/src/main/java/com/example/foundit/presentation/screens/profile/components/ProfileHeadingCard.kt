@@ -1,5 +1,6 @@
 package com.example.foundit.presentation.screens.profile.components
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,7 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -39,14 +40,16 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.foundit.R
+import com.example.foundit.R.drawable.ic_launcher_background
 
 
 // UI-Only Composable
 @Composable
 fun ProfileHeadingCard(
     modifier: Modifier = Modifier,
-    profilePicture: Painter,
+    profilePicture: Uri?,
     firstName: String,
     lastName: String,
     profileCountryCode: Int,
@@ -66,15 +69,19 @@ fun ProfileHeadingCard(
                 modifier = modifier
                     .fillMaxSize()
                     .weight(.4f)
-                    .padding(16.dp)
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
 
-                Image(
-                    painter = profilePicture,
-                    contentDescription = "",
+                AsyncImage(
+                    model = profilePicture ?: ic_launcher_background,
+                    contentDescription = "Profile Picture",
                     alignment = Alignment.Center,
                     modifier = Modifier
-                        .clip(shape = CircleShape))
+                        .size(110.dp)
+                        .clip(shape = CircleShape),
+                )
             }
 
             Column(
@@ -205,7 +212,7 @@ fun ProfileHeadingCard(
 fun ProfileHeadingCardPreview() {
     ProfileHeadingCard(
         modifier = Modifier,
-        profilePicture = painterResource(id = R.drawable.ic_launcher_background),
+        profilePicture = null,
         profileCountryCode = 91,
         firstName = "Musaib",
         lastName = "Shabir",

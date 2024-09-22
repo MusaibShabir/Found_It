@@ -57,13 +57,17 @@ fun EditProfileScreenContent(
     onLastNameChange: (String) -> Unit,
     onCancelClick: () -> Unit,
     onSaveClick: () -> Unit,
+    profilePic: Uri?,
     navController: NavController
 ) {
-    var profilePicture by remember { mutableStateOf<Uri?>(null) }
-
+    var profilePicture by remember { mutableStateOf(profilePic) }
     val profilePicturePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
-        onResult = { uri -> profilePicture = uri }
+        onResult = { uri ->
+            if (uri != null) {
+                profilePicture = uri // Update profile picture only if a valid URI is selected
+            }
+        }
     )
 
     Scaffold(
@@ -197,6 +201,7 @@ fun EditProfileScreen(
     // dividing user name into firstName and lastName
     val splitUserName = userName.split(" ", limit = 2)
     val userNameList = if (splitUserName.size == 2) listOf(splitUserName[0], splitUserName[1]) else listOf(splitUserName[0], "")
+    val profilePictures: Uri? = viewModel.profilePicture
 
     //Profile Heading Card
     val profileFirstName by remember { mutableStateOf(userNameList[0]) }
@@ -204,6 +209,7 @@ fun EditProfileScreen(
     var profileFirstNameX by remember { mutableStateOf(profileData?.firstName ?: "") }
     var profileLastNameX by remember { mutableStateOf(profileData?.lastName ?: "") }
     val profileId by remember { mutableLongStateOf(profileData?.id ?: 0) }
+    var profilePicture by remember { mutableStateOf<Uri?>(profilePictures) }
 
 
     EditProfileScreenContent(
@@ -217,7 +223,8 @@ fun EditProfileScreen(
             viewModel.updateProfileData(profileId, profileFirstName, profileLastName)
             navController.popBackStack()
         },
-        navController = navController
+        navController = navController,
+        profilePic = profilePicture
     )
 
 }
@@ -236,7 +243,8 @@ fun PreviewEditProfileScreen() {
         onLastNameChange = {},
         onCancelClick = {},
         onSaveClick = {},
-        navController = NavController(LocalContext.current)
+        navController = NavController(LocalContext.current),
+        profilePic = null
     )
 }
 

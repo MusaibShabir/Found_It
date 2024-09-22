@@ -1,6 +1,7 @@
 package com.example.foundit.presentation.screens.profile
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,7 +42,7 @@ fun ProfileScreenContent(
     modifier: Modifier = Modifier,
     profileFirstName: String,
     profileLastName: String,
-    profilePicture: Painter,
+    profilePicture: Uri?,
     profileCountryCode: Int,
     profileId: Long,
     badgesToDisplay: List<BadgesCardDataClass>,
@@ -109,7 +110,7 @@ fun ProfileScreen(
     val splitUserName = userName.split(" ", limit = 2)
     val userNameList = if (splitUserName.size == 2) listOf(splitUserName[0], splitUserName[1]) else listOf(splitUserName[0], "")
 
-    val profilePictures = viewModel.profilePicture ?: painterResource(id = R.drawable.ic_launcher_background)
+    val profilePicture: Uri? = viewModel.profilePicture //?: painterResource(id = R.drawable.ic_launcher_background)
 
 
     //Profile Heading Card
@@ -118,7 +119,7 @@ fun ProfileScreen(
 //    val profileFirstName by remember { mutableStateOf(profileData?.firstName ?: "") }
 //    val profileLastName by remember { mutableStateOf(profileData?.lastName ?: "") }
     val profileCountryCode by remember { mutableIntStateOf(profileData?.countryCode ?: 0) }
-    val profilePicture = painterResource(id = R.drawable.ic_launcher_background)
+//    val profilePicture = painterResource(id = R.drawable.ic_launcher_background)
     val profileId by remember { mutableLongStateOf(profileData?.id ?: 0) }
 
     //Score Card
@@ -168,7 +169,7 @@ fun formatTimestampToDate(timestamp: Long?, format: String = "yyyy-MM-dd"): Stri
 fun PreviewProfileScreen() {
     ProfileScreenContent(
         modifier = Modifier,
-        profilePicture = painterResource(id = R.drawable.ic_launcher_background),
+        profilePicture = null,
         profileFirstName = "Musaib",
         profileLastName = "Shabir",
         profileCountryCode = 91,
