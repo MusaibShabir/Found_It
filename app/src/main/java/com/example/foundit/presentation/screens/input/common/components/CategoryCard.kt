@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.foundit.ui.theme.MainGreen
 
 
 @Composable
@@ -49,7 +50,7 @@ fun CategoryCard(
         ),
         colors = CardDefaults.cardColors(
             containerColor = if (isSelected == true) {
-                Color.Blue.copy(alpha = .4f)
+                MainGreen.copy(alpha = .8f)
             } else {
                 Color.White
             }

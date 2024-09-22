@@ -118,7 +118,8 @@ fun MainScreen(modifier: Modifier) {
             if (shouldShowBottomBar(currentRoute)) {
                 NavigationBar(modifier = modifier, navController = navController)
             }
-        }
+        },
+
     ) {innerPadding ->
         NavHost(
             navController = navController,

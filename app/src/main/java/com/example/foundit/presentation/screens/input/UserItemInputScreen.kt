@@ -24,11 +24,11 @@ import com.example.foundit.presentation.common.TheTopAppBar
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.currentRoute
 import com.example.foundit.presentation.screens.input.common.ChildCategoryScreen
+import com.example.foundit.presentation.screens.input.common.MapScreen
 import com.example.foundit.presentation.screens.input.common.ParentCategoryScreen
 import com.example.foundit.presentation.screens.input.common.components.AreYouSureToCancelAlertBox
 import com.example.foundit.presentation.screens.input.common.components.ColorCategoryScreen
 import com.example.foundit.presentation.screens.input.common.components.ItemDescriptionScreen
-import com.example.foundit.presentation.screens.input.common.MapScreen
 import com.example.foundit.presentation.screens.input.common.components.UserInputBottomNavigationBar
 import com.example.foundit.presentation.screens.input.found.FoundInputViewModel
 import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
