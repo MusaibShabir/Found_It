@@ -20,7 +20,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.foundit.R
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.progress.components.ProcessCardList
 import kotlinx.coroutines.launch
 
@@ -44,7 +43,7 @@ fun ProcessScreen(modifier: Modifier, navController: NavHostController) {
 
     Scaffold(
         modifier = modifier,
-        topBar = { TheTopAppBar(title = "Progress", navController = navController, backRoute = NavRoutes.HOME)}
+        topBar = { TheTopAppBar(title = "Progress", navController = navController, isNavigationIconVisible = false)}
     ){paddingValues ->
         Column(modifier = modifier.padding(paddingValues)) {
             TabRow(selectedTabIndex = pagerState.currentPage) {

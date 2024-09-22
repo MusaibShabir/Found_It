@@ -1,7 +1,6 @@
 package com.example.foundit.presentation.screens.profile.components
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -23,14 +22,14 @@ fun ProfileTopAppBar(
                 text = title,
             )
         },
-        navigationIcon = {
-            IconButton(onClick = { navController.navigate(NavRoutes.HOME) }) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                    contentDescription = null
-                )
-            }
-        },
+//        navigationIcon = {
+//            IconButton(onClick = { navController.navigate(NavRoutes.HOME) }) {
+//                Icon(
+//                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+//                    contentDescription = null
+//                )
+//            }
+//        },
         actions = {
             IconButton(onClick = {navController.navigate(NavRoutes.SETTINGS)}) {
                 Icon(

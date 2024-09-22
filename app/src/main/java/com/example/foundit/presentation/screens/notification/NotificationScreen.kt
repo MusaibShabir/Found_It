@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.foundit.presentation.common.TheTopAppBar
-import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.notification.components.NotificationCard
 
 @Composable
@@ -20,7 +19,7 @@ fun NotificationScreen(
     viewModel: NotificationBaseViewModel
 ) {
     Scaffold(
-        topBar ={ TheTopAppBar(title = "Notifications", navController = navController, backRoute = NavRoutes.HOME) }
+        topBar ={ TheTopAppBar(title = "Notifications", navController = navController, isNavigationIconVisible = false) }
     ) {innerPadding ->
         Column(
             modifier = modifier
