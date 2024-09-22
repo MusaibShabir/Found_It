@@ -12,7 +12,7 @@ val Pink40 = Color(0xFF7D5260)
 
 val MainRed = Color(0xFFEF4848)
 val MainGreen = Color(0xFF0C8371)
-val SelectedIcon = Color(0xFFC7C7C7)
+val SelectedIconColor = Color(0xFF56D572).copy(alpha = .8f)
 
 val githubColor = Color(0xFF171515)
 val linkedInColor = Color(0xFF0a66c2)

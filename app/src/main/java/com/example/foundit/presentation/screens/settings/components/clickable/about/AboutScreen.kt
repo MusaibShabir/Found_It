@@ -53,7 +53,6 @@ fun AboutScreen(
             SettingsOptionCard(modifier = modifier, settingsOptionName = "Privacy Policy", forwardNavigation = NavRoutes.PRIVACY_POLICY, navController = navController)
             SettingsOptionCard(modifier = modifier, settingsOptionName = "Acknowledgments", forwardNavigation = NavRoutes.ACKNOWLEDGMENTS, navController = navController)
             SettingsOptionCard(modifier = modifier, settingsOptionName = "Developer Information", forwardNavigation = NavRoutes.DEVELOPER_INFO, navController = navController)
-            SettingsOptionCard(modifier = modifier, settingsOptionName = "Follow us", forwardNavigation = NavRoutes.FOLLOW_US, navController = navController)
 
             Spacer(modifier = modifier.height(15.dp))
 

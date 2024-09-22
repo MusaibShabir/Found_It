@@ -7,6 +7,8 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -22,6 +24,7 @@ import com.example.foundit.R
 import com.example.foundit.presentation.common.TheTopAppBar
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.progress.components.ProcessCardList
+import com.example.foundit.ui.theme.MainGreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -47,7 +50,16 @@ fun ProcessScreen(modifier: Modifier, navController: NavHostController) {
         topBar = { TheTopAppBar(title = "Progress", navController = navController, backRoute = NavRoutes.HOME)}
     ){paddingValues ->
         Column(modifier = modifier.padding(paddingValues)) {
-            TabRow(selectedTabIndex = pagerState.currentPage) {
+            TabRow(
+                selectedTabIndex = pagerState.currentPage,
+                contentColor = MainGreen,
+                indicator = { tabPositions ->
+                    SecondaryIndicator(
+                        Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
+                        color = MainGreen
+                    )
+                }
+            ) {
 
                 Tab(
                     selected = pagerState.currentPage == 0,
