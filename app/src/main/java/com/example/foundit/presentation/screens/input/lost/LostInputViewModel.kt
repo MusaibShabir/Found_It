@@ -1,26 +1,22 @@
 package com.example.foundit.presentation.screens.input.lost
 
-import android.content.Context
-import android.location.Address
-import android.location.Geocoder
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foundit.presentation.data.firestore.FirestoreService
+import com.example.foundit.presentation.screens.input.data.GeocodingResponse
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import java.util.Locale
+import kotlinx.serialization.json.Json
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okio.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,22 +33,6 @@ class LostInputViewModel @Inject constructor(
         _cardType.value = type
     }
 
-
-
-    private val collectedData = mutableStateOf<InputLostData?>(null)
-
-
-    // Function to update the collected data
-    fun updateCollectedData(newData: InputLostData) {
-        collectedData.value = newData
-    }
-
-    // Function to send data to FireStore (you'll implement this)
-    fun sendDataToFirestore() {
-        val dataToSend = collectedData.value ?: return // Ensure data is available
-
-        // ... your FireStore logic to send dataToSend
-    }
 
     // Remembered array to store integers
     private val integerArray =  mutableStateListOf<Int>()
@@ -75,9 +55,6 @@ class LostInputViewModel @Inject constructor(
             _parentSelectedCategoryId.value = categoryId
         }
     }
-
-
-
 
     // Logic For Color Category Selection Screen
     private val _colorSelectedId = MutableStateFlow("")
@@ -111,16 +88,6 @@ class LostInputViewModel @Inject constructor(
         _itemDescription.value = newDescription
     }
 
-    //Logic To get All the Data from the User by ID
-    fun getAllUserDataByCategoryIds(): Map<String, Any?> {
-        return mapOf(
-            "parentSelectedCategoryId" to parentSelectedCategoryId.value,
-            "colorSelectedId" to colorSelectedId.value,
-            "selectedChildCategoryIds" to selectedChildCategoryIds.value
-        )
-
-    }
-
     fun onSubmitClick() {
         viewModelScope.launch {
             val getChildCategoryIdsAsString = selectedChildCategoryIds.value.joinToString(", ")
@@ -149,61 +116,86 @@ class LostInputViewModel @Inject constructor(
 
     fun clearMarkerPosition() {
         _markerPosition.value = null
-        _markerAddressDetail.value = ResponseState.Idle
+        //_markerAddressDetail.value = ResponseState.Idle
 
     }
 
-    sealed class ResponseState<out T> {
-        data object Idle : ResponseState<Nothing>()
-        data object Loading : ResponseState<Nothing>()
-        data class Success<T>(val data: T) : ResponseState<T>()
-        data class Error(val exception: Exception) : ResponseState<Nothing>()
-    }
+    private val apiKey = "AIzaSyB2PRqP3v51ke2IKYdi8pM2Katkfeb0p3A"
+
+    private val _address = MutableStateFlow<String?>(null)
+    val address: StateFlow<String?> = _address.asStateFlow()
 
 
-    private val _markerAddressDetail = MutableStateFlow<ResponseState<Address>>(ResponseState.Idle)
-    private val markerAddressDetail = _markerAddressDetail.asStateFlow()
-
-    // Create formattedAddress only once
-    val formattedAddress: StateFlow<String>
-        get() = markerAddressDetail.map { responseState ->
-            when (responseState) {
-                is ResponseState.Idle -> "Unknown"
-                is ResponseState.Loading -> "Loading address..."
-                is ResponseState.Success -> responseState.data.getAddressLine(0)
-                is ResponseState.Error -> "Error fetching address: ${responseState.exception.message}"
-            }
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
-
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    fun getMarkerAddressDetails(lat: Double, long: Double, context: Context) {
+    fun fetchAddressFromGeocodingApi(
+        latitude: Double?,
+        longitude: Double?
+    ) {
         viewModelScope.launch {
-            _markerAddressDetail.value = ResponseState.Loading
-            try {
-                val geocoder = Geocoder(context, Locale.getDefault())
-                geocoder.getFromLocation(lat, long, 1) { addresses ->
-                    _markerAddressDetail.value = if (addresses.isNotEmpty()) {
-                        ResponseState.Success(addresses[0])
-                    } else {
-                        ResponseState.Error(Exception("Address not found"))
+            if (latitude != null && longitude != null) {
+                Log.d("GeoCoding", "Latitude: $latitude, Longitude: $longitude")
+
+                // Prepare the URL for the API request
+                val url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$apiKey"
+
+                // Create an OkHttpClient instance
+                val client = OkHttpClient()
+
+                // Build the request
+                val request = Request.Builder()
+                    .url(url)
+                    .build()
+
+                // Make the network call asynchronously
+                client.newCall(request).enqueue(object : Callback {
+                    override fun onFailure(call: okhttp3.Call, e: IOException) {
+                        Log.d("GeoCoding", "Failed to make the request: ${e.message}")
+                        _address.value = null
                     }
-                }
-            } catch (e: Exception) {
-                _markerAddressDetail.value = ResponseState.Error(e)
+
+                    override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                        val responseBody = response.body?.string()
+                        if (!response.isSuccessful || responseBody == null) {
+                            Log.d("GeoCoding", "Failed to fetch the address")
+                            _address.value = null
+                            return
+                        }
+
+                        // Parse the JSON response using Kotlin serialization
+                        val json = Json { ignoreUnknownKeys = true }
+                        val geocodingResponse = json.decodeFromString<GeocodingResponse>(responseBody)
+
+                        // Extract the desired address components
+                        val addressComponents = geocodingResponse.results.firstOrNull()?.address_components
+                        val subLocality = addressComponents?.firstOrNull { it.types.contains("sublocality_level_1") }?.long_name
+                        val locality = addressComponents?.firstOrNull { it.types.contains("locality") }?.long_name
+                        val administrativeAreaLevel1 = addressComponents?.firstOrNull { it.types.contains("administrative_area_level_1") }?.long_name
+                        val country = addressComponents?.firstOrNull { it.types.contains("country") }?.long_name
+                        val postalCode = addressComponents?.firstOrNull { it.types.contains("postal_code") }?.long_name
+
+                        // Combine the components into a single string, handling empty cases
+                        val filteredAddress = if (
+                            subLocality.isNullOrEmpty() &&
+                            locality.isNullOrEmpty() &&
+                            administrativeAreaLevel1.isNullOrEmpty() &&
+                            country.isNullOrEmpty()) {
+                            postalCode ?: "Unknown Location"
+                        } else {
+                            listOfNotNull(subLocality, locality, administrativeAreaLevel1, country).joinToString(", ")
+                        }
+
+                        // Update the _address StateFlow with the filtered address
+                        _address.value = filteredAddress
+                    }
+                })
+            } else {
+                Log.d("GeoCoding", "Latitude or Longitude is null")
+                _address.value = null
             }
         }
     }
 
 
-
-
-
-
-
-
-
-
-
 }
+
 
 

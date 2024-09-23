@@ -40,7 +40,6 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.internal.composableLambda
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -56,7 +55,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
@@ -80,8 +78,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
-
-
 
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -211,7 +207,7 @@ fun MapScreen(
 
         HorizontalDivider(modifier = modifier.padding(vertical = 10.dp))
 
-        val locationAddress by viewModel.formattedAddress.collectAsState()
+        val locationAddress by viewModel.address.collectAsState()
 
         Row(
             modifier = modifier.fillMaxWidth(),
@@ -226,14 +222,16 @@ fun MapScreen(
                     .size(22.dp)
             )
             Spacer(modifier = modifier.width(6.dp))
-            Text(
-                text = locationAddress,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-                textAlign = TextAlign.Start,
-                textDecoration = TextDecoration.Underline,
+            locationAddress?.let {
+                Text(
+                    text = it,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
+                    textAlign = TextAlign.Start,
+                    textDecoration = TextDecoration.Underline,
 
-                )
+                    )
+            }
         }
 
 
@@ -298,10 +296,9 @@ fun MapScreen(
                 ) {
                     markerPosition?.let { position ->
                         LaunchedEffect(position) {
-                            viewModel.getMarkerAddressDetails(
+                            viewModel.fetchAddressFromGeocodingApi(
                                 position.latitude,
                                 position.longitude,
-                                context = context
                             )
                             cameraPositionState.animate(
                                 update = CameraUpdateFactory.newLatLngZoom(

@@ -5,6 +5,9 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlin.serialization)
+
+
 }
 
 android {
@@ -129,6 +132,13 @@ dependencies {
 
     //Permissions Accompanist
     implementation(libs.accompanist.permissions)
+
+    // For making HTTP requests (OkHttp)
+    implementation (libs.okhttp)
+
+    // For parsing JSON (Gson or kotlinx.serialization)
+    implementation (libs.gson)
+    implementation (libs.kotlinx.serialization.json)
 
 
 
