@@ -129,10 +129,12 @@ class LostInputViewModel @Inject constructor(
             val getItemDescription = itemDescription.value
 
             firestoreService.addCardData(
-                cardType = 0,
+                cardType = cardType.value ?: 10,
                 childCategory = getChildCategoryIdsAsString,
                 parentCategory = getParentCategory,
                 color = getColorCategory,
+                locationCoordinates = markerPosition.value ?: LatLng(0.0, 0.0),
+                locationAddress = markerAddressDetail.value.toString(),
                 cardDescription = getItemDescription
             )
         }

@@ -2,8 +2,10 @@ package com.example.foundit.presentation.data.firestore
 
 import android.util.Log
 import com.example.foundit.presentation.data.account.AccountService
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.channels.awaitClose
@@ -87,6 +89,8 @@ class FirestoreServiceImpl @Inject constructor(
         parentCategory: String,
         cardDescription: String,
         color: String,
+        locationCoordinates: LatLng,
+        locationAddress: String,
         childCategory: String
     ) {
         val userId = currentUserId
@@ -121,6 +125,8 @@ class FirestoreServiceImpl @Inject constructor(
                         "childCategory" to childCategory,
                         "color" to color,
                         "cardDescription" to cardDescription,
+                        "locationCoordinates" to GeoPoint(locationCoordinates.latitude, locationCoordinates.longitude),
+                        "locationAddress" to locationAddress,
                         "date" to Timestamp(Date()),
                         "status" to 0
                     )

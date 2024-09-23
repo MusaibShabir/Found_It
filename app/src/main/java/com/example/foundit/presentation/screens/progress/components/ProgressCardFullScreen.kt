@@ -196,7 +196,7 @@ fun ProgressCardFullScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "📍 ${data["location"]?.toString() ?: "Unknown location"}",
+                            text = "📍 ${data["locationAddress"]?.toString() ?: "Unknown location"}",
                             style = MaterialTheme.typography.bodySmall,
                             color = Color.Gray
                         )
