@@ -1,7 +1,6 @@
 package com.example.foundit.presentation.screens.profile
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foundit.presentation.data.account.AccountService
