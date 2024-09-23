@@ -1,5 +1,6 @@
 package com.example.foundit.presentation.screens.profile.components
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,8 +19,8 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults.buttonColors
 import androidx.compose.material3.ButtonDefaults.buttonElevation
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -28,7 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -39,29 +40,29 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.foundit.R
-import com.example.foundit.ui.theme.MainGreen
+import com.example.foundit.R.drawable.ic_launcher_background
 
 
 // UI-Only Composable
 @Composable
 fun ProfileHeadingCard(
     modifier: Modifier = Modifier,
-    profilePicture: Painter,
+    profilePicture: Uri?,
     firstName: String,
     lastName: String,
     profileCountryCode: Int,
     profileId: Long,
     onEditProfileClick: () -> Unit,
 ) {
-    ElevatedCard(
+    Card(
         shape = RoundedCornerShape(15.dp),
         modifier = modifier
             .fillMaxWidth()
             .height(180.dp)
             .padding(16.dp),
-        elevation = CardDefaults.elevatedCardElevation(8.dp),
-        colors = CardDefaults.elevatedCardColors(containerColor = MainGreen)
+        elevation = CardDefaults.cardElevation(8.dp)
     ) {
         Row (modifier = modifier.fillMaxSize()){
             Column(
@@ -69,16 +70,18 @@ fun ProfileHeadingCard(
                     .fillMaxSize()
                     .weight(.4f)
                     .padding(16.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
 
-                Image(
-                    painter = profilePicture,
+                AsyncImage(
+                    model = profilePicture ?: ic_launcher_background,
                     contentDescription = "Profile Picture",
                     alignment = Alignment.Center,
                     modifier = Modifier
-                        .clip(shape = CircleShape))
+                        .size(110.dp)
+                        .clip(shape = CircleShape),
+                )
             }
 
             Column(
@@ -94,7 +97,6 @@ fun ProfileHeadingCard(
                         text = "$firstName $lastName",
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight(600),
-                        color = Color.White,
                         maxLines = 1,
                     )
                     Row (
@@ -117,7 +119,6 @@ fun ProfileHeadingCard(
                                 text = "INDIA",
                                 maxLines = 1,
                                 fontSize = 13.sp,
-                                color = Color.White,
                                 modifier = modifier.padding(start = 5.dp)
                             )
                         }
@@ -133,7 +134,6 @@ fun ProfileHeadingCard(
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight(300),
                         fontStyle = FontStyle.Italic,
-                        color = Color.White,
                         fontSize = 12.sp,
                         modifier = modifier.padding(top = 1.dp, bottom = 1.dp)
                     )
@@ -212,7 +212,7 @@ fun ProfileHeadingCard(
 fun ProfileHeadingCardPreview() {
     ProfileHeadingCard(
         modifier = Modifier,
-        profilePicture = painterResource(id = R.drawable.ic_launcher_background),
+        profilePicture = null,
         profileCountryCode = 91,
         firstName = "Musaib",
         lastName = "Shabir",

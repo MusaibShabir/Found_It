@@ -35,10 +35,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -57,13 +55,19 @@ fun EditProfileScreenContent(
     onLastNameChange: (String) -> Unit,
     onCancelClick: () -> Unit,
     onSaveClick: () -> Unit,
+    profilePicture: Uri?,
+    onProfilePictureChange: (Uri?) -> Unit,
     navController: NavController
 ) {
-    var profilePicture by remember { mutableStateOf<Uri?>(null) }
-
+    //var profilePicture by remember { mutableStateOf(profilePic) }
     val profilePicturePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
-        onResult = { uri -> profilePicture = uri }
+        onResult = { uri ->
+            if (uri != null) {
+                //profilePicture = uri
+                onProfilePictureChange(uri)// Update profile picture only if a valid URI is selected
+            }
+        }
     )
 
     Scaffold(
@@ -191,9 +195,21 @@ fun EditProfileScreen(
     viewModel: ProfileViewModel
 ) {
     val profileData by viewModel.profileData.collectAsState()
-    var profileFirstName by remember { mutableStateOf(profileData?.firstName ?: "") }
-    var profileLastName by remember { mutableStateOf(profileData?.lastName ?: "") }
+
+    val userName = viewModel.userName
+
+    // dividing user name into firstName and lastName
+    val splitUserName = userName.split(" ", limit = 2)
+    val userNameList = if (splitUserName.size == 2) listOf(splitUserName[0], splitUserName[1]) else listOf(splitUserName[0], "")
+    val profilePictures: Uri? = viewModel.profilePicture
+
+    //Profile Heading Card
+    var profileFirstName by remember { mutableStateOf(userNameList[0]) }
+    var profileLastName by remember { mutableStateOf(userNameList[1]) }
+//    var profileFirstNameX by remember { mutableStateOf(profileData?.firstName ?: "") }
+//    var profileLastNameX by remember { mutableStateOf(profileData?.lastName ?: "") }
     val profileId by remember { mutableLongStateOf(profileData?.id ?: 0) }
+    var profilePicture by remember { mutableStateOf(profilePictures) }
 
 
     EditProfileScreenContent(
@@ -204,10 +220,12 @@ fun EditProfileScreen(
         onLastNameChange = { profileLastName = it },
         onCancelClick = { navController.popBackStack() },
         onSaveClick = {
-            viewModel.updateProfileData(profileId, profileFirstName, profileLastName)
-            navController.popBackStack()
+//            viewModel.updateProfileData(firstName = profileFirstName, lastName = profileLastName, profilePicture = profilePicture)
+//            navController.popBackStack()
         },
-        navController = navController
+        profilePicture = profilePicture,
+        onProfilePictureChange = { profilePicture = it},
+        navController = navController,
     )
 
 }
@@ -215,18 +233,19 @@ fun EditProfileScreen(
 
 
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewEditProfileScreen() {
-    EditProfileScreenContent(
-        modifier = Modifier,
-        firstName = "Musaib",
-        lastName = "Shabir",
-        onFirstNameChange = {},
-        onLastNameChange = {},
-        onCancelClick = {},
-        onSaveClick = {},
-        navController = NavController(LocalContext.current)
-    )
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun PreviewEditProfileScreen() {
+//    EditProfileScreenContent(
+//        modifier = Modifier,
+//        firstName = "Musaib",
+//        lastName = "Shabir",
+//        onFirstNameChange = {},
+//        onLastNameChange = {},
+//        onCancelClick = {},
+//        onSaveClick = {},
+//        navController = NavController(LocalContext.current),
+//        profilePic = null
+//    )
+//}
 

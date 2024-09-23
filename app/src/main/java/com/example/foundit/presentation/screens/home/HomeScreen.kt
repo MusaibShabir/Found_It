@@ -13,8 +13,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -103,8 +101,9 @@ fun HomeScreen(
     foundButtonClick: String,
 ) {
     //Greetings
-    val profileData by viewModel.profileData.collectAsState()
-    val profileName = profileData?.let { "${it.firstName} ${it.lastName}" }
+//    val profileData by viewModel.profileData.collectAsState()
+//    val profileName = profileData?.let { "${it.firstName} ${it.lastName}" }
+    val profileName = viewModel.userName
     val greetingPrefix = stringResource(id = R.string.greeting_prefix)
 
     HomeScreenContent(

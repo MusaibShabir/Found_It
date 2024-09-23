@@ -92,7 +92,11 @@ fun ProgressCardFullScreen(
             else -> Color.Gray.copy(alpha = 0.4f)
         }
 
-        val cardLabel = when (data["cardType"].toString().drop(0)) {
+        val cardLabel = when (if (data["cardType"].toString().length == 1) {
+            data["cardType"].toString()
+        } else {
+            data["cardType"].toString().drop(1)
+        }) {
             "0" -> "Lost"
             "1" -> "Found"
             else -> "Halted"
@@ -141,6 +145,17 @@ fun ProgressCardFullScreen(
 
                             CircularProgressIndicator(
                                 color = Color.White, // Use color for progress indicator
+                                strokeCap = StrokeCap.Round,
+                                modifier = Modifier.size(20.dp),
+                                strokeWidth = 2.dp
+                            )
+                        }else if (data["status"].toString() == "-1") {
+                            Spacer(modifier = Modifier.size(14.dp))
+
+                            CircularProgressIndicator(
+                                progress = {0.08f},
+                                color = Color.Transparent, // Use color for progress indicator
+                                trackColor = Color.Yellow,
                                 strokeCap = StrokeCap.Round,
                                 modifier = Modifier.size(20.dp),
                                 strokeWidth = 2.dp
