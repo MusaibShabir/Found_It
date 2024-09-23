@@ -40,6 +40,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.internal.composableLambda
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,6 +55,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
@@ -79,14 +82,19 @@ import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 
 
+
+
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun MapScreen(
     modifier: Modifier,
-    cardType: Int?,
-    viewModel: LostInputViewModel
+    //cardType: Int?,
+    viewModel: LostInputViewModel,
+    navController: NavController,
 ) {
+
+    val cardType = navController.currentBackStackEntry?.arguments?.getInt("cardType")
     val context = LocalContext.current
     val defaultLocation = LatLng(34.083658, 74.797373)
 
@@ -108,8 +116,9 @@ fun MapScreen(
         isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
-    DisposableEffect(Unit) { // Trigger once when the Composable enters the composition
-        // Register a BroadcastReceiver to listen for changes in location settings
+
+    DisposableEffect(Unit) {
+
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 if (intent?.action == LocationManager.PROVIDERS_CHANGED_ACTION) {
@@ -119,7 +128,6 @@ fun MapScreen(
         }
         context.registerReceiver(receiver, IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION))
 
-        // Unregister the receiver when the Composable leaves the composition
         onDispose {
             val weakContext = WeakReference(context)
             weakContext.get()?.unregisterReceiver(receiver)
@@ -152,14 +160,12 @@ fun MapScreen(
         1 -> mapRadiusColor = MainGreen
     }
 
-
     // Location Callback for live location updates
     val locationCallback = remember {
         object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 for (location in locationResult.locations) {
                     currentLocation = LatLng(location.latitude, location.longitude)
-                    //viewModel.updateMarkerPosition(currentLocation!!)
                 }
             }
         }
@@ -298,7 +304,12 @@ fun MapScreen(
                                 context = context
                             )
                             cameraPositionState.animate(
-                                update = CameraUpdateFactory.newLatLngZoom(position, 13f),
+                                update = CameraUpdateFactory.newLatLngZoom(
+                                    position, when(cardType){
+                                        0 -> 13f
+                                        1 -> 15f
+                                        else -> 10f
+                                    }),
                                 durationMs = 900
                             )
                         }
@@ -319,7 +330,6 @@ fun MapScreen(
                     }
                 }
             } else {
-                // Show message when permissions or GPS are not enabled
                 Column(
                     modifier = modifier
                         .fillMaxSize()
@@ -331,9 +341,13 @@ fun MapScreen(
                         locationPermissionsState.permissions.size == locationPermissionsState.revokedPermissions.size
 
                     val textToShow = when {
+
                         !allPermissionsRevoked -> "Thanks for granting access to your approximate location. Please allow precise location access and enable GPS."
+
                         locationPermissionsState.shouldShowRationale -> "Location permissions are important for this app. Please grant them."
+
                         else -> "Location permissions are necessary. You can enable them below or in app settings."
+
                     }
 
                     Text(

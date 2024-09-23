@@ -145,11 +145,10 @@ fun MainScreen(modifier: Modifier) {
             composable(
                 route = NavRoutes.USER_ITEM_INPUT_SCREEN + "/{cardType}",
                 arguments = listOf(navArgument("cardType") { type = NavType.IntType })
-            ) { backStackEntry ->
-                val cardType = backStackEntry.arguments?.getInt("cardType")
+            ) { //backStackEntry ->
+                //val cardType = backStackEntry.arguments?.getInt("cardType")
                 UserItemInputScreen(
                     modifier = modifier,
-                    cardType = cardType,
                     navController = navController
                 )
             }

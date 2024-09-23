@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,11 +39,18 @@ import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
 @Composable
 fun UserItemInputScreen(
     modifier: Modifier,
-    cardType: Int?,
     navController: NavController
 ) {
     val lostInputViewModel: LostInputViewModel = hiltViewModel()
     val foundInputViewModel: FoundInputViewModel= hiltViewModel()
+
+    val cardType = navController.currentBackStackEntry?.arguments?.getInt("cardType")
+    // Storing the Card Type in the ViewModel
+    LaunchedEffect(cardType) {
+        if (cardType != null) {
+            lostInputViewModel.storeCardType(cardType)
+        }
+    }
 
 
     val isMapMarkerLocationEmpty by lostInputViewModel.markerPosition.collectAsState()
@@ -133,8 +141,8 @@ fun UserItemInputScreen(
             composable(NavRoutes.MAP_SCREEN) {
                 MapScreen(
                     modifier = modifier,
-                   cardType = cardType,
-                    viewModel = lostInputViewModel
+                    viewModel = lostInputViewModel,
+                    navController = navController
                 )
             }
 
@@ -207,7 +215,6 @@ fun PreviewAreYouSureToCancelAlertBox() {
 fun PreviewUserItemInputScreen() {
     UserItemInputScreen(
         modifier = Modifier,
-        cardType = 0,
         navController = NavController(LocalContext.current)
     )
 }

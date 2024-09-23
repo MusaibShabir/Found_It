@@ -28,6 +28,17 @@ class LostInputViewModel @Inject constructor(
     private val firestoreService: FirestoreService
 ) : ViewModel() {
 
+    // Handling the Card Type Logic
+    private val _cardType = MutableStateFlow<Int?>(null)
+    val cardType: StateFlow<Int?> = _cardType
+
+        // Function to store cardType
+    fun storeCardType(type: Int) {
+        _cardType.value = type
+    }
+
+
+
     private val collectedData = mutableStateOf<InputLostData?>(null)
 
 
@@ -53,7 +64,7 @@ class LostInputViewModel @Inject constructor(
     }
 
 
-    // Logic For Parent Category Selection
+    // Logic For Parent Category Selection Screen
     private val _parentSelectedCategoryId = MutableStateFlow("")
     val parentSelectedCategoryId: StateFlow<String> = _parentSelectedCategoryId.asStateFlow()
 
@@ -66,7 +77,9 @@ class LostInputViewModel @Inject constructor(
     }
 
 
-    // Logic For Parent Category Selection
+
+
+    // Logic For Color Category Selection Screen
     private val _colorSelectedId = MutableStateFlow("")
     val colorSelectedId: StateFlow<String> = _colorSelectedId.asStateFlow()
     fun setColorSelectedIdId(colorId: String)  {
