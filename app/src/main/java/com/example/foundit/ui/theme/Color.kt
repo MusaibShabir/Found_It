@@ -10,11 +10,19 @@ val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
+val LogoColor = Color(0xFF56D572)
 val MainRed = Color(0xFFEF4848)
 val MainGreen = Color(0xFF0C8371)
-val SelectedIcon = Color(0xFFC7C7C7)
+val SelectedIconColor = Color(0xFF56D572).copy(alpha = .8f)
 
 val githubColor = Color(0xFF171515)
 val linkedInColor = Color(0xFF0a66c2)
 val twitterColor = Color(0xFF000000)
 val instagramColor = Color(0xFFDD2A7B)
+
+val LightGreen = Color(
+    red = 65,
+    green = 157,
+    blue = 124,
+    alpha = 43
+)

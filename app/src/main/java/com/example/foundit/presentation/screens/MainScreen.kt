@@ -1,5 +1,7 @@
 package com.example.foundit.presentation.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -37,7 +39,6 @@ import com.example.foundit.presentation.screens.settings.SettingsScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.about.AboutScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.about.AcknowledgementScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.about.DeveloperInfoScreen
-import com.example.foundit.presentation.screens.settings.components.clickable.about.FollowUsScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.account_center.AccountCenterScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.account_center.ChangeEmailScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.account_center.ChangePasswordScreen
@@ -48,7 +49,6 @@ import com.example.foundit.presentation.screens.settings.components.clickable.fe
 import com.example.foundit.presentation.screens.settings.components.clickable.help_and_Support.ContactSupportScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.help_and_Support.HelpAndSupportScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.help_and_Support.ReportBugScreen
-import com.example.foundit.presentation.screens.settings.components.clickable.language.LanguageScreen
 import com.example.foundit.presentation.screens.settings.components.clickable.security.SecurityScreen
 import com.example.foundit.presentation.splash.SplashScreen
 
@@ -97,6 +97,7 @@ fun currentRoute(navController: NavHostController): String {
 }
 
 //@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun MainScreen(modifier: Modifier) {
     val navController = rememberNavController()
@@ -116,7 +117,8 @@ fun MainScreen(modifier: Modifier) {
             if (shouldShowBottomBar(currentRoute)) {
                 NavigationBar(modifier = modifier, navController = navController)
             }
-        }
+        },
+
     ) {innerPadding ->
         NavHost(
             navController = navController,
@@ -143,11 +145,10 @@ fun MainScreen(modifier: Modifier) {
             composable(
                 route = NavRoutes.USER_ITEM_INPUT_SCREEN + "/{cardType}",
                 arguments = listOf(navArgument("cardType") { type = NavType.IntType })
-            ) { backStackEntry ->
-                val cardType = backStackEntry.arguments?.getInt("cardType")
+            ) { //backStackEntry ->
+                //val cardType = backStackEntry.arguments?.getInt("cardType")
                 UserItemInputScreen(
                     modifier = modifier,
-                    cardType = cardType,
                     navController = navController
                 )
             }
@@ -178,10 +179,6 @@ fun MainScreen(modifier: Modifier) {
 
             composable(NavRoutes.ACCOUNT_CENTER) {
                 AccountCenterScreen(modifier, navController)
-            }
-
-            composable(NavRoutes.LANGUAGE) {
-                LanguageScreen(modifier, navController)
             }
 
             composable(NavRoutes.APPEARANCE) {
@@ -240,9 +237,6 @@ fun MainScreen(modifier: Modifier) {
                 DeveloperInfoScreen(modifier = modifier, navController = navController)
             }
 
-            composable(NavRoutes.FOLLOW_US) {
-                FollowUsScreen(modifier = modifier, navController = navController)
-            }
 
             composable(NavRoutes.CHANGE_PASSWORD) {
                 ChangePasswordScreen(modifier = modifier, navController = navController)
@@ -280,8 +274,6 @@ fun MainScreen(modifier: Modifier) {
         }
     }
 }
-
-
 
 // Helper function to determine if the navigation bar should be shown
 @Composable

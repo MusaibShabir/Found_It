@@ -52,8 +52,8 @@ playServicesMaps = "19.0.0"
 appcompat = "1.7.0"
 
 # Goolge Maps
-mapsUtilsKtx = "5.0.0"
-maps-compose = "4.4.1"
+mapsUtilsKtx = "5.1.1"
+maps-compose = "6.1.2"
 
 
 

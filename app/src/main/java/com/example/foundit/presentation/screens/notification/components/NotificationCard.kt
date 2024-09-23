@@ -51,8 +51,8 @@ fun NotificationItem(
             .fillMaxWidth()
             .height(intrinsicSize = IntrinsicSize.Max)
             .padding(0.dp)
-            .clickable(onClick = onClick),//making the button clickable
-        shape = RoundedCornerShape(35.dp),
+            .clickable(onClick = onClick),
+        shape = RoundedCornerShape(15.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(containerColor = MainGreen),
     ) {
@@ -74,7 +74,7 @@ fun NotificationItem(
                 )
                 Spacer(modifier = modifier.height(4.dp))
                 Text(
-                    text = notification.msg,
+                    text = notification.message,
                     style = MaterialTheme.typography.bodySmall.copy(fontSize = 14.sp),
                     color = Color.White,
                     maxLines = if(isExpanded) Int.MAX_VALUE else 1,//if isExpanded is true this expands the card
@@ -83,6 +83,21 @@ fun NotificationItem(
             }
         }
     }
+}
+
+@Preview(showBackground = true, showSystemUi = false)
+@Composable
+fun PreviewNotificationItem() {
+    NotificationItem(
+        modifier = Modifier,
+        notification = NotificationItemData(
+            id = 1,
+            title = "This is a Notification Test",
+            message = "This is a Notification Test"
+        ),
+        isExpanded = false,
+        onClick = {}
+    )
 }
 
 

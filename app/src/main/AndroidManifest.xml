@@ -9,6 +9,7 @@
 
     <application
         android:name=".MyApplication"
+        android:screenOrientation="portrait"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -18,7 +19,8 @@
         android:roundIcon="@mipmap/app_icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoundIt"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        tools:ignore="DiscouragedApi">
 
 
         <meta-data
@@ -28,7 +30,9 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.FoundIt">
+            android:theme="@style/Theme.FoundIt"
+            android:screenOrientation="userPortrait"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

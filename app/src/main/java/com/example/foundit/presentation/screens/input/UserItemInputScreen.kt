@@ -1,10 +1,13 @@
 package com.example.foundit.presentation.screens.input
 
+import android.os.Build
 import androidx.activity.compose.BackHandler
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,24 +25,32 @@ import com.example.foundit.presentation.common.TheTopAppBar
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.currentRoute
 import com.example.foundit.presentation.screens.input.common.ChildCategoryScreen
+import com.example.foundit.presentation.screens.input.common.MapScreen
 import com.example.foundit.presentation.screens.input.common.ParentCategoryScreen
 import com.example.foundit.presentation.screens.input.common.components.AreYouSureToCancelAlertBox
 import com.example.foundit.presentation.screens.input.common.components.ColorCategoryScreen
 import com.example.foundit.presentation.screens.input.common.components.ItemDescriptionScreen
-import com.example.foundit.presentation.screens.input.common.MapScreen
 import com.example.foundit.presentation.screens.input.common.components.UserInputBottomNavigationBar
 import com.example.foundit.presentation.screens.input.found.FoundInputViewModel
 import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
 
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun UserItemInputScreen(
     modifier: Modifier,
-    cardType: Int?,
     navController: NavController
 ) {
     val lostInputViewModel: LostInputViewModel = hiltViewModel()
     val foundInputViewModel: FoundInputViewModel= hiltViewModel()
+
+    val cardType = navController.currentBackStackEntry?.arguments?.getInt("cardType")
+    // Storing the Card Type in the ViewModel
+    LaunchedEffect(cardType) {
+        if (cardType != null) {
+            lostInputViewModel.storeCardType(cardType)
+        }
+    }
 
 
     val isMapMarkerLocationEmpty by lostInputViewModel.markerPosition.collectAsState()
@@ -130,8 +141,8 @@ fun UserItemInputScreen(
             composable(NavRoutes.MAP_SCREEN) {
                 MapScreen(
                     modifier = modifier,
-                   cardType = cardType,
-                    viewModel = lostInputViewModel
+                    viewModel = lostInputViewModel,
+                    navController = navController
                 )
             }
 
@@ -198,12 +209,12 @@ fun PreviewAreYouSureToCancelAlertBox() {
 
 
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Preview(showBackground = true, showSystemUi = true, device = "id:pixel_2")
 @Composable
 fun PreviewUserItemInputScreen() {
     UserItemInputScreen(
         modifier = Modifier,
-        cardType = 0,
         navController = NavController(LocalContext.current)
     )
 }

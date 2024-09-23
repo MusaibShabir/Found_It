@@ -1,6 +1,11 @@
 package com.example.foundit.presentation.screens.input.lost
 
+import android.content.Context
+import android.location.Address
+import android.location.Geocoder
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -9,15 +14,30 @@ import com.example.foundit.presentation.data.firestore.FirestoreService
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
 class LostInputViewModel @Inject constructor(
     private val firestoreService: FirestoreService
 ) : ViewModel() {
+
+    // Handling the Card Type Logic
+    private val _cardType = MutableStateFlow<Int?>(null)
+    val cardType: StateFlow<Int?> = _cardType
+
+        // Function to store cardType
+    fun storeCardType(type: Int) {
+        _cardType.value = type
+    }
+
+
 
     private val collectedData = mutableStateOf<InputLostData?>(null)
 
@@ -44,7 +64,7 @@ class LostInputViewModel @Inject constructor(
     }
 
 
-    // Logic For Parent Category Selection
+    // Logic For Parent Category Selection Screen
     private val _parentSelectedCategoryId = MutableStateFlow("")
     val parentSelectedCategoryId: StateFlow<String> = _parentSelectedCategoryId.asStateFlow()
 
@@ -57,7 +77,9 @@ class LostInputViewModel @Inject constructor(
     }
 
 
-    // Logic For Parent Category Selection
+
+
+    // Logic For Color Category Selection Screen
     private val _colorSelectedId = MutableStateFlow("")
     val colorSelectedId: StateFlow<String> = _colorSelectedId.asStateFlow()
     fun setColorSelectedIdId(colorId: String)  {
@@ -127,6 +149,49 @@ class LostInputViewModel @Inject constructor(
 
     fun clearMarkerPosition() {
         _markerPosition.value = null
+        _markerAddressDetail.value = ResponseState.Idle
+
+    }
+
+    sealed class ResponseState<out T> {
+        data object Idle : ResponseState<Nothing>()
+        data object Loading : ResponseState<Nothing>()
+        data class Success<T>(val data: T) : ResponseState<T>()
+        data class Error(val exception: Exception) : ResponseState<Nothing>()
+    }
+
+
+    private val _markerAddressDetail = MutableStateFlow<ResponseState<Address>>(ResponseState.Idle)
+    private val markerAddressDetail = _markerAddressDetail.asStateFlow()
+
+    // Create formattedAddress only once
+    val formattedAddress: StateFlow<String>
+        get() = markerAddressDetail.map { responseState ->
+            when (responseState) {
+                is ResponseState.Idle -> "Unknown"
+                is ResponseState.Loading -> "Loading address..."
+                is ResponseState.Success -> responseState.data.getAddressLine(0)
+                is ResponseState.Error -> "Error fetching address: ${responseState.exception.message}"
+            }
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    fun getMarkerAddressDetails(lat: Double, long: Double, context: Context) {
+        viewModelScope.launch {
+            _markerAddressDetail.value = ResponseState.Loading
+            try {
+                val geocoder = Geocoder(context, Locale.getDefault())
+                geocoder.getFromLocation(lat, long, 1) { addresses ->
+                    _markerAddressDetail.value = if (addresses.isNotEmpty()) {
+                        ResponseState.Success(addresses[0])
+                    } else {
+                        ResponseState.Error(Exception("Address not found"))
+                    }
+                }
+            } catch (e: Exception) {
+                _markerAddressDetail.value = ResponseState.Error(e)
+            }
+        }
     }
 
 

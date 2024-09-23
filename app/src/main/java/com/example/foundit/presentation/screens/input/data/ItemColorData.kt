@@ -17,6 +17,7 @@ data class ItemColorData(
         PINK,
         BROWN,
         PURPLE,
+        NO_COLOR,
     }
 }
 
@@ -30,6 +31,7 @@ val colorCategories = listOf(
     ItemColorData(7, "Orange", ItemColorData.Category.ORANGE),
     ItemColorData(8, "Pink", ItemColorData.Category.PINK),
     ItemColorData(9, "Brown", ItemColorData.Category.BROWN),
-    ItemColorData(10, "Purple", ItemColorData.Category.PURPLE)
+    ItemColorData(10, "Purple", ItemColorData.Category.PURPLE),
+    ItemColorData(11, "No-Color", ItemColorData.Category.NO_COLOR),
 
     )

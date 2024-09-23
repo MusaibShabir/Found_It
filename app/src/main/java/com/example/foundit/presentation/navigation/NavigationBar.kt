@@ -4,8 +4,6 @@ package com.example.foundit.presentation.navigation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.Text
@@ -20,9 +18,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.foundit.presentation.navigation.components.NavigationIcon
 import com.example.foundit.presentation.data.navigation.NavigationItems
-import com.example.foundit.ui.theme.SelectedIcon
+import com.example.foundit.presentation.navigation.components.NavigationIcon
+import com.example.foundit.ui.theme.SelectedIconColor
 
 
 @Composable
@@ -54,7 +52,7 @@ fun NavigationBar(modifier: Modifier, navController: NavHostController) {
                         }
                     },
                     colors = NavigationBarItemColors(
-                        selectedIndicatorColor = SelectedIcon,
+                        selectedIndicatorColor = SelectedIconColor,
                         selectedIconColor = Color.Black,
                         selectedTextColor = Color.Black,
                         disabledIconColor = Color.Transparent,
@@ -67,23 +65,11 @@ fun NavigationBar(modifier: Modifier, navController: NavHostController) {
                     },
                     alwaysShowLabel = true,
                     icon = {
-                        BadgedBox(
-                            badge = {
-                                if (item.badgeCount != null) {
-                                    Badge {
-                                        Text(text = item.badgeCount.toString())
-                                    }
-                                } else if (item.hasNews) {
-                                    Badge()
-                                }
-                            }
-                        ) {
-                            if (index == selectedItemIndex) {
-                                NavigationIcon(iconResource = item.selectedIcon)
-                            } else {
-                                NavigationIcon(iconResource = item.unselectedIcon)
+                        if (index == selectedItemIndex) {
+                            NavigationIcon(iconResource = item.selectedIcon)
+                        } else {
+                            NavigationIcon(iconResource = item.unselectedIcon)
 
-                            }
                         }
                     }
                 )
@@ -91,6 +77,8 @@ fun NavigationBar(modifier: Modifier, navController: NavHostController) {
         }
     }
 }
+
+
 
 
 
