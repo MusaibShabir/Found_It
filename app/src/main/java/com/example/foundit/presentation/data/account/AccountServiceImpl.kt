@@ -1,12 +1,17 @@
 package com.example.foundit.presentation.data.account
 
 import android.net.Uri
+import com.example.foundit.presentation.data.User
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserInfo
 import com.google.firebase.auth.userProfileChangeRequest
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 
 class AccountServiceImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
@@ -77,6 +82,20 @@ class AccountServiceImpl @Inject constructor(
         firebaseAuth.currentUser?.updateProfile(profileUpdates)?.await()
     }
 
+    // it is used to update Profile
+    override suspend fun updateProfile(firstName: String, lastName: String, profilePicture: Uri?) {
+        val currentUser = firebaseAuth.currentUser
+        if (currentUser != null) {
+            val profileUpdates = userProfileChangeRequest {
+                displayName = "$firstName $lastName"  // Single space between first and last name
+                photoUri = profilePicture  // Can be null; Firebase will handle it
+            }
+            currentUser.updateProfile(profileUpdates).await()
+        } else {
+            throw IllegalStateException("No authenticated user found.")
+        }
+    }
+
     // it is used to update email
     override suspend fun updateEmail(email: String) {
         firebaseAuth.currentUser?.verifyBeforeUpdateEmail(email)?.await()
@@ -96,5 +115,33 @@ class AccountServiceImpl @Inject constructor(
     override suspend fun deleteAccount() {
         firebaseAuth.currentUser?.delete()?.await()
     }
+
+/*
+    override val currentUser: Flow<User?>
+        get() = callbackFlow {
+            val listener =
+                FirebaseAuth.AuthStateListener { auth ->
+                    this.trySend(auth.currentUser.toNotesUser())
+                }
+            firebaseAuth.addAuthStateListener(listener)
+            awaitClose { firebaseAuth.removeAuthStateListener(listener) }
+        }
+
+    private fun FirebaseUser?.toNotesUser(): User {
+        return if (this == null) User() else User(
+            id = this.uid,
+            email = this.email ?: "",
+            provider = this.providerId,
+            displayName = this.displayName ?: "",
+            isAnonymous = this.isAnonymous
+        )
+    }
+
+    override fun getUserProfile(): User {
+        return firebaseAuth.currentUser.toNotesUser()
+    }
+*/
+
+
 }
 

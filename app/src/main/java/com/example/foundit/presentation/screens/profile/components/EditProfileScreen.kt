@@ -35,10 +35,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -57,15 +55,17 @@ fun EditProfileScreenContent(
     onLastNameChange: (String) -> Unit,
     onCancelClick: () -> Unit,
     onSaveClick: () -> Unit,
-    profilePic: Uri?,
+    profilePicture: Uri?,
+    onProfilePictureChange: (Uri?) -> Unit,
     navController: NavController
 ) {
-    var profilePicture by remember { mutableStateOf(profilePic) }
+    //var profilePicture by remember { mutableStateOf(profilePic) }
     val profilePicturePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
             if (uri != null) {
-                profilePicture = uri // Update profile picture only if a valid URI is selected
+                //profilePicture = uri
+                onProfilePictureChange(uri)// Update profile picture only if a valid URI is selected
             }
         }
     )
@@ -204,27 +204,28 @@ fun EditProfileScreen(
     val profilePictures: Uri? = viewModel.profilePicture
 
     //Profile Heading Card
-    val profileFirstName by remember { mutableStateOf(userNameList[0]) }
-    val profileLastName by remember { mutableStateOf(userNameList[1]) }
-    var profileFirstNameX by remember { mutableStateOf(profileData?.firstName ?: "") }
-    var profileLastNameX by remember { mutableStateOf(profileData?.lastName ?: "") }
+    var profileFirstName by remember { mutableStateOf(userNameList[0]) }
+    var profileLastName by remember { mutableStateOf(userNameList[1]) }
+//    var profileFirstNameX by remember { mutableStateOf(profileData?.firstName ?: "") }
+//    var profileLastNameX by remember { mutableStateOf(profileData?.lastName ?: "") }
     val profileId by remember { mutableLongStateOf(profileData?.id ?: 0) }
-    var profilePicture by remember { mutableStateOf<Uri?>(profilePictures) }
+    var profilePicture by remember { mutableStateOf(profilePictures) }
 
 
     EditProfileScreenContent(
         modifier = modifier,
         firstName = profileFirstName,
         lastName = profileLastName,
-        onFirstNameChange = { profileFirstNameX = it },
-        onLastNameChange = { profileLastNameX = it },
+        onFirstNameChange = { profileFirstName = it },
+        onLastNameChange = { profileLastName = it },
         onCancelClick = { navController.popBackStack() },
         onSaveClick = {
-            viewModel.updateProfileData(profileId, profileFirstName, profileLastName)
-            navController.popBackStack()
+//            viewModel.updateProfileData(firstName = profileFirstName, lastName = profileLastName, profilePicture = profilePicture)
+//            navController.popBackStack()
         },
+        profilePicture = profilePicture,
+        onProfilePictureChange = { profilePicture = it},
         navController = navController,
-        profilePic = profilePicture
     )
 
 }
@@ -232,19 +233,19 @@ fun EditProfileScreen(
 
 
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewEditProfileScreen() {
-    EditProfileScreenContent(
-        modifier = Modifier,
-        firstName = "Musaib",
-        lastName = "Shabir",
-        onFirstNameChange = {},
-        onLastNameChange = {},
-        onCancelClick = {},
-        onSaveClick = {},
-        navController = NavController(LocalContext.current),
-        profilePic = null
-    )
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun PreviewEditProfileScreen() {
+//    EditProfileScreenContent(
+//        modifier = Modifier,
+//        firstName = "Musaib",
+//        lastName = "Shabir",
+//        onFirstNameChange = {},
+//        onLastNameChange = {},
+//        onCancelClick = {},
+//        onSaveClick = {},
+//        navController = NavController(LocalContext.current),
+//        profilePic = null
+//    )
+//}
 

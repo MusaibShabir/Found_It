@@ -1,6 +1,7 @@
 package com.example.foundit.presentation.screens.profile
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foundit.presentation.data.account.AccountService
@@ -24,6 +25,7 @@ class ProfileViewModel @Inject constructor(
 
     val userName: String
         get() = accountService.currentUserName
+
 
     val memberSince: Long?
         get() = accountService.a
@@ -50,5 +52,25 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    /*
+    fun updateProfileData(firstName: String, lastName: String, profilePicture: Uri?) {
+        viewModelScope.launch {
+            accountService.updateProfile(firstName, lastName, profilePicture)
+        }
+    }
+
+    fun a(){
+        Log.d("profile", "a: $userName")
+        //Log.d("profile", "a: $profilePicture")
+    }
+
+    // Using StateFlow to hold and expose the username
+    private val _userName = MutableStateFlow(userName)
+    val userNames: StateFlow<String> = _userName.asStateFlow()
+
+    fun aa(){
+        _userName.value = userName
+    }
+    */
 
 }
