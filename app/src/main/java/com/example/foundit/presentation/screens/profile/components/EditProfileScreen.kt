@@ -206,8 +206,8 @@ fun EditProfileScreen(
     //Profile Heading Card
     var profileFirstName by remember { mutableStateOf(userFirstName) }
     var profileLastName by remember { mutableStateOf(userLastName) }
-//    var profileFirstNameX by remember { mutableStateOf(profileData?.firstName ?: "") }
-//    var profileLastNameX by remember { mutableStateOf(profileData?.lastName ?: "") }
+//    var profileFirstName by remember { mutableStateOf(profileData?.firstName ?: "") }
+//    var profileLastName by remember { mutableStateOf(profileData?.lastName ?: "") }
     val profileId by remember { mutableLongStateOf(profileData?.id ?: 0) }
     var profilePicture by remember { mutableStateOf(profilePictures) }
 
