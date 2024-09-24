@@ -70,6 +70,8 @@ import com.example.foundit.presentation.screens.registration.components.Clickabl
 import com.example.foundit.presentation.screens.registration.components.OrDivider
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleViewModel
+import com.example.foundit.ui.theme.LogoColor
+import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.Righteous
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.FirebaseNetworkException
@@ -188,12 +190,13 @@ fun SignUpScreen(
                     shape = MaterialTheme.shapes.medium,
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedLabelColor = Color.Blue,
-                        cursorColor = Color.Blue,
-                        focusedBorderColor = Color.Blue,
+                        focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                        focusedLabelColor = MaterialTheme.colorScheme.onSurface,
+                        cursorColor = MainGreen,
+                        focusedBorderColor = MainGreen,
                         selectionColors = TextSelectionColors(
-                            handleColor = Color.Blue,
-                            backgroundColor = Color.Transparent,
+                            handleColor = MainGreen,
+                            backgroundColor = MainGreen,
                         ),
                     ),
                     keyboardOptions = KeyboardOptions(
@@ -220,12 +223,13 @@ fun SignUpScreen(
                     shape = MaterialTheme.shapes.medium,
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedLabelColor = Color.Blue,
-                        cursorColor = Color.Blue,
-                        focusedBorderColor = Color.Blue,
+                        focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                        focusedLabelColor = MaterialTheme.colorScheme.onSurface,
+                        cursorColor = MainGreen,
+                        focusedBorderColor = MainGreen,
                         selectionColors = TextSelectionColors(
-                            handleColor = Color.Blue,
-                            backgroundColor = Color.Transparent,
+                            handleColor = MainGreen,
+                            backgroundColor = MainGreen,
                         ),
                     ),
                     keyboardOptions = KeyboardOptions(
@@ -258,12 +262,13 @@ fun SignUpScreen(
                         shape = MaterialTheme.shapes.medium,
                         singleLine = true,
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedLabelColor = Color.Blue,
-                            cursorColor = Color.Blue,
-                            focusedBorderColor = Color.Blue,
+                            focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                            focusedLabelColor = MaterialTheme.colorScheme.onSurface,
+                            cursorColor = MainGreen,
+                            focusedBorderColor = MainGreen,
                             selectionColors = TextSelectionColors(
-                                handleColor = Color.Blue,
-                                backgroundColor = Color.Transparent,
+                                handleColor = MainGreen,
+                                backgroundColor = MainGreen,
                             ),
                         ),
                         modifier = modifier
@@ -314,12 +319,13 @@ fun SignUpScreen(
                     singleLine = true,
                     isError = !isEmailValid,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedLabelColor = Color.Blue,
-                        cursorColor = Color.Blue,
-                        focusedBorderColor = Color.Blue,
+                        focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                        focusedLabelColor = MaterialTheme.colorScheme.onSurface,
+                        cursorColor = MainGreen,
+                        focusedBorderColor = MainGreen,
                         selectionColors = TextSelectionColors(
-                            handleColor = Color.Blue,
-                            backgroundColor = Color.Transparent,
+                            handleColor = MainGreen,
+                            backgroundColor = MainGreen,
                         ),
                     ),
                     keyboardOptions = KeyboardOptions(
@@ -361,13 +367,13 @@ fun SignUpScreen(
                     visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                     isError = !isPasswordValid,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedLabelColor = Color.Blue,
-                        cursorColor = Color.Blue,
-                        focusedBorderColor = Color.Blue,
-                        errorBorderColor = Color.Red,
+                        focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                        focusedLabelColor = MaterialTheme.colorScheme.onSurface,
+                        cursorColor = MainGreen,
+                        focusedBorderColor = MainGreen,
                         selectionColors = TextSelectionColors(
-                            handleColor = Color.Blue,
-                            backgroundColor = Color.Transparent,
+                            handleColor = MainGreen,
+                            backgroundColor = MainGreen,
                         ),
                     ),
                     keyboardOptions = KeyboardOptions(
@@ -410,12 +416,13 @@ fun SignUpScreen(
                     visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                     isError = confirmPasswordError,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedLabelColor = Color.Blue,
-                        cursorColor = Color.Blue,
-                        focusedBorderColor = Color.Blue,
+                        focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                        focusedLabelColor = MaterialTheme.colorScheme.onSurface,
+                        cursorColor = MainGreen,
+                        focusedBorderColor = MainGreen,
                         selectionColors = TextSelectionColors(
-                            handleColor = Color.Blue,
-                            backgroundColor = Color.Transparent,
+                            handleColor = MainGreen,
+                            backgroundColor = MainGreen,
                         ),
                     ),
                     keyboardOptions = KeyboardOptions(
@@ -459,7 +466,7 @@ fun SignUpScreen(
                         }
                     },
                     colors = ButtonColors(
-                        containerColor = Color.Blue,
+                        containerColor = MainGreen,
                         contentColor = MaterialTheme.colorScheme.surface,
                         disabledContainerColor = Color.Gray,
                         disabledContentColor = MaterialTheme.colorScheme.onSurface

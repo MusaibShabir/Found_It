@@ -6,7 +6,9 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,9 +18,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,6 +47,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.foundit.R
 import com.example.foundit.presentation.data.navigation.NavRoutes
+import com.example.foundit.ui.theme.LogoColor
+import com.example.foundit.ui.theme.MainGreen
 import kotlinx.coroutines.delay
 
 @Composable
@@ -57,22 +66,22 @@ fun GetStartedScreen(
 
     LaunchedEffect(Unit) {
         showCard = true
-        delay(1000)
+        delay(100)
         showImage = true
-        delay(100)
+        delay(1000)
         showTitle = true
-        delay(100)
+        delay(1000)
         showDescription = true
         delay(100)
         showButton = true
     }
 
     Scaffold(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize(),
     ) { innerPadding ->
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .padding(innerPadding)
                 .padding(16.dp)
@@ -84,20 +93,20 @@ fun GetStartedScreen(
                     animationSpec = tween(durationMillis = 2000)
                 )
             ) {
-                Card(
-                    modifier = Modifier
+                OutlinedCard(
+                    modifier = modifier
                         .fillMaxWidth()
                         .height(390.dp),
                     shape = RoundedCornerShape(36.dp),
                     colors = CardDefaults.cardColors(
                         containerColor = Color.White
                     ),
-                    elevation = CardDefaults.cardElevation(30.dp)
+                    border = BorderStroke(color = LogoColor, width = 1.dp)
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(16.dp),
-                        modifier = Modifier
+                        modifier = modifier
                             .fillMaxSize()
                             .padding(horizontal = 16.dp, vertical = 20.dp)
 
@@ -115,7 +124,7 @@ fun GetStartedScreen(
                         AnimatedVisibility(
                             visible = showTitle
                         ) {
-                            TypingTextEffect(text = "Welcome to Found it", typingDelay = 20)
+                            TypingTextEffect(text = "Welcome to Found It", typingDelay = 50)
                         }
 
                         AnimatedVisibility(
@@ -135,11 +144,14 @@ fun GetStartedScreen(
                             visible = showButton,
                             enter = fadeIn(animationSpec = tween(durationMillis = 2000)) + scaleIn(animationSpec = tween(durationMillis = 2000))
                         ) {
-                            Button(
+                            ElevatedButton(
                                 onClick = {
-                                    // Navigate to the next screen
                                     navController.navigate(forwardNavigation)
                                 },
+                                colors = ButtonDefaults.elevatedButtonColors(
+                                    containerColor = MainGreen,
+                                    contentColor = Color.White
+                                ),
                                 modifier = Modifier
                                     .fillMaxWidth(0.6f)
                                     .padding(top = 20.dp)
