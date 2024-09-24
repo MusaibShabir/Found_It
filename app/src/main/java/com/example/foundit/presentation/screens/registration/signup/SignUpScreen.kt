@@ -24,12 +24,12 @@ import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Man
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
@@ -96,6 +96,7 @@ fun SignUpScreen(
 
     var isEmailValid by remember { mutableStateOf(true) }
     var passwordVisible by remember { mutableStateOf(false) }
+    var confirmPasswordVisible by remember { mutableStateOf(false) }
     var isPasswordValid by remember { mutableStateOf(true) }
     var isConfirmPasswordValid by remember { mutableStateOf(true) }
     var confirmPasswordError by remember { mutableStateOf(false) }
@@ -117,26 +118,7 @@ fun SignUpScreen(
             Toast.makeText(context, "Location permission is required to proceed", Toast.LENGTH_LONG).show()
         }
     }
-
-    fun requestLocationPermission() {
-        when {
-            ContextCompat.checkSelfPermission(
-                context, android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                Log.d("Location", "Permission already granted")
-                coroutineScope.launch {
-                    signUpViewModel.getLastLocation(fusedLocationClient, context)
-                }
-            }
-            else -> {
-                Log.d("Location", "Requesting permission")
-                locationPermissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
-            }
-        }
-    }
-
-
-
+    
     Scaffold(
         modifier = modifier
             .fillMaxSize(1f),
@@ -190,6 +172,7 @@ fun SignUpScreen(
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,
                         focusedLabelColor = MaterialTheme.colorScheme.onSurface,
                         cursorColor = MainGreen,
                         focusedBorderColor = MainGreen,
@@ -223,6 +206,7 @@ fun SignUpScreen(
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,
                         focusedLabelColor = MaterialTheme.colorScheme.onSurface,
                         cursorColor = MainGreen,
                         focusedBorderColor = MainGreen,
@@ -262,6 +246,7 @@ fun SignUpScreen(
                         singleLine = true,
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,
                             focusedLabelColor = MaterialTheme.colorScheme.onSurface,
                             cursorColor = MainGreen,
                             focusedBorderColor = MainGreen,
@@ -277,6 +262,7 @@ fun SignUpScreen(
                     )
 
                     ExposedDropdownMenu(
+                        containerColor = MaterialTheme.colorScheme.onPrimary,
                         expanded = expanded,
                         onDismissRequest = { expanded = false }
                     ) {
@@ -319,6 +305,8 @@ fun SignUpScreen(
                     isError = !isEmailValid,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                        errorContainerColor = MaterialTheme.colorScheme.onPrimary,
                         focusedLabelColor = MaterialTheme.colorScheme.onSurface,
                         cursorColor = MainGreen,
                         focusedBorderColor = MainGreen,
@@ -338,8 +326,6 @@ fun SignUpScreen(
                 )
 
                 // Password
-                val passwordIcon =
-                    if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
                 OutlinedTextField(
                     modifier = modifier
                         .fillMaxWidth()
@@ -351,11 +337,11 @@ fun SignUpScreen(
                             it.length >= 8 && it.any { char -> !char.isLetterOrDigit() }
                     },
                     label = { Text("Password") },
-                    leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password icon") },
+                    leadingIcon = { Icon(Icons.Outlined.Lock, contentDescription = "Password icon") },
                     trailingIcon = {
                         IconButton(onClick = { passwordVisible = !passwordVisible }) {
                             Icon(
-                                passwordIcon,
+                                if (passwordVisible) Icons.Outlined.Visibility else Icons.Outlined.VisibilityOff,
                                 contentDescription = if (passwordVisible) "Hide password" else "Show password"
                             )
                         }
@@ -367,6 +353,8 @@ fun SignUpScreen(
                     isError = !isPasswordValid,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                        errorContainerColor = MaterialTheme.colorScheme.onPrimary,
                         focusedLabelColor = MaterialTheme.colorScheme.onSurface,
                         cursorColor = MainGreen,
                         focusedBorderColor = MainGreen,
@@ -388,6 +376,8 @@ fun SignUpScreen(
                     }
                 )
 
+
+
                 // Confirm Password
                 OutlinedTextField(
                     modifier = modifier
@@ -400,22 +390,24 @@ fun SignUpScreen(
                         isConfirmPasswordValid = !confirmPasswordError
                     },
                     label = { Text("Confirm Password") },
-                    leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password icon") },
+                    leadingIcon = { Icon(Icons.Outlined.Lock, contentDescription = "Password icon") },
                     trailingIcon = {
-                        IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        IconButton(onClick = { confirmPasswordVisible = !confirmPasswordVisible }) {
                             Icon(
-                                passwordIcon,
-                                contentDescription = if (passwordVisible) "Hide password" else "Show password"
+                                if (confirmPasswordVisible) Icons.Outlined.Visibility else Icons.Outlined.VisibilityOff,
+                                contentDescription = if (confirmPasswordVisible) "Hide password" else "Show password"
                             )
                         }
                     },
                     placeholder = { Text("Confirm Your Password", fontStyle = FontStyle.Italic) },
                     shape = MaterialTheme.shapes.medium,
                     singleLine = true,
-                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                    visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                     isError = confirmPasswordError,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                        errorContainerColor = MaterialTheme.colorScheme.onPrimary,
                         focusedLabelColor = MaterialTheme.colorScheme.onSurface,
                         cursorColor = MainGreen,
                         focusedBorderColor = MainGreen,
@@ -492,11 +484,12 @@ fun SignUpScreen(
                 }
             } // Button Row Ends
 
+
             OrDivider()
+
 
             ContinueWithGoogleCard(
                 modifier = modifier,
-                //colorScheme = 1,
                 continueWithGoogleViewModel = continueWithGoogleViewModel,
             ) { credential ->
                 signUpViewModel.onSignUpWithGoogle(credential) { result ->

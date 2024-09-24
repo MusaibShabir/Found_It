@@ -67,7 +67,7 @@ fun GetStartedScreen(
         showTitle = true
         delay(1000)
         showDescription = true
-        delay(100)
+        delay(2000)
         showButton = true
     }
 
@@ -127,7 +127,8 @@ fun GetStartedScreen(
                             enter = fadeIn(animationSpec = tween(durationMillis = 3000))
                         ) {
                             Text(
-                                text = "This app helps you track and locate your lost items quickly and efficiently. Whether you've misplaced your wallet, or any other valuable item, Found it is here to assist you in finding them with ease.",
+                                text = "Misplaced your keys? Lost your phone? Join our community of helpful finders and seekers. " +
+                                        "This app makes it easy to report lost items and connect with people who may have found them.",
                                 style = MaterialTheme.typography.bodyLarge.copy(
                                     textAlign = TextAlign.Center
                                 ),
@@ -137,7 +138,7 @@ fun GetStartedScreen(
 
                         AnimatedVisibility(
                             visible = showButton,
-                            enter = fadeIn(animationSpec = tween(durationMillis = 2000)) + scaleIn(animationSpec = tween(durationMillis = 2000))
+                            enter = fadeIn(animationSpec = tween(durationMillis = 200)) + scaleIn(animationSpec = tween(durationMillis = 1000))
                         ) {
                             ElevatedButton(
                                 onClick = {

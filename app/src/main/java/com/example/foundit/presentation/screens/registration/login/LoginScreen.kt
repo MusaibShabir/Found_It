@@ -50,6 +50,7 @@ import com.example.foundit.presentation.screens.registration.components.Clickabl
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.OrDivider
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleViewModel
+import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.Righteous
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -118,15 +119,17 @@ fun LoginScreen(
                 singleLine = true,
                 isError = !isEmailValid,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedLabelColor = Color.Blue,
-                    cursorColor = Color.Blue,
-                    focusedBorderColor = Color.Blue,
-                    selectionColors =  TextSelectionColors(
-                        handleColor = Color.Blue,
-                        backgroundColor = Color.Transparent,
+                    focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                    errorContainerColor = MaterialTheme.colorScheme.onPrimary,
+                    focusedLabelColor = MaterialTheme.colorScheme.onSurface,
+                    cursorColor = MainGreen,
+                    focusedBorderColor = MainGreen,
+                    selectionColors = TextSelectionColors(
+                        handleColor = MainGreen,
+                        backgroundColor = MainGreen,
                     ),
-
-                    ),
+                ),
                 supportingText = {
                     if (!isEmailValid && email.isNotBlank()) {
                         Text("Invalid email address", color = MaterialTheme.colorScheme.error)
@@ -158,15 +161,17 @@ fun LoginScreen(
                 singleLine = true,
                 isError = !isPasswordValid,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedLabelColor = Color.Blue,
-                    cursorColor = Color.Blue,
-                    focusedBorderColor = Color.Blue,
-                    selectionColors =  TextSelectionColors(
-                        handleColor = Color.Blue,
-                        backgroundColor = Color.Transparent,
+                    focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                    errorContainerColor = MaterialTheme.colorScheme.onPrimary,
+                    focusedLabelColor = MaterialTheme.colorScheme.onSurface,
+                    cursorColor = MainGreen,
+                    focusedBorderColor = MainGreen,
+                    selectionColors = TextSelectionColors(
+                        handleColor = MainGreen,
+                        backgroundColor = MainGreen,
                     ),
-
-                    ),
+                ),
                 supportingText = {
                     if (!isPasswordValid && password.isNotBlank()) {
                         Text("Password must be at least 8 characters", color = MaterialTheme.colorScheme.error)
@@ -220,7 +225,7 @@ fun LoginScreen(
                     }
                 },
                 colors = ButtonColors(
-                    containerColor = Color.Blue,
+                    containerColor = MainGreen,
                     contentColor = MaterialTheme.colorScheme.surface,
                     disabledContainerColor = Color.Gray,
                     disabledContentColor = MaterialTheme.colorScheme.onSurface
