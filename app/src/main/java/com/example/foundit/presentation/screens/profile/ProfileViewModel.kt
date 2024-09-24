@@ -22,15 +22,40 @@ class ProfileViewModel @Inject constructor(
     private val _profileData = MutableStateFlow<ProfileData?>(null)
     val profileData: StateFlow<ProfileData?> = _profileData.asStateFlow()
 
-    val userName: String
+    val previoususerId = accountService.currentUserId
+
+    val currentuserId: String
+        get() = accountService.currentUserId
+
+    val currentUserName: String
         get() = accountService.currentUserName
 
-
     val memberSince: Long?
-        get() = accountService.a
+        get() = accountService.accountCreationDate
 
-    val profilePicture: Uri?
+    val currentUserProfilePicture: Uri?
         get() = accountService.currentUserPhotoUrl
+
+    // dividing user name into firstName and lastName
+    val splitUserName: List<String>
+        get() = currentUserName.split(" ", limit = 2)
+
+    val userNameList: List<String>
+        get() {
+            return if (splitUserName.size == 2) listOf(splitUserName[0], splitUserName[1]) else listOf(splitUserName[0], "")
+        }
+
+
+    // Using StateFlow to hold and expose the username
+    private val _userFirstName = MutableStateFlow(userNameList[0])
+    val userFirstNames: StateFlow<String> = _userFirstName.asStateFlow()
+
+    private val _userLastName = MutableStateFlow(userNameList[1])
+    val userLastNames: StateFlow<String> = _userLastName.asStateFlow()
+
+    // Using StateFlow to hold and expose the profile picture
+    private val _profilePicture = MutableStateFlow(currentUserProfilePicture)
+    val profilePicture: StateFlow<Uri?> = _profilePicture.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -51,25 +76,24 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    /*
+
     fun updateProfileData(firstName: String, lastName: String, profilePicture: Uri?) {
         viewModelScope.launch {
             accountService.updateProfile(firstName, lastName, profilePicture)
+            updateProfileData()
         }
     }
 
-    fun a(){
-        Log.d("profile", "a: $userName")
-        //Log.d("profile", "a: $profilePicture")
+    fun updateProfileData(){
+//        splitUserName = currentUserName.split(" ", limit = 2)
+        _userFirstName.value = userNameList[0]
+        _userLastName.value = userNameList[1]
+        _profilePicture.value = currentUserProfilePicture
+//        Log.d("profile", "aa _profilepicture: ${_profilePicture.value}")
+//        Log.d("profile", "a split: ${splitUserName}")
+//        Log.d("profile", "a list: ${userNameList}")
+//        Log.d("profile", "a _flow: ${_userFirstName.value}")
+//        Log.d("profile", "a flow: ${userLastNames.value}")
     }
-
-    // Using StateFlow to hold and expose the username
-    private val _userName = MutableStateFlow(userName)
-    val userNames: StateFlow<String> = _userName.asStateFlow()
-
-    fun aa(){
-        _userName.value = userName
-    }
-    */
 
 }

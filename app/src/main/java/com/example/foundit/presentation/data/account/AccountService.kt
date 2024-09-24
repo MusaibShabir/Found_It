@@ -1,13 +1,11 @@
 package com.example.foundit.presentation.data.account
 
 import android.net.Uri
-import com.example.foundit.presentation.data.User
 import com.google.firebase.auth.UserInfo
-import kotlinx.coroutines.flow.Flow
 
 interface AccountService {
         val currentUserId: String
-        val a: Long?
+        val accountCreationDate: Long?
         val currentUserName: String
         val currentUserEmail: String
         val currentUserProviderData: MutableList<out UserInfo>?
@@ -25,6 +23,4 @@ interface AccountService {
         suspend fun logout()
         suspend fun signInWithGoogle(idToken: String)
         suspend fun deleteAccount()
-//        val currentUser: Flow<User?>
-//        fun getUserProfile(): User
 }

@@ -14,16 +14,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
-import com.example.foundit.R
 import com.example.foundit.presentation.data.BadgesCardData
 import com.example.foundit.presentation.data.BadgesCardDataClass
 import com.example.foundit.presentation.data.navigation.NavRoutes
@@ -104,18 +100,21 @@ fun ProfileScreen(
 ) {
     val profileData by viewModel.profileData.collectAsState()
     val memberSince = viewModel.memberSince
-    val userName = viewModel.userName
+//    val userName = viewModel.userName
+//    val profilePicture: Uri? = viewModel.profilePicture //?: painterResource(id = R.drawable.ic_launcher_background)
+    val userFirstName by viewModel.userFirstNames.collectAsState()
+    val userLastName by viewModel.userLastNames.collectAsState()
+    val profilePicture by viewModel.profilePicture.collectAsState()
 
     // dividing user name into firstName and lastName
-    val splitUserName = userName.split(" ", limit = 2)
-    val userNameList = if (splitUserName.size == 2) listOf(splitUserName[0], splitUserName[1]) else listOf(splitUserName[0], "")
+//    val splitUserName = userName.split(" ", limit = 2)
+//    val userNameList = if (splitUserName.size == 2) listOf(splitUserName[0], splitUserName[1]) else listOf(splitUserName[0], "")
 
-    val profilePicture: Uri? = viewModel.profilePicture //?: painterResource(id = R.drawable.ic_launcher_background)
 
 
     //Profile Heading Card
-    val profileFirstName by remember { mutableStateOf(userNameList[0]) }
-    val profileLastName by remember { mutableStateOf(userNameList[1]) }
+//    val profileFirstName by remember { mutableStateOf(userFirstName)}
+//    val profileLastName by remember { mutableStateOf(userLastName) }
 //    val profileFirstName by remember { mutableStateOf(profileData?.firstName ?: "") }
 //    val profileLastName by remember { mutableStateOf(profileData?.lastName ?: "") }
     val profileCountryCode by remember { mutableIntStateOf(profileData?.countryCode ?: 0) }
@@ -131,8 +130,8 @@ fun ProfileScreen(
 
     ProfileScreenContent(
         modifier = modifier,
-        profileFirstName = profileFirstName,
-        profileLastName = profileLastName,
+        profileFirstName = userFirstName,
+        profileLastName = userLastName,
         profileId = profileId,
         profilePicture = profilePicture,
         profileCountryCode = profileCountryCode,
