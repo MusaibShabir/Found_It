@@ -1,6 +1,5 @@
 package com.example.foundit.presentation.screens.registration.signup
 
-import android.content.pm.PackageManager
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -63,7 +62,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.registration.components.ClickableTextToNavigationRoute
@@ -118,7 +116,7 @@ fun SignUpScreen(
             Toast.makeText(context, "Location permission is required to proceed", Toast.LENGTH_LONG).show()
         }
     }
-    
+
     Scaffold(
         modifier = modifier
             .fillMaxSize(1f),
