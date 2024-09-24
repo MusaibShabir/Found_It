@@ -100,14 +100,16 @@ fun UserItemInputScreen(
                         else -> { navControllerForUserInputScreen.popBackStack() }
                     }
                                       },
-                nextButtonEnabled = { when (currentRoute) {
-                    NavRoutes.MAP_SCREEN -> isMapMarkerLocationEmpty !== null
-                    NavRoutes.PARENT_CATEGORY_SCREEN -> isParentSelectedCategoryEmpty.isNotEmpty()
-                    NavRoutes.COLOR_CATEGORY_SCREEN -> isColorSelectedCategoryEmpty.isNotEmpty()
-                    NavRoutes.CHILD_CATEGORY_SCREEN -> isChildSelectedCategoryEmpty.isNotEmpty()
-                    NavRoutes.ITEM_DESCRIPTION_SCREEN -> isDescriptionEmpty.length >= minCharLength
-                    else -> true
-                }
+                nextButtonEnabled = {
+                        when (currentRoute) {
+                            NavRoutes.MAP_SCREEN -> isMapMarkerLocationEmpty !== null
+                            NavRoutes.PARENT_CATEGORY_SCREEN -> isParentSelectedCategoryEmpty.isNotEmpty()
+                            NavRoutes.COLOR_CATEGORY_SCREEN -> isColorSelectedCategoryEmpty.isNotEmpty()
+                            NavRoutes.CHILD_CATEGORY_SCREEN -> isChildSelectedCategoryEmpty.isNotEmpty()
+                            NavRoutes.ITEM_DESCRIPTION_SCREEN -> isDescriptionEmpty.length >= minCharLength
+                            else -> true
+                        }
+
                 },
                 onNextClick = {
                     when (currentRoute) {
@@ -124,23 +126,30 @@ fun UserItemInputScreen(
                         navControllerForUserInputScreen.navigate(NavRoutes.ITEM_DESCRIPTION_SCREEN)
                     }
                         NavRoutes.ITEM_DESCRIPTION_SCREEN -> {
-                            lostInputViewModel.onSubmitClick { isSucess, _ ->
-                                if (isSucess) {
-                                    Toast.makeText(
-                                        context,
-                                        "Your Item was Registered Succesfully",
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                    navController.navigate(NavRoutes.HOME)
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        "Something Went Wrong",
-                                        Toast.LENGTH_LONG
-                                    ).show()
+                            if(lostInputViewModel.isNetworkAvailableViewmodel(context)) {
+                                lostInputViewModel.onSubmitClick { isSucess, _ ->
+                                    if (isSucess) {
+                                        Toast.makeText(
+                                            context,
+                                            "Your Item was Registered Succesfully",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                        navController.navigate(NavRoutes.HOME)
+                                    } else {
+                                        Toast.makeText(
+                                            context,
+                                            "Something Went Wrong",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
                                 }
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    "Please Connect to the Internet",
+                                    Toast.LENGTH_LONG
+                                ).show()
                             }
-
 
                     }else -> {
 

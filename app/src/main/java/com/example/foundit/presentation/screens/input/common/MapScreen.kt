@@ -10,6 +10,7 @@ import android.location.LocationManager
 import android.os.Build
 import android.os.Looper
 import android.provider.Settings
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -85,7 +86,6 @@ import java.lang.ref.WeakReference
 @Composable
 fun MapScreen(
     modifier: Modifier,
-    //cardType: Int?,
     viewModel: LostInputViewModel,
     navController: NavController,
 ) {
@@ -112,7 +112,6 @@ fun MapScreen(
         isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
-
     DisposableEffect(Unit) {
 
         val receiver = object : BroadcastReceiver() {
@@ -133,10 +132,12 @@ fun MapScreen(
     val locationPermissionsState = rememberMultiplePermissionsState(
         permissions = listOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
+            Manifest.permission.ACCESS_COARSE_LOCATION,
         )
 
     )
+
+
 
     var mapTopHeading by remember { mutableStateOf("") }
     when (cardType) {
@@ -241,7 +242,7 @@ fun MapScreen(
                 .fillMaxSize()
                 .padding(vertical = 18.dp)
         ) {
-            if (locationPermissionsState.allPermissionsGranted && isGpsEnabled) {
+            if (locationPermissionsState.allPermissionsGranted && isGpsEnabled  ) {
                 LaunchedEffect(locationPermissionsState.allPermissionsGranted, isGpsEnabled) {
                     val locationRequest =
                         LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000).apply {
@@ -296,19 +297,28 @@ fun MapScreen(
                 ) {
                     markerPosition?.let { position ->
                         LaunchedEffect(position) {
-                            viewModel.fetchAddressFromGeocodingApi(
-                                position.latitude,
-                                position.longitude,
-                            )
-                            cameraPositionState.animate(
-                                update = CameraUpdateFactory.newLatLngZoom(
-                                    position, when(cardType){
-                                        0 -> 13f
-                                        1 -> 15f
-                                        else -> 10f
-                                    }),
-                                durationMs = 900
-                            )
+                            if (viewModel.isNetworkAvailableViewmodel(context)) {
+                                viewModel.fetchAddressFromGeocodingApi(
+                                    position.latitude,
+                                    position.longitude,
+                                )
+                                cameraPositionState.animate(
+                                    update = CameraUpdateFactory.newLatLngZoom(
+                                        position, when(cardType){
+                                            0 -> 13f
+                                            1 -> 15f
+                                            else -> 10f
+                                        }),
+                                    durationMs = 900
+                                )
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    "No Internet Connection",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
                         }
 
                         Marker(
@@ -393,3 +403,4 @@ fun MapScreen(
         }
     }
 }
+
