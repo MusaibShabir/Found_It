@@ -1,6 +1,7 @@
 package com.example.foundit.presentation.screens.settings
 
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +13,9 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -76,11 +80,16 @@ fun SettingsScreen(
                 verticalArrangement = Arrangement.Bottom,
 
             ){
-                Card(
+                OutlinedCard(
                     modifier = modifier
                         .fillMaxWidth()
                         .height(64.dp),
                     shape = RectangleShape,
+                    colors = CardDefaults.elevatedCardColors(
+                        containerColor = MaterialTheme.colorScheme.background,
+                    ),
+                    border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.onBackground)
+
                 ){
                     Row(
                         modifier = modifier.fillMaxSize(),
@@ -88,12 +97,15 @@ fun SettingsScreen(
                         horizontalArrangement = Arrangement.Center
                     ){
                         TextButton(
-                            onClick = { showAlertDialogBox = !showAlertDialogBox }
-                        ) {Text(
+                            onClick = { showAlertDialogBox = !showAlertDialogBox },
+                            colors = ButtonDefaults.textButtonColors(
+                                contentColor = MaterialTheme.colorScheme.error)
+                        ) {
+                            Text(
                             text = "Log Out",
-                            color = Color.Red,
                             fontSize = 18.sp,
-                        ) }
+                            )
+                        }
 
                     }
 

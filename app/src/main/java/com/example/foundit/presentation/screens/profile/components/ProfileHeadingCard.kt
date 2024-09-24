@@ -21,6 +21,7 @@ import androidx.compose.material3.ButtonDefaults.buttonColors
 import androidx.compose.material3.ButtonDefaults.buttonElevation
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -43,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.foundit.R
 import com.example.foundit.R.drawable.ic_launcher_background
+import com.example.foundit.ui.theme.MainGreen
 
 
 // UI-Only Composable
@@ -56,13 +58,15 @@ fun ProfileHeadingCard(
     profileId: Long,
     onEditProfileClick: () -> Unit,
 ) {
-    Card(
+    ElevatedCard(
         shape = RoundedCornerShape(15.dp),
         modifier = modifier
             .fillMaxWidth()
             .height(180.dp)
             .padding(16.dp),
-        elevation = CardDefaults.cardElevation(8.dp)
+        elevation = CardDefaults.cardElevation(8.dp),
+        colors = CardDefaults.elevatedCardColors(containerColor = MainGreen)
+
     ) {
         Row (modifier = modifier.fillMaxSize()){
             Column(
@@ -95,6 +99,7 @@ fun ProfileHeadingCard(
             ) {
                     Text(
                         text = "$firstName $lastName",
+                        color = MaterialTheme.colorScheme.onPrimary,
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight(600),
                         maxLines = 1,
@@ -117,6 +122,7 @@ fun ProfileHeadingCard(
 
                             Text(
                                 text = "INDIA",
+                                color = MaterialTheme.colorScheme.onPrimary,
                                 maxLines = 1,
                                 fontSize = 13.sp,
                                 modifier = modifier.padding(start = 5.dp)
@@ -131,6 +137,7 @@ fun ProfileHeadingCard(
                             }
                             append(profileId.toString())
                         },
+                        color = MaterialTheme.colorScheme.onPrimary,
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight(300),
                         fontStyle = FontStyle.Italic,
@@ -142,7 +149,7 @@ fun ProfileHeadingCard(
                         onClick = { onEditProfileClick() },
                         shape = RoundedCornerShape(22.dp),
                         elevation = buttonElevation(defaultElevation = 20.dp, pressedElevation = 25.dp),
-                        colors = buttonColors(containerColor = Color.Gray),
+                        colors = buttonColors(containerColor = MaterialTheme.colorScheme.onPrimary),
                         modifier = modifier
                             .padding(top = 3.dp)
                             .height(35.dp)

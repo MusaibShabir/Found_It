@@ -41,7 +41,7 @@ fun BadgeCard(
             .height(100.dp),
         shape = RoundedCornerShape(15.dp),
         elevation = CardDefaults.elevatedCardElevation(8.dp),
-        colors = CardDefaults.elevatedCardColors(containerColor = MainGreen)
+        colors = CardDefaults.elevatedCardColors(containerColor = MainGreen),
     ) {
         Column(
             modifier = modifier.fillMaxSize(),
