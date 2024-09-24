@@ -1,6 +1,7 @@
 package com.example.foundit.presentation.screens.progress.components
 
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,10 +17,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.LocationOn
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -43,12 +44,12 @@ import androidx.navigation.NavHostController
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
+import com.google.firebase.Timestamp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import com.google.firebase.Timestamp
 
 
 //sealed class ProcessCardItem {
@@ -109,12 +110,12 @@ fun ProcessCard(
 //    }
 
     val cardColor = when (cardItem["cardType"].toString()) {
-        "0" -> MainRed.copy(alpha = 0.4f)
-        "1" -> MainGreen.copy(alpha = 0.4f)
-        else -> Color.Gray.copy(alpha = 0.4f)
+        "0" -> MainRed.copy(alpha = 0.65f)
+        "1" -> MainGreen.copy(alpha = 0.65f)
+        else -> Color.Gray.copy(alpha = 0.7f)
     }
 
-    Card(
+    OutlinedCard(
         onClick = {
             try {
                 navController.navigate(NavRoutes.PROGRESS_CARD_FULL_SCREEN + "/${cardItem["cardId"]}")
@@ -122,6 +123,7 @@ fun ProcessCard(
                 Toast.makeText(context,"error",Toast.LENGTH_SHORT).show()
             }
         },
+        border = BorderStroke(width = 1.dp, color = Color.LightGray),
         colors = CardDefaults.cardColors(containerColor = cardColor),
         modifier = modifier
             .fillMaxWidth()
@@ -158,7 +160,6 @@ fun ProcessCard(
             ){
                 Box(
                     modifier = modifier,
-                    //contentAlignment = Alignment.Center
                 ) {
                     Row(
                         modifier = modifier,
@@ -281,91 +282,3 @@ fun formatDate(timestamp: Timestamp?): String {
         "No date available" // Fallback in case of a null timestamp
     }
 }
-
-//
-//@Composable
-//fun FinishedProcessCardList(
-//    modifier: Modifier,
-//    cardData: List<Map<String, Any>>
-//) {
-////    val rememberedCardData = remember(cardData) { cardData }
-////    LazyColumn(
-////        modifier = modifier.fillMaxSize(),
-////        verticalArrangement = Arrangement.spacedBy(16.dp)
-////    ) {
-////        items(rememberedCardData) { cardItem ->
-////            ProcessCard(modifier = modifier, cardItem = cardItem)
-////        }
-////    }
-//    Column(
-//        modifier = modifier.fillMaxSize()
-//    ) {
-//        cardData.forEach {item ->
-//            ProcessCard(modifier = modifier, cardItem = item)
-//        }
-//    }
-//}
-//
-//@Composable
-//fun HaltedProcessCardList(
-//    modifier: Modifier,
-//    cardData: List<Map<String, Any>>
-//    ) {
-////    Column(
-////        modifier = modifier
-////            .fillMaxSize(),
-////        horizontalAlignment = Alignment.CenterHorizontally,
-////        verticalArrangement = Arrangement.Center
-////    ) {
-////        Text(
-////            text = "Nothing to show here"
-////        )
-////    }
-//    Column (
-//        modifier = modifier.fillMaxSize()
-//    ){
-//        cardData.forEach {item ->
-//            ProcessCard(modifier = modifier, cardItem = item)
-//        }
-//    }
-//}
-
-/*
-@Composable
-@Preview(showBackground = true, showSystemUi = false, device = "id:pixel_6_pro")
-fun PreviewInProcessCard() {
-    ProcessCard(
-        modifier = Modifier,
-        cardItem = ProcessCardItem.InProcess(
-            data = InProcessDataItem(
-                itemTitle = "Watch",
-                cardColorCode = 1,
-                itemDescription = "This is the description of the card, which will specify the item and its details.",
-                itemLocation = "Srinagar Jammu & Kashmir",
-                progressIndicator = true
-            )
-        )
-    )
-}
-
-@Composable
-@Preview(showBackground = true, showSystemUi = false, device = "id:pixel_6_pro")
-fun PreviewFinishedProcessCard() {
-    ProcessCard(
-        modifier = Modifier,
-        cardItem = ProcessCardItem.Finished(
-            data = FinishedProcessDataItem(
-                itemTitle = "Watch",
-                cardColorCode = 1,
-                itemDescription = "This is the description of the card, which will specify the item and its details.",
-                itemLocation = "Srinagar Jammu & Kashmir",
-                progressIndicator = false
-            )
-        )
-    )
-}
-
-
-
-*/
-

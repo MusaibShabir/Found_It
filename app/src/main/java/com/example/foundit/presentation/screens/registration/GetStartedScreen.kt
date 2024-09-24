@@ -94,7 +94,7 @@ fun GetStartedScreen(
                         .height(390.dp),
                     shape = RoundedCornerShape(36.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = Color.White
+                        containerColor = MainGreen.copy(alpha = .15f)
                     ),
                     border = BorderStroke(color = LogoColor, width = 1.dp)
                 ) {

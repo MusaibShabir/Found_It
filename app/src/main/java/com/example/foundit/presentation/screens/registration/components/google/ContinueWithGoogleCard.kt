@@ -1,5 +1,6 @@
 package com.example.foundit.presentation.screens.registration.components.google
 
+import android.media.tv.TvContract.Channels.Logo
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -30,33 +31,19 @@ import androidx.compose.ui.unit.sp
 import androidx.credentials.Credential
 import androidx.credentials.CredentialManager
 import com.example.foundit.R
+import com.example.foundit.ui.theme.MainGreen
+import com.example.foundit.ui.theme.MainRed
 import com.example.foundit.ui.theme.RobotFamily
 
 @Composable
 fun ContinueWithGoogleCard(
     modifier: Modifier,
-    //colorScheme: Int = 1,
     continueWithGoogleViewModel: ContinueWithGoogleViewModel,
     onGetCredentialResponse: (Credential) -> Unit
 ) {
     val context = LocalContext.current
     val credentialManager = CredentialManager.create(context)
 
-    /*
-    For Dynamic Card & Text Color
-
-    val containerColor = when(colorScheme) {
-        1 -> Color.White
-        2 -> Color.White
-        else -> Color.White
-    }
-    val textColor = when (colorScheme) {
-        1 -> Color.Blue
-        2 -> Color.White
-        else -> Color.Blue
-    }
-
-     */
     Row (modifier = modifier
         .fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
@@ -73,10 +60,10 @@ fun ContinueWithGoogleCard(
                     onGetCredentialResponse = onGetCredentialResponse
                 )
             },
-            shape = RoundedCornerShape(32.dp),
-            border = BorderStroke(width = 1.dp, color = Color.Black),
-            colors = CardDefaults.elevatedCardColors(),
-            elevation = CardDefaults.elevatedCardElevation(25.dp)
+            shape = RoundedCornerShape(228.dp),
+            border = BorderStroke(width = 1.dp, color = MainGreen),
+            colors = CardDefaults.elevatedCardColors(containerColor = Color.White),
+            elevation = CardDefaults.elevatedCardElevation(12.dp)
         ) {
                 Row (modifier = modifier
                     .fillMaxSize()
