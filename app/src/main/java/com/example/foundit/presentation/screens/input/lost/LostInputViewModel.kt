@@ -1,6 +1,7 @@
 package com.example.foundit.presentation.screens.input.lost
 
 import android.util.Log
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -88,25 +89,30 @@ class LostInputViewModel @Inject constructor(
         _itemDescription.value = newDescription
     }
 
-    fun onSubmitClick() {
+    fun onSubmitClick( onResult: (Boolean, Exception?) -> Unit ) {
         viewModelScope.launch {
-            val getChildCategoryIdsAsString = selectedChildCategoryIds.value.joinToString(", ")
-            val getParentCategory = parentSelectedCategoryId.value
-            val getColorCategory = colorSelectedId.value
-            val getItemDescription = itemDescription.value
+                val getChildCategoryIdsAsString = selectedChildCategoryIds.value.joinToString(", ")
+                val getParentCategory = parentSelectedCategoryId.value
+                val getColorCategory = colorSelectedId.value
+                val getItemDescription = itemDescription.value
 
-            firestoreService.addCardData(
-                cardType = cardType.value ?: 10,
-                childCategory = getChildCategoryIdsAsString,
-                parentCategory = getParentCategory,
-                color = getColorCategory,
-                locationCoordinates = markerPosition.value ?: LatLng(0.0, 0.0),
-                locationAddress = markerAddressDetail.value.toString(),
-                cardDescription = getItemDescription
-            )
+                try {
+                    firestoreService.addCardData(
+                        cardType = cardType.value ?: 10,
+                        childCategory = getChildCategoryIdsAsString,
+                        parentCategory = getParentCategory,
+                        color = getColorCategory,
+                        locationCoordinates = markerPosition.value ?: LatLng(0.0, 0.0),
+                        locationAddress = address.value.toString(),
+                        cardDescription = getItemDescription
+                    )
+                    onResult(true,null)
+                }catch (error: Exception) {
+                    onResult(false,error)
+                }
         }
-
     }
+
 
     // Map Screen Logic
     private val _markerPosition = MutableStateFlow<LatLng?>(null)

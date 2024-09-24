@@ -1,6 +1,7 @@
 package com.example.foundit.presentation.screens.input
 
 import android.os.Build
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
@@ -52,6 +53,7 @@ fun UserItemInputScreen(
         }
     }
 
+    val context = LocalContext.current
 
     val isMapMarkerLocationEmpty by lostInputViewModel.markerPosition.collectAsState()
     val isParentSelectedCategoryEmpty by lostInputViewModel.parentSelectedCategoryId.collectAsState()
@@ -121,7 +123,25 @@ fun UserItemInputScreen(
                     NavRoutes.CHILD_CATEGORY_SCREEN -> {
                         navControllerForUserInputScreen.navigate(NavRoutes.ITEM_DESCRIPTION_SCREEN)
                     }
-                        NavRoutes.ITEM_DESCRIPTION_SCREEN -> { lostInputViewModel.onSubmitClick()
+                        NavRoutes.ITEM_DESCRIPTION_SCREEN -> {
+                            lostInputViewModel.onSubmitClick { isSucess, _ ->
+                                if (isSucess) {
+                                    Toast.makeText(
+                                        context,
+                                        "Your Item was Registered Succesfully",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    navController.navigate(NavRoutes.HOME)
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "Something Went Wrong",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
+
+
                     }else -> {
 
                         }
