@@ -106,6 +106,7 @@ fun ChildCategoryScreen(
                 items(childCategories) { childCategory ->
                     CategoryCard(
                         modifier = Modifier,
+                        borderColor = Color.Black,
                         categoryText = childCategory.name,
                         isSelected = childCategory.id in selectedCategoryIds,
                         onCategoryClick = { viewModel.toggleChildCategorySelection( childCategory.id) },

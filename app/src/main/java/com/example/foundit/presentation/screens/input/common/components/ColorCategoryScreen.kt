@@ -103,6 +103,7 @@ fun ColorCategoryScreen(
                 items(colorCategories) { colorCategory ->
                     CategoryCard(
                         modifier = Modifier,
+                        borderColor = Color.Black,
                         categoryText = colorCategory.name,
                         isSelected = colorCategory.name == selectedCategoryId,
                         onCategoryClick = { viewModel.setColorSelectedIdId( colorCategory.name ) }

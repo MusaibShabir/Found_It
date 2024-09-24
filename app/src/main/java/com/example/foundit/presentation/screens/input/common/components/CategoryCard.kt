@@ -30,6 +30,7 @@ fun CategoryCard(
     modifier: Modifier,
     categoryText: String,
     onCategoryClick: (() -> Unit?)? = null,
+    borderColor: Color,
     isSelected: Boolean? = null,
     ) {
 
@@ -46,7 +47,7 @@ fun CategoryCard(
         },
         border = BorderStroke(
             width = 1.dp ,
-            color = Color.Black
+            color = borderColor
         ),
         colors = CardDefaults.cardColors(
             containerColor = if (isSelected == true) {
@@ -86,6 +87,7 @@ fun PreviewCategoryCard() {
         modifier = Modifier,
         categoryText = "Category",
         onCategoryClick = {},
-        isSelected = false
+        isSelected = false,
+        borderColor = Color.Black
     )
 }

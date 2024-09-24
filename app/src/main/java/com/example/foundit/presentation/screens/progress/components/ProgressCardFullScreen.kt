@@ -4,18 +4,23 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -25,6 +30,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.FiberManualRecord
+import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -33,8 +40,8 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -44,11 +51,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.foundit.presentation.screens.input.common.components.CategoryCard
+import com.example.foundit.presentation.screens.input.data.childCategories
 import com.example.foundit.presentation.screens.progress.ProgressCardFullScreenViewModel
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
@@ -87,9 +98,9 @@ fun ProgressCardFullScreen(
     // Display card data
     cardData?.let { data ->
         val cardColor = when (data["cardType"].toString()) {
-            "0" -> MainRed.copy(alpha = 0.4f)
-            "1" -> MainGreen.copy(alpha = 0.4f)
-            else -> Color.Gray.copy(alpha = 0.4f)
+            "0" -> MainRed.copy(alpha = .9f)
+            "1" -> MainGreen.copy(alpha = .9f)
+            else -> Color.Yellow.copy(alpha = .9f)
         }
 
         val cardLabel = when (if (data["cardType"].toString().length == 1) {
@@ -100,6 +111,18 @@ fun ProgressCardFullScreen(
             "0" -> "Lost"
             "1" -> "Found"
             else -> "Halted"
+        }
+
+        val borderColor = when (cardLabel) {
+            "Lost" -> MainRed.copy(alpha = .5f)
+            "Found" -> MainGreen.copy(alpha = .5f)
+            else -> Color.Yellow.copy(alpha = .5f)
+        }
+
+        val showItemDiscription = when(cardLabel) {
+            "Lost" -> true
+            "Found" -> false
+            else -> false
         }
 
         Column(
@@ -126,7 +149,7 @@ fun ProgressCardFullScreen(
                 Card(
                     shape = RoundedCornerShape(16.dp),
                     modifier = Modifier.padding(end = 8.dp),
-                    elevation = CardDefaults.cardElevation(4.dp),
+                    elevation = CardDefaults.cardElevation(8.dp),
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.Center,
@@ -137,14 +160,14 @@ fun ProgressCardFullScreen(
                     ) {
                         Text(
                             text = cardLabel,
-                            color = Color.White, // Text color remains white
+                            color = MaterialTheme.colorScheme.onPrimary,
                             style = MaterialTheme.typography.titleMedium
                         )
                         if (data["status"].toString() == "0") {
-                            Spacer(modifier = Modifier.size(14.dp))
+                            Spacer(modifier = Modifier.size(12.dp))
 
                             CircularProgressIndicator(
-                                color = Color.White, // Use color for progress indicator
+                                color = MaterialTheme.colorScheme.onPrimary,
                                 strokeCap = StrokeCap.Round,
                                 modifier = Modifier.size(20.dp),
                                 strokeWidth = 2.dp
@@ -165,41 +188,71 @@ fun ProgressCardFullScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = modifier.height(8.dp))
 
 
-            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+            Column(modifier = modifier.padding(horizontal = 16.dp)) {
                 // Title and location row
-                Column(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = modifier.fillMaxWidth()) {
                     Row (
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
                     ){
                         Text(
                             text = data["parentCategory"]?.toString() ?: "Unknown",
                             style = MaterialTheme.typography.headlineLarge
                         )
-                        VerticalDivider(
-                            thickness = 2.dp,
+
+                        Spacer(modifier.width(8.dp))
+
+                        Icon(
+                            imageVector = Icons.Default.FiberManualRecord,
+                            contentDescription = "Close",
                             modifier = Modifier
-                                .height(30.dp)
-                                .padding(horizontal = 12.dp),
-                            color = Color.Black
+                                .size(12.dp)
                         )
+
+                        Spacer(modifier.width(8.dp))
+
                         Text(
                             text = data["color"]?.toString() ?: "Unknown Colour",
                             style = MaterialTheme.typography.headlineMedium
                         )
                     }
 
+                    HorizontalDivider(modifier.padding(vertical = 8.dp))
+
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        modifier = modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(
-                            text = "📍 ${data["locationAddress"]?.toString() ?: "Unknown location"}",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = Color.Gray
-                        )
+                        Row(
+                            modifier
+                                .width(IntrinsicSize.Max)
+                                .height(IntrinsicSize.Max),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ){
+                            Icon(
+                                imageVector = Icons.Rounded.LocationOn,
+                                contentDescription = "Close",
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Spacer(modifier.width(4.dp))
+                            Text(
+                                text = truncateText(
+                                    text = data["locationAddress"]?.toString() ?: "Unknown location",
+                                    maxLength = 32
+                                ),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = Color.Gray,
+                                overflow = TextOverflow.Ellipsis,
+                                softWrap = true,
+                                maxLines = 1
+                            )
+                        }
+
                         Text(
                             text = formatDate(data["date"] as? Timestamp),
                             style = MaterialTheme.typography.bodySmall,
@@ -212,82 +265,76 @@ fun ProgressCardFullScreen(
 
                 // Lazy grid for white boxes
                 LazyVerticalGrid(
-                    columns = GridCells.Fixed(4),
-                    modifier = Modifier
-                        //.height(150.dp),
+                    modifier = modifier
                         .fillMaxWidth(),
-                    contentPadding = PaddingValues(8.dp)
-                ) {
+                    columns = GridCells.Adaptive(minSize = 120.dp),
+
+                    ) {
                     //val mapData = data["a"] as? Map<String, Any> ?: emptyMap()
 
                     val input = data["childCategory"].toString()
                     val charList = input.split(",").map { it.trim() }
 
-                    // Iterate through the map's entries and display the values
-                    items(charList) { entry ->
-                        Card(
-                            modifier = Modifier
-                                .size(50.dp)
-                                .padding(4.dp),
-                            elevation = CardDefaults.cardElevation(4.dp),
-                            //colors = CardDefaults.cardColors(Color.Green)
+
+                    items(childCategories) { category ->
+                        CategoryCard(
+                            modifier = modifier,
+                            categoryText = category.name,
+                            borderColor = borderColor,
+                        )
+                    }
+                }
+
+                Spacer(modifier = modifier.height(16.dp))
+
+                // Item description card
+                if (showItemDiscription) {
+                    OutlinedCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 120.dp, max = 240.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        elevation = CardDefaults.cardElevation(4.dp),
+                        border = BorderStroke(width = 1.dp, color = borderColor)
+                    ) {
+                        Column(
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .verticalScroll(rememberScrollState())
+                                .padding(12.dp)
                         ) {
-                            // Display the value of each entry in the grid
                             Text(
-                                text = entry,
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier
-                                    .padding(8.dp)
-                                    .fillMaxWidth()
+                                text = "Item Description",
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontWeight = FontWeight.Bold
+                            )
+                            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                            Text(
+                                text = data["cardDescription"]?.toString()
+                                    ?: "No description available",
+                                style = MaterialTheme.typography.bodyMedium,
                             )
                         }
                     }
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Item description card
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp),
-                    shape = RoundedCornerShape(8.dp),
-                    elevation = CardDefaults.cardElevation(4.dp)
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .verticalScroll(rememberScrollState())
-                            .padding(12.dp)
-                    ) {
-                        Text(text = "Item Description", style = MaterialTheme.typography.bodyLarge)
-                        HorizontalDivider(modifier = Modifier.padding(vertical = 6.dp), thickness = 2.dp)
-                        Text(
-                            text = data["cardDescription"]?.toString()
-                                ?: "No description available",
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = modifier.height(16.dp))
 
                 // Area for matched cards
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .background(Color.LightGray, shape = RoundedCornerShape(8.dp)),
-                    contentAlignment = Alignment.Center
+                LazyColumn(
+                    modifier = modifier
+                        .fillMaxSize(),
+                   horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
                 ) {
-                    Text(text = "Area for Matched Cards", color = Color.DarkGray)
+
                 }
             }
         }
     }
 
     // Floating action button for delete
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = modifier.fillMaxSize()) {
         FloatingActionButton(
             onClick = {
                 if (isNetworkAvailable(context)) {
@@ -318,7 +365,7 @@ fun ProgressCardFullScreen(
                     Toast.makeText(context, "No internet connection. Please try again when connected.", Toast.LENGTH_SHORT).show()
                 }
             },
-            modifier = Modifier
+            modifier = modifier
                 .align(Alignment.BottomEnd)
                 .padding(end = 30.dp, bottom = 70.dp),
             containerColor = Color.Red,
@@ -329,6 +376,14 @@ fun ProgressCardFullScreen(
                 contentDescription = "Delete"
             )
         }
+    }
+}
+
+fun truncateText(text: String, maxLength: Int): String {
+    return if (text.length > maxLength) {
+        text.substring(0, maxLength) + "..."
+    } else {
+        text
     }
 }
 

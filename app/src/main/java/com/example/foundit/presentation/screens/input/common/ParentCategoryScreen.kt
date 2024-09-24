@@ -103,6 +103,7 @@ fun ParentCategoryScreen(
                 items(parentCategories) { parentCategory ->
                     CategoryCard(
                         modifier = modifier,
+                        borderColor = Color.Black,
                         categoryText = parentCategory.name,
                         isSelected = parentCategory.name == selectedCategoryId,
                         onCategoryClick = { viewModel.setParentSelectedCategoryId(parentCategory.name) }
