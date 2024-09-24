@@ -1,17 +1,12 @@
 package com.example.foundit.presentation.data.account
 
 import android.net.Uri
-import com.example.foundit.presentation.data.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserInfo
 import com.google.firebase.auth.userProfileChangeRequest
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
 
 class AccountServiceImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
@@ -21,7 +16,8 @@ class AccountServiceImpl @Inject constructor(
     override val currentUserId: String
         get() = firebaseAuth.currentUser?.uid.orEmpty()
 
-    override val a: Long?
+    // provides account creation date of current firebase user
+    override val accountCreationDate: Long?
         get() = firebaseAuth.currentUser?.metadata?.creationTimestamp
 
     // provides Name of current firebase user
@@ -40,6 +36,7 @@ class AccountServiceImpl @Inject constructor(
     override val currentUserEmailVerified: Boolean
         get() = firebaseAuth.currentUser?.isEmailVerified ?: false
 
+    // provides provider infomation of current firebase user
     override val currentUserProviderData: MutableList<out UserInfo>?
         get() = firebaseAuth.currentUser?.providerData
 
@@ -88,7 +85,8 @@ class AccountServiceImpl @Inject constructor(
         if (currentUser != null) {
             val profileUpdates = userProfileChangeRequest {
                 displayName = "$firstName $lastName"  // Single space between first and last name
-                photoUri = profilePicture  // Can be null; Firebase will handle it
+                // Todo profile photo to be implemented
+                //photoUri = Uri.parse(profilePicture.toString())  // Can be null; Firebase will handle it
             }
             currentUser.updateProfile(profileUpdates).await()
         } else {
@@ -115,33 +113,4 @@ class AccountServiceImpl @Inject constructor(
     override suspend fun deleteAccount() {
         firebaseAuth.currentUser?.delete()?.await()
     }
-
-/*
-    override val currentUser: Flow<User?>
-        get() = callbackFlow {
-            val listener =
-                FirebaseAuth.AuthStateListener { auth ->
-                    this.trySend(auth.currentUser.toNotesUser())
-                }
-            firebaseAuth.addAuthStateListener(listener)
-            awaitClose { firebaseAuth.removeAuthStateListener(listener) }
-        }
-
-    private fun FirebaseUser?.toNotesUser(): User {
-        return if (this == null) User() else User(
-            id = this.uid,
-            email = this.email ?: "",
-            provider = this.providerId,
-            displayName = this.displayName ?: "",
-            isAnonymous = this.isAnonymous
-        )
-    }
-
-    override fun getUserProfile(): User {
-        return firebaseAuth.currentUser.toNotesUser()
-    }
-*/
-
-
 }
-

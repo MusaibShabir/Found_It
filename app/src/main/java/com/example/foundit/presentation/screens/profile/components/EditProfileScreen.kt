@@ -196,18 +196,18 @@ fun EditProfileScreen(
 ) {
     val profileData by viewModel.profileData.collectAsState()
 
-    val userName = viewModel.userName
+//    val userName = viewModel.userName
+//    val profilePictures: Uri? = viewModel.profilePicture
+    val userFirstName by viewModel.userFirstNames.collectAsState()
+    val userLastName by viewModel.userLastNames.collectAsState()
+    val profilePictures by viewModel.profilePicture.collectAsState()
 
-    // dividing user name into firstName and lastName
-    val splitUserName = userName.split(" ", limit = 2)
-    val userNameList = if (splitUserName.size == 2) listOf(splitUserName[0], splitUserName[1]) else listOf(splitUserName[0], "")
-    val profilePictures: Uri? = viewModel.profilePicture
 
     //Profile Heading Card
-    var profileFirstName by remember { mutableStateOf(userNameList[0]) }
-    var profileLastName by remember { mutableStateOf(userNameList[1]) }
-//    var profileFirstNameX by remember { mutableStateOf(profileData?.firstName ?: "") }
-//    var profileLastNameX by remember { mutableStateOf(profileData?.lastName ?: "") }
+    var profileFirstName by remember { mutableStateOf(userFirstName) }
+    var profileLastName by remember { mutableStateOf(userLastName) }
+//    var profileFirstName by remember { mutableStateOf(profileData?.firstName ?: "") }
+//    var profileLastName by remember { mutableStateOf(profileData?.lastName ?: "") }
     val profileId by remember { mutableLongStateOf(profileData?.id ?: 0) }
     var profilePicture by remember { mutableStateOf(profilePictures) }
 
@@ -220,8 +220,8 @@ fun EditProfileScreen(
         onLastNameChange = { profileLastName = it },
         onCancelClick = { navController.popBackStack() },
         onSaveClick = {
-//            viewModel.updateProfileData(firstName = profileFirstName, lastName = profileLastName, profilePicture = profilePicture)
-//            navController.popBackStack()
+            viewModel.updateProfileData(firstName = profileFirstName, lastName = profileLastName, profilePicture = profilePicture)
+            navController.popBackStack()
         },
         profilePicture = profilePicture,
         onProfilePictureChange = { profilePicture = it},
