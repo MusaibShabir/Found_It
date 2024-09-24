@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -51,7 +52,8 @@ fun ProcessScreen(modifier: Modifier, navController: NavHostController) {
         Column(modifier = modifier.padding(paddingValues)) {
             TabRow(
                 selectedTabIndex = pagerState.currentPage,
-                contentColor = MainGreen,
+                containerColor = MaterialTheme.colorScheme.background,
+                contentColor = MaterialTheme.colorScheme.onBackground,
                 indicator = { tabPositions ->
                     SecondaryIndicator(
                         Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
@@ -123,7 +125,6 @@ fun ProcessScreen(modifier: Modifier, navController: NavHostController) {
             }
         }
     }
-
 
 }
 

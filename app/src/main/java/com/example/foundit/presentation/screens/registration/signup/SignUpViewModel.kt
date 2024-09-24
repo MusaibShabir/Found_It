@@ -111,39 +111,4 @@ class SignUpViewModel @Inject constructor(
             }
         }
     }
-
-
-
-    suspend fun getLastLocation(
-        fusedLocationClient: FusedLocationProviderClient,
-        context: Context
-    ) {
-        if (ContextCompat.checkSelfPermission(
-                context, android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            try {
-                val location = fusedLocationClient.lastLocation.await() // Use await() to make it suspendable
-                location?.let {
-                    val userLocation = LatLng(it.latitude, it.longitude)
-                    Log.d("Location", "User is at: $userLocation")
-                } ?: run {
-                    Toast.makeText(context, "Location not available, make sure GPS is enabled", Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: SecurityException) {
-                e.printStackTrace()
-                Toast.makeText(context, "Location permission is required to access location", Toast.LENGTH_SHORT).show()
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Toast.makeText(context, "Failed to get location", Toast.LENGTH_SHORT).show()
-            }
-        } else {
-            Toast.makeText(context, "Location permission is not granted", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-
-
-
-
 }

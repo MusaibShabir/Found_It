@@ -2,6 +2,7 @@ package com.example.foundit.presentation.screens.home
 
 
 import android.annotation.SuppressLint
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -124,6 +125,12 @@ fun HomeScreen(
         lostButtonClick = lostButtonClick,
         foundButtonClick = foundButtonClick
     )
+
+    BackHandler(
+        enabled = true,
+    ) {
+
+    }
 }
 
 

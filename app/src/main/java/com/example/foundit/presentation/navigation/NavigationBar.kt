@@ -4,6 +4,7 @@ package com.example.foundit.presentation.navigation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.Text
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.foundit.presentation.data.navigation.NavigationItems
@@ -37,8 +39,10 @@ fun NavigationBar(modifier: Modifier, navController: NavHostController) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         androidx.compose.material3.NavigationBar(
-            containerColor = Color.White,
-        ) {
+            containerColor = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.onBackground,
+            tonalElevation = 12.dp
+        ){
             NavigationItems.forEachIndexed { index, item ->
                 NavigationBarItem(
                     selected = selectedItemIndex == index,

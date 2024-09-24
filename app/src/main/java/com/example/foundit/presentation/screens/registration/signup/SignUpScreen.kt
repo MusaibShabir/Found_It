@@ -424,7 +424,7 @@ fun SignUpScreen(
                     onClick = {
                         signUpViewModel.signUpUser(email, password, firstName, lastName) { isSuccess, e ->
                             if (isSuccess) {
-                                Toast.makeText(context, "User created successfully. Please verify your email.", Toast.LENGTH_LONG).show()
+                                Toast.makeText(context, "User created successfully", Toast.LENGTH_LONG).show()
                                 navController.navigate(NavRoutes.HOME)
                             } else {
                                 val errorMessage = when (e) {
@@ -478,7 +478,6 @@ fun SignUpScreen(
                     when (result) {
                         SignUpViewModel.SignInResult.Success -> {
                             Log.d("SignUp", "User created successfully")
-                            //requestLocationPermission()
                             navController.navigate(NavRoutes.HOME)
                         }
 
