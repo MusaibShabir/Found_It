@@ -100,22 +100,6 @@ fun SignUpScreen(
     var confirmPasswordError by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
-    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-
-
-    val locationPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            Log.d("Location", "Permission granted")
-            coroutineScope.launch {
-                signUpViewModel.getLastLocation(fusedLocationClient, context)
-            }
-        } else {
-            Toast.makeText(context, "Location permission is required to proceed", Toast.LENGTH_LONG).show()
-        }
-    }
 
     Scaffold(
         modifier = modifier
