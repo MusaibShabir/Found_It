@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -123,6 +122,12 @@ fun ProgressCardFullScreen(
             "Lost" -> true
             "Found" -> false
             else -> false
+        }
+
+        val lazyColumnEmptyText = when(cardLabel){
+            "Lost" -> "Here you will be able to see to your potential item Matchs"
+            "Found" -> "Here you will be able to see to your potential item Matchs"
+            else -> "No cards found"
         }
 
         Column(
@@ -318,16 +323,23 @@ fun ProgressCardFullScreen(
                     }
                 }
 
-                Spacer(modifier = modifier.height(16.dp))
+                Spacer(modifier = modifier.height(8.dp))
+                HorizontalDivider()
+                Spacer(modifier = modifier.height(8.dp))
+
 
                 // Area for matched cards
                 LazyColumn(
                     modifier = modifier
-                        .fillMaxSize(),
+                        .fillMaxSize()
+                        .background(color = Color.LightGray),
                    horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-
+                    item { Text(
+                        text = lazyColumnEmptyText,
+                        textAlign = TextAlign.Center
+                    ) }
                 }
             }
         }
