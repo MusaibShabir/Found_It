@@ -70,7 +70,6 @@ import com.example.foundit.presentation.screens.registration.components.Clickabl
 import com.example.foundit.presentation.screens.registration.components.OrDivider
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleCard
 import com.example.foundit.presentation.screens.registration.components.google.ContinueWithGoogleViewModel
-import com.example.foundit.ui.theme.LogoColor
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.Righteous
 import com.google.android.gms.location.LocationServices
