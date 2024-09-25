@@ -23,7 +23,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FiberManualRecord
 import androidx.compose.material.icons.rounded.LocationOn
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -42,6 +44,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.screens.input.common.components.CategoryCard
@@ -232,6 +235,30 @@ fun MatchedCardFullScreen(
                             text = data["cardDescription"]?.toString()
                                 ?: "No description available",
                             style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    ElevatedButton(
+                        onClick = {
+
+                        },
+                        colors = ButtonDefaults.elevatedButtonColors(
+                            containerColor = MainRed,
+                            contentColor = Color.White
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth(0.38f)
+                            .padding(top = 30.dp)
+                            .height(50.dp)
+                    ) {
+                        Text(
+                            text = "Select",
+                            fontSize = 18.sp,
                         )
                     }
                 }
