@@ -184,7 +184,7 @@ class LostInputViewModel @Inject constructor(
                         val subLocality = addressComponents?.firstOrNull { it.types.contains("sublocality_level_1") }?.long_name
                         val locality = addressComponents?.firstOrNull { it.types.contains("locality") }?.long_name
                         val administrativeAreaLevel1 = addressComponents?.firstOrNull { it.types.contains("administrative_area_level_1") }?.long_name
-                        val country = addressComponents?.firstOrNull { it.types.contains("country" ) && it.types.contains("political") }?.long_name
+                        val country = addressComponents?.firstOrNull { it.types.contains("country" ) || it.types.contains("political") }?.long_name
                         val postalCode = addressComponents?.firstOrNull { it.types.contains("postal_code") }?.long_name
 
                         // Combine the components into a single string, handling empty cases
