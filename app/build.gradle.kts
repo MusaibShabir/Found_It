@@ -137,6 +137,7 @@ dependencies {
     implementation (libs.okhttp)
 
     // For parsing JSON (Gson or kotlinx.serialization)
+    implementation (libs.gson)
     implementation (libs.kotlinx.serialization.json)
 
 
