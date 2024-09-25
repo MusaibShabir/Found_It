@@ -1,4 +1,4 @@
-package com.example.foundit.presentation.screens.input.common.components
+package com.example.foundit.presentation.screens.input.common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.foundit.presentation.screens.input.common.components.CategoryCard
 import com.example.foundit.presentation.screens.input.data.colorCategories
 import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
 import com.example.foundit.ui.theme.MainGreen
@@ -98,7 +99,7 @@ fun ColorCategoryScreen(
                     .padding(8.dp),
                 verticalArrangement = Arrangement.Bottom,
                 horizontalArrangement = Arrangement.Start,
-                columns = GridCells.FixedSize(124.dp)
+                columns = GridCells.Adaptive(minSize = 118.dp)
             ) {
                 items(colorCategories) { colorCategory ->
                     CategoryCard(
