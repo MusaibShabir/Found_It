@@ -3,6 +3,7 @@ package com.example.foundit.presentation.screens.progress.components
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -23,6 +24,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -30,6 +32,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.FiberManualRecord
+import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -50,13 +53,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.input.common.components.CategoryCard
 import com.example.foundit.presentation.screens.input.data.childCategories
 import com.example.foundit.presentation.screens.progress.ProgressCardFullScreenViewModel
@@ -86,6 +93,7 @@ fun ProgressCardFullScreen(
     // Collect the card data from the ViewModel
     val viewModel: ProgressCardFullScreenViewModel = hiltViewModel()
     val cardData by viewModel.cardData.collectAsState()
+    val matchedCards by viewModel.matchedCards.collectAsState()
 
     val context = LocalContext.current
 
@@ -96,6 +104,16 @@ fun ProgressCardFullScreen(
 
     // Display card data
     cardData?.let { data ->
+
+        LaunchedEffect(data["matches"]) {
+            try {
+                val matchedCardId = data["matches"] as? List<String> ?: emptyList()
+                viewModel.fetchMatchedCards(matchedCardId)
+            } catch (e: Exception) {
+                Log.d("profile", "ProgressCardFullScreen: $e")
+            }
+        }
+
         val cardColor = when (data["cardType"].toString()) {
             "0" -> MainRed.copy(alpha = .9f)
             "1" -> MainGreen.copy(alpha = .9f)
@@ -122,12 +140,6 @@ fun ProgressCardFullScreen(
             "Lost" -> true
             "Found" -> false
             else -> false
-        }
-
-        val lazyColumnEmptyText = when(cardLabel){
-            "Lost" -> "Here you will be able to see to your potential item Matchs"
-            "Found" -> "Here you will be able to see to your potential item Matchs"
-            else -> "No cards found"
         }
 
         Column(
@@ -248,7 +260,7 @@ fun ProgressCardFullScreen(
                             Text(
                                 text = truncateText(
                                     text = data["locationAddress"]?.toString() ?: "Unknown location",
-                                    maxLength = 32
+                                    maxLength = 26
                                 ),
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = Color.Gray,
@@ -328,18 +340,14 @@ fun ProgressCardFullScreen(
                 Spacer(modifier = modifier.height(8.dp))
 
 
-                // Area for matched cards
                 LazyColumn(
                     modifier = modifier
-                        .fillMaxSize()
-                        .background(color = Color.LightGray),
-                   horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
+                        .fillMaxSize(),
+                   horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    item { Text(
-                        text = lazyColumnEmptyText,
-                        textAlign = TextAlign.Center
-                    ) }
+                    items(matchedCards) { item ->
+                        MatchedCard(modifier = modifier, cardItem = item, navController = navController)
+                    }
                 }
             }
         }
@@ -396,6 +404,94 @@ fun truncateText(text: String, maxLength: Int): String {
         text.substring(0, maxLength) + "..."
     } else {
         text
+    }
+}
+
+@Composable
+fun MatchedCard(
+    modifier: Modifier,
+    cardItem: Map<String, Any>,
+    navController: NavHostController
+) {
+    val context = LocalContext.current
+
+    val cardColor = when (cardItem["cardType"].toString()) {
+        "0" -> MainRed.copy(alpha = 0.65f)
+        "1" -> MainGreen.copy(alpha = 0.65f)
+        else -> Color.Gray.copy(alpha = 0.7f)
+    }
+
+    OutlinedCard(
+        onClick = {
+            try {
+                navController.navigate(NavRoutes.MATCHED_CARD_FULL_SCREEN + "/${cardItem["cardId"]}")
+            } catch (e: Exception) {
+                Toast.makeText(context,"error",Toast.LENGTH_SHORT).show()
+            }
+        },
+        border = BorderStroke(width = 1.dp, color = Color.LightGray),
+        colors = CardDefaults.cardColors(containerColor = cardColor),
+        modifier = modifier
+            .fillMaxWidth()
+            //.height(160.dp)
+            .padding( top = 16.dp, bottom = 0.dp),
+    ) {
+        Column (
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(24.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.Start
+        ){
+            Row (
+                modifier = Modifier.fillMaxWidth() ,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+
+            ){
+                Text(
+                    text = "${cardItem["parentCategory"]}",
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Column (
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start
+            ){
+                Box(
+                    modifier = modifier,
+                ) {
+                    Row(
+                        modifier = modifier,
+                        horizontalArrangement = Arrangement.Start,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        Icon(
+                            imageVector = Icons.Outlined.LocationOn,
+                            contentDescription = "Location",
+                            modifier = modifier.size(12.dp)
+                        )
+                        Text(
+                            text = cardItem["locationAddress"].toString(),
+                            //textAlign = TextAlign.Center,
+                            fontSize = 12.sp,
+                            fontStyle = FontStyle.Italic,
+                            textDecoration = TextDecoration.Underline
+                        )
+                    }
+                }
+
+                Spacer(modifier = modifier.height(10.dp))
+                Text(
+                    text = "${cardItem["cardDescription"]}",
+                    fontSize = 12.sp,
+                    textAlign = TextAlign.Start,
+                    maxLines = 2
+                )
+            }
+        }
     }
 }
 

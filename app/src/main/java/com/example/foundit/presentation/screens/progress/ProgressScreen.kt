@@ -91,7 +91,6 @@ fun ProcessScreen(modifier: Modifier, navController: NavHostController) {
                         }
                     }
                 )
-
             }
 
 
@@ -125,7 +124,6 @@ fun ProcessScreen(modifier: Modifier, navController: NavHostController) {
             }
         }
     }
-
 }
 
 @Composable

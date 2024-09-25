@@ -5,16 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foundit.presentation.data.firestore.FirestoreService
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProgressCardFullScreenViewModel @Inject constructor(
+class MatchedCardFullScreenViewModel @Inject constructor(
     private val firestoreService: FirestoreService
 ) : ViewModel() {
 
@@ -22,14 +20,10 @@ class ProgressCardFullScreenViewModel @Inject constructor(
     private val _cardData = MutableStateFlow<Map<String, Any>?>(emptyMap())
     val cardData: StateFlow<Map<String, Any>?> = _cardData
 
-    // hold matched cards
-    private val _matchedCards = MutableStateFlow<List<Map<String, Any>>>(emptyList())
-    val matchedCards: StateFlow<List<Map<String, Any>>> = _matchedCards.asStateFlow()
-
     // Fetch data for the given cardId
     fun fetchCardData(cardId: String) {
         viewModelScope.launch {
-            firestoreService.getSingleCardData(cardId)
+            firestoreService.getMatchedSingleCardData(cardId)
                 .catch {
                     // Handle any errors
                     _cardData.value = emptyMap()
@@ -43,33 +37,6 @@ class ProgressCardFullScreenViewModel @Inject constructor(
 
             // This log will still show the old data (emptyMap) as it executes before collect completes
             Log.d("dataCard", "fetchCardData after collect: ${_cardData.value}")
-        }
-    }
-
-    // Fetch data for the given cardId
-    fun fetchMatchedCards(cardId: List<String>) {
-        viewModelScope.launch {
-//            Log.d("profile", "ProgressCardFullScreen: $cardId")
-            while (cardId.isEmpty()){
-                delay(100)
-            }
-//            Log.d("profile", "ProgressCardFullScreen after: $cardId")
-            firestoreService.getMatchedCardData(cardId).collect { items ->
-                _matchedCards.value = items
-//                Log.d("profile", "ProgressCardFullScreen after: $items")
-//                Log.d("profile", "ProgressCardFullScreen after: ${_matchedCards.value}")
-            }
-        }
-    }
-
-    fun deleteCardData(cardId: String, onResult: (Boolean, Exception?) -> Unit){
-        viewModelScope.launch {
-            try {
-                firestoreService.deleteCardData(cardId)
-                onResult(true,null)
-            } catch (e: Exception) {
-                onResult(false,e)
-            }
         }
     }
 }
