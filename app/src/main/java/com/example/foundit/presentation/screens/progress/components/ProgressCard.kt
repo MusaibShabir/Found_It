@@ -2,6 +2,7 @@ package com.example.foundit.presentation.screens.progress.components
 
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,7 +20,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,8 +31,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -127,8 +128,8 @@ fun ProcessCard(
         colors = CardDefaults.cardColors(containerColor = cardColor),
         modifier = modifier
             .fillMaxWidth()
-            //.height(160.dp)
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 0.dp),
+            .height(168.dp)
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp),
     ) {
         Column (
             modifier = modifier
@@ -149,7 +150,11 @@ fun ProcessCard(
                 )
 
                 if (cardItem["status"].toString() == "0"){
-                    CardLinearProgressIndicator()
+                    CustomAnimatedProgressIndicator(
+                        modifier = Modifier
+                            .width(26.dp)
+                            .height(2.dp)
+                    )
                 }
 
             }
@@ -194,12 +199,15 @@ fun ProcessCard(
     }
 }
 
-@Composable
-fun CardLinearProgressIndicator() {
 
+@Composable
+fun CustomAnimatedProgressIndicator(
+    modifier: Modifier = Modifier,
+    color: Color = Color.Blue,
+    trackColor: Color = Color.LightGray
+) {
     var progress by remember { mutableFloatStateOf(0f) }
     val coroutineScope = rememberCoroutineScope()
-
 
     LaunchedEffect(key1 = Unit) {
         coroutineScope.launch {
@@ -207,14 +215,14 @@ fun CardLinearProgressIndicator() {
             while (true) {
                 if (isIncreasing) {
                     while (progress < 1f) {
-                        progress += 0.02f
-                        delay(1)
+                        progress += 0.04f
+                        delay(4)
                     }
                     isIncreasing = false
                 } else {
                     while (progress > 0f) {
-                        progress -= 0.02f
-                        delay(1)
+                        progress -= 0.04f
+                        delay(4)
                     }
                     isIncreasing = true
                 }
@@ -222,19 +230,23 @@ fun CardLinearProgressIndicator() {
         }
     }
 
-    LinearProgressIndicator(
-        progress = { progress },
-        modifier = Modifier
-            .width(18.dp)
-            .height(2.dp),
-        color = Color.Blue,
-        trackColor = Color.White,
-        strokeCap = StrokeCap.Round
-    )
-
+    Canvas(modifier) {
+        val progressWidth = progress * size.width
+        val cornerRadius = size.height / 2
+        // Draw track
+        drawRoundRect(
+            color = trackColor,
+            size = size,
+            cornerRadius = CornerRadius(cornerRadius, cornerRadius)
+        )
+        // Draw progress
+        drawRoundRect(
+            color = color,
+            size = Size(width = progressWidth, height = size.height),
+            cornerRadius = CornerRadius(cornerRadius, cornerRadius)
+        )
+    }
 }
-
-
 
 
 @Composable
