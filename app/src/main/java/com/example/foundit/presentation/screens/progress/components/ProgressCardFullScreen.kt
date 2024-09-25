@@ -136,12 +136,6 @@ fun ProgressCardFullScreen(
             else -> Color.Yellow.copy(alpha = .5f)
         }
 
-        val showItemDiscription = when(cardLabel) {
-            "Lost" -> true
-            "Found" -> false
-            else -> false
-        }
-
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -305,35 +299,34 @@ fun ProgressCardFullScreen(
                 Spacer(modifier = modifier.height(16.dp))
 
                 // Item description card
-                if (showItemDiscription) {
-                    OutlinedCard(
-                        modifier = Modifier
+                OutlinedCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 120.dp, max = 240.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    elevation = CardDefaults.cardElevation(4.dp),
+                    border = BorderStroke(width = 1.dp, color = borderColor)
+                ) {
+                    Column(
+                        modifier = modifier
                             .fillMaxWidth()
-                            .heightIn(min = 120.dp, max = 240.dp),
-                        shape = RoundedCornerShape(12.dp),
-                        elevation = CardDefaults.cardElevation(4.dp),
-                        border = BorderStroke(width = 1.dp, color = borderColor)
+                            .verticalScroll(rememberScrollState())
+                            .padding(12.dp)
                     ) {
-                        Column(
-                            modifier = modifier
-                                .fillMaxWidth()
-                                .verticalScroll(rememberScrollState())
-                                .padding(12.dp)
-                        ) {
-                            Text(
-                                text = "Item Description",
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontWeight = FontWeight.Bold
-                            )
-                            HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-                            Text(
-                                text = data["cardDescription"]?.toString()
-                                    ?: "No description available",
-                                style = MaterialTheme.typography.bodyMedium,
-                            )
-                        }
+                        Text(
+                            text = "Item Description",
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.Bold
+                        )
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                        Text(
+                            text = data["cardDescription"]?.toString()
+                                ?: "No description available",
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
                     }
                 }
+
 
                 Spacer(modifier = modifier.height(8.dp))
                 HorizontalDivider()
@@ -434,7 +427,7 @@ fun MatchedCard(
         modifier = modifier
             .fillMaxWidth()
             //.height(160.dp)
-            .padding( top = 16.dp, bottom = 0.dp),
+            .padding(top = 16.dp, bottom = 0.dp),
     ) {
         Column (
             modifier = modifier
