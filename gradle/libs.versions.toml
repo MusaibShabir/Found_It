@@ -1,5 +1,4 @@
 [versions]
-gson = "2.10.1"
 kotlin = "2.0.20"
 agp = "8.6.1"
 featureDelivery = "2.1.0"
@@ -79,7 +78,6 @@ feature-delivery = { module = "com.google.android.play:feature-delivery", versio
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
-gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 
 # Koltin Searlization
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
