@@ -106,12 +106,13 @@ class LostInputViewModel @Inject constructor(
                 try {
                     firestoreService.addCardData(
                         cardType = cardType.value ?: 10,
-                        childCategory = getChildCategoryIdsAsString,
                         parentCategory = getParentCategory,
+                        cardDescription = getItemDescription,
                         color = getColorCategory,
                         locationCoordinates = markerPosition.value ?: LatLng(0.0, 0.0),
                         locationAddress = address.value.toString(),
-                        cardDescription = getItemDescription
+                        childCategory = getChildCategoryIdsAsString,
+                        date = selectedDateString.value
                     )
                     onResult(true,null)
                 }catch (error: Exception) {
