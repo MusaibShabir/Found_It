@@ -105,7 +105,7 @@ fun ProgressCardFullScreen(
     // Display card data
     cardData?.let { data ->
 
-        LaunchedEffect(data["matches"] as Boolean && data["cardType"].toString() == "1") {
+        LaunchedEffect(data["matches"]) {
             try {
                 val matchedCardId = data["matches"] as? List<String> ?: emptyList()
                 viewModel.fetchMatchedCards(matchedCardId)

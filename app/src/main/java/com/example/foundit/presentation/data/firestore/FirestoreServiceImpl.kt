@@ -91,7 +91,8 @@ class FirestoreServiceImpl @Inject constructor(
         color: String,
         locationCoordinates: LatLng,
         locationAddress: String,
-        childCategory: String
+        childCategory: String,
+        date: String
     ) {
         val userId = currentUserId
 
@@ -127,7 +128,8 @@ class FirestoreServiceImpl @Inject constructor(
                         "cardDescription" to cardDescription,
                         "locationCoordinates" to GeoPoint(locationCoordinates.latitude, locationCoordinates.longitude),
                         "locationAddress" to locationAddress,
-                        "date" to Timestamp(Date()),
+                        "cardCreatedDate" to Timestamp(Date()),
+                        "date" to date,
                         "status" to 0
                     )
 
@@ -202,7 +204,7 @@ class FirestoreServiceImpl @Inject constructor(
             snapshot?.let { it ->
                 val documents = it.documents
                     .map { document -> document.data ?: emptyMap() }
-                    .sortedByDescending { it["date"].toString() } // Sort by the 'date' field (ensure it's properly formatted)
+                    .sortedByDescending { it["cardCreatedDate"].toString() } // Sort by the 'date' field (ensure it's properly formatted)
                 Log.d("Firestore", "getItemData: $documents")
                 trySend(documents) // Send the documents to the flow
             }
