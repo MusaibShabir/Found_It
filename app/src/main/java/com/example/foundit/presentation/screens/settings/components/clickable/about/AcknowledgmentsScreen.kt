@@ -50,6 +50,7 @@ fun AcknowledgementScreen(
                 """.trimIndent(),
                 style = MaterialTheme.typography.bodySmall
             )
+
         }
     }
 }

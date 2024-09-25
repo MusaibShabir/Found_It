@@ -41,7 +41,7 @@ import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
 import com.example.foundit.ui.theme.MainGreen
 
 @Composable
-fun ItemDescriptionScreen(
+fun ItemDescriptionAndDatePickerScreen(
     modifier: Modifier,
     viewModel: LostInputViewModel
 ) {
@@ -51,14 +51,27 @@ fun ItemDescriptionScreen(
 
     var descriptionCategoryTopHeading by remember { mutableStateOf("") }
     when(cardType){
-        0 -> descriptionCategoryTopHeading = "Please provide a brief description of your lost item to assist in its quick recovery."
-        1 -> descriptionCategoryTopHeading = "Please provide a brief description of your found item to assist in its quick recovery."
+        0 -> descriptionCategoryTopHeading = "Provide a brief description of your lost item to assist in its quick recovery."
+        1 -> descriptionCategoryTopHeading = "Provide a brief description of your found item to assist in its quick recovery."
+    }
+
+    var datePickerTopHeading by remember { mutableStateOf("") }
+    when(cardType){
+        0 -> datePickerTopHeading = "Tell us the date when the item was lost."
+        1 -> datePickerTopHeading = "Tell us the date when you found the item."
+    }
+
+    var datePickerTitle by remember { mutableStateOf("") }
+    when(cardType){
+        0 -> datePickerTitle = "Select the date when the item was lost"
+        1 -> datePickerTitle = "Select the date when the item was found"
     }
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+        ,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
@@ -174,6 +187,59 @@ fun ItemDescriptionScreen(
                 )
             }
         }
+        Spacer(modifier.height(18.dp))
+
+        Row(
+            modifier = modifier.fillMaxWidth()
+        ) {
+            OutlinedCard(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .height(IntrinsicSize.Max),
+                shape = RoundedCornerShape(14.dp),
+                colors = CardDefaults.cardColors(containerColor = MainGreen)
+            ) {
+                Row(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    Text(
+                        text = datePickerTopHeading,
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Start,
+                    )
+                }
+            }
+
+        }
+        HorizontalDivider(modifier = modifier.padding(vertical = 10.dp))
+        OutlinedCard(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Max)
+                .padding(vertical = 18.dp),
+            colors = CardDefaults.cardColors(containerColor = MainGreen.copy(alpha = .25f)),
+        ) {
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.Start
+            ){
+                DatePickerDocked(
+                    modifier = modifier,
+                    datePickerTitle = datePickerTitle,
+                    viewModel = viewModel
+                )
+
+            }
+        }
+
     }
 
 }

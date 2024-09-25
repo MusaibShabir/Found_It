@@ -20,6 +20,11 @@ import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okio.IOException
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneId
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -213,6 +218,25 @@ class LostInputViewModel @Inject constructor(
                 (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
                         networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR))
     }
+
+    // Date Picker Logic
+    private val _selectedDateMillis = MutableStateFlow<Long?>(null)
+    val selectedDateMillis: StateFlow<Long?> = _selectedDateMillis
+
+    private val _selectedDateString = MutableStateFlow("")
+    val selectedDateString: StateFlow<String> = _selectedDateString
+
+    fun onDateSelected(localDate: LocalDate) {
+        val millis = localDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        _selectedDateMillis.value = millis
+        _selectedDateString.value = convertMillisToDate(millis)
+    }
+
+    private fun convertMillisToDate(millis: Long): String {
+        val formatter = SimpleDateFormat("dd-MMMM-yyyy", Locale.getDefault())
+        return formatter.format(Date(millis))
+    }
+
 
 
 

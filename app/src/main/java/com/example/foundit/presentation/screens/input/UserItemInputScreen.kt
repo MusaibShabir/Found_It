@@ -30,7 +30,7 @@ import com.example.foundit.presentation.screens.input.common.MapScreen
 import com.example.foundit.presentation.screens.input.common.ParentCategoryScreen
 import com.example.foundit.presentation.screens.input.common.components.AreYouSureToCancelAlertBox
 import com.example.foundit.presentation.screens.input.common.components.ColorCategoryScreen
-import com.example.foundit.presentation.screens.input.common.components.ItemDescriptionScreen
+import com.example.foundit.presentation.screens.input.common.components.ItemDescriptionAndDatePickerScreen
 import com.example.foundit.presentation.screens.input.common.components.UserInputBottomNavigationBar
 import com.example.foundit.presentation.screens.input.found.FoundInputViewModel
 import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
@@ -60,6 +60,7 @@ fun UserItemInputScreen(
     val isColorSelectedCategoryEmpty by lostInputViewModel.colorSelectedId.collectAsState()
     val isChildSelectedCategoryEmpty by lostInputViewModel.selectedChildCategoryIds.collectAsState()
     val isDescriptionEmpty by lostInputViewModel.itemDescription.collectAsState()
+    val isDateEmpty by lostInputViewModel.selectedDateMillis.collectAsState()
 
     // Minimum Character Length For Description
     val minCharLength = 25
@@ -106,7 +107,7 @@ fun UserItemInputScreen(
                             NavRoutes.PARENT_CATEGORY_SCREEN -> isParentSelectedCategoryEmpty.isNotEmpty()
                             NavRoutes.COLOR_CATEGORY_SCREEN -> isColorSelectedCategoryEmpty.isNotEmpty()
                             NavRoutes.CHILD_CATEGORY_SCREEN -> isChildSelectedCategoryEmpty.isNotEmpty()
-                            NavRoutes.ITEM_DESCRIPTION_SCREEN -> isDescriptionEmpty.length >= minCharLength
+                            NavRoutes.ITEM_DESCRIPTION_SCREEN -> isDescriptionEmpty.length >= minCharLength && isDateEmpty !== null
                             else -> true
                         }
 
@@ -199,7 +200,7 @@ fun UserItemInputScreen(
             }
 
             composable(NavRoutes.ITEM_DESCRIPTION_SCREEN) {
-                ItemDescriptionScreen(
+                ItemDescriptionAndDatePickerScreen(
                     modifier = modifier,
                     viewModel = lostInputViewModel
                 )
