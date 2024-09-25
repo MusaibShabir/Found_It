@@ -233,7 +233,7 @@ class LostInputViewModel @Inject constructor(
     }
 
     private fun convertMillisToDate(millis: Long): String {
-        val formatter = SimpleDateFormat("dd-MMMM-yyyy", Locale.getDefault())
+        val formatter = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
         return formatter.format(Date(millis))
     }
 

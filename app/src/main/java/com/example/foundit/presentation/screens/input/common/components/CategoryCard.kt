@@ -36,9 +36,9 @@ fun CategoryCard(
 
     OutlinedCard(
         modifier = modifier
-            .width(IntrinsicSize.Min)
+            .width(IntrinsicSize.Max)
             .height(48.dp)
-            .padding(8.dp),
+            .padding(horizontal = 4.dp, vertical = 8.dp),
         shape = RoundedCornerShape(24.dp),
         onClick = {
             if (onCategoryClick != null) {
@@ -60,7 +60,7 @@ fun CategoryCard(
         Row(
             modifier = modifier
                 .fillMaxSize()
-                .padding(horizontal = 10.dp),
+            ,
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ){
