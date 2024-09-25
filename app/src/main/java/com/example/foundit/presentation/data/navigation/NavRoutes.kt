@@ -4,6 +4,7 @@ object NavRoutes {
     const val HOME = "Home"
     const val PROGRESS = "Progress"
     const val PROGRESS_CARD_FULL_SCREEN = "Progress Card Full Screen"
+    const val MATCHED_CARD_FULL_SCREEN = "Matched Card Full Screen"
     const val NOTIFICATIONS = "Notifications"
     const val PROFILE = "Profile"
     const val SETTINGS = "Settings"

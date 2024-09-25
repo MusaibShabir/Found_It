@@ -173,7 +173,7 @@ fun ProcessCard(
                             modifier = modifier.size(12.dp)
                         )
                         Text(
-                            text = formatDate(cardItem["date"] as? Timestamp),
+                            text = cardItem["locationAddress"]?.toString() ?: "Unknown location",
                             //textAlign = TextAlign.Center,
                             fontSize = 12.sp,
                             fontStyle = FontStyle.Italic,
