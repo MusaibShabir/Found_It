@@ -211,6 +211,36 @@ class FirestoreServiceImpl @Inject constructor(
         awaitClose { listener!!.remove() } // Clean up when the flow is closed
     }
 
+    override suspend fun getMatchedCardData(cardId: List<String>): Flow<List<Map<String, Any>>> = callbackFlow {
+        val userId = currentUserId
+        if (userId.isEmpty()) {
+            trySend(emptyList()) // Send an empty list if the user ID is not available
+            close() // Close the flow as there's nothing to send
+            return@callbackFlow
+        }
+
+        val documentRef = firebaseFirestore
+            .collectionGroup("Card")
+            .whereIn("cardId", cardId)  // Use whereIn to match a list of cardIds
+
+        listener = documentRef.addSnapshotListener { snapshot, exception ->
+            if (exception != null) {
+                close(exception) // Close the flow with the exception
+                return@addSnapshotListener
+            }
+
+            snapshot?.let { it ->
+                val documents = it.documents
+                    .map { document -> document.data ?: emptyMap() }
+                    //.sortedByDescending { it["date"].toString() } // Sort by the 'date' field (ensure it's properly formatted)
+                Log.d("Firestore", "getItemData: $documents")
+                trySend(documents) // Send the documents to the flow
+            }
+        }
+
+        awaitClose { listener!!.remove() } // Clean up when the flow is closed
+    }
+
     override suspend fun getSingleCardData(cardId: String): Flow<Map<String, Any>> = callbackFlow {
         val userId = currentUserId
         if (userId.isEmpty()) {
@@ -242,6 +272,38 @@ class FirestoreServiceImpl @Inject constructor(
         }
 
         awaitClose { listenerRegistration.remove() } // Clean up when the flow is closed
+    }
+
+    override suspend fun getMatchedSingleCardData(cardId: String): Flow<Map<String, Any>> = callbackFlow{
+        val userId = currentUserId
+        if (userId.isEmpty()) {
+            trySend(emptyMap()) // Send an empty map if the user ID is not available
+            close() // Close the flow as there's nothing to send
+            return@callbackFlow
+        }
+
+        val documentRef = firebaseFirestore
+            .collectionGroup("Card")
+            .whereEqualTo("cardId", cardId) // Query for specific cardId
+
+        val listenerRegistration = documentRef.addSnapshotListener { snapshot, exception ->
+            if (exception != null) {
+                close(exception) // Close the flow with the exception
+                return@addSnapshotListener
+            }
+
+            snapshot?.let { querySnapshot ->
+                // Assuming there's only one document with the given cardId
+                val document = querySnapshot.documents.firstOrNull()
+                if (document != null) {
+                    val data = document.data ?: emptyMap<String, Any>()
+                    trySend(data) // Send the document's data to the flow
+                } else {
+                    trySend(emptyMap()) // Send an empty map if no document is found
+                }
+            }
+        }
+        awaitClose { listenerRegistration.remove() }
     }
 
     override suspend fun deleteCardData(cardId: String) {

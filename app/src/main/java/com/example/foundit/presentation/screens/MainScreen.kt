@@ -27,6 +27,7 @@ import com.example.foundit.presentation.screens.profile.ProfileScreen
 import com.example.foundit.presentation.screens.profile.ProfileViewModel
 import com.example.foundit.presentation.screens.profile.components.EditProfileScreen
 import com.example.foundit.presentation.screens.progress.ProcessScreen
+import com.example.foundit.presentation.screens.progress.components.MatchedCardFullScreen
 import com.example.foundit.presentation.screens.progress.components.ProgressCardFullScreen
 import com.example.foundit.presentation.screens.registration.ForgotPasswordScreen
 import com.example.foundit.presentation.screens.registration.GetStartedScreen
@@ -163,6 +164,14 @@ fun MainScreen(modifier: Modifier) {
             ) {
                 val cardId = it.arguments?.getString("cardId")
                 ProgressCardFullScreen(modifier = modifier, cardId = cardId.toString(), navController = navController)
+            }
+
+            composable(
+                NavRoutes.MATCHED_CARD_FULL_SCREEN + "/{cardId}",
+                arguments = listOf(navArgument("cardId") { type = NavType.StringType })
+            ) {
+                val cardId = it.arguments?.getString("cardId")
+                MatchedCardFullScreen(modifier = modifier, cardId = cardId.toString(), navController = navController)
             }
 
             composable(NavRoutes.NOTIFICATIONS) {
