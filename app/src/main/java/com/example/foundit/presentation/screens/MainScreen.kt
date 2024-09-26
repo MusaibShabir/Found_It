@@ -14,8 +14,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.navigation.NavigationBar
 import com.example.foundit.presentation.screens.actions.ActionScreen
-import com.example.foundit.presentation.screens.documentation.PrivacyPolicyScreen
-import com.example.foundit.presentation.screens.documentation.TermsOfServiceScreen
+import com.example.foundit.presentation.screens.settings.components.clickable.about.PrivacyPolicyScreen
+import com.example.foundit.presentation.screens.settings.components.clickable.about.TermsOfServiceScreen
 import com.example.foundit.presentation.screens.home.HomeScreen
 import com.example.foundit.presentation.screens.input.UserItemInputScreen
 import com.example.foundit.presentation.screens.notification.NotificationBaseViewModel

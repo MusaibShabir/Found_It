@@ -125,6 +125,11 @@
 
     <string name="terms_of_service_thank_you">By using Found It, you agree to these Terms of Service. Thank you for trusting us to help you find your lost belongings!</string>
 
+    <!-->Acknowledgements-->
+    <string name="acknowledgement_title">Acknowledgements</string>
+    <string name="acknowledgement_teacher">We extend our heartfelt thanks to Mr. Irfan for their much-needed guidance and support during the development of the Found It project. Your insights and advice were invaluable and helped steer the project toward success. We also appreciate your willingness to offer your perspective and expertise throughout the project. We would not have been able to complete the project without their guidance and support.</string>
+
+
 
     <!-- Notification Screen (Main)-->
     <string name="when_no_notification">No notification Available</string>

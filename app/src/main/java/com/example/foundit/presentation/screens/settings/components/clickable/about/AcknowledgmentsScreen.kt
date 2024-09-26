@@ -1,17 +1,18 @@
 package com.example.foundit.presentation.screens.settings.components.clickable.about
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.foundit.R
 import com.example.foundit.presentation.common.TheTopAppBar
 
 @Composable
@@ -22,40 +23,28 @@ fun AcknowledgementScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TheTopAppBar(title = "Acknowledgments", navController = navController)
+            TheTopAppBar(title = "Acknowledgements", navController = navController)
         }
     ) { innerPadding ->
         Column(
             modifier = modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState()) // Enable vertical scrolling
                 .padding(innerPadding)
-            .padding(horizontal = 16.dp)
+                .padding(horizontal = 16.dp)
         ) {
+            // Acknowledgement Content
             Text(
-                text = """
-                    Acknowledgments
-
-                    We would like to express our sincere gratitude to the following individuals and organizations for their support and contributions to the development of "Found it."
-
-                    • SSM College of Engineering: For providing the educational resources and environment that made this project possible.
-                    • Our Mentors:
-                      - Mr. Irfan Rashid
-                      - Mr. Khalid Makhdoomi
-                      
-                    • Google Firebase: For providing the backend services that power our real-time data storage and user authentication.
-                    
-                    • Open Source Communities: For the invaluable tools and libraries that facilitated our development process.
-
-                    Thank you for your unwavering support and encouragement.
-                """.trimIndent(),
-                style = MaterialTheme.typography.bodySmall
+                text = stringResource(id = R.string.acknowledgement_teacher),
+                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
+                modifier = Modifier.padding(vertical = 8.dp)
             )
         }
     }
 }
 
-@Preview (showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewAcknowledgementScreen() {
-    AcknowledgementScreen(navController = NavHostController(LocalContext.current))
+@Preview(showBackground = true)
+fun AcknowledgementScreenPreview() {
+    AcknowledgementScreen(navController = rememberNavController())
 }
