@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.foundit.presentation.data.navigation.NavRoutes
+import com.example.foundit.ui.theme.MainGreen
 
 @Composable
 fun ForgotPasswordScreen(
@@ -115,14 +116,16 @@ fun ForgotPasswordScreen(
                         singleLine = true,
                         isError = !isEmailValid,
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedLabelColor = Color.Blue,
-                            cursorColor = Color.Blue,
-                            focusedBorderColor = Color.Blue,
-                            selectionColors =  TextSelectionColors(
-                                handleColor = Color.Blue,
-                                backgroundColor = Color.Transparent,
+                            focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,
+                            errorContainerColor = MaterialTheme.colorScheme.onPrimary,
+                            focusedLabelColor = MaterialTheme.colorScheme.onSurface,
+                            cursorColor = MainGreen,
+                            focusedBorderColor = MainGreen,
+                            selectionColors = TextSelectionColors(
+                                handleColor = MainGreen,
+                                backgroundColor = MainGreen,
                             ),
-
                         ),
                         supportingText = {
                             if (!isEmailValid && email.isNotBlank()) {
@@ -151,7 +154,7 @@ fun ForgotPasswordScreen(
                                 }
                             },
                             colors = ButtonColors(
-                                containerColor = Color.Blue,
+                                containerColor = MainGreen,
                                 contentColor = MaterialTheme.colorScheme.surface,
                                 disabledContainerColor = Color.Gray,
                                 disabledContentColor = MaterialTheme.colorScheme.onSurface,
@@ -192,14 +195,14 @@ fun ForgotPasswordScreen(
                         Icon(
                             imageVector = Icons.Default.ArrowBackIosNew,
                             contentDescription = "Back Arrow",
-                            tint = Color.Blue,
+                            tint = MainGreen,
                             modifier = modifier.size(16.dp)
                         )
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(6.dp))
                         Text(
                             text = "Back to Login",
                             fontSize = 16.sp,
-                            color = Color.Blue,
+                            color = MainGreen,
                             style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier.clickable {
                                 navController.navigate(NavRoutes.LOGIN)
