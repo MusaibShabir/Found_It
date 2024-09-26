@@ -16,6 +16,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberDatePickerState
@@ -30,11 +31,9 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
 import com.example.foundit.ui.theme.MainGreen
-import java.text.SimpleDateFormat
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneId
-import java.util.Date
-import java.util.Locale
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,8 +46,20 @@ fun DatePickerDocked(
     var showDatePicker by remember { mutableStateOf(false) }
     val selectedDateString by viewModel.selectedDateString.collectAsState()
     val selectedDateMillis by viewModel.selectedDateMillis.collectAsState()
+
+    val noFutureDates = object : SelectableDates {
+        override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+            val date = Instant.ofEpochMilli(utcTimeMillis)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
+            return date <= LocalDate.now()
+        }
+    }
     val datePickerState = rememberDatePickerState(
-        initialSelectedDateMillis = selectedDateMillis
+        initialSelectedDateMillis = selectedDateMillis,
+        yearRange = 1922..2100,
+        selectableDates = noFutureDates
+
     )
 
 
@@ -125,12 +136,4 @@ fun DatePickerDocked(
         }
     }
 }
-
-
-fun convertMillisToDate(millis: Long): String {
-    val formatter = SimpleDateFormat(
-        "dd-MMMM-yyyy", Locale.getDefault())
-    return formatter.format(Date(millis))
-} // store this function in the viewmodel and only retribe the string that is givning as the ouput to display in the text field
-
 
