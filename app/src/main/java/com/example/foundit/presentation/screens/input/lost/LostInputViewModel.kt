@@ -136,7 +136,7 @@ class LostInputViewModel @Inject constructor(
 
     }
 
-    private val apiKey = "AIzaSyB2PRqP3v51ke2IKYdi8pM2Katkfeb0p3A"
+    private val apiKey = "AIzaSyATPpGq86WPBpIKh9j1cxzlhxQFtPX4umo"
 
     private val _address = MutableStateFlow<String?>(null)
     val address: StateFlow<String?> = _address.asStateFlow()
