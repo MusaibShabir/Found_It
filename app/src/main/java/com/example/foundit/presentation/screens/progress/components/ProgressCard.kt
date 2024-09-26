@@ -17,9 +17,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.LocationOn
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -152,8 +153,8 @@ fun ProcessCard(
                 if (cardItem["status"].toString() == "0"){
                     CustomAnimatedProgressIndicator(
                         modifier = Modifier
-                            .width(26.dp)
-                            .height(2.dp)
+                            .width(18.dp)
+                            .height(3.dp)
                     )
                 }
 
@@ -173,9 +174,9 @@ fun ProcessCard(
                     ) {
 
                         Icon(
-                            imageVector = Icons.Outlined.LocationOn,
+                            imageVector = Icons.Default.LocationOn,
                             contentDescription = "Location",
-                            modifier = modifier.size(12.dp)
+                            modifier = modifier.size(14.dp)
                         )
                         Text(
                             text = cardItem["locationAddress"]?.toString() ?: "Unknown location",
@@ -204,7 +205,7 @@ fun ProcessCard(
 fun CustomAnimatedProgressIndicator(
     modifier: Modifier = Modifier,
     color: Color = Color.Blue,
-    trackColor: Color = Color.LightGray
+    trackColor: Color = MaterialTheme.colorScheme.background
 ) {
     var progress by remember { mutableFloatStateOf(0f) }
     val coroutineScope = rememberCoroutineScope()
@@ -215,13 +216,13 @@ fun CustomAnimatedProgressIndicator(
             while (true) {
                 if (isIncreasing) {
                     while (progress < 1f) {
-                        progress += 0.04f
+                        progress += 0.015f
                         delay(4)
                     }
                     isIncreasing = false
                 } else {
                     while (progress > 0f) {
-                        progress -= 0.04f
+                        progress -= 0.05f
                         delay(4)
                     }
                     isIncreasing = true

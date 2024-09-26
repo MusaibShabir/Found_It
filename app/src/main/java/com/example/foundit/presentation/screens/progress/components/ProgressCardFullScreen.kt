@@ -26,13 +26,14 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.FiberManualRecord
-import androidx.compose.material.icons.outlined.LocationOn
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -305,7 +306,10 @@ fun ProgressCardFullScreen(
                         .heightIn(min = 120.dp, max = 240.dp),
                     shape = RoundedCornerShape(12.dp),
                     elevation = CardDefaults.cardElevation(4.dp),
-                    border = BorderStroke(width = 1.dp, color = borderColor)
+                    border = BorderStroke(width = 1.dp, color = borderColor),
+                    colors = CardDefaults.outlinedCardColors(
+                        containerColor = MaterialTheme.colorScheme.background
+                    )
                 ) {
                     Column(
                         modifier = modifier
@@ -349,6 +353,12 @@ fun ProgressCardFullScreen(
     // Floating action button for delete
     Box(modifier = modifier.fillMaxSize()) {
         FloatingActionButton(
+            modifier = modifier
+                .align(Alignment.BottomEnd)
+                .padding(end = 30.dp, bottom = 70.dp)
+                .size(72.dp)
+            ,
+            shape = CircleShape,
             onClick = {
                 if (isNetworkAvailable(context)) {
                     viewModel.deleteCardData(cardId) { isSuccess, e ->
@@ -378,15 +388,14 @@ fun ProgressCardFullScreen(
                     Toast.makeText(context, "No internet connection. Please try again when connected.", Toast.LENGTH_SHORT).show()
                 }
             },
-            modifier = modifier
-                .align(Alignment.BottomEnd)
-                .padding(end = 30.dp, bottom = 70.dp),
+
             containerColor = Color.Red,
             contentColor = Color.White
         ) {
             Icon(
                 imageVector = Icons.Default.Delete,
-                contentDescription = "Delete"
+                contentDescription = "Delete",
+                modifier = Modifier.size(32.dp)
             )
         }
     }
@@ -462,9 +471,9 @@ fun MatchedCard(
                     ) {
 
                         Icon(
-                            imageVector = Icons.Outlined.LocationOn,
+                            imageVector = Icons.Default.LocationOn,
                             contentDescription = "Location",
-                            modifier = modifier.size(12.dp)
+                            modifier = modifier.size(14.dp)
                         )
                         Text(
                             text = cardItem["locationAddress"].toString(),
