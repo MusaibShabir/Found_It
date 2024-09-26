@@ -2,6 +2,7 @@ package com.example.foundit.presentation.screens.profile
 
 import android.annotation.SuppressLint
 import android.net.Uri
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -143,6 +144,11 @@ fun ProfileScreen(
         navController = navController
     )
 
+    BackHandler(
+        enabled = true,
+    ) {
+
+    }
 
 }
 
