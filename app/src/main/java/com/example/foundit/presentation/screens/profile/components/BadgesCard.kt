@@ -70,7 +70,7 @@ fun BadgeItem(badgeImageVector: ImageVector) {
     Icon(
         imageVector = badgeImageVector,
         contentDescription = "Badge",
-        modifier = Modifier.size(58.dp),
+        modifier = Modifier.size(54.dp),
         tint= Color.White
     )
 }
