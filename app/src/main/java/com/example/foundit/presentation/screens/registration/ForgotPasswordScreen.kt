@@ -55,8 +55,6 @@ fun ForgotPasswordScreen(
     navController: NavHostController
 ) {
     var email by remember { mutableStateOf("") }
-    var emailSent by remember { mutableStateOf(false) }
-    var errorOccurred by remember { mutableStateOf(false) }
     var isEmailValid by remember { mutableStateOf(true) }
     val context = LocalContext.current
 
@@ -146,12 +144,8 @@ fun ForgotPasswordScreen(
                                 .width(200.dp)
                                 .height(52.dp),
                             onClick = {
-                                emailSent = true
-                                errorOccurred = false
-                                if (emailSent && !errorOccurred) {
-                                    navController.navigate(NavRoutes.LOGIN)
-                                    Toast.makeText(context,"mail sent!",Toast.LENGTH_LONG).show()
-                                }
+                                navController.navigate(NavRoutes.LOGIN)
+                                Toast.makeText(context, "mail sent!", Toast.LENGTH_LONG).show()
                             },
                             colors = ButtonColors(
                                 containerColor = MainGreen,
@@ -171,17 +165,6 @@ fun ForgotPasswordScreen(
                                 fontWeight = FontWeight.Normal,
                             )
                         }
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    if (emailSent && errorOccurred) {
-                        Text(
-                            text = "error occurred Try Again",
-                            style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),
-                            color = MaterialTheme.colorScheme.error,
-                            textAlign = TextAlign.Center
-                        )
                     }
 
                     Spacer(modifier = Modifier.height(20.dp))
