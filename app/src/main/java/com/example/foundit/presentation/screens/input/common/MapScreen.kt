@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -239,12 +240,12 @@ fun MapScreen(
 
 
         Spacer(modifier = modifier.height(8.dp))
-        ElevatedCard(
+        OutlinedCard(
             modifier = modifier
                 .fillMaxSize()
-                .padding(vertical = 18.dp)
             ,
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
+            border = BorderStroke(width = 1.dp, color = MainGreen)
         ) {
             if (locationPermissionsState.allPermissionsGranted && isGpsEnabled  ) {
                 LaunchedEffect(locationPermissionsState.allPermissionsGranted, isGpsEnabled) {
@@ -356,7 +357,7 @@ fun MapScreen(
 
                     val permissionRequestText = when {
                         fineLocationPermissionState?.status?.isGranted == true
-                            -> "Precise location access granted."
+                            -> "PLease Enable GPS Location below."
                         !locationPermissionsState.allPermissionsGranted &&
                                 locationPermissionsState.permissions.any {
                                     it.permission == Manifest.permission.ACCESS_COARSE_LOCATION && it.status.isGranted
