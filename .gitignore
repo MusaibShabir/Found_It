@@ -15,3 +15,5 @@
 local.properties
 .kotlin/sessions
 .idea/deploymentTargetSelector.xml
+.kotlin/errors
+app/release
