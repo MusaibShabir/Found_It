@@ -34,6 +34,7 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -60,6 +61,7 @@ import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -241,6 +243,8 @@ fun MapScreen(
             modifier = modifier
                 .fillMaxSize()
                 .padding(vertical = 18.dp)
+            ,
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
         ) {
             if (locationPermissionsState.allPermissionsGranted && isGpsEnabled  ) {
                 LaunchedEffect(locationPermissionsState.allPermissionsGranted, isGpsEnabled) {
@@ -344,23 +348,31 @@ fun MapScreen(
                     verticalArrangement = Arrangement.Bottom,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    val allPermissionsRevoked =
-                        locationPermissionsState.permissions.size == locationPermissionsState.revokedPermissions.size
 
-                    val textToShow = when {
+                    val fineLocationPermissionState = locationPermissionsState.permissions.find {
+                        it.permission == Manifest.permission.ACCESS_FINE_LOCATION
+                    }
 
-                        !allPermissionsRevoked -> "Thanks for granting access to your approximate location. Please allow precise location access and enable GPS."
 
-                        locationPermissionsState.shouldShowRationale -> "Location permissions are important for this app. Please grant them."
-
-                        else -> "Location permissions are necessary. You can enable them below or in app settings."
-
+                    val permissionRequestText = when {
+                        fineLocationPermissionState?.status?.isGranted == true
+                            -> "Precise location access granted."
+                        !locationPermissionsState.allPermissionsGranted &&
+                                locationPermissionsState.permissions.any {
+                                    it.permission == Manifest.permission.ACCESS_COARSE_LOCATION && it.status.isGranted
+                                } -> "Approximate location access granted. " +
+                                "This app works best with precise location. " +
+                                "Please  allow access to precise location below"
+                        locationPermissionsState.shouldShowRationale ->
+                            "Location permissions are important for this app. Please grant them."
+                        else -> "Location permissions are necessary to use this feature. You can grant them below."
                     }
 
                     Text(
-                        text = textToShow,
+                        text = permissionRequestText,
                         textAlign = TextAlign.Center
                     )
+                    Spacer(modifier.height(16.dp))
 
                     Row(
                         modifier = modifier
@@ -368,7 +380,7 @@ fun MapScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        if (allPermissionsRevoked) {
+                        if (fineLocationPermissionState?.status?.isGranted == false) {
                             ElevatedButton(
                                 colors = ButtonDefaults.elevatedButtonColors(
                                     containerColor = MainGreen,
