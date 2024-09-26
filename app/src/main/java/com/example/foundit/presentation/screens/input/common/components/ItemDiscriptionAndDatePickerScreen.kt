@@ -17,6 +17,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -180,6 +181,7 @@ fun ItemDescriptionAndDatePickerScreen(
 
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.White,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.background,
                         cursorColor = MainGreen,
                         focusedIndicatorColor = MainGreen
                     )
