@@ -14,6 +14,15 @@ android {
     namespace = "com.example.foundit"
     compileSdk = 34
 
+    signingConfigs {
+        create("release") {
+            keyAlias = "key0"
+            keyPassword = "Musaibkey"
+            storeFile = file("C:\\Users\\user\\Desktop\\apps\\foundit_jks.jks")
+            storePassword = "Musaibkey"
+
+        }
+    }
     defaultConfig {
         applicationId = "com.example.foundit"
         minSdk = 29
@@ -29,12 +38,16 @@ android {
 
     buildTypes {
         release {
+            getByName("release") {
+                signingConfig = signingConfigs.getByName("release")
+            }
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
