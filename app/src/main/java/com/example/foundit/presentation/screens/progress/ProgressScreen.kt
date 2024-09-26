@@ -1,5 +1,6 @@
 package com.example.foundit.presentation.screens.progress
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
@@ -123,6 +124,11 @@ fun ProcessScreen(modifier: Modifier, navController: NavHostController) {
                 }
             }
         }
+    }
+    BackHandler(
+        enabled = true,
+    ) {
+
     }
 }
 

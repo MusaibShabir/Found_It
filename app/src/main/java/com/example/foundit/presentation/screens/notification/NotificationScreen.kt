@@ -1,5 +1,6 @@
 package com.example.foundit.presentation.screens.notification
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,6 +32,12 @@ fun NotificationScreen(
         ) {
             NotificationCard(modifier = modifier, viewModel = viewModel)
         }
+    }
+
+    BackHandler(
+        enabled = true,
+    ) {
+
     }
 }
 

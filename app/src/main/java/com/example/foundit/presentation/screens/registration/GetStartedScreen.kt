@@ -1,6 +1,7 @@
 package com.example.foundit.presentation.screens.registration
 
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -163,6 +164,12 @@ fun GetStartedScreen(
                 }
             }
         }
+    }
+
+    BackHandler(
+        enabled = true,
+    ) {
+
     }
 }
 
