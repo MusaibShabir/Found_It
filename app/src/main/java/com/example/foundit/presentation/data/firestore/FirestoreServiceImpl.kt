@@ -130,6 +130,7 @@ class FirestoreServiceImpl @Inject constructor(
                         "locationAddress" to locationAddress,
                         "cardCreatedDate" to Timestamp(Date()),
                         "date" to date,
+                        "matches" to null,
                         "status" to 0
                     )
 
