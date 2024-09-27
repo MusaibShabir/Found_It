@@ -99,7 +99,6 @@ fun ProfileScreen(
     navController: NavController,
     viewModel: ProfileViewModel
 ) {
-    val profileData by viewModel.profileData.collectAsState()
     val memberSince = viewModel.memberSince
 //    val userName = viewModel.userName
 //    val profilePicture: Uri? = viewModel.profilePicture //?: painterResource(id = R.drawable.ic_launcher_background)
@@ -118,13 +117,13 @@ fun ProfileScreen(
 //    val profileLastName by remember { mutableStateOf(userLastName) }
 //    val profileFirstName by remember { mutableStateOf(profileData?.firstName ?: "") }
 //    val profileLastName by remember { mutableStateOf(profileData?.lastName ?: "") }
-    val profileCountryCode by remember { mutableIntStateOf(profileData?.countryCode ?: 0) }
+    val profileCountryCode by remember { mutableIntStateOf(91) }
 //    val profilePicture = painterResource(id = R.drawable.ic_launcher_background)
-    val profileId by remember { mutableLongStateOf(profileData?.id ?: 0) }
+    val profileId by remember { mutableLongStateOf(23984874) }
 
     //Score Card
-    val foundScore by remember { mutableIntStateOf(profileData?.totalFound ?: 0) }
-    val reportedScore by remember { mutableIntStateOf(profileData?.totalReported ?: 0) }
+    val foundScore by remember { mutableIntStateOf(4) }
+    val reportedScore by remember { mutableIntStateOf(6) }
 
     //Member Since Card
     //val memberSinceDate by remember { mutableStateOf(memberSince ?: "unknown") }

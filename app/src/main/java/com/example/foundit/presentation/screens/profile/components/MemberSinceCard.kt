@@ -13,8 +13,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,7 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.foundit.R
-import com.example.foundit.presentation.screens.profile.ProfileViewModel
 import com.example.foundit.ui.theme.MainGreen
 
 // UI-Only Composable
@@ -81,19 +78,6 @@ fun MemberSinceCardContent(
         }
     }
 }
-
-
-// ViewModel Composable
-@Composable
-fun MemberSinceCard(
-    modifier: Modifier,
-    viewModel: ProfileViewModel
-) {
-    val profileData by viewModel.profileData.collectAsState()
-
-    MemberSinceCardContent(modifier = modifier, memberSince = profileData?.memberSince)
-}
-
 
 
 @Composable

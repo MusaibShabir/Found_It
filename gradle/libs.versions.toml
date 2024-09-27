@@ -15,9 +15,7 @@ kotlinxSerialization = "1.7.3"
 okhttp = "4.12.0"
 
 
-#Room
 playServicesLocation = "21.3.0"
-roomRuntime = "2.6.1"
 
 #Compose
 coilCompose = "2.7.0"
@@ -97,10 +95,6 @@ androidx-navigation-dynamic-features-fragment = { module = "androidx.navigation:
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragment" }
 androidx-navigation-testing = { module = "androidx.navigation:navigation-testing", version.ref = "navigationFragment" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationFragment" }
-
-androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
-androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime"}
-androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime"}
 
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidCompiler" }

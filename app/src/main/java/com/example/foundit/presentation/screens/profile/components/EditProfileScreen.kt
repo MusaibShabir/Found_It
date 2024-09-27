@@ -26,7 +26,6 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -194,8 +193,6 @@ fun EditProfileScreen(
     navController: NavController,
     viewModel: ProfileViewModel
 ) {
-    val profileData by viewModel.profileData.collectAsState()
-
 //    val userName = viewModel.userName
 //    val profilePictures: Uri? = viewModel.profilePicture
     val userFirstName by viewModel.userFirstNames.collectAsState()
@@ -208,7 +205,6 @@ fun EditProfileScreen(
     var profileLastName by remember { mutableStateOf(userLastName) }
 //    var profileFirstName by remember { mutableStateOf(profileData?.firstName ?: "") }
 //    var profileLastName by remember { mutableStateOf(profileData?.lastName ?: "") }
-    val profileId by remember { mutableLongStateOf(profileData?.id ?: 0) }
     var profilePicture by remember { mutableStateOf(profilePictures) }
 
 
