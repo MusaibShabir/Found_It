@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.collection.mutableFloatSetOf
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -43,6 +44,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -150,7 +152,13 @@ fun MapScreen(
     var mapRadius by remember { mutableDoubleStateOf(0.0) }
     when (cardType) {
         0 -> mapRadius = 2000.0
-        1 -> mapRadius = 500.0
+        1 -> mapRadius = 50.0
+    }
+
+    var zoomAfterTap by remember { mutableFloatStateOf(0f) }
+    when (cardType) {
+        0 -> zoomAfterTap = 13f
+        1 -> zoomAfterTap = 18f
     }
 
     var mapRadiusColor by remember { mutableStateOf(Color.White) }
@@ -308,11 +316,7 @@ fun MapScreen(
                                 )
                                 cameraPositionState.animate(
                                     update = CameraUpdateFactory.newLatLngZoom(
-                                        position, when(cardType){
-                                            0 -> 13f
-                                            1 -> 15f
-                                            else -> 10f
-                                        }),
+                                        position, zoomAfterTap),
                                     durationMs = 900
                                 )
                             } else {
