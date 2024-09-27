@@ -70,7 +70,6 @@ import com.example.foundit.presentation.screens.input.data.childCategories
 import com.example.foundit.presentation.screens.progress.ProgressCardFullScreenViewModel
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestoreException
 
 
@@ -266,7 +265,7 @@ fun ProgressCardFullScreen(
                         }
 
                         Text(
-                            text = formatDate(data["date"] as? Timestamp),
+                            text = data["date"]?.toString() ?: "No date available" ,
                             style = MaterialTheme.typography.bodySmall,
                             color = Color.Gray
                         )

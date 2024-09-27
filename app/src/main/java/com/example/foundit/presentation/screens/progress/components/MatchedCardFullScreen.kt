@@ -1,5 +1,6 @@
 package com.example.foundit.presentation.screens.progress.components
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -52,7 +53,6 @@ import com.example.foundit.presentation.screens.input.data.childCategories
 import com.example.foundit.presentation.screens.progress.MatchedCardFullScreenViewModel
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
-import com.google.firebase.Timestamp
 
 // For LazyVerticalGrid
 @Composable
@@ -177,7 +177,7 @@ fun MatchedCardFullScreen(
                         }
 
                         Text(
-                            text = formatDate(data["date"] as? Timestamp),
+                            text = data["date"]?.toString() ?: "No date available",
                             style = MaterialTheme.typography.bodySmall,
                             color = Color.Gray
                         )
@@ -190,21 +190,29 @@ fun MatchedCardFullScreen(
                 LazyVerticalGrid(
                     modifier = modifier
                         .fillMaxWidth(),
-                    columns = GridCells.Adaptive(minSize = 120.dp),
+                    columns = GridCells.Adaptive(minSize = 120.dp)
+                ) {
+                    val input = data["childCategory"]?.toString()
+                    if (!input.isNullOrEmpty()) {
+                        val charList = input.split(",")
+                            .mapNotNull { it.trim().toIntOrNull() }
+                            .filter { id -> childCategories.any { it.id == id } }
 
-                    ) {
-                    //val mapData = data["a"] as? Map<String, Any> ?: emptyMap()
+                        Log.d("CharList", "Contents of charList: $charList")
 
-                    val input = data["childCategory"].toString()
-                    val charList = input.split(",").map { it.trim() }
+                        val filteredCategories = childCategories.filter { category ->
+                            charList.contains(category.id)
+                        }
 
-
-                    items(childCategories) { category ->
-                        CategoryCard(
-                            modifier = modifier,
-                            categoryText = category.name,
-                            borderColor = borderColor,
-                        )
+                        if (filteredCategories.isNotEmpty()) {
+                            items(filteredCategories) { category ->
+                                CategoryCard(
+                                    modifier = modifier,
+                                    categoryText = category.name,
+                                    borderColor = borderColor
+                                )
+                            }
+                        }
                     }
                 }
 
