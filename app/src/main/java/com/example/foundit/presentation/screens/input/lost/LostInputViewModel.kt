@@ -29,7 +29,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LostInputViewModel @Inject constructor(
-    private val firestoreService: FirestoreService
+    private val firestoreService: FirestoreService,
 ) : ViewModel() {
 
     // Handling the Card Type Logic
@@ -95,6 +95,8 @@ class LostInputViewModel @Inject constructor(
     fun updateItemDescription(newDescription: String) {
         _itemDescription.value = newDescription
     }
+
+
 
     fun onSubmitClick( onResult: (Boolean, Exception?) -> Unit ) {
         viewModelScope.launch {

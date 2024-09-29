@@ -72,4 +72,6 @@ class ProgressCardFullScreenViewModel @Inject constructor(
             }
         }
     }
+
+
 }

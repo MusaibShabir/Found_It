@@ -1,6 +1,9 @@
 package com.example.foundit.presentation.screens.progress.components
 
+import android.Manifest
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -53,17 +56,36 @@ import com.example.foundit.presentation.screens.input.data.childCategories
 import com.example.foundit.presentation.screens.progress.MatchedCardFullScreenViewModel
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
 
 // For LazyVerticalGrid
+@OptIn(ExperimentalPermissionsApi::class)
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun MatchedCardFullScreen(
     modifier: Modifier,
     cardId: String,
     navController: NavHostController// Use Hilt to inject ViewModel
 ) {
+    val context = LocalContext.current
     // Collect the card data from the ViewModel
     val viewModel: MatchedCardFullScreenViewModel = hiltViewModel()
     val cardData by viewModel.cardData.collectAsState()
+
+
+    // Notification Logic
+    val notificationPermissionState = rememberPermissionState(
+        permission = Manifest.permission.POST_NOTIFICATIONS
+    )
+
+    LaunchedEffect(notificationPermissionState) {
+        if (!notificationPermissionState.status.isGranted) {
+            notificationPermissionState.launchPermissionRequest()
+        }
+    }
 
     // Fetch the data when the composable is first launched
     LaunchedEffect(cardId) {
@@ -253,7 +275,11 @@ fun MatchedCardFullScreen(
                 ) {
                     ElevatedButton(
                         onClick = {
-
+                            if (notificationPermissionState.status.isGranted) {
+                                viewModel.triggerNotification()
+                            } else {
+                                notificationPermissionState.launchPermissionRequest()
+                            }
                         },
                         colors = ButtonDefaults.elevatedButtonColors(
                             containerColor = MainRed,
