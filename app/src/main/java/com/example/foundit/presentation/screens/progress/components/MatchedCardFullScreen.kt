@@ -27,23 +27,31 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FiberManualRecord
 import androidx.compose.material.icons.rounded.LocationOn
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -54,15 +62,14 @@ import androidx.navigation.NavHostController
 import com.example.foundit.presentation.screens.input.common.components.CategoryCard
 import com.example.foundit.presentation.screens.input.data.childCategories
 import com.example.foundit.presentation.screens.progress.MatchedCardFullScreenViewModel
-import com.example.foundit.ui.theme.MainGreen
-import com.example.foundit.ui.theme.MainRed
+import com.example.foundit.ui.theme.LogoColor
+import com.example.foundit.ui.theme.RobotFamily
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
-import com.google.accompanist.permissions.shouldShowRationale
 
 // For LazyVerticalGrid
-@OptIn(ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun MatchedCardFullScreen(
@@ -81,6 +88,12 @@ fun MatchedCardFullScreen(
         permission = Manifest.permission.POST_NOTIFICATIONS
     )
 
+    // Bottom Sheet
+    var showBottomSheet by remember { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState()
+    var showBottomConfirmButton by remember { mutableStateOf(false) }
+
+
     LaunchedEffect(notificationPermissionState) {
         if (!notificationPermissionState.status.isGranted) {
             notificationPermissionState.launchPermissionRequest()
@@ -91,6 +104,7 @@ fun MatchedCardFullScreen(
     LaunchedEffect(cardId) {
         viewModel.fetchCardData(cardId) // Fetch the card data
     }
+
 
     // Display card data
     cardData?.let { data ->
@@ -103,12 +117,6 @@ fun MatchedCardFullScreen(
             "0" -> "Lost"
             "1" -> "Found"
             else -> "Halted"
-        }
-
-        val borderColor = when (cardLabel) {
-            "Lost" -> MainRed.copy(alpha = .5f)
-            "Found" -> MainGreen.copy(alpha = .5f)
-            else -> Color.Yellow.copy(alpha = .5f)
         }
 
         Column(
@@ -231,7 +239,7 @@ fun MatchedCardFullScreen(
                                 CategoryCard(
                                     modifier = modifier,
                                     categoryText = category.name,
-                                    borderColor = borderColor
+                                    borderColor = Color.Black
                                 )
                             }
                         }
@@ -247,7 +255,7 @@ fun MatchedCardFullScreen(
                         .heightIn(min = 120.dp, max = 240.dp),
                     shape = RoundedCornerShape(12.dp),
                     elevation = CardDefaults.cardElevation(4.dp),
-                    border = BorderStroke(width = 1.dp, color = borderColor)
+                    border = BorderStroke(width = 1.dp, color = Color.Black)
                 ) {
                     Column(
                         modifier = modifier
@@ -268,11 +276,13 @@ fun MatchedCardFullScreen(
                         )
                     }
                 }
+
                 Row(
-                    modifier = Modifier
+                    modifier = modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
+
                     ElevatedButton(
                         onClick = {
                             if (notificationPermissionState.status.isGranted) {
@@ -280,27 +290,207 @@ fun MatchedCardFullScreen(
                             } else {
                                 notificationPermissionState.launchPermissionRequest()
                             }
+
+                            showBottomSheet = true
+
                         },
                         colors = ButtonDefaults.elevatedButtonColors(
-                            containerColor = MainRed,
+                            containerColor = LogoColor,
                             contentColor = Color.White
                         ),
                         modifier = Modifier
-                            .fillMaxWidth(0.38f)
+                            .fillMaxWidth()
                             .padding(top = 30.dp)
                             .height(50.dp)
                     ) {
                         Text(
-                            text = "Select",
+                            text = "Contact",
                             fontSize = 18.sp,
                         )
                     }
+
+
+                    if (showBottomSheet) {
+                        ModalBottomSheet(
+                            sheetState = sheetState,
+                            onDismissRequest = { showBottomSheet = false },
+                            containerColor = MaterialTheme.colorScheme.background
+                        ) {
+                            Column(
+                                modifier = modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                horizontalAlignment = Alignment.Start,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+
+                                // Name Row
+                                Row(
+                                    modifier.fillMaxWidth()
+                                    ,
+                                    horizontalArrangement = Arrangement.Start,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ){
+                                    Text(
+                                        text = "Name:",
+                                        fontSize = 16.sp,
+                                        fontFamily = RobotFamily,
+                                        fontWeight = FontWeight.Bold,
+                                        modifier = modifier.padding(end = 8.dp)
+                                    )
+
+
+                                    Text(
+                                        text = "Musaib Shabir",
+                                        fontSize = 16.sp,
+                                        fontFamily = RobotFamily,
+                                        fontWeight = FontWeight.Normal,
+                                        fontStyle = FontStyle.Normal
+                                    )
+                                }
+
+                                // Country Row
+                                Row(
+                                    modifier.fillMaxWidth()
+                                    ,
+                                    horizontalArrangement = Arrangement.Start,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ){
+                                    Text(
+                                        text = "Country:",
+                                        fontSize = 16.sp,
+                                        fontFamily = RobotFamily,
+                                        fontWeight = FontWeight.Bold,
+                                        modifier = modifier.padding(end = 8.dp)
+                                    )
+
+
+                                    Text(
+                                        text = "India",
+                                        fontSize = 16.sp,
+                                        fontFamily = RobotFamily,
+                                        fontWeight = FontWeight.Normal,
+                                        fontStyle = FontStyle.Normal
+                                    )
+                                }
+
+                                // Email Row
+                                Row(
+                                    modifier.fillMaxWidth()
+                                    ,
+                                    horizontalArrangement = Arrangement.Start,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ){
+                                    Text(
+                                        text = "Email:",
+                                        fontSize = 16.sp,
+                                        fontFamily = RobotFamily,
+                                        fontWeight = FontWeight.Bold,
+                                        modifier = modifier.padding(end = 8.dp)
+                                    )
+
+
+                                    Text(
+                                        text = "itzmusaibShabir@gmail.com",
+                                        fontSize = 16.sp,
+                                        fontFamily = RobotFamily,
+                                        fontWeight = FontWeight.Normal,
+                                        fontStyle = FontStyle.Normal
+                                    )
+                                }
+
+                            }
+                        }
+                        showBottomConfirmButton = true
+
+                    }
+
                 }
+
+
+                if (showBottomConfirmButton) {
+                    Column(
+                        modifier
+                            .fillMaxSize()
+                            .padding(bottom = 16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Bottom
+                    ) {
+                        Row(
+                            modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Does this item belong to the below person",
+                                fontSize = 16.sp,
+                                fontFamily = RobotFamily,
+                                fontWeight = FontWeight.Medium,
+                                fontStyle = FontStyle.Italic
+                            )
+
+                        }
+
+                        Spacer(modifier.height(16.dp))
+
+                        Row(
+                            modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            OutlinedCard(
+                                modifier
+                                    .fillMaxWidth()
+                                    .height(IntrinsicSize.Max),
+                                shape = RoundedCornerShape(38.dp),
+                                elevation = CardDefaults.cardElevation(4.dp),
+                                colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.background)
+                            ) {
+
+                                Row(
+                                    modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Button(
+                                        modifier = modifier.width(112.dp),
+                                        onClick = {}
+                                    ) {
+                                        Text(
+                                            text = "No",
+                                            fontSize = 16.sp,
+                                            fontFamily = RobotFamily,
+                                            fontWeight = FontWeight.Medium,
+                                        )
+                                    }
+
+                                    Button(
+                                        modifier = modifier.width(112.dp),
+                                        onClick = {}
+                                    ) {
+                                        Text(
+                                            text = "Yes",
+                                            fontSize = 16.sp,
+                                            fontFamily = RobotFamily,
+                                            fontWeight = FontWeight.Medium,
+                                        )
+                                    }
+                                }
+
+
+                            }
+
+
+                        }
+                    }
+                }
+
             }
         }
     }
 }
-
 
 @Composable
 @Preview(showBackground = true, showSystemUi = false)

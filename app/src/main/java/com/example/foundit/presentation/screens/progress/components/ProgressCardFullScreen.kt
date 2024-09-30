@@ -35,6 +35,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.FiberManualRecord
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.rounded.LocationOn
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -56,7 +57,6 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -70,6 +70,7 @@ import com.example.foundit.presentation.screens.input.data.childCategories
 import com.example.foundit.presentation.screens.progress.ProgressCardFullScreenViewModel
 import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.MainRed
+import com.example.foundit.ui.theme.RobotFamily
 import com.google.firebase.firestore.FirebaseFirestoreException
 
 
@@ -305,6 +306,7 @@ fun ProgressCardFullScreen(
                 }
                 Spacer(modifier = modifier.height(16.dp))
 
+
                 // Item description card
                 OutlinedCard(
                     modifier = Modifier
@@ -334,6 +336,86 @@ fun ProgressCardFullScreen(
                                 ?: "No description available",
                             style = MaterialTheme.typography.bodyMedium,
                         )
+                    }
+                }
+                Spacer(modifier.height(16.dp))
+
+                // Confirm Button for Lost Item Card
+                if (cardLabel == "Lost") {
+                    Column(
+                        modifier
+                            .fillMaxSize()
+                            .padding(bottom = 16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Top
+                    ) {
+                        Row(
+                            modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Did you found your item?",
+                                fontSize = 16.sp,
+                                fontFamily = RobotFamily,
+                                fontWeight = FontWeight.Medium,
+                                fontStyle = FontStyle.Italic
+                            )
+
+                        }
+
+                        Spacer(modifier.height(16.dp))
+
+                        Row(
+                            modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            OutlinedCard(
+                                modifier
+                                    .fillMaxWidth()
+                                    .height(IntrinsicSize.Max),
+                                shape = RoundedCornerShape(38.dp),
+                                elevation = CardDefaults.cardElevation(4.dp),
+                                colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.background)
+                            ) {
+
+                                Row(
+                                    modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Button(
+                                        modifier = modifier.width(112.dp),
+                                        onClick = {}
+                                    ) {
+                                        Text(
+                                            text = "No",
+                                            fontSize = 16.sp,
+                                            fontFamily = RobotFamily,
+                                            fontWeight = FontWeight.Medium,
+                                        )
+                                    }
+
+                                    Button(
+                                        modifier = modifier.width(112.dp),
+                                        onClick = {}
+                                    ) {
+                                        Text(
+                                            text = "Yes",
+                                            fontSize = 16.sp,
+                                            fontFamily = RobotFamily,
+                                            fontWeight = FontWeight.Medium,
+                                        )
+                                    }
+                                }
+
+
+                            }
+
+                        }
                     }
                 }
 
@@ -395,7 +477,7 @@ fun ProgressCardFullScreen(
                 }
             },
 
-            containerColor = Color.Red,
+            containerColor = MainRed,
             contentColor = Color.White
         ) {
             Icon(
@@ -438,7 +520,7 @@ fun MatchedCard(
             }
         },
         border = BorderStroke(width = 1.dp, color = Color.LightGray),
-        colors = CardDefaults.cardColors(containerColor = cardColor),
+        colors = CardDefaults.cardColors(containerColor = Color.LightGray),
         modifier = modifier
             .fillMaxWidth()
             //.height(160.dp)
@@ -490,14 +572,6 @@ fun MatchedCard(
                         )
                     }
                 }
-
-                Spacer(modifier = modifier.height(10.dp))
-                Text(
-                    text = "${cardItem["cardDescription"]}",
-                    fontSize = 12.sp,
-                    textAlign = TextAlign.Start,
-                    maxLines = 2
-                )
             }
         }
     }
