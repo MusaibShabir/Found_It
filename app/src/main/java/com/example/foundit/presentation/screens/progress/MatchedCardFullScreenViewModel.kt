@@ -3,6 +3,7 @@ package com.example.foundit.presentation.screens.progress
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.foundit.di.NotificationHelper
 import com.example.foundit.presentation.data.firestore.FirestoreService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MatchedCardFullScreenViewModel @Inject constructor(
-    private val firestoreService: FirestoreService
+    private val firestoreService: FirestoreService,
+    private val notificationHelper: NotificationHelper
 ) : ViewModel() {
 
     // Holds the card data
@@ -39,4 +41,12 @@ class MatchedCardFullScreenViewModel @Inject constructor(
             Log.d("dataCard", "fetchCardData after collect: ${_cardData.value}")
         }
     }
+
+
+    fun triggerNotification() {
+        notificationHelper.showNotification(
+            title = "New Match",
+            content = "Matching Notification Test")
+    }
+
 }
