@@ -184,11 +184,11 @@ fun ProgressCardFullScreen(
                                 modifier = Modifier.size(20.dp),
                                 strokeWidth = 2.dp
                             )
-                        }else if (data["status"].toString() == "-1") {
+                        } else if (data["status"].toString() == "-1") {
                             Spacer(modifier = Modifier.size(14.dp))
 
                             CircularProgressIndicator(
-                                progress = {0.08f},
+                                progress = { 0.08f },
                                 color = Color.Transparent, // Use color for progress indicator
                                 trackColor = Color.Yellow,
                                 strokeCap = StrokeCap.Round,
@@ -206,10 +206,10 @@ fun ProgressCardFullScreen(
             Column(modifier = modifier.padding(horizontal = 16.dp)) {
                 // Title and location row
                 Column(modifier = modifier.fillMaxWidth()) {
-                    Row (
+                    Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
-                    ){
+                    ) {
                         Text(
                             text = data["parentCategory"]?.toString() ?: "Unknown",
                             style = MaterialTheme.typography.headlineLarge
@@ -245,7 +245,7 @@ fun ProgressCardFullScreen(
                                 .height(IntrinsicSize.Max),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center
-                        ){
+                        ) {
                             Icon(
                                 imageVector = Icons.Rounded.LocationOn,
                                 contentDescription = "Close",
@@ -254,7 +254,8 @@ fun ProgressCardFullScreen(
                             Spacer(modifier.width(4.dp))
                             Text(
                                 text = truncateText(
-                                    text = data["locationAddress"]?.toString() ?: "Unknown location",
+                                    text = data["locationAddress"]?.toString()
+                                        ?: "Unknown location",
                                     maxLength = 26
                                 ),
                                 style = MaterialTheme.typography.bodyMedium,
@@ -266,7 +267,7 @@ fun ProgressCardFullScreen(
                         }
 
                         Text(
-                            text = data["date"]?.toString() ?: "No date available" ,
+                            text = data["date"]?.toString() ?: "No date available",
                             style = MaterialTheme.typography.bodySmall,
                             color = Color.Gray
                         )
@@ -428,63 +429,78 @@ fun ProgressCardFullScreen(
                 LazyColumn(
                     modifier = modifier
                         .fillMaxSize(),
-                   horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     items(matchedCards) { item ->
-                        MatchedCard(modifier = modifier, cardItem = item, navController = navController)
+                        MatchedCard(
+                            modifier = modifier,
+                            cardItem = item,
+                            navController = navController
+                        )
                     }
                 }
             }
         }
-    }
 
-    // Floating action button for delete
-    Box(modifier = modifier.fillMaxSize()) {
-        FloatingActionButton(
-            modifier = modifier
-                .align(Alignment.BottomEnd)
-                .padding(end = 30.dp, bottom = 70.dp)
-                .size(72.dp)
-            ,
-            shape = CircleShape,
-            onClick = {
-                if (isNetworkAvailable(context)) {
-                    viewModel.deleteCardData(cardId) { isSuccess, e ->
-                        if (isSuccess) {
-                            Toast.makeText(context, "Card deleted successfully", Toast.LENGTH_SHORT).show()
-                            navController.popBackStack()
-                        } else {
-                            val errorMessage = when (e) {
-                                is FirebaseFirestoreException -> {
-                                    when (e.code) {
-                                        FirebaseFirestoreException.Code.PERMISSION_DENIED -> "You don't have permission to delete this card."
-                                        FirebaseFirestoreException.Code.NOT_FOUND -> "Card not found, unable to delete."
-                                        FirebaseFirestoreException.Code.UNAVAILABLE -> "Firestore service is currently unavailable. Please try again later."
-                                        FirebaseFirestoreException.Code.CANCELLED -> "Deletion was cancelled."
-                                        FirebaseFirestoreException.Code.ABORTED -> "Operation aborted. Please try again."
-                                        else -> "An unexpected error occurred while deleting the card."
+
+        if (data["status"].toString() != "1"){
+            // Floating action button for delete
+            Box(modifier = modifier.fillMaxSize()) {
+                FloatingActionButton(
+                    modifier = modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(end = 30.dp, bottom = 70.dp)
+                        .size(72.dp),
+                    shape = CircleShape,
+                    onClick = {
+                        if (isNetworkAvailable(context)) {
+                            viewModel.deleteCardData(cardId) { isSuccess, e ->
+                                if (isSuccess) {
+                                    Toast.makeText(
+                                        context,
+                                        "Card deleted successfully",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    navController.popBackStack()
+                                } else {
+                                    val errorMessage = when (e) {
+                                        is FirebaseFirestoreException -> {
+                                            when (e.code) {
+                                                FirebaseFirestoreException.Code.PERMISSION_DENIED -> "You don't have permission to delete this card."
+                                                FirebaseFirestoreException.Code.NOT_FOUND -> "Card not found, unable to delete."
+                                                FirebaseFirestoreException.Code.UNAVAILABLE -> "Firestore service is currently unavailable. Please try again later."
+                                                FirebaseFirestoreException.Code.CANCELLED -> "Deletion was cancelled."
+                                                FirebaseFirestoreException.Code.ABORTED -> "Operation aborted. Please try again."
+                                                else -> "An unexpected error occurred while deleting the card."
+                                            }
+                                        }
+
+                                        is IllegalArgumentException -> "Invalid input provided."
+                                        is NullPointerException -> "An unexpected error occurred."
+                                        else -> "An unknown error occurred: ${e?.message}"
                                     }
+                                    Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
                                 }
-                                is IllegalArgumentException -> "Invalid input provided."
-                                is NullPointerException -> "An unexpected error occurred."
-                                else -> "An unknown error occurred: ${e?.message}"
                             }
-                            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "No internet connection. Please try again when connected.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                    }
-                } else {
-                    Toast.makeText(context, "No internet connection. Please try again when connected.", Toast.LENGTH_SHORT).show()
-                }
-            },
+                    },
 
-            containerColor = MainRed,
-            contentColor = Color.White
-        ) {
-            Icon(
-                imageVector = Icons.Default.Delete,
-                contentDescription = "Delete",
-                modifier = Modifier.size(32.dp)
-            )
+                    containerColor = MainRed,
+                    contentColor = Color.White
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete",
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
+            }
         }
     }
 }
