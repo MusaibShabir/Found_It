@@ -135,9 +135,6 @@ dependencies {
     implementation(libs.maps.utils.ktx)
     implementation(libs.play.services.location)
 
-    //Firebase Functions
-    //implementation("com.google.firebase:firebase-functions-ktx:21.4.0")
-
     //Permissions Accompanist
     implementation(libs.accompanist.permissions)
 
