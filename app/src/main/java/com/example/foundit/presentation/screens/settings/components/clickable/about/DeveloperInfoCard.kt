@@ -15,10 +15,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.foundit.R
+import com.example.foundit.ui.theme.MainGreen
 import com.example.foundit.ui.theme.githubColor
 import com.example.foundit.ui.theme.instagramColor
 import com.example.foundit.ui.theme.linkedInColor
@@ -56,12 +58,13 @@ fun DeveloperInfoCard(
 ) {
     val urlHandler: UriHandler = LocalUriHandler.current
 
-    Card(
-        shape = RoundedCornerShape(15.dp),
+    OutlinedCard(
+        shape = RoundedCornerShape(16.dp),
         modifier = modifier
             .fillMaxWidth()
             .height(200.dp)
-            .padding(16.dp),
+            .padding(12.dp),
+        colors = CardDefaults.cardColors(containerColor = MainGreen.copy(alpha = .5f))
     ) {
         Row(
             modifier = modifier
