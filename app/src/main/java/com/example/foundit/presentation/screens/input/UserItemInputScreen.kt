@@ -26,13 +26,12 @@ import com.example.foundit.presentation.common.TheTopAppBar
 import com.example.foundit.presentation.data.navigation.NavRoutes
 import com.example.foundit.presentation.screens.currentRoute
 import com.example.foundit.presentation.screens.input.common.ChildCategoryScreen
+import com.example.foundit.presentation.screens.input.common.ColorCategoryScreen
 import com.example.foundit.presentation.screens.input.common.MapScreen
 import com.example.foundit.presentation.screens.input.common.ParentCategoryScreen
 import com.example.foundit.presentation.screens.input.common.components.AreYouSureToCancelAlertBox
-import com.example.foundit.presentation.screens.input.common.ColorCategoryScreen
 import com.example.foundit.presentation.screens.input.common.components.ItemDescriptionAndDatePickerScreen
 import com.example.foundit.presentation.screens.input.common.components.UserInputBottomNavigationBar
-import com.example.foundit.presentation.screens.input.found.FoundInputViewModel
 import com.example.foundit.presentation.screens.input.lost.LostInputViewModel
 
 
@@ -43,7 +42,6 @@ fun UserItemInputScreen(
     navController: NavController
 ) {
     val lostInputViewModel: LostInputViewModel = hiltViewModel()
-    val foundInputViewModel: FoundInputViewModel= hiltViewModel()
 
     val cardType = navController.currentBackStackEntry?.arguments?.getInt("cardType")
     // Storing the Card Type in the ViewModel
