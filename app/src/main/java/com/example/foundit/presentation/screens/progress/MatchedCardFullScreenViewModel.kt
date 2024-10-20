@@ -46,7 +46,7 @@ class MatchedCardFullScreenViewModel @Inject constructor(
     fun triggerNotification() {
         notificationHelper.showNotification(
             title = "New Match",
-            content = "Matching Notification Test")
+            content = "Match Found for your Item")
     }
 
 }
