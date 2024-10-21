@@ -15,7 +15,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MatchedCardFullScreenViewModel @Inject constructor(
     private val firestoreService: FirestoreService,
-    private val notificationHelper: NotificationHelper
 ) : ViewModel() {
 
     // Holds the card data
@@ -47,10 +46,6 @@ class MatchedCardFullScreenViewModel @Inject constructor(
     }
 
 
-    fun triggerNotification() {
-        notificationHelper.showNotification(
-            title = "New Match",
-            content = "Match Found for your Item")
-    }
+
 
 }
