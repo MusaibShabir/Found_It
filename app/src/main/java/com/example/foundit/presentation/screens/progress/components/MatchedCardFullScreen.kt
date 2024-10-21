@@ -455,7 +455,9 @@ fun MatchedCardFullScreen(
                                 ) {
                                     Button(
                                         modifier = modifier.width(112.dp),
-                                        onClick = {}
+                                        onClick = {
+                                            showBottomConfirmButton = false
+                                        }
                                     ) {
                                         Text(
                                             text = "No",
@@ -467,7 +469,16 @@ fun MatchedCardFullScreen(
 
                                     Button(
                                         modifier = modifier.width(112.dp),
-                                        onClick = {}
+                                        onClick = {
+                                            viewModel.contactUser(cardId){isSuccessfull ->
+                                                if (isSuccessfull){
+                                                    showBottomConfirmButton = false
+                                                    navController.popBackStack()
+                                                } else {
+                                                    // Todo: Handle failure
+                                                }
+                                            }
+                                        }
                                     ) {
                                         Text(
                                             text = "Yes",
