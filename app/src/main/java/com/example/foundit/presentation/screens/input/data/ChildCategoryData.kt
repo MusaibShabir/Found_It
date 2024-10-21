@@ -12,9 +12,6 @@ data class ChildCategoryData(
         LONG,
         SMALL,
         BIG,
-        RED,
-        YELLOW,
-        GREEN,
         CARDS,
         CASH,
         LEATHER,
@@ -44,18 +41,12 @@ data class ChildCategoryData(
         EARPHONE,
         WIRELESS,
         WIRED,
-        UNDEFINED,
-
-
     }
 }
 
 
 val childCategories = listOf(
     ChildCategoryData(1, 1,"Short", ChildCategoryData.Category.SHORT),
-    ChildCategoryData(3, 1,"Red", ChildCategoryData.Category.RED),
-    ChildCategoryData(4, 1,"Green", ChildCategoryData.Category.GREEN),
-    ChildCategoryData(5, 1,"Yellow", ChildCategoryData.Category.YELLOW),
     ChildCategoryData(7, 1,"Small", ChildCategoryData.Category.SMALL),
     ChildCategoryData(8, 1,"Big", ChildCategoryData.Category.BIG),
     ChildCategoryData(9, 1,"Cards", ChildCategoryData.Category.CARDS),
@@ -116,15 +107,9 @@ val childCategories = listOf(
     ChildCategoryData(41, 8,"Leather", ChildCategoryData.Category.LEATHER),
     ChildCategoryData(42, 8,"Fabric", ChildCategoryData.Category.FABRIC),
     ChildCategoryData(43, 8,"Nylon", ChildCategoryData.Category.NYLON),
-    ChildCategoryData(43, 8,"Can't Define", ChildCategoryData.Category.UNDEFINED),
     ChildCategoryData(44, 8,"Cash", ChildCategoryData.Category.CASH),
     ChildCategoryData(45, 8,"Pennies", ChildCategoryData.Category.PENNIES),
     ChildCategoryData(46, 8,"Cards", ChildCategoryData.Category.CARDS),
-
-    // For Umbrella Category ->  empty for now
-
-    // For Luggage Category -> same as bag
-
 
 
 
