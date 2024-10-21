@@ -89,7 +89,7 @@ fun isNetworkAvailable(context: Context): Boolean {
 fun ProgressCardFullScreen(
     modifier: Modifier,
     cardId: String,
-    navController: NavHostController// Use Hilt to inject ViewModel
+    navController: NavHostController
 ) {
     // Collect the card data from the ViewModel
     val viewModel: ProgressCardFullScreenViewModel = hiltViewModel()
@@ -469,66 +469,71 @@ fun ProgressCardFullScreen(
                         }
                     }
                 }
-            }
 
 
-            if (data["status"].toString() != "1") {
-                // Floating action button for delete
-                Box(modifier = modifier.fillMaxSize()) {
-                    FloatingActionButton(
-                        modifier = modifier
-                            .align(Alignment.BottomEnd)
-                            .padding(end = 30.dp, bottom = 70.dp)
-                            .size(72.dp),
-                        shape = CircleShape,
-                        onClick = {
-                            if (isNetworkAvailable(context)) {
-                                viewModel.deleteCardData(cardId) { isSuccess, e ->
-                                    if (isSuccess) {
-                                        Toast.makeText(
-                                            context,
-                                            "Card deleted successfully",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                        navController.popBackStack()
-                                    } else {
-                                        val errorMessage = when (e) {
-                                            is FirebaseFirestoreException -> {
-                                                when (e.code) {
-                                                    FirebaseFirestoreException.Code.PERMISSION_DENIED -> "You don't have permission to delete this card."
-                                                    FirebaseFirestoreException.Code.NOT_FOUND -> "Card not found, unable to delete."
-                                                    FirebaseFirestoreException.Code.UNAVAILABLE -> "Firestore service is currently unavailable. Please try again later."
-                                                    FirebaseFirestoreException.Code.CANCELLED -> "Deletion was cancelled."
-                                                    FirebaseFirestoreException.Code.ABORTED -> "Operation aborted. Please try again."
-                                                    else -> "An unexpected error occurred while deleting the card."
+
+                if (data["status"].toString() != "1") {
+                    // Floating action button for delete
+                    Box(modifier = modifier.fillMaxSize()) {
+                        FloatingActionButton(
+                            modifier = modifier
+                                .align(Alignment.BottomEnd)
+                                .padding(end = 30.dp, bottom = 70.dp)
+                                .size(72.dp),
+                            shape = CircleShape,
+                            onClick = {
+                                if (isNetworkAvailable(context)) {
+                                    viewModel.deleteCardData(cardId) { isSuccess, e ->
+                                        if (isSuccess) {
+                                            Toast.makeText(
+                                                context,
+                                                "Card deleted successfully",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            navController.navigate(NavRoutes.PROGRESS)
+                                        } else {
+                                            val errorMessage = when (e) {
+                                                is FirebaseFirestoreException -> {
+                                                    when (e.code) {
+                                                        FirebaseFirestoreException.Code.PERMISSION_DENIED -> "You don't have permission to delete this card."
+                                                        FirebaseFirestoreException.Code.NOT_FOUND -> "Card not found, unable to delete."
+                                                        FirebaseFirestoreException.Code.UNAVAILABLE -> "Firestore service is currently unavailable. Please try again later."
+                                                        FirebaseFirestoreException.Code.CANCELLED -> "Deletion was cancelled."
+                                                        FirebaseFirestoreException.Code.ABORTED -> "Operation aborted. Please try again."
+                                                        else -> "An unexpected error occurred while deleting the card."
+                                                    }
                                                 }
+
+                                                is IllegalArgumentException -> "Invalid input provided."
+                                                is NullPointerException -> "An unexpected error occurred."
+                                                else -> "An unknown error occurred: ${e?.message}"
                                             }
-
-                                            is IllegalArgumentException -> "Invalid input provided."
-                                            is NullPointerException -> "An unexpected error occurred."
-                                            else -> "An unknown error occurred: ${e?.message}"
+                                            Toast.makeText(
+                                                context,
+                                                errorMessage,
+                                                Toast.LENGTH_SHORT
+                                            )
+                                                .show()
                                         }
-                                        Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT)
-                                            .show()
                                     }
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "No internet connection. Please try again when connected.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
-                            } else {
-                                Toast.makeText(
-                                    context,
-                                    "No internet connection. Please try again when connected.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        },
+                            },
 
-                        containerColor = MainRed,
-                        contentColor = Color.White
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = "Delete",
-                            modifier = Modifier.size(32.dp)
-                        )
+                            containerColor = MainRed,
+                            contentColor = Color.White
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = "Delete",
+                                modifier = Modifier.size(32.dp)
+                            )
+                        }
                     }
                 }
             }
