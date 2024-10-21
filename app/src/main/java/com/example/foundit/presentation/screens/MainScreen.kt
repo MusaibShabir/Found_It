@@ -97,7 +97,6 @@ fun currentRoute(navController: NavHostController): String {
     return navBackStackEntry?.destination?.route ?: ""
 }
 
-//@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun MainScreen(modifier: Modifier) {

@@ -134,7 +134,6 @@ class LostInputViewModel @Inject constructor(
 
     fun clearMarkerPosition() {
         _markerPosition.value = null
-        //_markerAddressDetail.value = ResponseState.Idle
 
     }
 

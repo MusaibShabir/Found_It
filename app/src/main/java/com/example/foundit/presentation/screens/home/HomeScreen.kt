@@ -2,6 +2,7 @@ package com.example.foundit.presentation.screens.home
 
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -108,6 +109,8 @@ fun HomeScreen(
 //    val profileData by viewModel.profileData.collectAsState()
 //    val profileName = profileData?.let { "${it.firstName} ${it.lastName}" }
     //val profileName = viewModel.userName
+
+    val context = LocalContext.current
     val userFirstName by viewModel.userFirstNames.collectAsState()
     val userLastName by viewModel.userLastNames.collectAsState()
     val updateProfileData = viewModel.currentuserId != viewModel.previoususerId
@@ -126,11 +129,13 @@ fun HomeScreen(
         foundButtonClick = foundButtonClick
     )
 
+
     BackHandler(
         enabled = true,
-    ) {
+        onBack = { (context as Activity).finish()  }
+    )
 
-    }
+
 }
 
 

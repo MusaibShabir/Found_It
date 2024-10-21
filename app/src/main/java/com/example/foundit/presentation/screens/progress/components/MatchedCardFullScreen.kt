@@ -77,7 +77,6 @@ fun MatchedCardFullScreen(
     cardId: String,
     navController: NavHostController// Use Hilt to inject ViewModel
 ) {
-    val context = LocalContext.current
     // Collect the card data from the ViewModel
     val viewModel: MatchedCardFullScreenViewModel = hiltViewModel()
     val cardData by viewModel.cardData.collectAsState()

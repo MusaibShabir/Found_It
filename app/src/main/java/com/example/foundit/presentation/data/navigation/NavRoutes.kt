@@ -9,7 +9,6 @@ object NavRoutes {
     const val PROFILE = "Profile"
     const val SETTINGS = "Settings"
     const val ACCOUNT_CENTER = "Account Center"
-    const val LANGUAGE = "Language"
     const val APPEARANCE = "Appearance"
     const val SECURITY = "Security"
     const val HELP_AND_SUPPORT = "Help and Support"
@@ -38,5 +37,4 @@ object NavRoutes {
     const val COLOR_CATEGORY_SCREEN = "Color Category Screen"
     const val CHILD_CATEGORY_SCREEN = "Child Category Screen"
     const val ITEM_DESCRIPTION_SCREEN = "Item Description Screen"
-
 }
