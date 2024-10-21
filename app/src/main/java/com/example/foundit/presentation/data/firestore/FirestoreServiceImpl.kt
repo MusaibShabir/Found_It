@@ -412,8 +412,10 @@ class FirestoreServiceImpl @Inject constructor(
                 // Now proceed with the transaction
                 firebaseFirestore.runTransaction { transaction ->
 
+                    val matchId = foundCardId.split('@')[0]
+
                     // Reference to the Found document (for the current user)
-                    val foundUserDocRef = firebaseFirestore.collection("User/$userId/Card")
+                    val foundUserDocRef = firebaseFirestore.collection("User/$matchId/Card")
                         .document(foundCardId)
 
                     // Update the 'matches' field to null for all documents where matches == foundCardId
@@ -457,6 +459,92 @@ class FirestoreServiceImpl @Inject constructor(
         }
     }
 
+    // OR
+
+//    override suspend fun cardMatched(foundCardId: String, lostCardId: String) {
+//        val userId = currentUserId
+//
+//        // Ensure the user ID is not empty
+//        if (userId.isNotEmpty()) {
+//            try {
+//                // Fetch the lost card document reference asynchronously before starting the transaction
+//                val lostUserDocQuery = firebaseFirestore.collectionGroup("Card")
+//                    .whereEqualTo("cardId", lostCardId)
+//                    .get() // This returns a Task<QuerySnapshot>
+//
+//                // Await the query to get the lost document reference
+//                val querySnapshot = lostUserDocQuery.await()
+//
+//                // Ensure that a matching document is found
+//                if (querySnapshot.documents.isEmpty()) {
+//                    throw IllegalStateException("No matching lost card document found.")
+//                }
+//
+//                val lostUserDocRef = querySnapshot.documents[0].reference
+//
+//                // Fetch all documents where matches == foundCardId before the transaction
+//                val matchesQuerySnapshot = firebaseFirestore.collectionGroup("Card")
+//                    .whereEqualTo("matches", foundCardId)
+//                    .get()
+//                    .await()
+//
+//                // Now proceed with the transaction
+//                firebaseFirestore.runTransaction { transaction ->
+//
+//                    // Fetch the Found card document using collectionGroup for the current user
+//                    val foundUserQuerySnapshot = firebaseFirestore.collectionGroup("Card")
+//                        .whereEqualTo("cardId", foundCardId)
+//                        .get()
+//                        .await()
+//
+//                    if (foundUserQuerySnapshot.documents.isEmpty()) {
+//                        throw IllegalStateException("No matching found card document found.")
+//                    }
+//
+//                    val foundUserDocRef = foundUserQuerySnapshot.documents[0].reference
+//
+//                    // Update the 'matches' field to null for all documents where matches == foundCardId
+//                    for (doc in matchesQuerySnapshot.documents) {
+//                        val docRef = doc.reference
+//                        transaction.update(docRef, "matches", null)
+//                    }
+//
+//                    // Update the 'foundUserDocRef' document: set `status` to 1 and `matches` to lostCardId
+//                    transaction.set(
+//                        foundUserDocRef,
+//                        mapOf(
+//                            "status" to 1,
+//                            "matches" to lostCardId
+//                        ),
+//                        SetOptions.merge()
+//                    )
+//
+//                    // Update the 'lostUserDocRef' document: set `status` to 1 and `matches` to foundCardId
+//                    transaction.set(
+//                        lostUserDocRef,
+//                        mapOf(
+//                            "status" to 1,
+//                            "matches" to foundCardId
+//                        ),
+//                        SetOptions.merge()
+//                    )
+//
+//                    null // Return null to indicate success in the transaction
+//                }.await() // Await the transaction to ensure it completes successfully
+//
+//                Log.d("Firestore", "Transaction successfully completed for foundCardId: $foundCardId and lostCardId: $lostCardId")
+//
+//            } catch (e: Exception) {
+//                // Handle any exception during the transaction
+//                Log.e("Firestore", "Error performing transaction: ${e.message}", e)
+//                throw e
+//            }
+//        } else {
+//            throw IllegalStateException("User ID is empty, cannot proceed with transaction")
+//        }
+//    }
+
+
 
     // if card match is confirmed as no
     override suspend fun cardNotMatched(foundCardId: String, lostCardId: String) {
@@ -483,8 +571,10 @@ class FirestoreServiceImpl @Inject constructor(
                 // Now proceed with the transaction
                 firebaseFirestore.runTransaction { transaction ->
 
+                    val matchId = foundCardId.split('@')[0]
+
                     // Reference to the Found document (for the current user)
-                    val foundUserDocRef = firebaseFirestore.collection("User/$userId/Card")
+                    val foundUserDocRef = firebaseFirestore.collection("User/$matchId/Card")
                         .document(foundCardId)
 
                     // Get the current state of the found user's matches
