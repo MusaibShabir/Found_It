@@ -285,7 +285,6 @@ fun MatchedCardFullScreen(
                     ElevatedButton(
                         onClick = {
                             if (notificationPermissionState.status.isGranted) {
-                                viewModel.triggerNotification()
                             } else {
                                 notificationPermissionState.launchPermissionRequest()
                             }

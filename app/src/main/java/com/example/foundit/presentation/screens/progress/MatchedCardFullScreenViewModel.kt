@@ -3,7 +3,6 @@ package com.example.foundit.presentation.screens.progress
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.foundit.di.NotificationHelper
 import com.example.foundit.presentation.data.firestore.FirestoreService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
