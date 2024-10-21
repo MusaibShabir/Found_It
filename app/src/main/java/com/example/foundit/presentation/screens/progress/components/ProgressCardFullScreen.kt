@@ -278,8 +278,12 @@ fun ProgressCardFullScreen(
                 // Lazy grid for white boxes
                 LazyVerticalGrid(
                     modifier = modifier
-                        .fillMaxWidth(),
-                    columns = GridCells.Adaptive(minSize = 120.dp)
+                        .fillMaxWidth()
+                        .height(120.dp)
+                            ,
+                    columns = GridCells.Adaptive(minSize = 102.dp),
+                    horizontalArrangement = Arrangement.Start,
+                    verticalArrangement = Arrangement.Top
                 ) {
                     val input = data["childCategory"]?.toString()
                     if (!input.isNullOrEmpty()) {
