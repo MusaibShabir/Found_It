@@ -27,17 +27,13 @@ class MatchedCardFullScreenViewModel @Inject constructor(
         viewModelScope.launch {
             firestoreService.getMatchedSingleCardData(cardId)
                 .catch {
-                    // Handle any errors
                     _cardData.value = emptyMap()
                     Log.d("dataCard", "Error fetching data: ${it.message}")
                 }
                 .collect { data ->
                     _cardData.value = data
-                    // Log inside the collect block to ensure data has been fetched
                     Log.d("dataCard", "fetchCardData: ${_cardData.value}")
                 }
-
-            // This log will still show the old data (emptyMap) as it executes before collect completes
             Log.d("dataCard", "fetchCardData after collect: ${_cardData.value}")
         }
     }
