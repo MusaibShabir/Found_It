@@ -569,7 +569,6 @@ fun MatchedCard(
                         )
                         Text(
                             text = cardItem["locationAddress"].toString(),
-                            //textAlign = TextAlign.Center,
                             fontSize = 12.sp,
                             fontStyle = FontStyle.Italic,
                             textDecoration = TextDecoration.Underline
