@@ -190,12 +190,6 @@ fun PrivacyPolicyScreen(
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
-            Text(
-                text = stringResource(id = R.string.privacy_policy_opt_out),
-                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 16.sp),
-                modifier = Modifier.padding(vertical = 8.dp)
-            )
-
             // Security
             Text(
                 text = stringResource(id = R.string.privacy_policy_security),
