@@ -114,7 +114,7 @@ class LostInputViewModel @Inject constructor(
                         locationCoordinates = markerPosition.value ?: LatLng(0.0, 0.0),
                         locationAddress = address.value.toString(),
                         childCategory = getChildCategoryIdsAsString,
-                        dateString = selectedDateString.value,
+                        date = selectedDateString.value,
                         dateLong = selectedDateMillis.value ?: 0
                     )
                     onResult(true,null)
