@@ -342,7 +342,7 @@ fun ProgressCardFullScreen(
                 Spacer(modifier.height(16.dp))
 
                 // Confirm Button for Lost Item Card
-                if (cardLabel == "Lost") {
+                if (cardLabel == "Lost" && data["isMatchEmpty"].toString() == "0" && data["status"].toString() == "0") {
                     Column(
                         modifier
                             .fillMaxSize()
@@ -390,7 +390,15 @@ fun ProgressCardFullScreen(
                                 ) {
                                     Button(
                                         modifier = modifier.width(112.dp),
-                                        onClick = {}
+                                        onClick = {
+                                            viewModel.cardNotMatched(data["matches"].toString(),cardId){isSuccessfull ->
+                                                if (isSuccessfull){
+                                                    //navController.popBackStack()
+                                                } else {
+                                                    // Todo: Handle failure
+                                                }
+                                            }
+                                        }
                                     ) {
                                         Text(
                                             text = "No",
@@ -402,7 +410,15 @@ fun ProgressCardFullScreen(
 
                                     Button(
                                         modifier = modifier.width(112.dp),
-                                        onClick = {}
+                                        onClick = {
+                                            viewModel.cardMatched(data["matches"].toString(),cardId){isSuccessfull ->
+                                                if (isSuccessfull){
+                                                    //navController.popBackStack()
+                                                } else {
+                                                    // Todo: Handle failure
+                                                }
+                                            }
+                                        }
                                     ) {
                                         Text(
                                             text = "Yes",
@@ -412,10 +428,7 @@ fun ProgressCardFullScreen(
                                         )
                                     }
                                 }
-
-
                             }
-
                         }
                     }
                 }

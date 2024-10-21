@@ -42,6 +42,14 @@ class MatchedCardFullScreenViewModel @Inject constructor(
         }
     }
 
+    fun contactUser(cardId: String, onResult: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            //Log.d("Firestore", "DocumentSnapshot with ID $cardId successfully updated.")
+            firestoreService.contactLostUser(cardId)
+            onResult(true)
+        }
+    }
+
 
     fun triggerNotification() {
         notificationHelper.showNotification(

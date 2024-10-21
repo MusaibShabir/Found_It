@@ -62,6 +62,22 @@ class ProgressCardFullScreenViewModel @Inject constructor(
         }
     }
 
+    // Fetch data for the given cardId
+    fun cardMatched(foundCardId: String, lostCardId: String, onResult: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            firestoreService.cardMatched(foundCardId, lostCardId)
+            onResult(true)
+        }
+    }
+
+    // Fetch data for the given cardId
+    fun cardNotMatched(foundCardId: String, lostCardId: String, onResult: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            firestoreService.cardNotMatched(foundCardId, lostCardId)
+            onResult(true)
+        }
+    }
+
     fun deleteCardData(cardId: String, onResult: (Boolean, Exception?) -> Unit){
         viewModelScope.launch {
             try {

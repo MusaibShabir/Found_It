@@ -11,6 +11,9 @@ interface FirestoreService {
     suspend fun getMatchedCardData(cardId: List<String>): Flow<List<Map<String, Any>>>
     suspend fun getSingleCardData(cardId: String): Flow<Map<String, Any>>
     suspend fun getMatchedSingleCardData(cardId: String): Flow<Map<String, Any>>
+    suspend fun cardMatched(foundCardId: String, lostCardId: String)
+    suspend fun cardNotMatched(foundCardId: String, lostCardId: String)
+    suspend fun contactLostUser(cardId: String)
     suspend fun deleteCardData(cardId: String)
     suspend fun clearFirestoreListener()
 }
