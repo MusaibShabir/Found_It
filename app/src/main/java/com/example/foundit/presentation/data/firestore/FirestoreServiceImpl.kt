@@ -93,7 +93,8 @@ class FirestoreServiceImpl @Inject constructor(
         locationCoordinates: LatLng,
         locationAddress: String,
         childCategory: String,
-        date: String
+        dateString: String,
+        dateLong: Long
     ) {
         val userId = currentUserId
 
@@ -131,7 +132,8 @@ class FirestoreServiceImpl @Inject constructor(
                         "locationCoordinates" to GeoPoint(locationCoordinates.latitude, locationCoordinates.longitude),
                         "locationAddress" to locationAddress,
                         "cardCreatedDate" to Timestamp(Date()),
-                        "date" to date,
+                        "dateString" to dateString,
+                        "dateLong" to dateLong,
                         "matches" to null,
                         "status" to 0
                     )
