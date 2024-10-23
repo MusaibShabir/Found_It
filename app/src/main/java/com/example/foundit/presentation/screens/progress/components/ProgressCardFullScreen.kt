@@ -89,7 +89,7 @@ fun isNetworkAvailable(context: Context): Boolean {
 fun ProgressCardFullScreen(
     modifier: Modifier,
     cardId: String,
-    navController: NavHostController
+    navController: NavHostController// Use Hilt to inject ViewModel
 ) {
     // Collect the card data from the ViewModel
     val viewModel: ProgressCardFullScreenViewModel = hiltViewModel()
@@ -280,7 +280,8 @@ fun ProgressCardFullScreen(
                 LazyVerticalGrid(
                     modifier = modifier
                         .fillMaxWidth()
-                        .height(120.dp),
+                        .height(120.dp)
+                    ,
                     columns = GridCells.Adaptive(minSize = 102.dp),
                     horizontalArrangement = Arrangement.Start,
                     verticalArrangement = Arrangement.Top
@@ -394,11 +395,8 @@ fun ProgressCardFullScreen(
                                     Button(
                                         modifier = modifier.width(112.dp),
                                         onClick = {
-                                            viewModel.cardNotMatched(
-                                                data["matches"].toString(),
-                                                cardId
-                                            ) { isSuccessfull ->
-                                                if (isSuccessfull) {
+                                            viewModel.cardNotMatched(data["matches"].toString(),cardId){isSuccessfull ->
+                                                if (isSuccessfull){
                                                     //navController.popBackStack()
                                                 } else {
                                                     // Todo: Handle failure
@@ -417,11 +415,8 @@ fun ProgressCardFullScreen(
                                     Button(
                                         modifier = modifier.width(112.dp),
                                         onClick = {
-                                            viewModel.cardMatched(
-                                                data["matches"].toString(),
-                                                cardId
-                                            ) { isSuccessfull ->
-                                                if (isSuccessfull) {
+                                            viewModel.cardMatched(data["matches"].toString(),cardId){isSuccessfull ->
+                                                if (isSuccessfull){
                                                     //navController.popBackStack()
                                                 } else {
                                                     // Todo: Handle failure
@@ -447,94 +442,80 @@ fun ProgressCardFullScreen(
                 HorizontalDivider()
                 Spacer(modifier = modifier.height(8.dp))
 
-                // Matched Card List
+
                 LazyColumn(
                     modifier = modifier
                         .fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    items(
-                        items = matchedCards,
-                        key = { item -> item.hashCode() }) { item ->
+                    items(matchedCards) { item ->
                         MatchedCard(
                             modifier = modifier,
                             cardItem = item,
                             navController = navController
                         )
-
-                        LaunchedEffect(matchedCards.size) {
-                            if (matchedCards.isNotEmpty() && item == matchedCards.last()) {
-                                viewModel.triggerNotification()
-                            }
-                        }
                     }
                 }
+            }
+        }
 
 
-
-                if (data["status"].toString() != "1") {
-                    // Floating action button for delete
-                    Box(modifier = modifier.fillMaxSize()) {
-                        FloatingActionButton(
-                            modifier = modifier
-                                .align(Alignment.BottomEnd)
-                                .padding(end = 30.dp, bottom = 70.dp)
-                                .size(72.dp),
-                            shape = CircleShape,
-                            onClick = {
-                                if (isNetworkAvailable(context)) {
-                                    viewModel.deleteCardData(cardId) { isSuccess, e ->
-                                        if (isSuccess) {
-                                            Toast.makeText(
-                                                context,
-                                                "Card deleted successfully",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                            navController.navigate(NavRoutes.PROGRESS)
-                                        } else {
-                                            val errorMessage = when (e) {
-                                                is FirebaseFirestoreException -> {
-                                                    when (e.code) {
-                                                        FirebaseFirestoreException.Code.PERMISSION_DENIED -> "You don't have permission to delete this card."
-                                                        FirebaseFirestoreException.Code.NOT_FOUND -> "Card not found, unable to delete."
-                                                        FirebaseFirestoreException.Code.UNAVAILABLE -> "Firestore service is currently unavailable. Please try again later."
-                                                        FirebaseFirestoreException.Code.CANCELLED -> "Deletion was cancelled."
-                                                        FirebaseFirestoreException.Code.ABORTED -> "Operation aborted. Please try again."
-                                                        else -> "An unexpected error occurred while deleting the card."
-                                                    }
-                                                }
-
-                                                is IllegalArgumentException -> "Invalid input provided."
-                                                is NullPointerException -> "An unexpected error occurred."
-                                                else -> "An unknown error occurred: ${e?.message}"
-                                            }
-                                            Toast.makeText(
-                                                context,
-                                                errorMessage,
-                                                Toast.LENGTH_SHORT
-                                            )
-                                                .show()
-                                        }
-                                    }
-                                } else {
+        if (data["status"].toString() != "1"){
+            // Floating action button for delete
+            Box(modifier = modifier.fillMaxSize()) {
+                FloatingActionButton(
+                    modifier = modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(end = 30.dp, bottom = 70.dp)
+                        .size(72.dp),
+                    shape = CircleShape,
+                    onClick = {
+                        if (isNetworkAvailable(context)) {
+                            viewModel.deleteCardData(cardId) { isSuccess, e ->
+                                if (isSuccess) {
                                     Toast.makeText(
                                         context,
-                                        "No internet connection. Please try again when connected.",
+                                        "Card deleted successfully",
                                         Toast.LENGTH_SHORT
                                     ).show()
-                                }
-                            },
+                                    navController.popBackStack()
+                                } else {
+                                    val errorMessage = when (e) {
+                                        is FirebaseFirestoreException -> {
+                                            when (e.code) {
+                                                FirebaseFirestoreException.Code.PERMISSION_DENIED -> "You don't have permission to delete this card."
+                                                FirebaseFirestoreException.Code.NOT_FOUND -> "Card not found, unable to delete."
+                                                FirebaseFirestoreException.Code.UNAVAILABLE -> "Firestore service is currently unavailable. Please try again later."
+                                                FirebaseFirestoreException.Code.CANCELLED -> "Deletion was cancelled."
+                                                FirebaseFirestoreException.Code.ABORTED -> "Operation aborted. Please try again."
+                                                else -> "An unexpected error occurred while deleting the card."
+                                            }
+                                        }
 
-                            containerColor = MainRed,
-                            contentColor = Color.White
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Delete,
-                                contentDescription = "Delete",
-                                modifier = Modifier.size(32.dp)
-                            )
+                                        is IllegalArgumentException -> "Invalid input provided."
+                                        is NullPointerException -> "An unexpected error occurred."
+                                        else -> "An unknown error occurred: ${e?.message}"
+                                    }
+                                    Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "No internet connection. Please try again when connected.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                    }
+                    },
+
+                    containerColor = MainRed,
+                    contentColor = Color.White
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete",
+                        modifier = Modifier.size(32.dp)
+                    )
                 }
             }
         }
@@ -617,6 +598,7 @@ fun MatchedCard(
                         )
                         Text(
                             text = cardItem["locationAddress"].toString(),
+                            //textAlign = TextAlign.Center,
                             fontSize = 12.sp,
                             fontStyle = FontStyle.Italic,
                             textDecoration = TextDecoration.Underline
