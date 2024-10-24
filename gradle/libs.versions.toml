@@ -48,11 +48,11 @@ navigationFragment = "2.8.3"
 
 
 #FireBase
-firebaseAuthKtx = "23.0.0"
-firebaseConfigKtx = "22.0.0"
-firebaseFirestoreKtx = "25.1.0"
-firebaseBom = "33.4.0"
-firebaseAuth = "23.0.0"
+firebaseAuthKtx = "23.1.0"
+firebaseConfigKtx = "22.0.1"
+firebaseFirestoreKtx = "25.1.1"
+firebaseBom = "33.5.1"
+firebaseAuth = "23.1.0"
 playServicesMaps = "19.0.0"
 appcompat = "1.7.0"
 
