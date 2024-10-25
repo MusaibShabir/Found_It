@@ -105,11 +105,6 @@ fun HomeScreen(
     lostButtonClick: String,
     foundButtonClick: String,
 ) {
-    //Greetings
-//    val profileData by viewModel.profileData.collectAsState()
-//    val profileName = profileData?.let { "${it.firstName} ${it.lastName}" }
-    //val profileName = viewModel.userName
-
     val context = LocalContext.current
     val userFirstName by viewModel.userFirstNames.collectAsState()
     val userLastName by viewModel.userLastNames.collectAsState()
