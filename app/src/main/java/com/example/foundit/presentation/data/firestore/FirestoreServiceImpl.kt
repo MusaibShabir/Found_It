@@ -619,6 +619,57 @@ class FirestoreServiceImpl @Inject constructor(
         }
     }
 
+    override suspend fun resetCardMatched(foundId: String) {
+        try {
+            // 1. Fetch all documents where matches == foundId
+            val matchesQuerySnapshot = firebaseFirestore.collectionGroup("Card")
+                .whereEqualTo("matches", foundId)
+                .get()
+                .await()
+
+            // 2. Fetch the document where cardId == foundId
+            val foundCardQuerySnapshot = firebaseFirestore.collectionGroup("Card")
+                .whereEqualTo("cardId", foundId)
+                .get()
+                .await()
+
+            // Now proceed with the transaction
+            firebaseFirestore.runTransaction { transaction ->
+
+                // 1. Set `matches` to null for all documents where matches == foundId
+                for (doc in matchesQuerySnapshot.documents) {
+                    val docRef = doc.reference
+                    transaction.update(docRef, "matches", null)
+                }
+
+                // 2. Set `matches` to null and `isMatchEmpty` to 1 where cardId == foundId
+                if (foundCardQuerySnapshot.documents.isNotEmpty()) {
+                    val foundCardDocRef = foundCardQuerySnapshot.documents[0].reference
+                    transaction.update(
+                        foundCardDocRef,
+                        mapOf(
+                            "matches" to null,
+                            "isMatchEmpty" to 1
+                        )
+                    )
+                } else {
+                    throw IllegalStateException("No matching document found with cardId = $foundId")
+                }
+
+                null // Return null to indicate success in the transaction
+            }.await() // Await the transaction to ensure it completes successfully
+
+            Log.d("Firestore", "Transaction successfully completed for foundId: $foundId")
+
+        } catch (e: Exception) {
+            // Handle any exception during the transaction
+            Log.e("Firestore", "Error performing transaction: ${e.message}", e)
+            throw e
+        }
+    }
+
+
+
 
     // ask confirmation from lost user
     override suspend fun contactLostUser(cardId: String) {
