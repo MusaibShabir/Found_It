@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.0.21"
-agp = "8.6.1"
+agp = "8.7.1"
 featureDelivery = "2.1.0"
 
 ksp = "2.0.21-1.0.25"
