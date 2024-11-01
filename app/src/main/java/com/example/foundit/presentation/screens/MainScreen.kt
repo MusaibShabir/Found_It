@@ -53,42 +53,6 @@ import com.example.foundit.presentation.screens.settings.components.clickable.he
 import com.example.foundit.presentation.screens.settings.components.clickable.security.SecurityScreen
 import com.example.foundit.presentation.splash.SplashScreen
 
-/*
-
-It contains some of the Animations for the bottom navigation bar
-
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedContentLambdaTargetStateParameter")
-@Composable
-fun ScreenWithNavigationBar(
-    modifier: Modifier = Modifier,
-    navController: NavHostController,
-    content: @Composable () -> Unit
-) {
-    Scaffold(
-        bottomBar = { NavigationBar(modifier = modifier, navController = navController) }
-    ) {
-        val currentRoute = navController.currentBackStackEntry?.destination?.route
-        AnimatedContent(
-            targetState = currentRoute,
-            transitionSpec = {
-
-                slideInHorizontally(
-                    initialOffsetX = { fullWidth -> fullWidth },
-                    animationSpec = tween(500000, easing = FastOutSlowInEasing)
-                ) togetherWith
-                        slideOutHorizontally(
-                            targetOffsetX = { fullWidth -> -fullWidth },
-                            animationSpec = tween(5200000, easing = FastOutSlowInEasing)
-                        ) using(SizeTransform(clip = false))
-            },
-            label = ""
-        ) {
-            content()
-        }
-    }
-}
-
- */
 
 // Helper function to get the current route
 @Composable
