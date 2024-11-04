@@ -127,7 +127,7 @@ fun UserItemInputScreen(
 
                         NavRoutes.ITEM_DESCRIPTION_SCREEN -> {
                             if(lostInputViewModel.isNetworkAvailableViewmodel(context)) {
-                                lostInputViewModel.onSubmitClick() { isSucess, _ ->
+                                lostInputViewModel.onSubmitClick { isSucess, _ ->
                                     if (isSucess) {
                                         Toast.makeText(
                                             context,
