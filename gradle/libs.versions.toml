@@ -1,23 +1,23 @@
 [versions]
 kotlin = "2.0.21"
+ksp = "2.0.21-1.0.25"
 agp = "8.7.2"
 featureDelivery = "2.1.0"
 
-ksp = "2.0.21-1.0.25"
 
-# Accompanist Permission
+# Permissions
 accompanistPermissions = "0.36.0"
 
 # Searilization
 kotlinxSerialization = "1.7.3"
 
-# OK HTTP
+# Networking
 okhttp = "4.12.0"
 
-
+# Location Services
 playServicesLocation = "21.3.0"
 
-#Compose
+# Jetpack Compose
 coilCompose = "2.7.0"
 adnroidCompose = "1.7.5"
 androidComposeMaterial3 = "1.3.1"
@@ -25,18 +25,18 @@ activityCompose = "1.9.3"
 composeBom = "2024.11.00"
 foundationLayoutAndroid = "1.7.5"
 
-#Creditianls & Auth
+# Authentication & Credentials
 credentials = "1.3.0"
 googleid = "1.1.1"
 playServicesAuth = "21.2.0"
 googleGmsGoogleServices = "4.4.2"
 
 
-#Hilt
+# Dependency Injection
 hiltAndroidCompiler = "2.52"
 hiltNavigationCompose = "1.2.0"
 
-
+# Core Libs
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -44,6 +44,7 @@ espressoCore = "3.6.1"
 kotlinxCoroutinesAndroid = "1.9.0"
 lifecycleRuntimeKtx = "2.8.7"
 
+# Navigation
 navigationFragment = "2.8.4"
 
 
