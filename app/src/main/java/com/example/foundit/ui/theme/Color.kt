@@ -21,4 +21,3 @@ val githubColor = Color(0xFF171515)
 val linkedInColor = Color(0xFF0a66c2)
 val twitterColor = Color(0xFF000000)
 val instagramColor = Color(0xFFDD2A7B)
-
