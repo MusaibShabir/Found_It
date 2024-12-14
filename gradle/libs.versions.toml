@@ -19,11 +19,11 @@ playServicesLocation = "21.3.0"
 
 # Jetpack Compose
 coilCompose = "2.7.0"
-adnroidCompose = "1.7.5"
+adnroidCompose = "1.7.6"
 androidComposeMaterial3 = "1.3.1"
 activityCompose = "1.9.3"
-composeBom = "2024.11.00"
-foundationLayoutAndroid = "1.7.5"
+composeBom = "2024.12.01"
+foundationLayoutAndroid = "1.7.6"
 
 # Authentication & Credentials
 credentials = "1.3.0"
